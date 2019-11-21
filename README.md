@@ -61,5 +61,19 @@
 * 商务合作联系QQ：2955237748
 * 官网地址：[https://edu.roncoo.net](https://edu.roncoo.net/index.html)
 
+
+#### 编译使用
+``` bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+
+```
+
 ## 项目推荐
 ##### 龙果支付(roncoo-pay)：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
