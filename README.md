@@ -60,4 +60,4 @@
 * 官网地址：[https://edu.roncoo.net](https://edu.roncoo.net/index.html)
 
 ## 项目推荐
-##### roncoo-pay：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
+##### 龙果支付(roncoo-pay)：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
