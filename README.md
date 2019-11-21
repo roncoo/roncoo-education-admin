@@ -5,13 +5,11 @@
 ### 我们需要您的支持！
 《领课教育》很荣幸能进入2019 年最受欢迎中国开源软件评选名单，请帮忙投我们一票！[2019最受欢迎中国开源软件](https://www.oschina.net/p/roncoo-education?from=timeline&isappinstalled=0)
 
-___
-
+---
 ### 相关工程
 ##### 领课教育系统(roncoo-education)：[码云地址](https://gitee.com/roncoocom/roncoo-education) | [Github地址](https://github.com/roncoo/roncoo-education)
 ##### 前端门户系统(roncoo-education-web)：[码云地址](https://gitee.com/roncoocom/roncoo-education-web) | [Github地址](https://github.com/roncoo/roncoo-education-web)
 ##### 后台管理系统(roncoo-education-admin)：[码云地址](https://gitee.com/roncoocom/roncoo-education-admin) | [Github地址](https://github.com/roncoo/roncoo-education-admin)
-
 ---
 
 ### 项目介绍（如果对你有用，请给个star！）
