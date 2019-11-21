@@ -1,7 +1,12 @@
-<div align=center><img src="doc/images/logo.jpg"/></div>
+<div align=center><img src="logo.jpg"/></div>
 
 ### 我们需要您的支持！
 《领课教育》很荣幸能进入2019 年最受欢迎中国开源软件评选名单，请帮忙投我们一票！[2019最受欢迎中国开源软件](https://www.oschina.net/p/roncoo-education?from=timeline&isappinstalled=0)
+
+### 相关工程
+##### 领课教育系统（roncoo-education）：[码云地址](https://gitee.com/roncoocom/roncoo-education) | [Github地址](https://github.com/roncoo/roncoo-education)
+##### 前端门户系统（roncoo-education-web）：[码云地址](https://gitee.com/roncoocom/roncoo-education-web) | [Github地址](https://github.com/roncoo/roncoo-education-web)
+##### 后台管理系统（roncoo-education-admin）：[码云地址](https://gitee.com/roncoocom/roncoo-education-admin) | [Github地址](https://github.com/roncoo/roncoo-education-admin)
 
 # 领课教育 - 一个全行业都适用的分布式在线教育系统
 
@@ -31,10 +36,6 @@
 
 ### 演示地址
 ##### 前端演示地址：[领课教育](http://edu.os.roncoo.com/) | 后台演示地址：[运营后台](http://roncoo.vicp.net/web)
-
-### 相关工程
-##### 前端门户系统（roncoo-education-web）：[码云地址](https://gitee.com/roncoocom/roncoo-education-web) | [Github地址](https://github.com/roncoo/roncoo-education-web)
-##### 后台管理系统（roncoo-education-admin）：[码云地址](https://gitee.com/roncoocom/roncoo-education-admin) | [Github地址](https://github.com/roncoo/roncoo-education-admin)
 
 ### 使用文档
 ##### [项目介绍](https://blog.roncoo.com/article/1105321762337357826) | [部署文档](https://blog.roncoo.com/article/1103554925858197505) | [常见问题](https://blog.roncoo.com/article/1105309620724858882)
