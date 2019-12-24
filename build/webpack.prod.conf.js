@@ -135,6 +135,11 @@ const webpackConfig = merge(baseWebpackConfig, {
   }
 })
 
+//关闭 webpack 的性能提示
+performance: {
+  hints:false
+}
+
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
