@@ -63,3 +63,16 @@ roncoo-education-admin是后台管理工程，核心框架：vue-element-admin
 
 ## 项目推荐
 ##### 龙果支付(roncoo-pay)：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
+
+#### 编译使用
+``` bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:5800
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+
+```
