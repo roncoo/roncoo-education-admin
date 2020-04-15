@@ -10,7 +10,7 @@
               <div slot="header" class="clearfix">
                 <span>商业版</span>
               </div>
-              <div style="font-size: 15px;text-indent: 2em;padding: 0px;">单机构版、多机构版、定制版，详情请看各版本适用场景介绍及包含的功能明细。</div>
+              <div style="font-size: 15px;text-indent: 2em;padding: 0px;">专业版、SaaS版、定制版，详情请看各版本适用场景介绍及包含的功能明细。</div>
               <br/>
               <br/>
               <div class="text-right">
