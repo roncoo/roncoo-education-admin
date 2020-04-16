@@ -109,14 +109,14 @@
         align="center"
         width="100">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.tradeType === 1" type="success">线上支付</el-tag>
-          <el-tag v-if="scope.row.tradeType === 2" type="brandColor">线下支付</el-tag>
+          <el-row v-if="scope.row.tradeType === 1" type="success">线上支付</el-row>
+          <el-row v-if="scope.row.tradeType === 2" type="brandColor">线下支付</el-row>
         </template>
       </el-table-column>
       <el-table-column label="支付方式 / 价格(元)" width="140">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.payType === 1" type="success">微信支付</el-tag>
-          <el-tag v-if="scope.row.payType === 2" type="brandColor">支付宝支付</el-tag>
+          <el-row v-if="scope.row.payType === 1" type="success">微信支付</el-row>
+          <el-row v-if="scope.row.payType === 2" type="brandColor">支付宝支付</el-row>
           <el-row>价格:【{{scope.row.pricePaid.toFixed(2)}}】</el-row>
         </template>
       </el-table-column>
@@ -126,7 +126,7 @@
         align="center"
         width="80">
         <template slot-scope="sett">
-          <el-tag v-if="sett.row.channelType === 1" type="success">PC端</el-tag>
+          <el-row v-if="sett.row.channelType === 1" type="success">PC端</el-row>
         </template>
       </el-table-column>
       <el-table-column
@@ -135,10 +135,10 @@
         align="center"
         width="100">
         <template slot-scope="sett">
-          <el-tag v-if="sett.row.orderStatus === 1" type="warning">待支付</el-tag>
-          <el-tag v-if="sett.row.orderStatus === 2" type="success">支付成功</el-tag>
-          <el-tag v-if="sett.row.orderStatus === 3" type="danger">支付失败</el-tag>
-          <el-tag v-if="sett.row.orderStatus === 4" type="brandColor">已关闭</el-tag>
+          <el-row v-if="sett.row.orderStatus === 1" type="warning">待支付</el-row>
+          <el-row v-if="sett.row.orderStatus === 2" type="success">支付成功</el-row>
+          <el-row v-if="sett.row.orderStatus === 3" type="danger">支付失败</el-row>
+          <el-row v-if="sett.row.orderStatus === 4" type="brandColor">已关闭</el-row>
         </template>
       </el-table-column>
       <el-table-column prop="remarkCus" label="客户备注" width="100">
