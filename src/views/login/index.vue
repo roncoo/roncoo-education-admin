@@ -38,8 +38,8 @@
     </el-form>
     </div>
     <div class="tips">
-        <span>广州市领课网络科技有限公司 版权所有©2015-2019</span>
-        <span> | 粤ICP备16009964号</span>
+        <span>广州市领课网络科技有限公司 版权所有 ©2015-现在</span>
+        <span>| 粤ICP备16009964号</span>
       </div>
   </div>
 </template>
