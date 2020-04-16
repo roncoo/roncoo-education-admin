@@ -39,7 +39,7 @@
     </div>
     <div class="tips">
         <span>广州市领课网络科技有限公司 版权所有 ©2015-现在</span>
-        <span>|&nbsp;&nbsp;粤ICP备16009964号</span>
+        <span>|&nbsp;&nbsp;&nbsp;&nbsp;粤ICP备16009964号</span>
       </div>
   </div>
 </template>
