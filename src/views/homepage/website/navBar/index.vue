@@ -33,8 +33,8 @@
           prop="target"
           align="center">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.target === '_blank'" type="success">新窗口打开</el-tag>
-            <el-tag v-if="scope.row.target === '_self'" type="brandColor">同窗口打开</el-tag>
+            <el-row v-if="scope.row.target === '_blank'" type="success">新窗口打开</el-row>
+            <el-row v-if="scope.row.target === '_self'" type="brandColor">同窗口打开</el-row>
           </template>
         </el-table-column>
         <el-table-column prop="sort" label="排序">

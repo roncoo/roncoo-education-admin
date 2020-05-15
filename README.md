@@ -1,6 +1,8 @@
-<div align=center><img src="logo.jpg"/></div>
-
-<h2 align=center>一个各行业都适用的分布式在线教育系统</h2>
+<div align=center>
+ <img src="logo.jpg"/>
+ <h2>一个各行业都适用的分布式在线教育系统</h2>
+ <a href="http://edu.doc.roncoos.com/"><strong>领课教育系统-开源版-项目文档</strong></a>
+</div>
 
 ##### 领课教育系统(roncoo-education)：[码云地址](https://gitee.com/roncoocom/roncoo-education) | [Github地址](https://github.com/roncoo/roncoo-education)
 > roncoo-education是后台工程，核心框架：Spring Cloud  
@@ -59,16 +61,3 @@
 
 ## 项目推荐
 ##### 龙果支付系统(roncoo-pay)：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
-
-#### 编译使用
-``` bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:5800
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-
-```
