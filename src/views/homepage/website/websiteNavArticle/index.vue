@@ -2,7 +2,7 @@
   <div class="pad20">
     <el-form ref="formData" :model="formData" label-width="100px">
       <el-form-item label="文章名称：">
-        <el-input v-model="formData.artTitle"></el-input>
+        <el-input v-model="formData.artTitle" placeholder="请输入文章名称"></el-input>
       </el-form-item>
       <el-form-item label="文章描述：" style="width:80%">
          <div id="artDesc" style="height:400px;max-height:500px;"></div>
@@ -26,13 +26,16 @@
         ctrl: {
           loading: false
         },
-        formData: {},
-        navId: ''
+        formData: {
+          artTitle: '',
+          sort: 1,
+          navId: ''
+        }
       }
     },
     mounted() {
-      this.navId = this.$route.query.navId
-      this.getArticala(this.navId)
+      this.formData.navId = this.$route.query.navId
+      this.getArticala(this.formData.navId)
     },
     methods: {
       createEdit() {
@@ -73,7 +76,7 @@
         api.navArticleView({ navId: navId }).then(res => {
           this.createEdit();
           this.loading.hide()
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
               this.formData = res.data
           }
         }).catch(() => {
@@ -87,23 +90,43 @@
         this.$router.go(-1)
       },
       submitForm(formData) {
+        this.formData.artDesc = this.editor.txt.html()
         this.$refs[formData].validate((valid) => {
           if (valid) {
             this.loading.show()
-            api.navArticleUpdate(this.formData).then(res => {
-              this.loading.hide()
-              if (res.code === 200 && res.data > 0) {
-                this.tips('操作成功', 'success')
-                this.handleClose()
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: "更新失败"
-                });
-              }
-            }).catch(() => {
-              this.loading.hide()
-            })
+            if (formData.id) {
+              api.navArticleUpdate(this.formData).then(res => {
+                this.loading.hide()
+                if (res.code === 200 && res.data > 0) {
+                  this.tips('操作成功', 'success')
+                  this.handleClose()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: "更新失败"
+                  });
+                }
+              }).catch(() => {
+                this.loading.hide()
+              })
+            } else {
+              // 保存
+              console.log(this.formData)
+              api.navArticleSave(this.formData).then(res => {
+                this.loading.hide()
+                if (res.code === 200 && res.data > 0) {
+                  this.tips('操作成功', 'success')
+                  this.handleClose()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: "更新失败"
+                  });
+                }
+              }).catch(() => {
+                this.loading.hide()
+              })
+            }
           } else {
             this.loading.hide()
             this.$message({

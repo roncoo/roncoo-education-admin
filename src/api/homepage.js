@@ -199,6 +199,15 @@ export function navArticleUpdate(data = {}) {
   })
 }
 
+// 保存站点导航文章接口
+export function navArticleSave(data = {}) {
+  return request({
+    url: '/system/pc/website/nav/article/save',
+    method: 'post',
+    data: data
+  })
+}
+
 // 首页专区PC端分页列表接口
 export function pcZoneList(params, pageCurrent = 1, pageSize = 20) {
   return request({
