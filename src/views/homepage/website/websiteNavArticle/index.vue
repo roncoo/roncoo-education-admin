@@ -111,7 +111,6 @@
               })
             } else {
               // 保存
-              console.log(this.formData)
               api.navArticleSave(this.formData).then(res => {
                 this.loading.hide()
                 if (res.code === 200 && res.data > 0) {
