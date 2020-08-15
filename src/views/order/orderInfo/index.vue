@@ -84,14 +84,14 @@
           <el-button v-has="'/course/pc/order/info/view'" type="text" @click="handleView(scope.row.id)">{{scope.row.orderNo}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="课程信息" width="200">
+      <el-table-column label="课程信息" width="150">
         <template slot-scope="scope">
            <el-row>{{scope.row.courseName}}</el-row>
           <!-- <el-button v-has="'/user/pc/lecturer/view'" type="text" @click="handleOrderList(scope.row.courseId)">{{scope.row.courseName}}</el-button> -->
           <el-row>【<el-button type="text" @click="handleOrderList(scope.row.courseId, scope.row.courseName, 1)">详情</el-button>】</el-row>
         </template>
       </el-table-column>
-      <el-table-column label="讲师信息" width="150">
+      <el-table-column label="讲师信息" width="100">
         <template slot-scope="scope">
           <el-button v-has="'/user/pc/lecturer/view'" type="text" @click="handleLecturerView(scope.row.lecturerUserNo)">{{scope.row.lecturerName}}</el-button>
           <el-row>【<el-button type="text" @click="handleOrderList(scope.row.lecturerUserNo, scope.row.lecturerName, 2)">详情</el-button>】</el-row>
@@ -104,48 +104,38 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="交易类型"
+        label="交易类型/渠道"
         prop="tradeType"
-        align="center"
-        width="100">
+        width="120">
         <template slot-scope="scope">
           <el-row v-if="scope.row.tradeType === 1" type="success">线上支付</el-row>
           <el-row v-if="scope.row.tradeType === 2" type="brandColor">线下支付</el-row>
+          <span v-if="scope.row.channelType === 1" type="success">PC端</span>
         </template>
       </el-table-column>
-      <el-table-column label="支付方式 / 价格(元)" width="140">
+      <el-table-column label="支付方式 / 价格" width="140">
         <template slot-scope="scope">
           <el-row v-if="scope.row.payType === 1" type="success">微信支付</el-row>
           <el-row v-if="scope.row.payType === 2" type="brandColor">支付宝支付</el-row>
-          <el-row>价格:【{{scope.row.pricePaid.toFixed(2)}}】</el-row>
+          <el-row>￥{{scope.row.pricePaid.toFixed(2)}}</el-row>
         </template>
       </el-table-column>
       <el-table-column
-        label="购买渠道"
-        prop="channelType"
-        align="center"
-        width="80">
-        <template slot-scope="sett">
-          <el-row v-if="sett.row.channelType === 1" type="success">PC端</el-row>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="订单状态"
+        label="订单状态 / 时间"
         prop="orderStatus"
-        align="center"
-        width="100">
+        width="120">
         <template slot-scope="sett">
           <el-row v-if="sett.row.orderStatus === 1" type="warning">待支付</el-row>
           <el-row v-if="sett.row.orderStatus === 2" type="success">支付成功</el-row>
           <el-row v-if="sett.row.orderStatus === 3" type="danger">支付失败</el-row>
           <el-row v-if="sett.row.orderStatus === 4" type="brandColor">已关闭</el-row>
+          <br>
+          <span>{{sett.row.payTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="remarkCus" label="客户备注" width="100">
+      <el-table-column prop="remarkCus" label="客户备注">
       </el-table-column>
-      <el-table-column prop="payTime" label="支付时间" width="160">
-      </el-table-column>
-      <el-table-column label="操作" fixed="right" width="100">
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button v-has="'/course/pc/order/info/edit'" type="success" @click="handleRemark(scope.row)" size="mini">备注</el-button>
         </template>

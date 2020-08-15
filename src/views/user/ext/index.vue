@@ -8,6 +8,11 @@
       <el-form-item label="昵称：">
         <el-input v-model.trim="map.nickname"></el-input>
       </el-form-item>
+      <el-form-item label="注册时间：">
+        <div>
+          <datePicker v-model="gmtCreate" ref="dataRange" :newVal='gmtCreate' type="daterange"></datePicker>
+        </div>
+      </el-form-item>
       <el-form-item label="状态：" >
         <el-select v-model="map.statusId" class="auto-width" clearable filterable placeholder="状态" style="width: 85px">
           <el-option
@@ -17,11 +22,6 @@
             :value="item.code">
           </el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item label="注册时间：">
-        <div>
-          <datePicker v-model="gmtCreate" ref="dataRange" :newVal='gmtCreate' type="daterange"></datePicker>
-        </div>
       </el-form-item>
       <el-form-item>
         <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
@@ -33,27 +33,29 @@
       <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="userNo" label="用户编号">
+        <el-table-column prop="userNo" label="用户编号" width="180">
         </el-table-column>
-        <el-table-column label="用户手机">
+        <el-table-column label="用户手机" width="120">
            <template slot-scope="scope">
             <el-button v-has="'/user/pc/user/ext/view'" type="text" @click="handleView(scope.row.id)">{{scope.row.mobile}}</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="用户类型"
-          prop="userType"
-          align="center"
-          width="200">
-          <template slot-scope="sett">
-            <el-tag v-if="sett.row.userType === 1" type="success">用户</el-tag>
-            <el-tag v-if="sett.row.userType === 2" type="brandColor">讲师</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="nickname" label="昵称">
         </el-table-column>
         <el-table-column
-          width="150"
+          label="用户类型"
+          prop="userType"
+          align="center"
+          width="100">
+          <template slot-scope="sett">
+            <span v-if="sett.row.userType === 1">用户</span>
+            <span v-if="sett.row.userType === 2">讲师</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="gmtCreate" label="注册时间" width="200">
+        </el-table-column>
+        <el-table-column
+          width="180"
           prop="statusId"
           label="状态"
           align="center">
@@ -70,12 +72,10 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="gmtCreate" label="注册时间">
-        </el-table-column>
         <el-table-column
         fixed="right"
         label="操作"
-        width="200">
+        width="250">
         <template slot-scope="scope">
           <ul class="list-item-actions">
             <li>

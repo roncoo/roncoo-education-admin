@@ -42,34 +42,28 @@
       </el-form>
    </div>
     <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border>
-      <el-table-column type="index" label="序号" width="40">
+      <el-table-column type="index" label="序号" width="50">
       </el-table-column>
-      <el-table-column prop="courseName" label="课程名称">
-        <!-- <template slot-scope="scope">
-          <el-button type="text" @click="handleView(scope.row)" >{{scope.row.courseName}}</el-button>
-        </template> -->
+      <el-table-column prop="courseLogo" label="课程封面" width="122">
+        <template slot-scope="scope">
+          <img :src="scope.row.courseLogo" :alt="scope.row.courseName" width="100">
+        </template>
+      </el-table-column>
+      <el-table-column prop="courseName" label="课程名称" width="120">
       </el-table-column>>
-      <el-table-column label="课程分类" width="180">
+      <el-table-column label="课程分类">
         <template slot-scope="scope">
-        {{scope.row.categoryName1}}/{{scope.row.categoryName2}}/{{scope.row.categoryName3}}
+          【 {{ scope.row.categoryName1 }}】>【{{ scope.row.categoryName2 }}】>【{{ scope.row.categoryName3 }}】
+        </template>
+      </el-table-column>
+      <el-table-column label="价格" prop="courseOriginal" width="150">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isFree === 0">原价：{{scope.row.courseOriginal.toFixed(2)}}<br>优惠价：{{scope.row.courseDiscount.toFixed(2)}}</span>
+          <span v-else>免费</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="是否收费"
-        prop="isFree"
-        align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.isFree === 1" type="success">免费</el-tag>
-          <el-tag v-if="scope.row.isFree === 0" type="danger">收费</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="原价" width="100">
-        <template slot-scope="scope">
-          {{scope.row.courseOriginal.toFixed(2)}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        width="160"
+        width="150"
         prop="isPutaway"
         label="上下架"
         align="center">
@@ -87,7 +81,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="160"
+        width="150"
         prop="statusId"
         label="状态"
         align="center">
@@ -104,7 +98,7 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="sort" label="排序" width="100">
+      <el-table-column prop="sort" label="排序" align="center" width="60">
       </el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">

@@ -39,17 +39,22 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column label="手机号" width="150">
+        <el-table-column label="手机号" width="120">
            <template slot-scope="scope">
             <el-button v-has="'/user/pc/lecturer/audit/view'" type="text" @click="handleView(scope.row.id)">{{scope.row.lecturerMobile}}</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="lecturerName" label="讲师名称">
+        <el-table-column prop="lecturerName" label="讲师名称" width="200">
         </el-table-column>
-        <el-table-column prop="lecturerEmail" label="邮箱">
+        <el-table-column prop="lecturerEmail" label="邮箱" width="200">
+        </el-table-column>
+        <el-table-column label="分成比例" width="150">
+          <template slot-scope="scope">
+            {{scope.row.lecturerProportion*100}}%
+          </template>
         </el-table-column>
         <el-table-column
-          width="150"
+          width="180"
           prop="statusId"
           label="状态"
           align="center">
@@ -66,14 +71,10 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="分成比例" width="150">
-          <template slot-scope="scope">
-             [ 讲师: {{scope.row.lecturerProportion*100}}%]
-          </template>
-        </el-table-column>
         <el-table-column
           label="审核状态"
           prop="auditStatus"
+          width="150"
           align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.auditStatus === 0" type="brandColor">待审核</el-tag>
@@ -83,8 +84,7 @@
         </el-table-column>
         <el-table-column
         fixed="right"
-        label="操作"
-        width="200">
+        label="操作">
         <template slot-scope="scope">
           <ul class="list-item-actions">
             <li>

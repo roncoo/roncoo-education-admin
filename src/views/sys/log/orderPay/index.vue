@@ -13,7 +13,7 @@
     </div>
     <div>
       <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
-        <el-table-column type="index" label="序号" width="40"></el-table-column>
+        <el-table-column type="index" label="序号" width="50"></el-table-column>
         <el-table-column width="300" prop="orderNo" label="订单号"></el-table-column>
         <el-table-column width="300" prop="serialNumber" label="流水号"></el-table-column>
         <el-table-column width="150" label="订单状态">

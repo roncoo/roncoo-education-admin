@@ -26,14 +26,15 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-       <el-table-column  label="广告图片">
+       <el-table-column  label="广告图片" width="222">
          <template slot-scope="scope">
-           <img :src="scope.row.advImg" width="90" height="60"/>
+           <img :src="scope.row.advImg" width="200"/>
          </template>
         </el-table-column>
-        <el-table-column prop="advTitle" label="广告标题/广告链接">
+        <el-table-column prop="advTitle" label="广告标题"></el-table-column>
+        <el-table-column prop="beginTime" label="开始时间" width="180">
         </el-table-column>
-        <el-table-column prop="sort" label="排序" width="90">
+        <el-table-column prop="endTime" label="结束时间" width="180">
         </el-table-column>
         <el-table-column
           label="状态"
@@ -53,9 +54,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="beginTime" label="开始时间">
-        </el-table-column>
-        <el-table-column prop="endTime" label="结束时间">
+        <el-table-column prop="sort" label="排序" width="80">
         </el-table-column>
        <el-table-column
         fixed="right"

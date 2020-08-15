@@ -38,15 +38,10 @@
         <el-table-column
           prop="categoryName"
           label="分类名称"
-          sortable
-          width="180">
+          sortable>
         </el-table-column>
         <el-table-column
-          prop="remark"
-          label="备注">
-        </el-table-column>
-        <el-table-column
-        width="160"
+        width="180"
         prop="statusId"
         label="状态"
         align="center">
@@ -63,17 +58,23 @@
           </el-switch>
         </template>
       </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="排序">
-        </el-table-column>
-        <el-table-column label="操作" width="240">
-          <template slot-scope="scope">
-            <el-button v-has="'/course/pc/course/category/add'" type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addSubMmenu(scope.row.id, scope.row.floor)">添加</el-button>
-            <el-button v-has="'/course/pc/course/category/delete'" type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
-            <el-button v-has="'/course/pc/course/category/view'" type="success" @click="editSubMmenu(scope.row)" size="mini">编辑</el-button>
-          </template>
-        </el-table-column>
+      <el-table-column
+        prop="sort"
+        width="100"
+        label="排序"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="remark"
+        label="备注">
+      </el-table-column>
+      <el-table-column label="操作" width="300">
+        <template slot-scope="scope">
+          <el-button v-has="'/course/pc/course/category/add'" type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addSubMmenu(scope.row.id, scope.row.floor)">添加</el-button>
+          <el-button v-has="'/course/pc/course/category/delete'" type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
+          <el-button v-has="'/course/pc/course/category/view'" type="success" @click="editSubMmenu(scope.row)" size="mini">编辑</el-button>
+        </template>
+      </el-table-column>
       </el-table>
        <add :visible="ctrl.addDialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></add>
       <edit :visible="ctrl.editDialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></edit>
