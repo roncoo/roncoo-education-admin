@@ -45,7 +45,7 @@
 
 ### 官方QQ群（加群免费获取sql脚本）
 
-<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=5hPSMiWCiKukEStUPngTpPHgt-v1JTL9&jump_from=webapi"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="在线教育系统-领课⑨" title="在线教育系统-领课⑨"> 284915592</a> 可加
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=5hPSMiWCiKukEStUPngTpPHgt-v1JTL9&jump_from=webapi"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="在线教育系统-领课⑨" title="在线教育系统-领课⑨"> 284915592</a> 可加
 
 
 > QQ群：1028579521(已满)
