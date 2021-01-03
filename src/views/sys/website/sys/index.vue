@@ -34,6 +34,32 @@
               </el-form-item>
             </div></el-col>
           </el-row>
+        <el-alert class="title" :closable="false" title="阿里云配置" type="info" />
+        <br/>
+          <el-row>
+            <el-col :span="11"><div>
+              <el-form-item label="accessKeyId:">
+                <el-input style="width:450px;" v-model="formData.aliyunAccessKeyId" placeholder="请输入accessKeyId"></el-input>
+              </el-form-item>
+            </div></el-col>
+            <el-col :span="11"><div>
+              <el-form-item label="accessKeySecret:">
+                <el-input style="width:450px;" v-model="formData.aliyunAccessKeySecret" placeholder="请输入accessKeySecret"></el-input>
+              </el-form-item>
+            </div></el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11"><div>
+              <el-form-item label="smsCode:">
+                <el-input style="width:450px;" v-model="formData.smsCode" placeholder="请输入smsCode"></el-input>
+              </el-form-item>
+            </div></el-col>
+            <el-col :span="11"><div>
+              <el-form-item label="短信签名:">
+                <el-input style="width:450px;" v-model="formData.signName" placeholder="请输入短信签名"></el-input>
+              </el-form-item>
+            </div></el-col>
+          </el-row>
         <el-alert class="title" :closable="false" title="文件存储信息" type="info" />
           <br/>
             <el-form-item label="文件存储类型:">
@@ -43,19 +69,7 @@
                 <el-radio :label="3">本地</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-row>
-              <el-col :span="11"><div>
-                <el-form-item label="accessKeyId:">
-                  <el-input style="width:450px;" v-model="formData.aliyunAccessKeyId" placeholder="请输入accessKeyId"></el-input>
-                </el-form-item>
-              </div></el-col>
-              <el-col :span="11"><div>
-                <el-form-item label="accessKeySecret:">
-                  <el-input style="width:450px;" v-model="formData.aliyunAccessKeySecret" placeholder="请输入accessKeySecret"></el-input>
-                </el-form-item>
-              </div></el-col>
-            </el-row>
-            <el-row>
+            <el-row v-if="formData.fileType === 1">
               <el-col :span="11"><div>
                 <el-form-item label="ossUrl:">
                   <el-input style="width:450px;" v-model="formData.aliyunOssUrl" placeholder="请输入ossUrl"></el-input>
@@ -67,18 +81,9 @@
                 </el-form-item>
               </div></el-col>
             </el-row>
-            <el-row>
-              <el-col :span="11"><div>
-                <el-form-item label="smsCode:">
-                  <el-input style="width:450px;" v-model="formData.smsCode" placeholder="请输入smsCode"></el-input>
-                </el-form-item>
-              </div></el-col>
-              <el-col :span="11"><div>
-                <el-form-item label="短信签名:">
-                  <el-input style="width:450px;" v-model="formData.signName" placeholder="请输入短信签名"></el-input>
-                </el-form-item>
-              </div></el-col>
-          </el-row>
+            <el-form-item label="ossBucket:" v-if="formData.fileType === 1">
+              <el-input style="width:450px;" v-model="formData.aliyunOssEndpoint" placeholder="Endpoint（地域节点）"></el-input>
+            </el-form-item>
         <el-alert class="title" :closable="false" title="支付通道信息" type="info" />
           <br/>
           <el-form-item label="支付通道:">
