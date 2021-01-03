@@ -81,8 +81,12 @@
                 </el-form-item>
               </div></el-col>
             </el-row>
-            <el-form-item label="ossBucket:" v-if="formData.fileType === 1">
+            <el-form-item label="Endpoint（地域节点）:" v-if="formData.fileType === 1">
               <el-input style="width:450px;" v-model="formData.aliyunOssEndpoint" placeholder="Endpoint（地域节点）"></el-input>
+            </el-form-item>
+
+           <el-form-item label="视频Bucket:" v-if="formData.fileType === 1">
+              <el-input style="width:450px;" v-model="formData.aliyunOasVault" placeholder="视频Bucket"></el-input>
             </el-form-item>
         <el-alert class="title" :closable="false" title="支付通道信息" type="info" />
           <br/>
