@@ -7,7 +7,7 @@
           <el-form-item label="视频存储平台:">
             <el-radio-group v-model="formData.videoType">
               <el-radio :label="1">保利威视</el-radio>
-              <el-radio :label="0">七牛</el-radio>
+              <el-radio :label="2">百家云(未实现)</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-row>
@@ -64,9 +64,10 @@
           <br/>
             <el-form-item label="文件存储类型:">
               <el-radio-group v-model="formData.fileType">
+                <el-radio :label="0">本地</el-radio>
                 <el-radio :label="1">阿里云</el-radio>
-                <el-radio :label="2">七牛</el-radio>
-                <el-radio :label="3">本地</el-radio>
+                <el-radio :label="2">FastDFS</el-radio>
+                <el-radio :label="3">MinIO(未实现)</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-row v-if="formData.fileType === 1">
