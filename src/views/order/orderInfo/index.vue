@@ -123,7 +123,7 @@
       <el-table-column
         label="订单状态 / 时间"
         prop="orderStatus"
-        width="120">
+        width="160">
         <template slot-scope="sett">
           <el-row v-if="sett.row.orderStatus === 1" type="warning">待支付</el-row>
           <el-row v-if="sett.row.orderStatus === 2" type="success">支付成功</el-row>

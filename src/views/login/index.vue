@@ -170,7 +170,7 @@ $light_gray:#444;
     height: 450px;
     position: fixed;
     bottom: 0;
-    left: 200px;
+    right: 900px;
     top:150px;
   }
   .login_logo_img {

@@ -7,17 +7,26 @@
       <div style="background: #f5f5f5;">
         <div class="text">
           <el-alert
-            title="商业版介绍"
+            title="项目介绍"
             type="info"
             :closable="false">
-            <el-link
+            <li>roncoo-education 是后台工程，核心框架：Spring Cloud</li>
+            <li>roncoo-education-web 是前端门户工程，核心框架：Vuejs + Nuxt.js</li>
+            <li>roncoo-education-admin 是后台管理工程，核心框架：vue-element-admin</li>
+          </el-alert>
+        </div>
+      </div>
+      <div style="background: #f5f5f5; margin-top: 20px;">
+        <div class="text">
+          <el-alert
+            title="领课教育系统官网"
+            type="info"
+            :closable="false">
+            详情请看：<el-link
                     type="primary"
-                    href="https://edu.roncoo.net/?sources=os"
+                    href="https://edu.roncoo.net/?sources=os-admin"
                     target="_blank"
                     :underline="false">https://edu.roncoo.net/</el-link>
-            <li>专 业 版：拥有完善的在线教学功能，适合教育机构或企业运营自主品牌的在线教育平台使用。</li>
-            <li>SaaS版：也称多机构版，一套系统即可管理和维护多个独立域名、独立品牌的在线教育平台。</li>
-            <li>定  制  版：在领课教育系统的基础上按企业需求进行定制化开发。</li>
           </el-alert>
         </div>
       </div>
