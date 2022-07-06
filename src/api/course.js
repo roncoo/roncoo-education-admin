@@ -116,3 +116,12 @@ export function categoryView(data = {}) {
     data: data
   })
 }
+
+// 一键导入ES
+export function courseEsAdd(data = {}) {
+  return request({
+    url: '/course/pc/course/es/add',
+    method: 'post',
+    data
+  })
+}

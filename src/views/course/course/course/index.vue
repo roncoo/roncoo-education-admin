@@ -38,6 +38,7 @@
         <el-form-item>
           <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
           <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
+          <el-button icon="el-icon-upload" class="filter-item" @click="handleImport">一键导入</el-button>
         </el-form-item>
       </el-form>
    </div>
@@ -122,6 +123,7 @@
 <script>
 import * as api from '@/api/course'
 import Edit from './edit'
+import { courseEsAdd } from "../../../../api/course";
 export default {
   components: { Edit },
   data() {
@@ -189,6 +191,15 @@ export default {
     // 重置查询条件
     handleReset() {
       this.reload()
+    },
+    // 一键导入
+    handleImport() {
+      courseEsAdd().then(res => {
+        if (res.data) {
+          this.$message.success(res.data)
+          this.getList()
+        }
+      })
     },
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`)
