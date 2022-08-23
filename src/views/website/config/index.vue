@@ -76,7 +76,7 @@
       </el-form>
     </div>
     <div slot="footer" style="text-align: center">
-      <el-button size="mini" type="danger" plain plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
       <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
     </div>
     <br/>

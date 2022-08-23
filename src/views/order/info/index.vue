@@ -55,25 +55,25 @@
       <el-form-item>
         <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
         <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
-        <div style="display:inline" v-has="'/course/pc/order/info/statistical'">
-          <el-form-item>
-            <div>
-              <span>平台收入: 【{{ platformProfit }}元】</span>
-            </div>
-          </el-form-item>
-          <el-form-item>
-            <el-divider direction="vertical"></el-divider>
-          </el-form-item>
-          <el-form-item>
-            <span>订单收入: 【{{ totalProfit }}元】</span>
-          </el-form-item>
-          <el-form-item>
-            <el-divider direction="vertical"></el-divider>
-          </el-form-item>
-          <el-form-item>
-            <span>讲师收入: 【{{ lecturerProfit }}元】</span>
-          </el-form-item>
-        </div>
+        <!--        <div style="display:inline" v-has="'/course/pc/order/info/statistical'">
+                  <el-form-item>
+                    <div>
+                      <span>平台收入: 【{{ platformProfit }}元】</span>
+                    </div>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-divider direction="vertical"></el-divider>
+                  </el-form-item>
+                  <el-form-item>
+                    <span>订单收入: 【{{ totalProfit }}元】</span>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-divider direction="vertical"></el-divider>
+                  </el-form-item>
+                  <el-form-item>
+                    <span>讲师收入: 【{{ lecturerProfit }}元】</span>
+                  </el-form-item>
+                </div>-->
       </el-form-item>
     </el-form>
     <el-table v-loading="ctrl.load" border size="medium" :data="list" stripe style="width: 100%">
@@ -96,7 +96,7 @@
       </el-table-column>
       <el-table-column label="讲师信息" width="100">
         <template slot-scope="scope">
-          <el-button v-has="'/user/pc/lecturer/view'" type="text" @click="handleLecturerView(scope.row.lecturerUserNo)">{{ scope.row.lecturerName }}</el-button>
+          <el-button type="text" @click="handleLecturerView(scope.row.lecturerUserNo)">{{ scope.row.lecturerName }}</el-button>
           <el-row>【
             <el-button type="text" @click="handleOrderList(scope.row.lecturerUserNo, scope.row.lecturerName, 2)">详情</el-button>
             】
@@ -105,7 +105,7 @@
       </el-table-column>
       <el-table-column label="用户信息" width="120">
         <template slot-scope="scope">
-          <el-button v-has="'/user/pc/user/info/view'" type="text" @click="handleUserView(scope.row.userNo)">{{ scope.row.mobile }}</el-button>
+          <el-button v-has="'/user/info/view'" type="text" @click="handleUserView(scope.row.userNo)">{{ scope.row.mobile }}</el-button>
           <el-row>【
             <el-button type="text" @click="handleOrderList(scope.row.userNo, scope.row.mobile, 3)">详情</el-button>
             】
@@ -287,7 +287,7 @@ export default {
       this.ctrl.load = true
       userApi.userExtView({ orderUserNo: userNo }).then(res => {
         this.formData = res.data
-        this.ctrl.dialogTitle = res.data.nickname + '-' + '查看详情'
+        this.ctrl.dialogTitle = res.data.nickname
         this.ctrl.userViewVisible = true
         this.ctrl.load = false
       }).catch(() => {
@@ -300,7 +300,7 @@ export default {
       lecturerApi.lecturerView({ lecturerUserNo: lecturerUserNo }).then(res => {
         this.formData = res.data
         this.lecturerExt = res.data.lecturerExt
-        this.ctrl.dialogTitle = res.data.lecturerName + '-' + '查看详情'
+        this.ctrl.dialogTitle = res.data.lecturerName
         this.ctrl.lecturerViewVisible = true
         this.ctrl.load = false
       }).catch(() => {

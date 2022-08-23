@@ -20,8 +20,8 @@
         </el-table-column>
         <el-table-column prop="realName" label="名称" width="250">
         </el-table-column>
-        <el-table-column prop="sort" width="100" label="排序">
-        </el-table-column>
+        <el-table-column prop="remark" label="备注"/>
+        <el-table-column prop="sort" width="100" label="排序"/>
         <el-table-column
           width="150"
           prop="statusId"
@@ -39,8 +39,6 @@
               inactive-text="正常">
             </el-switch>
           </template>
-        </el-table-column>
-        <el-table-column prop="remark" label="备注">
         </el-table-column>
         <el-table-column
           fixed="right"

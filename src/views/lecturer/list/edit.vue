@@ -6,8 +6,6 @@
     :visible.sync="visible"
     :before-close="handleClose">
     <el-form ref="formData" :model="formData" label-width="100px">
-      <el-alert class="title" :closable="false" title="讲师个人信息" type="info"/>
-      <br/>
       <div>
         <br/>
         <el-row>
@@ -46,7 +44,6 @@
           <div id="introduce"></div>
         </el-form-item>
       </div>
-      <el-alert class="title" :closable="false" title="讲师分成及银行信息" type="info"/>
       <div>
         <br/>
         <el-row>
@@ -87,7 +84,7 @@
       </div>
     </el-form>
     <div slot="footer">
-      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
       <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
     </div>
   </el-dialog>

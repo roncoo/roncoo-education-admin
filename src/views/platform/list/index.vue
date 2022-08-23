@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column width="300" prop="clientId" label="客户端ID"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
-        <el-table-column prop="sort" label="排序"></el-table-column>
+        <el-table-column prop="sort" label="排序" width="80"></el-table-column>
         <el-table-column
           width="150"
           prop="statusId"

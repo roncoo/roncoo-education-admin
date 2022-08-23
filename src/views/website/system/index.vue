@@ -96,7 +96,7 @@
           </el-col>
           <el-col :span="11">
             <div>
-              <el-form-item label="ossBucket:">
+              <el-form-item label="Bucket:">
                 <el-input style="width:450px;" v-model="formData.aliyunOssBucket" placeholder="请输入ossBucket"></el-input>
               </el-form-item>
             </div>
@@ -105,7 +105,7 @@
         <el-row v-if="formData.fileType === 1">
           <el-col :span="11">
             <div>
-              <el-form-item label="Endpoint（地域节点）:" v-if="formData.fileType === 1">
+              <el-form-item label="Endpoint:" v-if="formData.fileType === 1">
                 <el-input style="width:450px;" v-model="formData.aliyunOssEndpoint" placeholder="Endpoint（地域节点）"></el-input>
               </el-form-item>
             </div>
@@ -162,7 +162,7 @@
       </el-form>
     </div>
     <div slot="footer" style="text-align: center">
-      <el-button size="mini" type="danger" plain plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
       <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
     </div>
     <br/>

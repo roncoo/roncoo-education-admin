@@ -51,13 +51,13 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="remark"
+          label="备注">
+        </el-table-column>
+        <el-table-column
           width="80"
           prop="sort"
           label="排序">
-        </el-table-column>
-        <el-table-column
-          prop="remark"
-          label="备注">
         </el-table-column>
         <el-table-column
           fixed="right"

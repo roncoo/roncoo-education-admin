@@ -1,7 +1,7 @@
 <template>
   <!--弹窗-->
   <el-dialog
-    width="60%"
+    width="800px"
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose">
@@ -23,11 +23,11 @@
           <el-col :span="8">
             <div>
               <el-form-item label="讲师编号:">
-                <span>{{formData.lecturerUserNo}}</span>
+                <span>{{ formData.lecturerUserNo }}</span>
               </el-form-item>
               <br/>
               <el-form-item label="讲师名称:">
-                <span>{{formData.lecturerName}}</span>
+                <span>{{ formData.lecturerName }}</span>
               </el-form-item>
             </div>
           </el-col>
@@ -36,7 +36,7 @@
             <div>
               <el-form-item label="状态:">
                 <template slot-scope="scope">
-                  <span :class="textClass(formData.statusId)">{{textStatusId[formData.statusId]}}</span>
+                  <span :class="textClass(formData.statusId)">{{ textStatusId[formData.statusId] }}</span>
                 </template>
               </el-form-item>
             </div>
@@ -46,21 +46,21 @@
           <el-col :span="8">
             <div>
               <el-form-item label="手机号:">
-                <span>{{formData.lecturerMobile}}</span>
+                <span>{{ formData.lecturerMobile }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="邮箱:">
-                <span>{{formData.lecturerEmail}}</span>
+                <span>{{ formData.lecturerEmail }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="职位:">
-                <span>{{formData.position}}</span>
+                <span>{{ formData.position }}</span>
               </el-form-item>
             </div>
           </el-col>
@@ -69,14 +69,14 @@
           <el-col :span="8">
             <div>
               <el-form-item label="注册时间:">
-                <span>{{formData.gmtCreate}}</span>
+                <span>{{ formData.gmtCreate }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="排序:">
-                <span>{{formData.sort}}</span>
+                <span>{{ formData.sort }}</span>
               </el-form-item>
             </div>
           </el-col>
@@ -95,14 +95,14 @@
           <el-col :span="8">
             <div>
               <el-form-item label="讲师分成情况:">
-                <span>{{formData.lecturerProportion}}%</span>
+                <span>{{ formData.lecturerProportion }}%</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="累计总收入:">
-                <span>{{lecturerExt.totalIncome}}元</span>
+                <span>{{ lecturerExt.totalIncome }}元</span>
               </el-form-item>
             </div>
           </el-col>
@@ -111,21 +111,21 @@
           <el-col :span="8">
             <div>
               <el-form-item label="已提现金额:">
-                <span>{{lecturerExt.historyMoney}}元</span>
+                <span>{{ lecturerExt.historyMoney }}元</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="可提现金额:">
-                <span>{{lecturerExt.enableBalances}}元</span>
+                <span>{{ lecturerExt.enableBalances }}元</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="冻结金额:">
-                <span>{{lecturerExt.freezeBalances}}元</span>
+                <span>{{ lecturerExt.freezeBalances }}元</span>
               </el-form-item>
             </div>
           </el-col>
@@ -134,21 +134,21 @@
           <el-col :span="8">
             <div>
               <el-form-item label="银行卡号:">
-                <span>{{lecturerExt.bankCardNo}}</span>
+                <span>{{ lecturerExt.bankCardNo }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="银行名称:">
-                <span>{{lecturerExt.bankName}}</span>
+                <span>{{ lecturerExt.bankName }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="支行名称:">
-                <span>{{lecturerExt.bankBranchName}}</span>
+                <span>{{ lecturerExt.bankBranchName }}</span>
               </el-form-item>
             </div>
           </el-col>
@@ -157,14 +157,14 @@
           <el-col :span="8">
             <div>
               <el-form-item label="开户姓名:">
-                <span>{{lecturerExt.bankUserName}}</span>
+                <span>{{ lecturerExt.bankUserName }}</span>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <el-form-item label="身份证号:">
-                <span>{{lecturerExt.bankIdCardNo}}</span>
+                <span>{{ lecturerExt.bankIdCardNo }}</span>
               </el-form-item>
             </div>
           </el-col>
@@ -172,7 +172,7 @@
       </el-card>
     </el-form>
     <div slot="footer">
-      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
     </div>
   </el-dialog>
 </template>
