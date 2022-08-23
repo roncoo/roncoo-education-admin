@@ -34,7 +34,8 @@
       <el-row v-if="formData.isFree == 0">
         <el-col :span="12">
           <el-form-item label="原价：">
-            <el-input type="text" style="width: 120px" placeholder="请输入价格" v-model="formData.courseOriginal"></el-input> 元
+            <el-input type="text" style="width: 120px" placeholder="请输入价格" v-model="formData.courseOriginal"></el-input>
+            元
           </el-form-item>
         </el-col>
         <!-- <el-col :span="12">
@@ -47,18 +48,19 @@
         <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1"></el-input-number>
       </el-form-item>
       <el-form-item label="课程简介:">
-         <div id="introduce"></div>
+        <div id="introduce"></div>
       </el-form-item>
-      <el-row style="margin-top:17px; ">
-        <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-        <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-      </el-row>
+      <div slot="footer">
+        <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+        <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+      </div>
     </el-form>
   </el-dialog>
 </template>
 <script>
 import * as api from '@/api/course'
 import * as commonalityApi from '@/api/commonality'
+
 export default {
   name: 'Edit',
   data() {
@@ -70,7 +72,8 @@ export default {
     // route object
     formData: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     },
     visible: {
       type: Boolean,

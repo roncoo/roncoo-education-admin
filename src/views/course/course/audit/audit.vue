@@ -4,25 +4,26 @@
     :visible.sync="visible"
     :before-close="handleClose"
     width="30%">
-  <el-form ref="formData" :model="formData" label-width="100px">
-    <el-form-item label="审核状态：">
-      <el-radio-group v-model="auditStatus">
-        <el-radio :label="1">通过</el-radio>
-        <el-radio :label="2">不通过</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="备注：">
-     <el-input type="textarea" :rows="3" placeholder="系统默认通过" v-model="formData.auditOpinion"></el-input>
-    </el-form-item>
-  </el-form>
-  <el-row style="margin-top:17px; ">
-        <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-        <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-      </el-row>
+    <el-form ref="formData" :model="formData" label-width="100px">
+      <el-form-item label="审核状态：">
+        <el-radio-group v-model="auditStatus">
+          <el-radio :label="1">通过</el-radio>
+          <el-radio :label="2">不通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="备注：">
+        <el-input type="textarea" :rows="3" placeholder="系统默认通过" v-model="formData.auditOpinion"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
 import * as api from '@/api/course'
+
 export default {
   name: 'Audit',
   data() {
@@ -34,7 +35,8 @@ export default {
     // route object
     formData: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     },
     visible: {
       type: Boolean,

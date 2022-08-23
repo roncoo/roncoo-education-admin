@@ -17,9 +17,9 @@
       </el-form-item>
     </el-form>
     <br/>
-    <el-row style="margin-top:17px; ">
-        <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-    </el-row>
+    <div slot="footer">
+        <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>

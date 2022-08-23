@@ -133,7 +133,7 @@
       //编辑弹窗
       handleEdit(row) {
        this.formData = row
-       this.ctrl.dialogTitle = row.navTitle + ' —— 编辑'
+       this.ctrl.dialogTitle = row.navTitle
        this.ctrl.dialogVisible = true
       },
       // 关闭编辑弹窗回调

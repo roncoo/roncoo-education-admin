@@ -30,14 +30,15 @@
         </el-input>
       </el-form-item>
     </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
-    </el-row>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
 import * as api from '@/api/sys'
+
 export default {
   name: 'Add',
   data() {
@@ -122,8 +123,8 @@ export default {
               });
             }
           }).catch(() => {
-              this.loading.hide()
-            })
+            this.loading.hide()
+          })
         } else {
           this.$message({
             type: 'error',

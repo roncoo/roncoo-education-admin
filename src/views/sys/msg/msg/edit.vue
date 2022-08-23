@@ -1,35 +1,36 @@
 <template>
   <!--弹窗-->
   <div>
-  <el-dialog
-    width="60%"
-    :title="title"
-    :visible.sync="visible"
-    :before-close="handleClose">
-    <el-form ref="formData" :model="formData" :rules="rules" label-width="100px">
-      <el-form-item label="标题：" prop="msgTitle">
-        <el-input v-model="formData.msgTitle"></el-input>
-      </el-form-item>
-      <el-form-item label="是否置顶：">
-        <el-radio-group v-model="formData.isTop">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="内容：">
-         <div id="msgText1"></div>
-      </el-form-item>
-    </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-        <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
-    </el-row>
-  </el-dialog>
+    <el-dialog
+      width="60%"
+      :title="title"
+      :visible.sync="visible"
+      :before-close="handleClose">
+      <el-form ref="formData" :model="formData" :rules="rules" label-width="100px">
+        <el-form-item label="标题：" prop="msgTitle">
+          <el-input v-model="formData.msgTitle"></el-input>
+        </el-form-item>
+        <el-form-item label="是否置顶：">
+          <el-radio-group v-model="formData.isTop">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="内容：">
+          <div id="msgText1"></div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+        <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import * as api from '@/api/sys'
 import * as commonalityApi from '@/api/commonality'
+
 export default {
   name: 'Add',
   data() {
@@ -43,9 +44,10 @@ export default {
   },
   props: {
     formData: {
-        type: Object,
-        default: () => {}
-      },
+      type: Object,
+      default: () => {
+      }
+    },
     visible: {
       type: Boolean,
       default: false
@@ -104,8 +106,8 @@ export default {
               });
             }
           }).catch(() => {
-              this.loading.hide()
-            })
+            this.loading.hide()
+          })
         } else {
           this.$message({
             type: 'error',

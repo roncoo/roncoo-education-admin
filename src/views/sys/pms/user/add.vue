@@ -1,30 +1,30 @@
 <template>
   <!--弹窗-->
   <div>
-  <el-dialog
-    width="35%"
-    :title="title"
-    :visible.sync="visible"
-    :before-close="handleClose">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item label="手机：" prop="mobile">
-        <el-input placeholder="请输入内容" v-model="form.mobile" class="input-with-select">
-          <el-button v-has="'/user/pc/user/list'" slot="append" icon="el-icon-search" @click="userList()"></el-button>
-        </el-input>
-     </el-form-item>
-      <el-form-item label="名称：" prop="realName">
-        <el-input v-model="form.realName"></el-input>
-      </el-form-item>
-      <el-form-item label="备注：">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="form.remark">
-        </el-input>
-      </el-form-item>
-    </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('form')">确 定</el-button>
-    </el-row>
-  </el-dialog>
+    <el-dialog
+      width="35%"
+      :title="title"
+      :visible.sync="visible"
+      :before-close="handleClose">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="手机：" prop="mobile">
+          <el-input placeholder="请输入内容" v-model="form.mobile" class="input-with-select">
+            <el-button v-has="'/user/pc/user/list'" slot="append" icon="el-icon-search" @click="userList()"></el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="名称：" prop="realName">
+          <el-input v-model="form.realName"></el-input>
+        </el-form-item>
+        <el-form-item label="备注：">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="form.remark">
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+        <el-button size="mini" type="primary" @click="submitForm('form')">确 定</el-button>
+      </div>
+    </el-dialog>
     <list-user :visible="ctrl.dialogVisible" :title="ctrl.dialogTitle" @close-callback="closeCallback"></list-user>
   </div>
 </template>
@@ -32,6 +32,7 @@
 import { isvalidMobile } from '@/utils/validate'
 import * as api from '@/api/sys'
 import listUser from './list'
+
 export default {
   components: { listUser },
   name: 'Add',
@@ -111,8 +112,8 @@ export default {
               });
             }
           }).catch(() => {
-              this.loading.hide()
-            })
+            this.loading.hide()
+          })
         } else {
           this.$message({
             type: 'error',

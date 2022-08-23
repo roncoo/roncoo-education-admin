@@ -3,7 +3,7 @@
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose"
-    width="50%">
+    width="800px">
     <el-form :inline="true">
       <el-alert class="title" :closable="false" title="订单信息" type="info" />
       <el-row>

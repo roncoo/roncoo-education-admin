@@ -13,22 +13,23 @@
         <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1" :max="10000"></el-input-number>
       </el-form-item>
     </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-    </el-row>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
 import * as api from '@/api/homepage'
+
 export default {
-   name: 'Edit',
+  name: 'Edit',
   data() {
     return {
       ctrl: {
         dialogVisible: true
       },
-      form: { },
+      form: {},
       rules: {
         navName: [
           { required: true, message: '请输入导航名称', trigger: 'blur', autocomplete: 'on' }
@@ -40,7 +41,8 @@ export default {
     // route object
     formData: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     },
     visible: {
       type: Boolean,
@@ -82,8 +84,8 @@ export default {
               });
             }
           }).catch(() => {
-              this.loading.hide()
-            })
+            this.loading.hide()
+          })
         } else {
           this.$message({
             type: 'error',

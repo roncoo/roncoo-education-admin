@@ -1,48 +1,49 @@
 <template>
   <!--弹窗-->
   <div>
-  <el-dialog
-    width="60%"
-    :title="title"
-    :visible.sync="visible"
-    :before-close="handleClose">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item label="标题：" prop="msgTitle">
-        <el-input v-model="form.msgTitle"></el-input>
-      </el-form-item>
-      <el-form-item label="定时发送：">
-        <el-radio-group v-model="form.isTimeSend">
-          <el-radio :label="1">开启</el-radio>
-          <el-radio :label="0">关闭</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="提醒时间：" v-if="form.isTimeSend == 1">
-        <el-date-picker
-          v-model="form.sendTime"
-          type="datetime"
-          placeholder="选择日期时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="是否置顶：">
-        <el-radio-group v-model="form.isTop">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="内容：">
-         <div id="msgText"></div>
-      </el-form-item>
-    </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-        <el-button style="float:right" size="mini" type="primary" @click="submitForm('form')">确 定</el-button>
-    </el-row>
-  </el-dialog>
+    <el-dialog
+      width="60%"
+      :title="title"
+      :visible.sync="visible"
+      :before-close="handleClose">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="标题：" prop="msgTitle">
+          <el-input v-model="form.msgTitle"></el-input>
+        </el-form-item>
+        <el-form-item label="定时发送：">
+          <el-radio-group v-model="form.isTimeSend">
+            <el-radio :label="1">开启</el-radio>
+            <el-radio :label="0">关闭</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="提醒时间：" v-if="form.isTimeSend == 1">
+          <el-date-picker
+            v-model="form.sendTime"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="是否置顶：">
+          <el-radio-group v-model="form.isTop">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="内容：">
+          <div id="msgText"></div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+        <el-button size="mini" type="primary" @click="submitForm('form')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import * as api from '@/api/sys'
 import * as commonalityApi from '@/api/commonality'
+
 export default {
   name: 'Add',
   data() {
@@ -116,7 +117,7 @@ export default {
           api.msgSave(this.formData).then(res => {
             this.loading.hide()
             if (res.code === 200 && res.data > 0) {
-                this.$emit('close-callback')
+              this.$emit('close-callback')
             } else {
               this.$message({
                 type: 'error',
@@ -124,8 +125,8 @@ export default {
               });
             }
           }).catch(() => {
-              this.loading.show()
-            })
+            this.loading.show()
+          })
         } else {
           this.$message({
             type: 'error',

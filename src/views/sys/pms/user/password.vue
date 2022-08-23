@@ -13,10 +13,10 @@
         <el-input placeholder="请输入确认密码" v-model="formData.rePwd" show-password></el-input>
       </el-form-item>
     </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
-    </el-row>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>

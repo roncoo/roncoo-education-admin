@@ -9,14 +9,6 @@
   display: none;
 }
 
-//暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
-.el-dialog {
-  transform: none;
-  left: 0;
-  position: relative;
-  margin: 0 auto;
-}
-
 .el-table--mini{
   .cell{
     line-height: 1.2;
@@ -35,10 +27,6 @@
   }
 }
 
-.el-dialog__body{
-  padding: 20px;
-}
-
 .el-form {
   .el-input, .el-select, .el-textarea {
     width: 300px;
@@ -51,5 +39,27 @@
     .el-input, .el-select, .el-textarea {
       width: auto;
     }
+  }
+}
+
+.el-dialog {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  max-height: calc(100% - 60px - 36px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .el-dialog__header{
+    text-align: center;
+  }
+  .el-dialog__body {
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .el-dialog__footer {
+    text-align: center;
   }
 }

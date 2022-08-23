@@ -16,81 +16,83 @@
         <el-input type="textarea" v-model="formData.remark"></el-input>
       </el-form-item>
     </el-form>
-    <el-row style="margin-top:17px;">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
-    </el-row>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确 定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
-  import * as api from '@/api/sys'
-  export default {
-    name: 'Edit',
-    data() {
-      return {
-        rules: {
-          roleName: [
-            { required: true, message: '请输入名称', trigger: 'blur' }
-          ]
-        }
+import * as api from '@/api/sys'
+
+export default {
+  name: 'Edit',
+  data() {
+    return {
+      rules: {
+        roleName: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  props: {
+    // route object
+    formData: {
+      type: Object,
+      default: () => {
       }
     },
-    props: {
-      // route object
-      formData: {
-        type: Object,
-        default: () => {}
-      },
-      visible: {
-        type: Boolean,
-        default: false
-      },
-      title: {
-        type: String,
-        default: ''
-      }
+    visible: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-      handleClose(done) {
-        this.$refs['formData'].resetFields()
-        this.$emit('close-callback')
-      },
-      handleChange(value) {
-        this.formData.sort = value
-      },
-      submitForm(formData) {
-        this.$refs[formData].validate((valid) => {
-          if (valid) {
-            if (this.formData.id === undefined) {
-              this.$message({
-                type: 'error',
-                message: "更新失败"
-              });
-            }
-            this.loading.show()
-            api.roleUpdate(this.formData).then(res => {
-              this.loading.hide()
-              if (res.code === 200 && res.data > 0) {
-                // 提交成功, 关闭窗口, 刷新列表
-                this.tips('更新成功', 'success')
-                this.handleClose()
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: "更新失败"
-                });
-              }
-            }).catch(() => {
-              this.loading.hide()
-            })
-          } else {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    handleClose(done) {
+      this.$refs['formData'].resetFields()
+      this.$emit('close-callback')
+    },
+    handleChange(value) {
+      this.formData.sort = value
+    },
+    submitForm(formData) {
+      this.$refs[formData].validate((valid) => {
+        if (valid) {
+          if (this.formData.id === undefined) {
             this.$message({
               type: 'error',
               message: "更新失败"
             });
           }
-        })
-      }
+          this.loading.show()
+          api.roleUpdate(this.formData).then(res => {
+            this.loading.hide()
+            if (res.code === 200 && res.data > 0) {
+              // 提交成功, 关闭窗口, 刷新列表
+              this.tips('更新成功', 'success')
+              this.handleClose()
+            } else {
+              this.$message({
+                type: 'error',
+                message: "更新失败"
+              });
+            }
+          }).catch(() => {
+            this.loading.hide()
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: "更新失败"
+          });
+        }
+      })
     }
   }
+}
 </script>

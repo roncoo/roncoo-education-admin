@@ -16,50 +16,52 @@
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="formData.remark"></el-input>
       </el-form-item>
     </el-form>
-    <el-row style="margin-top:17px; ">
-      <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-      <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-    </el-row>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
-  import * as api from '@/api/course'
-  export default {
-    name: 'Edit',
-    data() {
-      return {
-        rules: {
-          categoryName: [
-            { required: true, message: '请输入分类名称', trigger: 'blur' }
-          ]
-        }
+import * as api from '@/api/course'
+
+export default {
+  name: 'Edit',
+  data() {
+    return {
+      rules: {
+        categoryName: [
+          { required: true, message: '请输入分类名称', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  props: {
+    // route object
+    formData: {
+      type: Object,
+      default: () => {
       }
     },
-    props: {
-      // route object
-      formData: {
-        type: Object,
-        default: () => {}
-      },
-      visible: {
-        type: Boolean,
-        default: false
-      },
-      title: {
-        type: String,
-        default: ''
-      }
+    visible: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-      handleClose(done) {
-        this.$refs['formData'].resetFields()
-        this.$emit('close-callback')
-      },
-      handleChange(value) {
-        this.formData.sort = value
-      },
-      submitForm(formData) {
-        this.$refs[formData].validate((valid) => {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    handleClose(done) {
+      this.$refs['formData'].resetFields()
+      this.$emit('close-callback')
+    },
+    handleChange(value) {
+      this.formData.sort = value
+    },
+    submitForm(formData) {
+      this.$refs[formData].validate((valid) => {
         if (valid) {
           if (this.formData.id === undefined) {
             this.$message({
@@ -90,14 +92,14 @@
           });
         }
       })
-        this.$refs[formData].validate((valid) => {
-          if (valid) {
-            this.handleConfirm()
-          } else {
-            return false;
-          }
-        })
-      }
+      this.$refs[formData].validate((valid) => {
+        if (valid) {
+          this.handleConfirm()
+        } else {
+          return false;
+        }
+      })
     }
   }
+}
 </script>

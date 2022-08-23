@@ -3,19 +3,16 @@
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose"
-    width="32%">
-    <el-form ref="formData" :model="formData" label-width="100px">
-      <el-row>
-        <el-col :span="3">备注：</el-col>
-        <el-col :span="16">
-          <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="formData.remark"></el-input>
-        </el-col>
-      </el-row>
-      <el-row style="margin-top:17px; ">
-        <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleClose">取 消</el-button>
-        <el-button style="float:right" size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-      </el-row>
+    width="400px">
+    <el-form ref="formData" :model="formData" label-width="40px">
+      <el-form-item label="" prop="remark">
+          <el-input v-model="formData.remark" class="form-group" type="textarea" :rows="4" placeholder="请输入内容"  maxlength="50" show-word-limit />
+      </el-form-item>
     </el-form>
+    <div slot="footer">
+      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>
