@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Layout from '@/views/layout/Layout'
 
 Vue.use(Router)
 
-import Layout from '@/views/layout/Layout'
 export const asyncRouterMap = [
   {
     path: 'dashboard',
@@ -17,11 +17,11 @@ export const asyncRouterMap = [
     component: () => import('@/views/order'),
     children: [
       {
-        path: 'orderInfo',
-        component: () => import('@/views/order/orderInfo'),
+        path: 'info',
+        component: () => import('@/views/order/info'),
         meta: { requireAuth: true }
       }
-     ]
+    ]
   },
   //首页管理
   {
@@ -29,57 +29,46 @@ export const asyncRouterMap = [
     component: () => import('@/views/homepage'),
     children: [
       {
-        path: 'adv',
-        component: () => import('@/views/homepage/adv'),
-        children: [
-          {
-            path: 'pc',
-            component: () => import('@/views/homepage/adv/pc'),
-            meta: { requireAuth: true }
-          }
-        ]
+        path: 'carousel',
+        component: () => import('@/views/homepage/carousel'),
+        meta: { requireAuth: true }
       },
       {
         path: 'zone',
         component: () => import('@/views/homepage/zone'),
         children: [
           {
-            path: 'pc',
-            component: () => import('@/views/homepage/zone/pc'),
-            meta: { requireAuth: true }
-          },
-          {
             path: 'course',
             meta: { title: '专区课程' },
             component: () => import('@/views/homepage/zone/course')
           }
-         ]
+        ]
       },
       {
         path: 'website',
         component: () => import('@/views/homepage/website'),
         children: [
           {
-            path: 'navBar',
-            component: () => import('@/views/homepage/website/navBar'),
-            meta: { requireAuth: true }
-          },
-          {
-            path: 'websiteLink',
-            component: () => import('@/views/homepage/website/websiteLink'),
-            meta: { requireAuth: true }
-          },
-          {
             path: 'websiteNav',
             component: () => import('@/views/homepage/website/websiteNav'),
             meta: { requireAuth: true }
-          },
-          {
-            path: 'websiteNavArticle',
-            component: () => import('@/views/homepage/website/websiteNavArticle'),
-            meta: { requireAuth: true }
           }
         ]
+      },
+      {
+        path: 'nav',
+        component: () => import('@/views/homepage/nav'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: 'article',
+        component: () => import('@/views/homepage/article'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: 'link',
+        component: () => import('@/views/homepage/link'),
+        meta: { requireAuth: true }
       }
     ]
   },
@@ -88,34 +77,22 @@ export const asyncRouterMap = [
     path: 'course',
     component: () => import('@/views/course'),
     children: [
-      {
-        path: 'course',
-        component: () => import('@/views/course/course'),
-        children: [
-          {// 课程列表
-            path: 'course',
-            component: () => import('@/views/course/course/course'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 课程审核列表
-            path: 'audit',
-            component: () => import('@/views/course/course/audit'),
-            meta: { requireAuth: true }
-          }
-        ]
+      {// 课程列表
+        path: 'list',
+        component: () => import('@/views/course/list'),
+        meta: { requireAuth: true }
       },
       {
+        // 课程审核列表
+        path: 'audit',
+        component: () => import('@/views/course/audit'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 课程分类列表
         path: 'category',
         component: () => import('@/views/course/category'),
-        children: [
-          {
-            // 课程分类列表
-            path: 'category',
-            component: () => import('@/views/course/category/category'),
-            meta: { requireAuth: true }
-          }
-        ]
+        meta: { requireAuth: true }
       }
     ]
   },
@@ -124,46 +101,34 @@ export const asyncRouterMap = [
     path: 'lecturer',
     component: () => import('@/views/lecturer'),
     children: [
-      {
-        path: 'lecturer',
-        component: () => import('@/views/lecturer/lecturer'),
-        children: [
-          {// 讲师列表
-            path: 'lecturer',
-            component: () => import('@/views/lecturer/lecturer/lecturer'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 讲师审核列表
-            path: 'audit',
-            component: () => import('@/views/lecturer/lecturer/audit'),
-            meta: { requireAuth: true }
-          }
-        ]
+      {// 讲师列表
+        path: 'list',
+        component: () => import('@/views/lecturer/list'),
+        meta: { requireAuth: true }
       },
       {
+        // 讲师审核列表
+        path: 'audit',
+        component: () => import('@/views/lecturer/audit'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 讲师分润列表
         path: 'profit',
         component: () => import('@/views/lecturer/profit'),
-        children: [
-          {
-            // 讲师分润列表
-            path: 'profit',
-            component: () => import('@/views/lecturer/profit/profit'),
-            meta: { requireAuth: true }
-          }
-        ]
+        meta: { requireAuth: true }
       }
     ]
   },
-  // 学员管理
   {
+    // 学员管理
     path: 'user',
     component: () => import('@/views/user'),
     children: [
       // 学员列表
       {
-        path: 'ext',
-        component: () => import('@/views/user/ext'),
+        path: 'info',
+        component: () => import('@/views/user/info'),
         meta: { requireAuth: true }
       },
       {
@@ -174,36 +139,68 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    // 站点管理
+    path: 'website',
+    component: () => import('@/views/website'),
+    children: [
+      {
+        // 站点设置
+        path: 'config',
+        component: () => import('@/views/website/config'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 系统设置
+        path: 'system',
+        component: () => import('@/views/website/system'),
+        meta: { requireAuth: true }
+      }
+    ]
+  },
+  {
+    // 平台管理
+    path: 'platform',
+    component: () => import('@/views/platform'),
+    children: [
+      {
+        // 应用管理
+        path: 'list',
+        component: () => import('@/views/platform/list'),
+        meta: { requireAuth: true }
+      }
+    ]
+  },
+  {
+    // 权限管理
+    path: 'pms',
+    component: () => import('@/views/pms'),
+    children: [
+      {
+        // 用户管理
+        path: 'user',
+        component: () => import('@/views/pms/user'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 角色管理
+        path: 'role',
+        component: () => import('@/views/pms/role'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 菜单管理
+        path: 'menu',
+        component: () => import('@/views/pms/menu'),
+        meta: { requireAuth: true }
+      }
+    ]
+  },
   //系统管理
   {
     path: 'sys',
     component: () => import('@/views/sys'),
     children: [
-      {
-        // 权限管理
-        path: 'pms',
-        component: () => import('@/views/sys/pms'),
-        children: [
-          {
-            // 用户管理
-            path: 'user',
-            component: () => import('@/views/sys/pms/user'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 角色管理
-            path: 'role',
-            component: () => import('@/views/sys/pms/role'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 菜单管理
-            path: 'menu',
-            component: () => import('@/views/sys/pms/menu'),
-            meta: { requireAuth: true }
-          }
-        ]
-      },
       {// 消息管理
         path: 'msg',
         component: () => import('@/views/sys/msg'),
@@ -224,36 +221,6 @@ export const asyncRouterMap = [
             // 站点消息
             path: 'msg',
             component: () => import('@/views/sys/msg/msg'),
-            meta: { requireAuth: true }
-          }
-         ]
-      },
-      {// 站点管理
-        path: 'website',
-        component: () => import('@/views/sys/website'),
-        children: [
-          {
-            // 站点设置
-            path: 'website',
-            component: () => import('@/views/sys/website/website'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 系统设置
-            path: 'sys',
-            component: () => import('@/views/sys/website/sys'),
-            meta: { requireAuth: true }
-          }
-        ]
-      },
-      {// 平台管理
-        path: 'platform',
-        component: () => import('@/views/sys/platform'),
-        children: [
-          {
-            // 应用管理
-            path: 'platform',
-            component: () => import('@/views/sys/platform/platform'),
             meta: { requireAuth: true }
           }
         ]

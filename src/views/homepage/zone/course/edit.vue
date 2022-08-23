@@ -1,7 +1,7 @@
 <template>
   <!--弹窗-->
   <el-dialog
-    width="30%"
+    width="500px"
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose">
@@ -11,7 +11,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button size="mini" type="danger" plain @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="danger" plain plain @click="handleClose">取 消</el-button>
       <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
     </div>
   </el-dialog>
