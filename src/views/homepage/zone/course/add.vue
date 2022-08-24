@@ -1,7 +1,7 @@
 <template>
   <!--弹窗-->
   <el-dialog
-    width="90%"
+    width="1000px"
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose">
@@ -19,31 +19,29 @@
       </div>
       <div>
         <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
-          <el-table-column type="index" label="序号">
+          <el-table-column type="index" label="序号" width="50">
           </el-table-column>
           <el-table-column prop="courseName" label="课程名称">
           </el-table-column>
-          <el-table-column label="课程分类" width="180">
+          <el-table-column label="课程分类">
             <template slot-scope="scope">
-              {{scope.row.categoryName1}}/{{scope.row.categoryName2}}/{{scope.row.categoryName3}}
+              {{ scope.row.categoryName1 }}/{{ scope.row.categoryName2 }}/{{ scope.row.categoryName3 }}
             </template>
           </el-table-column>
           <el-table-column label="是否收费" width="90">
             <template slot-scope="scope">
-              <span :class="textClass(scope.row.isFree)">{{textIsFree[scope.row.isFree]}}</span>
+              <span :class="textClass(scope.row.isFree)">{{ textIsFree[scope.row.isFree] }}</span>
             </template>
           </el-table-column>
           <el-table-column label="原价" width="100">
             <template slot-scope="scope">
-              {{scope.row.courseOriginal.toFixed(2)}}
+              {{ scope.row.courseOriginal.toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column label="是否收费" width="90">
+          <el-table-column label="上架状态" width="90">
             <template slot-scope="scope">
-              <span :class="textClass(scope.row.isPutaway)">{{textIsPutaway[scope.row.isPutaway]}}</span>
+              <span :class="textClass(scope.row.isPutaway)">{{ textIsPutaway[scope.row.isPutaway] }}</span>
             </template>
-          </el-table-column>
-          <el-table-column prop="sort" label="排序" width="70">
           </el-table-column>
           <el-table-column
             fixed="right"

@@ -5,22 +5,22 @@
         <el-alert class="title" :closable="false" title="站点信息" type="info"/>
         <br/>
         <el-form-item label="站点标题:">
-          <el-input style="width:400px;" v-model="formData.websiteTitle" placeholder="请输入站点标题"></el-input>
+          <el-input style="width:800px;" v-model="formData.websiteTitle" placeholder="请输入站点标题"></el-input>
         </el-form-item>
         <el-form-item label="站点关键词:">
-          <el-input style="width:400px;" v-model="formData.websiteKeyword" placeholder="请输入站点关键词"></el-input>
+          <el-input style="width:800px;" v-model="formData.websiteKeyword" placeholder="请输入站点关键词"></el-input>
         </el-form-item>
         <el-form-item label="站点描述:">
-          <el-input style="width:400px;" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入站点描述" v-model="formData.websiteDesc"></el-input>
+          <el-input style="width:800px;" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入站点描述" v-model="formData.websiteDesc"></el-input>
         </el-form-item>
         <el-form-item label="站点版权:">
-          <el-input style="width:400px;" v-model="formData.copyright" placeholder="请输入站点版权"></el-input>
+          <el-input style="width:800px;" v-model="formData.copyright" placeholder="请输入站点版权"></el-input>
         </el-form-item>
         <el-form-item label="站点备案号:">
-          <el-input style="width:400px;" v-model="formData.icp" placeholder="请输入站点备案号"></el-input>
+          <el-input style="width:800px;" v-model="formData.icp" placeholder="请输入站点备案号"></el-input>
         </el-form-item>
         <el-form-item label="站点公安备案号:">
-          <el-input style="width:400px;" v-model="formData.prnNo" placeholder="请输入站点公安备案号"></el-input>
+          <el-input style="width:800px;" v-model="formData.prnNo" placeholder="请输入站点公安备案号"></el-input>
         </el-form-item>
         <el-form-item label="用户协议:" style="width:80%">
           <div id="userAgreement" style="height:400px;max-height:500px;"></div>
@@ -62,7 +62,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="统计代码:">
-          <el-input style="width:400px;" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入统计代码" v-model="formData.statisticsCode"></el-input>
+          <el-input style="width:800px;" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入统计代码" v-model="formData.statisticsCode"></el-input>
         </el-form-item>
         <el-alert class="title" :closable="false" title="讲师招募" type="info"/>
         <br/>

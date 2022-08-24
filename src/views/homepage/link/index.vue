@@ -26,16 +26,16 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="linkName,linkUrl" label="链接名称/链接地址" width="400">
+        <el-table-column prop="linkName,linkUrl" label="链接名称/链接地址">
           <template slot-scope="scope">
             <el-link type="primary" @click="jumpUrl(scope.row.linkUrl)" target="_blank">{{ scope.row.linkName }}</el-link>
             【{{ scope.row.linkUrl }}】
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="排序">
+        <el-table-column prop="sort" label="排序" width="100px">
         </el-table-column>
         <el-table-column
-          width="170"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
@@ -55,14 +55,10 @@
         <el-table-column
           fixed="right"
           label="操作"
-          width="340">
+          width="200">
           <template slot-scope="scope">
-            <ul class="list-item-actions">
-              <li>
-                <el-button type="danger" plain @click="handleDelRow(scope.row.id)" size="mini">删除</el-button>
-                <el-button v-has="'/system/pc/website/link/edit'" type="success" plain @click="handleUpdateRow(scope.row)" size="mini">修改</el-button>
-              </li>
-            </ul>
+            <el-button v-has="'/system/pc/website/link/edit'" type="success" plain @click="handleUpdateRow(scope.row)" size="mini">修改</el-button>
+            <el-button type="danger" plain @click="handleDelRow(scope.row.id)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

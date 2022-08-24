@@ -5,30 +5,10 @@
         <el-form-item label="课程名称:">
           <el-input v-model.trim="map.courseName"></el-input>
         </el-form-item>
-        <el-form-item label="状态:">
-          <el-select v-model="map.statusId" class="auto-width" clearable filterable placeholder="状态" style="width: 85px">
-            <el-option
-              v-for="item in opts.statusIdList"
-              :key="item.code"
-              :label="item.desc"
-              :value="item.code">
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="是否免费:">
           <el-select v-model="map.isFree" class="auto-width" clearable filterable placeholder="是否免费" style="width: 100px">
             <el-option
               v-for="item in opts.isFreeList"
-              :key="item.code"
-              :label="item.desc"
-              :value="item.code">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="上下架:">
-          <el-select v-model="map.isPutaway" class="auto-width" clearable filterable placeholder="上下架" style="width: 85px">
-            <el-option
-              v-for="item in opts.isPutawayList"
               :key="item.code"
               :label="item.desc"
               :value="item.code">
@@ -45,6 +25,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="上下架:">
+          <el-select v-model="map.isPutaway" class="auto-width" clearable filterable placeholder="上下架" style="width: 85px">
+            <el-option
+              v-for="item in opts.isPutawayList"
+              :key="item.code"
+              :label="item.desc"
+              :value="item.code">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
           <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
@@ -54,26 +44,45 @@
     <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
       <el-table-column type="index" label="序号" width="50">
       </el-table-column>
-      <el-table-column prop="courseLogo" label="课程封面" width="122">
+      <el-table-column prop="courseLogo" label="课程封面" width="142">
         <template slot-scope="scope">
-          <img :src="scope.row.courseLogo" :alt="scope.row.courseName" width="100">
+          <img :src="scope.row.courseLogo" :alt="scope.row.courseName" width="120">
         </template>
       </el-table-column>
-      <el-table-column prop="courseName" label="课程名称" width="120">
-      </el-table-column>
-      <el-table-column label="课程分类">
+      <el-table-column prop="courseName" label="课程名称">
         <template slot-scope="scope">
-          【 {{ scope.row.categoryName1 }}】>【{{ scope.row.categoryName2 }}】>【{{ scope.row.categoryName3 }}】
-        </template>
-      </el-table-column>
-      <el-table-column label="价格" prop="courseOriginal" width="140">
-        <template slot-scope="scope">
-          <span v-if="scope.row.isFree === 0">原价：{{ scope.row.courseOriginal.toFixed(2) }}<br>优惠价：{{ scope.row.courseDiscount.toFixed(2) }}</span>
+          {{ scope.row.courseName }}<br>
+          <span v-if="scope.row.isFree === 0">￥{{ scope.row.courseDiscount.toFixed(2) }} &nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration: line-through;color: #ccc;">￥{{ scope.row.courseOriginal.toFixed(2) }}</span></span>
           <span v-else>免费</span>
         </template>
       </el-table-column>
+      <el-table-column label="课程分类">
+        <template slot-scope="scope">
+          <span v-if="scope.row.categoryName3">
+          【 {{ scope.row.categoryName1 }}】>【{{ scope.row.categoryName2 }}】>【{{ scope.row.categoryName3 }}】
+            </span>
+
+          <span v-else-if="scope.row.categoryName2">
+          【 {{ scope.row.categoryName1 }}】>【{{ scope.row.categoryName2 }}】
+            </span>
+          <span v-else-if="scope.row.categoryName1">
+          【 {{ scope.row.categoryName1 }}】
+            </span>
+        </template>
+      </el-table-column>
       <el-table-column
-        width="150"
+        label="审核状态"
+        prop="auditStatus"
+        width="100"
+        align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.auditStatus === 0">待审核</span>
+          <span v-if="scope.row.auditStatus === 1">审核通过</span>
+          <span v-if="scope.row.auditStatus === 2">审核不通过</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="200"
         prop="isPutaway"
         label="上下架"
         align="center">
@@ -90,41 +99,28 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column
-        width="150"
-        prop="statusId"
-        label="状态"
-        align="center">
+      <!--      <el-table-column
+              width="150"
+              prop="statusId"
+              label="状态"
+              align="center">
+              <template slot-scope="scope">
+                <el-switch
+                  v-model="scope.row.statusId"
+                  @change="handleChangeStatusId(scope.row, $event)"
+                  :active-value="0"
+                  :inactive-value="1"
+                  active-color="#ff4949"
+                  inactive-color="#13ce66"
+                  active-text="禁用"
+                  inactive-text="正常">
+                </el-switch>
+              </template>
+            </el-table-column>-->
+      <el-table-column label="操作" width="180">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.statusId"
-            @change="handleChangeStatusId(scope.row, $event)"
-            :active-value="0"
-            :inactive-value="1"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-text="禁用"
-            inactive-text="正常">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column prop="sort" label="排序" align="center" width="60">
-      </el-table-column>
-      <el-table-column
-        label="审核状态"
-        prop="auditStatus"
-        width="80"
-        align="center">
-        <template slot-scope="scope">
-          <span v-if="scope.row.auditStatus === 0">待审核</span>
-          <span v-if="scope.row.auditStatus === 1">审核通过</span>
-          <span v-if="scope.row.auditStatus === 2">审核不通过</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="160">
-        <template slot-scope="scope">
+          <el-button v-has="'/course/pc/course/audit/view'" type="warning" plain @click="handleAudit(scope.row)" size="mini">审核</el-button>
           <el-button v-has="'/course/pc/course/audit/view'" type="success" plain @click="handleEdit(scope.row)" size="mini">修改</el-button>
-          <el-button v-has="'/course/pc/course/audit/view'" type="primary" @click="handleAudit(scope.row)" size="mini">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -284,7 +280,7 @@ export default {
       this.ctrl.load = true
       api.courseAuditView(id).then(res => {
         this.formData = res.data
-        this.ctrl.dialogTitle = res.data.courseName + " — " + title
+        this.ctrl.dialogTitle = res.data.courseName
         this.ctrl.load = false
       }).catch(() => {
         this.ctrl.load = false

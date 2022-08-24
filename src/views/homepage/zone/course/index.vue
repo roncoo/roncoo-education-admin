@@ -18,20 +18,24 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="courseName" label="课程名称" width="250">
+        <el-table-column prop="courseName" label="课程名称">
         </el-table-column>
-        <el-table-column label="所属分类" width="200">
+        <el-table-column label="所属分类">
           <template slot-scope="scope">
             {{ scope.row.categoryName1 }}/{{ scope.row.categoryName2 }}/{{ scope.row.categoryName3 }}
           </template>
         </el-table-column>
-        <el-table-column label="展示平台" width="100">
-          <template slot-scope="scope">
-            <span>{{ textZoneLocation[scope.row.zoneLocation] }}</span>
-          </template>
+        <!--        <el-table-column label="展示平台" width="100">
+                  <template slot-scope="scope">
+                    <span>{{ textZoneLocation[scope.row.zoneLocation] }}</span>
+                  </template>
+                </el-table-column>-->
+        <el-table-column prop="gmtCreate" label="添加时间" width="200">
+        </el-table-column>
+        <el-table-column prop="sort" label="排序" width="100">
         </el-table-column>
         <el-table-column
-          width="170"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
@@ -48,21 +52,13 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="排序" width="100">
-        </el-table-column>
-        <el-table-column prop="gmtCreate" label="添加时间">
-        </el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
-          width="250">
+          width="200">
           <template slot-scope="scope">
-            <ul class="list-item-actions">
-              <li>
-                <el-button type="danger" plain @click="handleDelRow(scope.row)" size="mini">删除</el-button>
-                <el-button v-has="'/course/pc/zone/course/edit'" type="success" plain @click="handleUpdateRow(scope.row)" size="mini">排序</el-button>
-              </li>
-            </ul>
+            <el-button v-has="'/course/pc/zone/course/edit'" type="success" plain @click="handleUpdateRow(scope.row)" size="mini">排序</el-button>
+            <el-button type="danger" plain @click="handleDelRow(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

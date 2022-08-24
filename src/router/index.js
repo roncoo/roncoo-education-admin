@@ -7,9 +7,7 @@ Vue.use(Router)
 export const asyncRouterMap = [
   {
     path: 'dashboard',
-    component: () => import('@/views/dashboard/index'),
-    // 当菜单文件中没有该页面配置时，在标签栏显示的就是这里配置的标题
-    meta: { title: '首页' }
+    component: () => import('@/views/dashboard')
   },
   //订单管理
   {
@@ -19,6 +17,12 @@ export const asyncRouterMap = [
       {
         path: 'info',
         component: () => import('@/views/order/info'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 支付日志
+        path: 'pay',
+        component: () => import('@/views/order/pay'),
         meta: { requireAuth: true }
       }
     ]
@@ -38,19 +42,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/homepage/zone'),
         children: [
           {
-            path: 'course',
-            meta: { title: '专区课程' },
-            component: () => import('@/views/homepage/zone/course')
-          }
-        ]
-      },
-      {
-        path: 'website',
-        component: () => import('@/views/homepage/website'),
-        children: [
+            path: 'list',
+            component: () => import('@/views/homepage/zone/list'),
+            meta: { requireAuth: true }
+          },
           {
-            path: 'websiteNav',
-            component: () => import('@/views/homepage/website/websiteNav'),
+            path: 'course',
+            component: () => import('@/views/homepage/zone/course'),
             meta: { requireAuth: true }
           }
         ]
@@ -63,7 +61,18 @@ export const asyncRouterMap = [
       {
         path: 'article',
         component: () => import('@/views/homepage/article'),
-        meta: { requireAuth: true }
+        children: [
+          {
+            path: 'list',
+            component: () => import('@/views/homepage/article/list'),
+            meta: { requireAuth: true }
+          },
+          {
+            path: 'info',
+            component: () => import('@/views/homepage/article/info'),
+            meta: { requireAuth: true }
+          }
+        ]
       },
       {
         path: 'link',
@@ -133,9 +142,9 @@ export const asyncRouterMap = [
       },
       {
         // 用户学习日志列表
-        path: 'studyLog',
-        meta: { title: '学习日志' },
-        component: () => import('@/views/user/studyLog')
+        path: 'study',
+        component: () => import('@/views/user/study'),
+        meta: { requireAuth: true }
       }
     ]
   },
@@ -196,52 +205,39 @@ export const asyncRouterMap = [
       }
     ]
   },
-  //系统管理
-  {
-    path: 'sys',
-    component: () => import('@/views/sys'),
+  {// 消息管理
+    path: 'msg',
+    component: () => import('@/views/msg'),
     children: [
-      {// 消息管理
-        path: 'msg',
-        component: () => import('@/views/sys/msg'),
-        children: [
-          {
-            // 消息管理
-            path: 'template',
-            component: () => import('@/views/sys/msg/template'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 用户消息
-            path: 'msgUser',
-            component: () => import('@/views/sys/msg/msgUser'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 站点消息
-            path: 'msg',
-            component: () => import('@/views/sys/msg/msg'),
-            meta: { requireAuth: true }
-          }
-        ]
+      {
+        // 消息管理
+        path: 'template',
+        component: () => import('@/views/msg/template'),
+        meta: { requireAuth: true }
       },
-      {// 日志查看
-        path: 'log',
-        component: () => import('@/views/sys/log'),
-        children: [
-          {
-            // 系统操作日志
-            path: 'sys',
-            component: () => import('@/views/sys/log/sys'),
-            meta: { requireAuth: true }
-          },
-          {
-            // 支付日志
-            path: 'orderPay',
-            component: () => import('@/views/sys/log/orderPay'),
-            meta: { requireAuth: true }
-          }
-        ]
+      {
+        // 用户消息
+        path: 'user',
+        component: () => import('@/views/msg/user'),
+        meta: { requireAuth: true }
+      },
+      {
+        // 站点消息
+        path: 'list',
+        component: () => import('@/views/msg/list'),
+        meta: { requireAuth: true }
+      }
+    ]
+  },
+  {// 日志查看
+    path: 'log',
+    component: () => import('@/views/log'),
+    children: [
+      {
+        // 系统操作日志
+        path: 'system',
+        component: () => import('@/views/log/system'),
+        meta: { requireAuth: true }
       }
     ]
   }

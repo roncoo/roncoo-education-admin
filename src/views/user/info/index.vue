@@ -33,15 +33,16 @@
       <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="userNo" label="用户编号" width="180">
-        </el-table-column>
-        <el-table-column label="用户手机" width="120">
+        <!--        <el-table-column prop="userNo" label="用户编号" width="180">
+                </el-table-column>-->
+        <el-table-column label="用户手机" width="150">
           <template slot-scope="scope">
-            <el-button v-has="'/user/pc/user/info/view'" type="text" @click="handleView(scope.row.id)">{{ scope.row.mobile }}</el-button>
+            <el-button v-has="'/user/pc/user/ext/view'" type="text" @click="handleView(scope.row.id)">{{ scope.row.mobile }}</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="nickname" label="昵称">
         </el-table-column>
+        <el-table-column prop="gmtCreate" label="注册时间" width="200"></el-table-column>
         <el-table-column
           label="用户类型"
           prop="userType"
@@ -52,10 +53,8 @@
             <span v-if="sett.row.userType === 2">讲师</span>
           </template>
         </el-table-column>
-        <el-table-column prop="gmtCreate" label="注册时间" width="200">
-        </el-table-column>
         <el-table-column
-          width="180"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
@@ -77,12 +76,8 @@
           label="操作"
           width="250">
           <template slot-scope="scope">
-            <ul class="list-item-actions">
-              <li>
-                <el-button v-has="'/user/pc/user/info/view'" type="success" plain @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
-                <el-button v-has="'/course/pc/course/user/study/log/list'" type="primary" @click="handleStudy(scope.row.userNo)" size="mini">学习记录</el-button>
-              </li>
-            </ul>
+            <el-button v-has="'/user/pc/user/ext/view'" type="success" plain @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
+            <el-button v-has="'/course/pc/course/user/study/log/list'" type="primary" plain @click="handleStudy(scope.row.userNo)" size="mini">学习记录</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -156,7 +151,7 @@ export default {
   },
   methods: {
     handleStudy(row) {
-      this.$router.push({ path: '/user/studyLog', query: { userNo: row }});
+      this.$router.push({ path: '/user/study', query: { userNo: row }});
     },
     // 跳修改弹窗页面
     handleEdit(id) {

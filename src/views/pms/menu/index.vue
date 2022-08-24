@@ -28,22 +28,19 @@
         <el-table-column
           prop="menuName"
           label="菜单名称"
-          sortable
-          width="220">
+          sortable>
         </el-table-column>
         <el-table-column
           prop="menuUrl"
           label="路由地址"
-          sortable
-          width="170">
+          sortable>
         </el-table-column>
         <el-table-column
           prop="apiUrl"
-          label="接口地址"
-          width="300">
+          label="接口地址">
         </el-table-column>
         <el-table-column
-          width="80"
+          width="100"
           prop="hiddenType"
           label="类型">
           <template slot-scope="scope">
@@ -51,11 +48,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="remark"
-          label="备注">
-        </el-table-column>
-        <el-table-column
-          width="80"
+          width="100"
           prop="sort"
           label="排序">
         </el-table-column>

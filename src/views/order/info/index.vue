@@ -105,7 +105,7 @@
       </el-table-column>
       <el-table-column label="用户信息" width="120">
         <template slot-scope="scope">
-          <el-button v-has="'/user/info/view'" type="text" @click="handleUserView(scope.row.userNo)">{{ scope.row.mobile }}</el-button>
+          <el-button v-has="'/user/pc/user/ext/view'" type="text" @click="handleUserView(scope.row.userNo)">{{ scope.row.mobile }}</el-button>
           <el-row>【
             <el-button type="text" @click="handleOrderList(scope.row.userNo, scope.row.mobile, 3)">详情</el-button>
             】

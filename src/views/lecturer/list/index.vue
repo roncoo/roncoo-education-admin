@@ -28,14 +28,14 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column label="手机号" width="120">
+        <el-table-column label="手机号">
           <template slot-scope="scope">
             <el-button v-has="'/user/pc/lecturer/view'" type="text" @click="handleView(scope.row.id)">{{ scope.row.lecturerMobile }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="lecturerName" label="讲师名称">
+        <el-table-column prop="lecturerName" label="名称">
         </el-table-column>
-        <el-table-column prop="lecturerEmail" label="邮箱" width="200">
+        <el-table-column prop="lecturerEmail" label="邮箱">
         </el-table-column>
         <el-table-column label="分成比例" width="150">
           <template slot-scope="scope">
@@ -43,7 +43,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="180"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">

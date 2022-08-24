@@ -2,11 +2,11 @@
   <div class="pad20">
     <div>
       <el-form :inline="true" size="mini">
-        <el-form-item label="讲师名称：">
-          <el-input v-model.trim="map.lecturerName"></el-input>
-        </el-form-item>
         <el-form-item label="手机号：">
           <el-input v-model.trim="map.lecturerMobile"></el-input>
+        </el-form-item>
+        <el-form-item label="讲师名称：">
+          <el-input v-model.trim="map.lecturerName"></el-input>
         </el-form-item>
         <el-form-item label="状态：">
           <el-select v-model="map.statusId" class="auto-width" clearable filterable placeholder="状态" style="width: 85px">
@@ -39,14 +39,14 @@
       <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column label="手机号" width="120">
+        <el-table-column label="手机号">
           <template slot-scope="scope">
             <el-button v-has="'/user/pc/lecturer/audit/view'" type="text" @click="handleView(scope.row.id)">{{ scope.row.lecturerMobile }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="lecturerName" label="讲师名称" width="200">
+        <el-table-column prop="lecturerName" label="名称">
         </el-table-column>
-        <el-table-column prop="lecturerEmail" label="邮箱" width="200">
+        <el-table-column prop="lecturerEmail" label="邮箱">
         </el-table-column>
         <el-table-column label="分成比例" width="150">
           <template slot-scope="scope">
@@ -54,7 +54,18 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="180"
+          label="审核状态"
+          prop="auditStatus"
+          width="150"
+          align="center">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.auditStatus === 0" type="brandColor">待审核</el-tag>
+            <el-tag v-if="scope.row.auditStatus === 1" type="success" plain>审核通过</el-tag>
+            <el-tag v-if="scope.row.auditStatus === 2" type="danger" plain>审核不通过</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
@@ -72,18 +83,8 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="审核状态"
-          prop="auditStatus"
-          width="150"
-          align="center">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.auditStatus === 0" type="brandColor">待审核</el-tag>
-            <el-tag v-if="scope.row.auditStatus === 1" type="success" plain>审核通过</el-tag>
-            <el-tag v-if="scope.row.auditStatus === 2" type="danger" plain>审核不通过</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
           fixed="right"
+          width="200"
           label="操作">
           <template slot-scope="scope">
             <ul class="list-item-actions">

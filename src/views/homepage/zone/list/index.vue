@@ -2,10 +2,12 @@
   <div class="pad20">
     <div>
       <el-form :inline="true" size="mini">
-        <el-form-item label="分类名称：">
-          <el-input v-model.trim="map.navName"></el-input>
+        <el-form-item>
         </el-form-item>
-        <el-form-item label="状态：">
+        <el-form-item label="专区名称：">
+          <el-input v-model.trim="map.zoneName"></el-input>
+        </el-form-item>
+        <el-form-item label="状态:">
           <el-select v-model="map.statusId" class="auto-width" clearable filterable placeholder="状态" style="width: 85px">
             <el-option
               v-for="item in opts.statusIdList"
@@ -18,21 +20,17 @@
         <el-form-item>
           <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
           <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
-          <el-button v-has="'/system/pc/website/nav/add'" type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="handleAddSubclass(0)">添加</el-button>
+          <el-button v-has="'/course/pc/zone/add'" type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="handleAddRow()">添加</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div>
-      <el-table
-        :data="list"
-        style="width: 100%"
-        v-loading="ctrl.loading"
-        border
-        row-key="id"
-        :default-expand-all="true">
+      <el-table v-loading="ctrl.loading" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="navName" label="导航名称">
+        <el-table-column prop="zoneName" label="专区名称">
+        </el-table-column>
+        <el-table-column prop="zoneDesc" label="专区描述">
         </el-table-column>
         <el-table-column prop="sort" label="排序">
         </el-table-column>
@@ -59,14 +57,9 @@
           label="操作"
           width="340">
           <template slot-scope="scope">
-            <ul class="list-item-actions">
-              <li>
-                <el-button type="danger" plain @click="handleDelRow(scope.row.id)" size="mini">删除</el-button>
-                <el-button v-has="'/system/pc/website/nav/edit'" type="success" plain @click="handleUpdateRow(scope.row)" size="mini">修改</el-button>
-                <el-button v-has="'/system/pc/website/nav/add'" type="primary" icon="el-icon-circle-plus-outline" size="mini" v-if="scope.row.parentId == 0" @click="handleAddSubclass(scope.row.id)">添加</el-button>
-                <el-button v-has="'/system/pc/website/nav/article/view'" type="primary" size="mini" v-if="scope.row.parentId !== 0" @click="handleArticala(scope.row.id)">文章管理</el-button>
-              </li>
-            </ul>
+            <el-button v-has="'/course/pc/zone/course/list'" type="primary" plain @click="handleCourseRow(scope.row.id)" size="mini">专区课程</el-button>
+            <el-button v-has="'/course/pc/zone/view'" type="success" plain @click="handleUpdateRow(scope.row.id)" size="mini">修改</el-button>
+            <el-button type="danger" plain @click="handleDelRow(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -84,33 +77,25 @@
       </div>
     </div>
     <edit :visible="ctrl.dialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCallback"></edit>
-    <add :visible="ctrl.addDialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCallback"></add>
   </div>
 </template>
 <script>
 import * as api from '@/api/homepage'
 import Edit from './edit'
-import Add from './add'
 
 export default {
-  components: { Edit, Add },
+  components: { Edit },
   data() {
     return {
       opts: {
         statusIdList: []
       },
-      // 页面控制数据，例如形式弹窗，显示加载中等
       ctrl: {
-        loading: false,
-        remoteAuthorLoading: false,
-        dialogVisible: false,
-        addDialogVisible: false
+        loading: false
       },
-      // 表单数据, 例如新增编辑子项，页面表单
-      // 条件筛选参数
       map: {},
+      // 表单数据, 例如新增编辑子项，页面表单
       formData: {},
-      tableData: [],
       list: [],
       page: {
         beginPageIndex: 1,
@@ -129,57 +114,6 @@ export default {
     this.getList()
   },
   methods: {
-    handleArticala(id) {
-      this.$router.push({ path: '/homepage/website/websiteNavArticle', query: { navId: id }});
-    },
-    //新增
-    handleAddSubclass(id) {
-      this.formData.parentId = id
-      this.ctrl.dialogTitle = '添加'
-      this.ctrl.addDialogVisible = true
-    },
-    //编辑
-    handleUpdateRow(data) {
-      this.formData = data
-      this.ctrl.dialogTitle = data.navName
-      this.ctrl.dialogVisible = true
-    },
-    // 关闭编辑弹窗回调
-    closeCallback() {
-      this.ctrl.dialogVisible = false
-      this.ctrl.addDialogVisible = false
-      this.reload()
-    },
-    //删除
-    handleDelRow(id) {
-      this.$confirm(`确定删除这条数据?`, '我要删除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.map.id = id
-        this.ctrl.loading = true
-        api.websiteNavDelete(this.map).then(res => {
-          this.ctrl.loading = false
-          if (res.code === 200) {
-            this.$message({
-              type: 'success',
-              message: '删除成功'
-            });
-            //刪除成功后刷新列表
-            this.reload()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '删除失败'
-            });
-          }
-        }).catch(() => {
-          this.ctrl.loading = false
-        })
-      }).catch(() => {
-      })
-    },
     handleChangeStatus(id, statusId) {
       const title = { 0: '禁用', 1: '启用' }
       this.$confirm(`确定要${title[statusId]}吗?`, {
@@ -190,12 +124,12 @@ export default {
         this.ctrl.loading = true
         this.changeStatus(id, statusId)
       }).catch(() => {
-        this.ctrl.loading = false
+        this.reload()
       })
     },
     //改变状态
     changeStatus(id, statusId) {
-      api.websiteNavUpate({ id, statusId }).then(res => {
+      api.pcZoneUpdate({ id, statusId }).then(res => {
         this.ctrl.loading = false
         if (res.code === 200 && res.data > 0) {
           const msg = { 0: '禁用成功', 1: '启用成功' }
@@ -210,12 +144,66 @@ export default {
             type: 'error',
             message: msg[statusId]
           });
-          this.reload()
         }
       }).catch(() => {
         this.ctrl.loading = false
         this.reload()
       })
+    },
+    //新增
+    handleAddRow() {
+      this.formData = {}
+      this.ctrl.dialogTitle = '新增'
+      this.ctrl.dialogVisible = true
+    },
+    //删除
+    handleDelRow(data) {
+      this.$confirm(`确定删除这条数据?`, '我要删除', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.map = {
+          id: data.id
+        }
+        this.ctrl.loading = true
+        api.pcZoneDelete(this.map).then(res => {
+          this.ctrl.loading = false
+          if (res.code === 200 && res.data > 0) {
+            this.$message({
+              type: 'success',
+              message: "删除成功"
+            });
+            this.reload()
+          } else {
+            this.$message({
+              type: 'error',
+              message: "删除失败"
+            });
+          }
+        }).catch(() => {
+          this.ctrl.loading = false
+        })
+      })
+    },
+    // 关闭编辑弹窗回调
+    closeCallback() {
+      this.ctrl.dialogVisible = false;
+      this.reload()
+    },
+    //编辑
+    handleUpdateRow(id) {
+      this.ctrl.loading = true
+      api.pcZoneView({ id: id }).then(res => {
+        this.formData = res.data
+        this.ctrl.dialogTitle = '编辑'
+        this.ctrl.dialogVisible = true
+      }).catch(() => {
+        this.ctrl.loading = false
+      })
+    },
+    handleCourseRow(id) {
+      this.$router.push({ path: '/homepage/zone/course', query: { zoneId: id }});
     },
     // 查询条件
     handleCheck() {
@@ -229,7 +217,7 @@ export default {
     // 刷新当前页面
     reload() {
       this.map = {}
-      this.formData = {}
+      this.formdata = {}
       this.getList()
     },
     handleSizeChange(val) {
@@ -243,15 +231,15 @@ export default {
       // console.log(`当前页: ${val}`)
     },
     getList() {
-      this.ctrl.load = true
-      api.websiteNavList(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
+      this.ctrl.loading = true
+      api.pcZoneList(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.data.list
         this.page.pageCurrent = res.data.pageCurrent
         this.page.totalCount = res.data.totalCount
         this.page.pageSize = res.data.pageSize
-        this.ctrl.load = false
+        this.ctrl.loading = false
       }).catch(() => {
-        this.ctrl.load = false
+        this.ctrl.loading = false
       })
     }
   }

@@ -41,7 +41,17 @@
           sortable>
         </el-table-column>
         <el-table-column
-          width="180"
+          prop="remark"
+          label="备注">
+        </el-table-column>
+        <el-table-column
+          prop="sort"
+          width="100"
+          label="排序"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
@@ -58,20 +68,10 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          width="100"
-          label="排序"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="remark"
-          label="备注">
-        </el-table-column>
         <el-table-column label="操作" width="300">
           <template slot-scope="scope">
-            <el-button v-has="'/course/pc/course/category/add'" type="primary" size="mini" @click="addSubMmenu(scope.row.id, scope.row.floor)">添加</el-button>
             <el-button v-has="'/course/pc/course/category/view'" type="success" plain @click="editSubMmenu(scope.row)" size="mini">编辑</el-button>
+            <el-button v-has="'/course/pc/course/category/add'" type="primary" plain size="mini" @click="addSubMmenu(scope.row.id, scope.row.floor)">添加</el-button>
             <el-button v-has="'/course/pc/course/category/delete'" type="danger" plain @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
           </template>
         </el-table-column>

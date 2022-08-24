@@ -7,7 +7,6 @@
     :before-close="handleClose">
     <el-form :inline="true">
       <el-card>
-        <el-divider style="font-weight:bold; background-color:#f4f4f5">讲师个人信息</el-divider>
         <el-row>
           <el-col :span="8">
             <div>
@@ -64,8 +63,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="8">
             <div>
               <el-form-item label="注册时间:">
@@ -80,18 +77,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-      </el-card>
-      <br/>
-      <el-card>
-        <el-divider style="font-weight:bold; background-color:#f4f4f5">简介</el-divider>
-        <el-form-item v-html="formData.introduce">
-        </el-form-item>
-      </el-card>
-      <br/>
-      <el-card>
-        <el-divider style="font-weight:bold; background-color:#f4f4f5">分成情况</el-divider>
-        <el-row>
           <el-col :span="8">
             <div>
               <el-form-item label="讲师分成情况:">
@@ -106,8 +91,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="8">
             <div>
               <el-form-item label="已提现金额:">
@@ -129,8 +112,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="8">
             <div>
               <el-form-item label="银行卡号:">
@@ -152,8 +133,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="8">
             <div>
               <el-form-item label="开户姓名:">
@@ -169,6 +148,8 @@
             </div>
           </el-col>
         </el-row>
+        <el-form-item v-html="formData.introduce">
+        </el-form-item>
       </el-card>
     </el-form>
     <div slot="footer">

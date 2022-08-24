@@ -2,7 +2,7 @@
   <div class="pad20">
     <el-form ref="formData" :model="formData" label-width="100px">
       <el-form-item label="文章名称：">
-        <el-input v-model="formData.artTitle" placeholder="请输入文章名称"></el-input>
+        <el-input style="width: 800px" v-model="formData.artTitle" placeholder="请输入文章名称"></el-input>
       </el-form-item>
       <el-form-item label="文章描述：" style="width:80%">
         <div id="artDesc" style="height:400px;max-height:500px;"></div>
@@ -11,7 +11,7 @@
         <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1" :max="10000"></el-input-number>
       </el-form-item>
     </el-form>
-    <div slot="footer">
+    <div slot="footer" style="text-align: center">
       <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
       <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
     </div>

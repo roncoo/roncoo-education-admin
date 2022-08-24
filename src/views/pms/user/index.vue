@@ -16,14 +16,14 @@
       <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
         <el-table-column type="index" label="序号" width="50">
         </el-table-column>
-        <el-table-column prop="mobile" label="手机号" width="170">
+        <el-table-column prop="mobile" label="手机号">
         </el-table-column>
-        <el-table-column prop="realName" label="名称" width="250">
+        <el-table-column prop="realName" label="名称">
         </el-table-column>
         <el-table-column prop="remark" label="备注"/>
         <el-table-column prop="sort" width="100" label="排序"/>
         <el-table-column
-          width="150"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">

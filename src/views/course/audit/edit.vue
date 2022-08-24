@@ -3,7 +3,7 @@
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose"
-    width="70%">
+    width="900px">
     <el-form ref="formData" :model="formData" label-width="100px">
       <!-- <el-form-item label="头像">
         <el-upload
@@ -21,38 +21,40 @@
         </el-upload>
       </el-form-item> -->
       <el-form-item label="课程名称：">
-        <el-input v-model="formData.courseName"></el-input>
+        <el-input style="width: 600px" v-model="formData.courseName"></el-input>
       </el-form-item>
-      <el-form-item label="是否免费：">
-        <el-radio-group v-model="formData.isFree">
-          <el-radio :label="0">收费</el-radio>
-          <el-radio :label="1">免费</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-row v-if="formData.isFree == 0">
-        <el-col :span="12">
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="是否免费：">
+            <el-radio-group v-model="formData.isFree">
+              <el-radio :label="1">免费</el-radio>
+              <el-radio :label="0">收费</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <span v-if="formData.isFree == 0">
+        <el-col :span="8">
           <el-form-item label="原价：">
             <el-input type="text" style="width: 120px" placeholder="请输入价格" v-model="formData.courseOriginal"></el-input>
             元
           </el-form-item>
         </el-col>
-        <!-- <el-col :span="12">
-          <el-form-item label="优惠价：">
-            <el-input type="text" style="width: 120px" placeholder="请输入价格" v-model="formData.courseDiscount"></el-input> 元
-          </el-form-item>
-        </el-col> -->
+                 <el-col :span="8">
+                    <el-form-item label="优惠价：">
+                      <el-input type="text" style="width: 120px" placeholder="请输入价格" v-model="formData.courseDiscount"></el-input>
+                      元
+                    </el-form-item>
+                  </el-col>
+      </span>
       </el-row>
-      <el-form-item label="排序：">
-        <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1"></el-input-number>
-      </el-form-item>
       <el-form-item label="课程简介:">
         <div id="introduce"></div>
       </el-form-item>
-      <div slot="footer">
-        <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
-        <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
-      </div>
     </el-form>
+    <div slot="footer">
+      <el-button size="mini" type="danger" @click="handleClose">取 消</el-button>
+      <el-button size="mini" type="primary" @click="submitForm('formData')">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
   <!--弹窗-->
   <el-dialog
-    width="65%"
+    width="1000px"
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose">
@@ -9,20 +9,11 @@
       <el-row>
         <el-col :span="12">
           <div>
-            <el-form-item label="用户手机：">
-              <el-input :disabled="true" v-model="formData.lecturerMobile"></el-input>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div>
             <el-form-item label="讲师名称：">
               <el-input v-model="formData.lecturerName"></el-input>
             </el-form-item>
           </div>
         </el-col>
-      </el-row>
-      <el-row>
         <el-col :span="12">
           <div>
             <el-form-item label="邮箱：">
@@ -30,51 +21,9 @@
             </el-form-item>
           </div>
         </el-col>
-        <el-col :span="12">
-          <div>
-            <el-form-item label="排序：">
-              <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1"></el-input-number>
-            </el-form-item>
-          </div>
-        </el-col>
       </el-row>
       <el-form-item label="讲师简介：">
         <div id="introduce"></div>
-      </el-form-item>
-      <el-row>
-        <el-col :span="12">
-          <div>
-            <el-form-item label="银行名称：">
-              <el-input :disabled="true" v-model="lecturerExt.bankName"></el-input>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div>
-            <el-form-item label="银行卡号：">
-              <el-input :disabled="true" v-model="lecturerExt.bankCardNo"></el-input>
-            </el-form-item>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <div>
-            <el-form-item label="开户名称：">
-              <el-input :disabled="true" v-model="lecturerExt.bankUserName"></el-input>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div>
-            <el-form-item label="银行卡号：">
-              <el-input :disabled="true" v-model="lecturerExt.bankIdCardNo"></el-input>
-            </el-form-item>
-          </div>
-        </el-col>
-      </el-row>
-      <el-form-item label="支行名称：">
-        <el-input :disabled="true" v-model="lecturerExt.bankBranchName"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer">

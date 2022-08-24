@@ -33,7 +33,7 @@
         <el-table-column prop="sort" label="排序" width="100">
         </el-table-column>
         <el-table-column
-          width="170"
+          width="200"
           prop="statusId"
           label="状态"
           align="center">
