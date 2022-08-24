@@ -5,15 +5,15 @@
     <a href="/" style="float: right;margin-right: 100px;" target="_blank" class="nav-item">网站首页</a>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+        <img src="https://static.roncoos.com/logos.png" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
+        <a class="inlineBlock" target="_blank" href="https://www.roncoo.net/">
           <el-dropdown-item>
-            首页
+            官网首页
           </el-dropdown-item>
-        </router-link>
+        </a>
         <el-dropdown-item divided>
           <span style="display:block;" @click="logout">退出登录</span>
         </el-dropdown-item>
