@@ -29,6 +29,9 @@
           prop="menuName"
           label="菜单名称"
           sortable>
+          <template slot-scope="scope">
+            <svg-icon :icon-class="scope.row.menuIcon || ''"/>&nbsp;{{ scope.row.menuName }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="menuUrl"

@@ -1,12 +1,106 @@
-import { login, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getInfo, login } from '@/api/login'
+import { getToken, removeToken, setToken } from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    roles: []
+    roles: [],
+    svgIconList: [
+      {
+        'icon': '概况总览',
+        'label': '概况总览'
+      },
+      {
+        'icon': '常用功能',
+        'label': '常用功能'
+      },
+      {
+        'icon': '课程订单',
+        'label': '课程订单'
+      },
+      {
+        'icon': '支付订单',
+        'label': '支付订单'
+      },
+      {
+        'icon': '首页管理',
+        'label': '首页管理'
+      },
+      {
+        'icon': '头部导航',
+        'label': '头部导航'
+      },
+      {
+        'icon': '专区管理',
+        'label': '专区管理'
+      },
+      {
+        'icon': '轮播管理',
+        'label': '轮播管理'
+      },
+      {
+        'icon': '底部文章',
+        'label': '底部文章'
+      },
+      {
+        'icon': '友情链接',
+        'label': '友情链接'
+      },
+      {
+        'icon': '课程管理',
+        'label': '课程管理'
+      },
+      {
+        'icon': '课程分类',
+        'label': '课程分类'
+      },
+      {
+        'icon': '讲师管理',
+        'label': '讲师管理'
+      },
+      {
+        'icon': '学员管理',
+        'label': '学员管理'
+      },
+      {
+        'icon': '站点管理',
+        'label': '站点管理'
+      },
+      {
+        'icon': '站点设置',
+        'label': '站点设置'
+      },
+      {
+        'icon': '系统设置',
+        'label': '系统设置'
+      },
+      {
+        'icon': '平台管理',
+        'label': '平台管理'
+      },
+      {
+        'icon': '应用管理',
+        'label': '应用管理'
+      },
+      {
+        'icon': '权限管理',
+        'label': '权限管理'
+      },
+      {
+        'icon': '用户管理',
+        'label': '用户管理'
+      },
+      {
+        'icon': '角色管理',
+        'label': '角色管理'
+      },
+      {
+        'icon': '菜单管理',
+        'label': '菜单管理'
+      }
+    ]
   },
 
   mutations: {

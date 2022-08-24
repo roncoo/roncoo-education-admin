@@ -22,6 +22,22 @@
       <el-form-item label="接口地址：" v-if="formData.menuType == 2 || formData.menuType == 3">
         <el-input v-model="formData.apiUrl"></el-input>
       </el-form-item>
+      <el-form-item label="菜单图标">
+        <el-select v-model="formData.menuIcon" placeholder="请选择">
+          <el-option
+            v-for="item in svgIconList"
+            :key="item.icon"
+            :label="item.label"
+            :value="item.icon"
+          >
+            <span style="float: left">{{ item.label }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">
+              <svg-icon :icon-class="item.icon || ''"/>
+            </span>
+          </el-option>
+        </el-select>
+        <span>&nbsp;&nbsp;<svg-icon :icon-class="formData.menuIcon || ''"/></span>
+      </el-form-item>
       <el-form-item label="排序：">
         <el-input-number style="width: 300px;" v-model="formData.sort" @change="handleChange" :min="1" :max="10000"></el-input-number>
       </el-form-item>
@@ -41,6 +57,7 @@
     name: 'Edit',
     data() {
       return {
+        svgIconList: []
       }
     },
     props: {
@@ -57,6 +74,9 @@
         type: String,
         default: ''
       }
+    },
+    mounted() {
+      this.svgIconList = this.$store.state.user.svgIconList
     },
     methods: {
       handleClose(done) {
