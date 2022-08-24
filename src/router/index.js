@@ -49,7 +49,7 @@ export const asyncRouterMap = [
           {
             path: 'course',
             component: () => import('@/views/homepage/zone/course'),
-            meta: { requireAuth: true }
+            meta: { requireAuth: true, title: '专区课程' }
           }
         ]
       },
@@ -70,7 +70,7 @@ export const asyncRouterMap = [
           {
             path: 'info',
             component: () => import('@/views/homepage/article/info'),
-            meta: { requireAuth: true }
+            meta: { requireAuth: true, title: '文章管理' }
           }
         ]
       },
