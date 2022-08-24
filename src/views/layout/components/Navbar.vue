@@ -1,7 +1,8 @@
 <template>
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <breadcrumb />
+    <breadcrumb/>
+    <a href="/" style="float: right;margin-right: 100px;" target="_blank" class="nav-item">网站首页</a>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -54,34 +55,40 @@ export default {
 .navbar {
   height: 50px;
   line-height: 50px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+
   .hamburger-container {
     line-height: 58px;
     height: 50px;
     float: left;
     padding: 0 10px;
   }
+
   .screenfull {
     position: absolute;
     right: 90px;
     top: 16px;
     color: red;
   }
+
   .avatar-container {
     height: 50px;
     display: inline-block;
     position: absolute;
     right: 35px;
+
     .avatar-wrapper {
       cursor: pointer;
       margin-top: 5px;
       position: relative;
       line-height: initial;
+
       .user-avatar {
         width: 40px;
         height: 40px;
         border-radius: 10px;
       }
+
       .el-icon-caret-bottom {
         position: absolute;
         right: -20px;
