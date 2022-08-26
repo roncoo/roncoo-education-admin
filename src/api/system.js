@@ -1,12 +1,41 @@
 import request from '@/utils/request'
+import * as axios from 'axios'
+import {getToken} from '@/utils/auth'
+
+// 分类--添加
+export function configSave(data = {}) {
+  return request.post('/v1/admin/config/save', data)
+}
+
+// 分类--查看
+export function configView(id) {
+  return request.get(`/v1/admin/config/view?id=${id}`)
+}
+
+// 分类--删除
+export function configDelete(id) {
+  return request.delete(`/v1/admin/config/delete?id=${id}`);
+}
+
+// 分类--编辑
+export function configEdit(data = {}) {
+  return request.put('/v1/admin/config/edit', data)
+}
+
+// 分类管理--分页
+export function configList(params) {
+  return request.post('/v1/admin/config/list', {...params})
+}
 
 // 获取枚举
 export function enumList(enumName) {
   return request.get(`/v1/admin/enum/list/${enumName}`)
 }
-import { getToken } from '@/utils/auth'
 
-import * as axios from 'axios'
+// 上传图片
+export const uploadPic = (params = {}, cb) => {
+  return createUpload('/v1/common/upload/pic', params, cb)
+}
 
 const createUpload = (url, params = {}, cb) => {
   const cancelToken = axios.CancelToken
@@ -36,9 +65,3 @@ const createUpload = (url, params = {}, cb) => {
     })
   })
 }
-
-// 上传图片
-export const uploadPic = (params = {}, cb) => {
-  return createUpload('/v1/common/upload/pic', params, cb)
-}
-

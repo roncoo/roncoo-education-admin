@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form class="filter-container" inline label-width="100px" size="mini">
       <el-form-item class="filter-item" label="名称">
-        <el-input v-model="map.categoryName" clearable/>
+        <el-input v-model="map.categoryName" clearable />
       </el-form-item>
       <el-form-item>
         <el-button class="filter-item" type="primary" @click="listForPage">查询</el-button>
@@ -21,13 +21,13 @@
       row-key="id"
       size="mini"
     >
-      <el-table-column label="名称" prop="categoryName"/>
+      <el-table-column label="名称" prop="categoryName" />
       <el-table-column label="状态">
         <template v-slot="scope">
           {{ statusEnums[scope.row.status] }}
         </template>
       </el-table-column>
-      <el-table-column label="排序" min-width="80" prop="sort"/>
+      <el-table-column label="排序" min-width="80" prop="sort" />
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button plain size="mini" type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
@@ -48,13 +48,13 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
-    <add :info="addCtr.info" :title="addCtr.title" :visible="addCtr.visible" @close-callback="closeCallback"/>
-    <edit :info="editCtr.info" :title="editCtr.title" :visible="editCtr.visible" @close-callback="closeEditCallback"/>
+    <add :info="addCtr.info" :title="addCtr.title" :visible="addCtr.visible" @close-callback="closeCallback" />
+    <edit :info="editCtr.info" :title="editCtr.title" :visible="editCtr.visible" @close-callback="closeEditCallback" />
   </div>
 </template>
 
 <script>
-import {categoryDelete, categoryPage, categoryStatus, categoryView} from '@/api/category'
+import {categoryDelete, categoryPage, categoryStatus, categoryView} from '@/api/course'
 import Add from '../add';
 import Edit from '../edit';
 

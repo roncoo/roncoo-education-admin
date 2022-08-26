@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {usersEdit} from '@/api/users';
+import {usersEdit} from '@/api/user';
 
 export default {
   name: 'UsersEdit',

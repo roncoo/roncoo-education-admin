@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form class="filter-container" inline label-width="100px" size="mini">
       <el-form-item class="filter-item" label="登录账号">
-        <el-input v-model="params.loginNo" clearable/>
+        <el-input v-model="params.loginNo" clearable />
       </el-form-item>
       <el-form-item class="filter-item" label="状态">
         <el-select v-model="params.status" clearable placeholder="请选择">
@@ -28,16 +28,16 @@
       highlight-current-row
       size="mini"
     >
-      <el-table-column align="center" label="序号" type="index" width="50"/>
-      <el-table-column label="登录账号" prop="loginNo"/>
-      <el-table-column label="昵称" prop="nickname"/>
-      <el-table-column label="备注" prop="remark"/>
+      <el-table-column align="center" label="序号" type="index" width="50" />
+      <el-table-column label="登录账号" prop="loginNo" />
+      <el-table-column label="昵称" prop="nickname" />
+      <el-table-column label="备注" prop="remark" />
       <el-table-column label="状态">
         <template v-slot="scope">
           {{ statusEnums[scope.row.status] }}
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort"/>
+      <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" width="300">
         <template v-slot="scope">
           <el-button plain size="mini" type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
@@ -79,14 +79,14 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
-    <users-add v-if="addCtr.visible" :visible="addCtr.visible" @close="handleAddClose"/>
-    <users-edit v-if="editCtr.visible" :info="editCtr.info" :visible="editCtr.visible" @close="handleUpdateClose"/>
-    <users-password v-if="passwordCtr.visible" :id="passwordCtr.id" :visible="passwordCtr.visible" @close="handlePasswordClose"/>
+    <users-add v-if="addCtr.visible" :visible="addCtr.visible" @close="handleAddClose" />
+    <users-edit v-if="editCtr.visible" :info="editCtr.info" :visible="editCtr.visible" @close="handleUpdateClose" />
+    <users-password v-if="passwordCtr.visible" :id="passwordCtr.id" :visible="passwordCtr.visible" @close="handlePasswordClose" />
   </div>
 </template>
 
 <script>
-import {usersDelete, usersPage, usersStatus, usersView} from '@/api/users';
+import {usersDelete, usersPage, usersStatus, usersView} from '@/api/user';
 import UsersEdit from '@/views/users/edit';
 import UsersAdd from '@/views/users/add';
 import UsersPassword from '../password';

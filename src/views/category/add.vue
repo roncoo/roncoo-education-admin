@@ -11,26 +11,26 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-row v-if="form.parentId == 0">
         <el-form-item class="form-group" label="名称" prop="categoryName">
-          <el-input v-model="form.categoryName"/>
+          <el-input v-model="form.categoryName" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="form.sort" :min="1" controls-position="right"/>
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" />
         </el-form-item>
       </el-row>
       <el-row v-if="form.parentId != 0">
         <el-col :span="12">
           <el-form-item class="form-group" label="名称" prop="categoryName">
-            <el-input v-model="form.categoryName"/>
+            <el-input v-model="form.categoryName" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="排序" prop="sort">
-            <el-input-number v-model="form.sort" :min="1" controls-position="right"/>
+            <el-input-number v-model="form.sort" :min="1" controls-position="right" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-form-item v-if="form.parentId !=0" label="内容" prop="content">
-        <wangeditor v-model="form.content"/>
+        <wangeditor v-model="form.content" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -40,7 +40,7 @@
   </el-dialog>
 </template>
 <script>
-import {categorySave} from '@/api/category'
+import {categorySave} from '@/api/course'
 import Wangeditor from '@/components/Wangeditor/index.vue';
 
 export default {
@@ -71,7 +71,7 @@ export default {
     }
   },
   watch: {
-    visible: function (val) {
+    visible: function(val) {
       if (val) {
         this.form.parentId = this.info.parentId;
         this.form.examCategoryType = this.info.examCategoryType

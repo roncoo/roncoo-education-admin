@@ -16,26 +16,26 @@
           label-position="left"
         >
           <h3 class="login-head">用户登录</h3>
-          <el-form-item class="form-group" prop="loginNo">
+          <el-form-item class="form-group" prop="mobile">
             <el-input
-              ref="loginNo"
-              v-model="loginForm.loginNo"
+              ref="mobile"
+              v-model="loginForm.mobile"
               auto-complete="on"
               class="form-input"
-              name="loginNo"
+              name="mobile"
               placeholder="用户名"
               tabindex="1"
               type="text"
             />
           </el-form-item>
-          <el-form-item class="form-group" prop="loginPassword">
+          <el-form-item class="form-group" prop="mobilePwd">
             <el-input
-              ref="loginPassword"
-              v-model="loginForm.loginPassword"
+              ref="mobilePwd"
+              v-model="loginForm.mobilePwd"
               :type="passwordType"
               auto-complete="on"
               class="form-input"
-              name="loginPassword"
+              name="mobilePwd"
               placeholder="密码"
               tabindex="2"
               @keyup.enter.native="handleLogin"
@@ -57,7 +57,8 @@
 
 <script>
 import {login} from '@/api/login';
-import { getToken, setToken } from '@/utils/auth'
+import {setToken} from '@/utils/auth'
+
 export default {
   name: 'Login',
   components: {},
@@ -80,12 +81,12 @@ export default {
     }
     return {
       loginForm: {
-        loginNo: '',
-        loginPassword: ''
+        mobile: '',
+        mobilePwd: ''
       },
       loginRules: {
-        loginNo: [{required: true, trigger: 'blur', validator: validateUsername}],
-        loginPassword: [{required: true, trigger: 'blur', validator: validatePass}]
+        mobile: [{required: true, trigger: 'blur', validator: validateUsername}],
+        mobilePwd: [{required: true, trigger: 'blur', validator: validatePass}]
       },
       loading: false,
       passwordType: 'password',

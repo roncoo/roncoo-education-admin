@@ -6,10 +6,10 @@
     width="600px"
   >
     <el-form ref="form" :model="newFormData" :rules="rules">
-          <el-form-item prop="configValue">
-            <!-- 文本类型 -->
-            <el-input v-model="newFormData.configValue" :rows="2" placeholder="请输入内容" type="textarea"/>
-          </el-form-item>
+      <el-form-item prop="configValue">
+        <!-- 文本类型 -->
+        <el-input v-model="newFormData.configValue" :rows="2" placeholder="请输入内容" type="textarea" />
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="handleClose">取 消</el-button>
@@ -18,7 +18,7 @@
   </el-dialog>
 </template>
 <script>
-import {configEdit} from '@/api/config'
+import {configEdit} from '@/api/system'
 
 export default {
   name: 'EditConfig',

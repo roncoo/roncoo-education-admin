@@ -10,20 +10,20 @@
       <el-table-column label="配置名称" prop="configName" width="250">
         <template v-slot="scope">
           <span>{{ scope.row.configName }}</span>
-          <el-tooltip :content="scope.row.configKey" class="item" effect="light" placement="top-start"><span class="tips"><svg-icon class="svg-icon" icon-class="svg-icon-info"/></span></el-tooltip>
+          <el-tooltip :content="scope.row.configKey" class="item" effect="light" placement="top-start"><span class="tips"><svg-icon class="svg-icon" icon-class="svg-icon-info" /></span></el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="参数/描述" prop="configValue">
         <template v-slot="scope">
           <span v-if="scope.row.contentType == 1">{{ scope.row.configValue }}</span>
-          <span v-if="scope.row.contentType == 5">{{ publicEnums[scope.row.configValue]}}</span>
+          <span v-if="scope.row.contentType == 5">{{ publicEnums[scope.row.configValue] }}</span>
           <br> <span style="color:#999">{{ scope.row.remark }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
         <template v-slot="scope">
           <el-button v-if="scope.row.contentType == 1" plain size="mini" type="primary" @click="handleUpdateRow(scope.row)">编辑</el-button>
-          <el-switch v-if="scope.row.contentType == 5" v-model="scope.row.configValue" active-color="#13ce66" active-text="开启" active-value="on" inactive-color="#ff4949" inactive-text="关闭" inactive-value="off" @change="changBooleanValue(scope.row)"/>
+          <el-switch v-if="scope.row.contentType == 5" v-model="scope.row.configValue" active-color="#13ce66" active-text="开启" active-value="on" inactive-color="#ff4949" inactive-text="关闭" inactive-value="off" @change="changBooleanValue(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {configEdit, configList} from '@/api/config'
+import {configEdit, configList} from '@/api/system'
 import ConfigEdit from '../edit';
 
 export default {
@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("GetOpts", {enumName: "PublicEnum", type: "obj"}).then((res) => {
+    this.$store.dispatch('GetOpts', {enumName: 'PublicEnum', type: 'obj'}).then((res) => {
       this.publicEnums = res;
     });
     this.listForAll()
