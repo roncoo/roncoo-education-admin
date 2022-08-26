@@ -8,24 +8,24 @@
 </template>
 
 <script>
-export default {
-  props: {
-    source: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
+  export default {
+    props: {
+      source: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+
+      }
+    },
+    created() {
+    },
+    methods: {
 
     }
-  },
-  created() {
-  },
-  methods: {
-
   }
-}
 </script>
 
 <style lang="scss">

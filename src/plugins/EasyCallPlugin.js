@@ -1,10 +1,9 @@
-
+import store from '@/store'
 export default function install(Vue) {
   if (install.installed) return;
   install.installed = true;
 
-  Vue.prototype.tips = function(text = '', type = 'info', time = 2000) {
-    console.log(text)
+  Vue.prototype.tips = function(text = '', type = 'warning', time = 2000) {
     try {
       this.$message({
         type: type,
@@ -27,6 +26,9 @@ export default function install(Vue) {
     },
     hide() {
       this.__loading__.close()
+    },
+    start() {
+      store.dispatch('app/toggleLoading', true)
     }
-  };
+  }
 }

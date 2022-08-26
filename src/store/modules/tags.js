@@ -1,21 +1,26 @@
 const tags = {
   state: {
     visitedViews: [],
-    cachedViews: []
+    cachedViews: [],
+    closeViews: [],
+    closeCacheView: null
   },
   mutations: {
     ADD_VISITED_VIEW(state, view) {
       if (!state.visitedViews.some(v => v.key === view.fullPath)) {
         const url = view.path === '/iframe' ? decodeURIComponent(view.query.source) : view.path
         const menu = this.getters.menu.menuSet[url]
+        const route = { ...view }
+        route.name = undefined
         state.visitedViews.push({
           key: view.fullPath,
           title: menu ? (menu.name || menu.title) : view.meta.title || 'no-name',
-          route: view
+          route: route
         })
       }
     },
     ADD_CACHED_VIEW: (state, view) => {
+      // state.closeCacheView = null
       if (state.cachedViews.includes(view.fullPath)) return
       if (!view.meta.noCache) {
         state.cachedViews.push(view.fullPath)
@@ -31,6 +36,10 @@ const tags = {
       }
     },
     DEL_CACHED_VIEW: (state, view) => {
+      state.closeCacheView = view.fullPath;
+      if (!state.closeViews.includes(view.fullPath)) {
+        state.closeViews.push(view.fullPath)
+      }
       for (const i of state.cachedViews) {
         if (i === view.fullPath) {
           const index = state.cachedViews.indexOf(i)
@@ -64,6 +73,16 @@ const tags = {
     DEL_ALL_CACHED_VIEWS: state => {
       state.cachedViews = []
     },
+    DEL_CLOSE_CACHED_VIEW: (state, path) => {
+      state.closeCacheView = null
+      for (const i of state.closeViews) {
+        if (i === path) {
+          const index = state.closeViews.indexOf(i)
+          state.closeViews.shift(index, index + 1)
+          break
+        }
+      }
+    },
 
     UPDATE_VISITED_VIEW: (state, view) => {
       for (let v of state.visitedViews) {
@@ -86,13 +105,24 @@ const tags = {
     addCachedView({ commit }, view) {
       commit('ADD_CACHED_VIEW', view)
     },
-
+    checkCachedView({ state, commit }, view) {
+      let path = view ? view.fullPath : '';
+      if (view && view.name && view.name === 'redirect') {
+        path = view.params.path
+      }
+      return new Promise(resolve => {
+        if (state.closeViews.includes(path)) {
+          commit('DEL_CLOSE_CACHED_VIEW', path)
+          resolve()
+        }
+      })
+    },
     delView({ dispatch, state }, view) {
       return new Promise(resolve => {
-        if (state.visitedViews.length !== 1
-          || (state.visitedViews.length === 1 && state.visitedViews[0].route.path !== '/dashboard')) {
+        if (state.visitedViews.length !== 1 ||
+          (state.visitedViews.length === 1 && state.visitedViews[0].route.path !== '/dashboard')) {
           dispatch('delVisitedView', view)
-          dispatch('delCachedView', view)
+          dispatch('delCachedView', view.route || view)
         }
         resolve({
           visitedViews: [...state.visitedViews],
@@ -138,8 +168,8 @@ const tags = {
 
     delAllViews({ dispatch, state }, view) {
       return new Promise(resolve => {
-        if (state.visitedViews.length !== 1
-          || (state.visitedViews.length === 1 && state.visitedViews[0].route.path !== '/dashboard')) {
+        if (state.visitedViews.length !== 1 ||
+          (state.visitedViews.length === 1 && state.visitedViews[0].route.path !== '/dashboard')) {
           dispatch('delAllVisitedViews', view)
           dispatch('delAllCachedViews', view)
         }

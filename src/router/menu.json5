@@ -1,23 +1,48 @@
 /**
-
  菜单配置项:
  {
  "id": 0, // 后端菜单id，在前端目前没什么用
  "name": "首页", // 菜单的标题，用于菜单标题、多标签Tag标题的显示
  "path": "/dashboard", // 菜单的路径，以`/`开头为本系统内部页面，如果是一个外部链接，那么将会在系统中嵌入视图显示
- "icon": null, // 图标
+ "targetName": null, // 图标
  "hidden": true, // 是否显示
  "children": [], // 子项
  "redirect": true, // 是否在面包屑中可点击跳转,
  "external": true  // 是否点击新开窗口显示
+ "helpWork": { //帮助文档
+    "name": "帮助文档名称",
+    "link": [
+      {
+        "name": "链接文字",
+        "url": "链接url"
+      }
+    ]
+  }
  }
-
 **/
 [
-  //  {
-  //    "id": 0,
-  //    "name": "首页",
-  //    "path": "dashboard",
-  //    "icon": null
-  //  }
+  {
+    "id": 0,
+    "name": "首页",
+    "path": "/dashboard",
+    "targetName": "dashboard"
+  },
+  {
+    "id": 0,
+    "name": "视频管理",
+    "path": "/video/list",
+    "targetName": "video"
+  },
+  {
+    "id": 0,
+    "name": "用户管理",
+    "path": "/users/list",
+    "targetName": "user"
+  },
+  {
+    "id": 0,
+    "name": "系统配置",
+    "path": "/config/list",
+    "targetName": "system"
+  }
 ]

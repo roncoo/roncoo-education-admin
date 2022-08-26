@@ -1,98 +1,42 @@
 <template>
-  <div class="container">
-    <div class="text">领课教育系统
-    </div>
-    <div>
-      <div style="background: #f5f5f5; margin-top: 20px;">
-        <div class="text">
-          <el-alert
-            title="官网地址"
-            type="info"
-            :closable="false">
-            详情请看：
-            <el-link
-              type="primary"
-              href="https://www.roncoo.net/?sources=os-admin"
-              target="_blank"
-              :underline="false">https://www.roncoo.net/
-            </el-link>
-          </el-alert>
-        </div>
-        <div class="text">
-          <el-alert
-            title="项目介绍"
-            type="info"
-            :closable="false">
-            <li>
-              <el-link
-                type="primary"
-                href="https://gitee.com/roncoocom/roncoo-education"
-                target="_blank"
-                :underline="false">roncoo-education
-              </el-link>
-              是后台工程，核心框架：Spring Cloud
-            </li>
-            <li>
-              <el-link
-                type="primary"
-                href="https://gitee.com/roncoocom/roncoo-education-web"
-                target="_blank"
-                :underline="false">roncoo-education-web
-              </el-link>
-              是前端门户工程，核心框架：Vuejs + Nuxt.js
-            </li>
-            <li>
-              <el-link
-                type="primary"
-                href="https://gitee.com/roncoocom/roncoo-education-admin"
-                target="_blank"
-                :underline="false">roncoo-education-admin
-              </el-link>
-              是运营管理工程，核心框架：vue-element-admin
-            </li>
-          </el-alert>
-        </div>
-      </div>
-    </div>
+  <div class="dashboard-container">
+
+    <!--<el-row :gutter="10" class="panel-group">
+      <el-col :span="12">
+        <UserInfo id="flow" :data="useInfoData" />
+      </el-col>
+      <el-col :span="12">
+        <UserInfo id="storage" :data="useInfoData" />
+      </el-col>
+    </el-row>
+    <el-row :gutter="10" class="panel-group">
+      <el-col :span="12">
+        <Stat :data="statData" />
+      </el-col>
+    </el-row>-->
   </div>
 </template>
+
 <script>
-import { mapGetters } from 'vuex'
-
-export default {
-  name: 'Dashboard',
-  methods: {},
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
-  }
-}
 </script>
-<style scoped>
-.container {
-  margin: 30px;
-}
 
-.template {
-  background-color: #EBEEF5
-}
+<style lang="scss" scoped>
+  .dashboard {
+    &-container {
+      margin: 30px;
+    }
 
-.bg-purple {
-  background: #d3dce6;
-}
+    &-text {
+      font-size: 30px;
+      line-height: 46px;
+    }
 
-.bg-purple-light {
-  background: #e5e9f2;
-}
+    .grid-content {
+      min-height: 36px;
+    }
 
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-
-.text {
-  font-size: 25px;
-  line-height: 46px;
-}
+    .bg-purple-dark {
+      background-color: #f8f8f8;
+    }
+  }
 </style>

@@ -1,15 +1,12 @@
 import mockMenuData from '@/router/menu.json5'
-import * as api from '@/api/commonality'
 import _ from 'lodash'
 
 function flattenMenu(menu, parents = []) {
   if (Array.isArray(menu)) {
     return menu.map(v => flattenMenu(v, [...parents]))
   } else if (menu) {
-    return menu.children ?
-      [{ ...menu, parents }].concat(flattenMenu(menu.children, [...parents, menu]))
-      :
-      [{ ...menu, parents }]
+    return menu.children ? [{...menu, parents}].concat(flattenMenu(menu.children, [...parents, menu]))
+      : [{...menu, parents}]
   }
 }
 
@@ -27,25 +24,17 @@ const menu = {
     }
   },
   actions: {
-    setMenu({ commit }) {
-      return new Promise(resolve => {
-        api.menuBtnList({}).then(response => {
-          // 调用递归方法获得按钮数据
-          localStorage.setItem('menuList', JSON.stringify(response.data.sysMenu));
-        })
-        // 保存菜单按钮权限数据至vuex中
-        api.menuUserList({}).then(res => {
-          if (res.data.sysMenu !== []) {
-            commit('set_system_menu', res.data.sysMenu)
-          } else {
-            // 如果没有权限默认初始化首页权限页路由
-            commit('set_system_menu', mockMenuData)
-          }
-          resolve()
-        }).catch(() => {
-          // 如果没有权限默认初始化首页权限页路由
-          commit('set_system_menu', mockMenuData)
-        })
+    setMenu({commit, state}) {
+      return new Promise((resolve, reject) => {
+        // TODO 后续续编辑为从服务器获取，并且做数据处理
+        commit('set_system_menu', mockMenuData)
+        resolve()
+        // getMenu().then(res => {
+        //   commit('set_system_menu', res.data)
+        //   resolve()
+        // }).catch(err => {
+        //   reject(err)
+        // })
       })
     }
   }

@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import menu from './modules/menu'
+import getters from './modules/getters'
 import app from './modules/app'
+import settings from './modules/settings'
 import user from './modules/user'
-import tags from './modules/tags'
+import menu from './modules/menu'
 import opts from './modules/opts'
-import getters from './getters'
+import tags from './modules/tags'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    menu,
     app,
-    tags,
+    settings,
+    user,
+    menu,
     opts,
-    user
+    tags
   },
   getters
 })

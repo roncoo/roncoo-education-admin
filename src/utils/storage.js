@@ -41,7 +41,12 @@ export const setSession = (name, content) => {
  */
 export const getSession = name => {
   if (!name) return
-  return JSON.parse(window.sessionStorage.getItem(name))
+  const data = window.sessionStorage.getItem(name)
+  if (data) {
+    return JSON.parse(data)
+  } else {
+    return null
+  }
 }
 
 /**

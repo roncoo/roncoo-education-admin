@@ -1,17 +1,16 @@
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
-      <el-breadcrumb-item v-for="(item,index) in levelList" v-if="item.title || item.name" :key="item.path">
-        <span v-if="item.redirect === false || index === levelList.length-1" class="no-redirect">{{ item.title || item.name }}</span>
-        <router-link v-else :to="resolvePath(item)">{{ item.title || item.name }}</router-link>
+      <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
+        <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
+        <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
 </template>
 
 <script>
-// import pathToRegexp from 'path-to-regexp'
-import { validateURL } from '@/utils/validate'
+import pathToRegexp from 'path-to-regexp'
 
 export default {
   data() {
@@ -29,40 +28,51 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      const { path, query } = this.$route
-      const menuSet = this.$store.getters.menu.menuSet
-      if (path !== '/iframe') {
-        this.levelList = menuSet[path] ? menuSet[path].parents.concat([menuSet[path]]) : []
-      } else {
-        const { source } = query
-        this.levelList = menuSet[source].parents.concat([menuSet[source]])
+      // only show routes with meta.title
+      let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
+      const first = matched[0]
+
+      if (!this.isDashboard(first)) {
+        matched = [{ path: '/dashboard', meta: { title: '首页' }}].concat(matched)
       }
+
+      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
     },
-    resolvePath(route) {
-      if (this.isExternalLink(route.path)) {
-        if (route.external === true) {
-          return route.path
-        }
-        return `/iframe?source=${encodeURIComponent(route.path)}`
+    isDashboard(route) {
+      const name = route && route.name
+      if (!name) {
+        return false
       }
-      return route.path
+      return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
     },
-    isExternalLink(routePath) {
-      return validateURL(routePath)
+    pathCompile(path) {
+      // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+      const { params } = this.$route
+      var toPath = pathToRegexp.compile(path)
+      return toPath(params)
+    },
+    handleLink(item) {
+      const { redirect, path } = item
+      if (redirect) {
+        this.$router.push(redirect)
+        return
+      }
+      this.$router.push(this.pathCompile(path))
     }
   }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 50px;
-    margin-left: 10px;
-    .no-redirect {
-      color: #97a8be;
-      cursor: text;
-    }
+<style lang="scss" scoped>
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 8px;
+
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
   }
+}
 </style>

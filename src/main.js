@@ -1,49 +1,42 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 import '@/styles/index.scss' // global css
-
 import App from './App'
 import store from './store'
 import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import EasyCallPlugin from '@/plugins/EasyCallPlugin'
+// 如果想要中文版 element-ui，按如下方式声明
+// Vue.use(ElementUI)
+import uploader from 'vue-simple-uploader';
 
-import EasyCallPlugin from '@/plugins/EasyCallPlugin';
-Vue.use(EasyCallPlugin);
+Vue.use(EasyCallPlugin)
 /**
- * This project originally used easy-mock to simulate data,
- * but its official service is very unstable,
- * and you can build your own service if you need it.
- * So here I use Mock.js for local emulation,
- * it will intercept your request, so you won't see the request in the network.
- * If you remove `../mock` it will automatically request easy-mock data.
+ * If you don't want to use mock-server
+ * you want to use MockJs for mock api
+ * you can execute: mockXHR()
+ *
+ * Currently MockJs will be used in the production environment,
+ * please remove it before going online ! ! !
  */
-// import '../mock' // simulation data
+// if (process.env.NODE_ENV === 'production') {
+//   const {mockXHR} = require('../mock')
+//   mockXHR()
+// }
 
-Vue.use(ElementUI)
-Vue.directive('has', {
-  inserted: function(el, binding) {
-    if (!permissionJudge(binding.value)) {
-      el.parentNode.removeChild(el);
-    }
-    function permissionJudge(value) {
-      // 此处store.getters.getMenuBtnList代表vuex中储存的按钮菜单数据
-      const list = JSON.parse(localStorage.getItem('menuList'))
-      for (const item of list) {
-        if (item.apiUrl === value) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-});
+// 编辑 el-dialog 默认点击遮照不关闭
+ElementUI.Dialog.props.closeOnClickModal.default = false;
+
+// set ElementUI lang to EN
+Vue.use(ElementUI, {locale})
+
+Vue.use(uploader)
 Vue.config.productionTip = false
 
 new Vue({

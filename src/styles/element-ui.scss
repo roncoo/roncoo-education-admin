@@ -1,4 +1,10 @@
-//to reset element-ui default css
+// cover some element-ui styles
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -9,13 +15,16 @@
   display: none;
 }
 
-.el-table--mini{
-  .cell{
-    line-height: 1.2;
-  }
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
 }
 
-//element ui upload
+// refine element ui upload
 .upload-container {
   .el-upload {
     width: 100%;
@@ -27,39 +36,42 @@
   }
 }
 
-.el-form {
-  .el-input, .el-select, .el-textarea {
-    width: 300px;
-    &.el-input--mini{
-      width: 160px;
-    }
-  }
-  .auto-width{
-    width: auto;
-    .el-input, .el-select, .el-textarea {
-      width: auto;
-    }
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
   }
 }
 
-.el-dialog {
-  display: flex;
-  flex-direction: column;
+// to fix el-date-picker css style
+.el-range-separator {
+  box-sizing: content-box;
+}
+
+.app-container {
+  .el-pagination {
+    text-align: right;
+    margin-top: 12px;
+  }
+}
+
+.el-dialog{
   margin: 0 !important;
-  max-height: calc(100% - 60px - 36px);
   position: absolute;
+  max-height: calc(100% - 60px - 36px);
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-
+  transform: translate(-50%,-50%);
   .el-dialog__header{
     text-align: center;
   }
-  .el-dialog__body {
-    padding: 20px;
+  .el-dialog__body{
+    max-height: calc(100vh - 206px);
     overflow-y: auto;
   }
-  .el-dialog__footer {
-    text-align: center;
-  }
+}
+
+.form-group {
+  width: 100%;
+  max-width: 400px;
 }

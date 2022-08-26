@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: ['plugin:vue/base', 'plugin:vue/essential', 'eslint:recommended'],
+  extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
@@ -21,7 +21,10 @@ module.exports = {
         "allowFirstLine": false
       }
     }],
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/multiline-html-element-content-newline":"off",
     "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -44,18 +47,20 @@ module.exports = {
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 2,
-    'eqeqeq': [2, 'allow-null'],
+    'eqeqeq': ["error", "always", {"null": "ignore"}],
     'generator-star-spacing': [2, {
       'before': true,
       'after': true
     }],
     'handle-callback-err': [2, '^(err|error)$'],
+    'indent': [2, 2, {
+      'SwitchCase': 1
+    }],
     'jsx-quotes': [2, 'prefer-single'],
     'key-spacing': [2, {
       'beforeColon': false,
       'afterColon': true
     }],
-    'computed-property-spacing': [0, 'never'],
     'keyword-spacing': [2, {
       'before': true,
       'after': true
@@ -71,7 +76,7 @@ module.exports = {
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
-    'no-control-regex': 2,
+    'no-control-regex': 0,
     'no-delete-var': 2,
     'no-dupe-args': 2,
     'no-dupe-class-members': 2,
@@ -150,8 +155,18 @@ module.exports = {
     'one-var': [2, {
       'initialized': 'never'
     }],
+    'operator-linebreak': [2, 'after', {
+      'overrides': {
+        '?': 'before',
+        ':': 'before'
+      }
+    }],
     'padded-blocks': [2, 'never'],
-    'semi': 0,
+    'quotes': [2, 'single', {
+      'avoidEscape': true,
+      'allowTemplateLiterals': true
+    }],
+    'semi': [2, 'never'],
     'semi-spacing': [2, {
       'before': false,
       'after': true
@@ -164,7 +179,9 @@ module.exports = {
       'words': true,
       'nonwords': false
     }],
-    'spaced-comment': 0,
+    'spaced-comment': [2, 'always', {
+      'markers': ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+    }],
     'template-curly-spacing': [2, 'never'],
     'use-isnan': 2,
     'valid-typeof': 2,
@@ -173,10 +190,9 @@ module.exports = {
     'yoda': [2, 'never'],
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'object-curly-spacing': [2, 'always', {
-      objectsInObjects: false
-    }],
-    'array-bracket-spacing': [2, 'never']
+    'object-curly-spacing': 'off',
+    'array-bracket-spacing': [2, 'never'],
+    'indent': 'off',
+    'semi': 0
   }
 }
-

@@ -1,61 +1,91 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
-import store from '../store'
+import { MessageBox, Message } from 'element-ui'
+import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// 创建axios实例
+// create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 10000 // 请求超时时间
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
 })
 
-// request拦截器
+// request interceptor
 service.interceptors.request.use(
   config => {
-    if (store.getters.token) {
-      config.headers['token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    // do something before request is sent
+    if (getToken()) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['token'] = getToken()
     }
     return config
   },
   error => {
-    // Do something with request error
+    // do something with request error
     console.log(error) // for debug
-    Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 
-// response 拦截器
+// response interceptor
 service.interceptors.response.use(
-  response => {
-    /**
-     * code为非20000是抛错 可结合自己业务进行修改
-     */
-    const res = response.data
-    if (res.code !== 200) {
-      Message({
-        message: res.msg,
-        type: 'error',
-        duration: 5 * 1000
-      })
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+  */
 
-      // 302:非法的token;  301:Token 过期了; 305 菜单过期;
-      if (res.code === 302 || res.code === 301 || res.code === 305) {
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
+  response => {
+    const res = response.data
+    // 关闭loading动画
+    store.dispatch('app/toggleLoading', false)
+
+    // if the custom code is not 200, it is judged as an error.
+    if (res.code !== 200) {
+      // 300:非法的token; 500:其他客户端登录了;  50014:Token 过期了;
+      if (res.code === 1001 || res.code === 1002) {
         MessageBox.confirm(
-          '你已被登出，可以取消继续留在该页面，或者重新登录',
+          '你已被登出，请重新登录',
           '确定登出',
           {
             confirmButtonText: '重新登录',
-            cancelButtonText: '取消',
+            showCancelButton: false,
             type: 'warning'
           }
         ).then(() => {
-          store.dispatch('FedLogOut').then(() => {
+          store.dispatch('user/logout').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
         })
+      } else if (res.code === 600) {
+        MessageBox.confirm(
+          res.msg,
+          '登录异常',
+          {
+            confirmButtonText: '确定',
+            showCancelButton: false,
+            type: 'warning'
+          }
+        ).then(() => {
+          store.dispatch('user/logout').then(() => {
+            location.reload() // 为了重新实例化vue-router对象 避免bug
+          })
+        })
+      } else {
+        Message({
+          message: res.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
       }
       // return res
-      return Promise.reject('error')
+      return Promise.reject(response.data)
     } else {
       return response.data
     }
