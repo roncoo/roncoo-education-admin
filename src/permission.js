@@ -33,7 +33,8 @@ router.beforeEach(async(to, from, next) => {
         try {
           if (store.getters.menu.init === false) {
             // 设置菜单
-            await store.dispatch('setMenu')
+            const routerList = await store.dispatch('setMenu')
+            router.addRoutes(routerList)
           }
           // get user info
           await store.dispatch('user/getInfo')
