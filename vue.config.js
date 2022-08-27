@@ -39,8 +39,7 @@ module.exports = {
     proxy: {
       '/gateway': {
         changeOrigin: true,
-        target: 'http://10.65.2.21:5840',
-        // target: 'https://dev-vod.roncoo.com',
+        target: 'https://dev-os.roncoos.com/gateway',
         secure: false,
         pathRewrite: {
           '^/gateway': ''
