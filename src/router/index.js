@@ -29,7 +29,9 @@ Vue.use(Router)
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-const asyncRouterMap = []
+const asyncRouterMap = [
+
+]
 export const constantRoutes = [
   {
     path: '/login',
@@ -50,7 +52,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: '首页', icon: 'dashboard'}
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
   // 订单管理
@@ -213,38 +215,38 @@ export const constantRoutes = [
   // },
   {
     // 权限管理
-    path: 'pms',
-    component: () => import('@/views/pms'),
+    path: '/pms',
+    component: Layout,
     children: [
       {
         // 用户管理
         path: 'user',
         component: () => import('@/views/pms/user/index'),
-        meta: {requireAuth: true}
+        meta: { requireAuth: true }
       },
       {
         // 角色管理
         path: 'role',
         component: () => import('@/views/pms/role/index'),
-        meta: {requireAuth: true}
+        meta: { requireAuth: true }
       },
       {
         // 菜单管理
         path: 'menu',
         component: () => import('@/views/pms/menu/index'),
-        meta: {requireAuth: true}
+        meta: { requireAuth: true }
       }
     ]
   },
   // 404 page must be placed at the end !!!
-  {path: '*', redirect: '/404', hidden: true},
+  { path: '*', redirect: '/404', hidden: true },
   {
     path: '/',
     component: Layout,
     redirect: 'dashboard', // 设置登陆系统默认页面
     children: [
-      {path: 'iframe', component: () => import('@/views/iframe/index')},
-      {path: 'redirect/:path*', name: 'redirect', component: () => import('@/views/redirect/index')},
+      { path: 'iframe', component: () => import('@/views/iframe/index') },
+      { path: 'redirect/:path*', name: 'redirect', component: () => import('@/views/redirect/index') },
       ...asyncRouterMap
     ]
   }
@@ -252,7 +254,7 @@ export const constantRoutes = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 

@@ -26,12 +26,13 @@ export default {
   /*50 = navbar  */
   min-height: calc(100vh - 85px);
   width: 100%;
+  padding: 20px;
   position: relative;
   /*导致上传页面无法出现滚动*/
   /*overflow: hidden;*/
 }
 .fixed-header+.app-main {
-  padding-top: 85px;
+  padding-top: 105px;
 }
 </style>
 
