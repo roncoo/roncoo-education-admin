@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
 export default {
-  components: { SidebarItem, Logo },
+  components: {SidebarItem, Logo},
   computed: {
     ...mapGetters([
       'menuArr',
@@ -36,7 +36,7 @@ export default {
     },
     activeMenu() {
       const route = this.$route
-      const { meta, path } = route
+      const {meta, path} = route
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
@@ -54,6 +54,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.menuArr)
   }
 }
 </script>

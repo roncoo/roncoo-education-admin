@@ -42,7 +42,6 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -54,39 +53,186 @@ export const constantRoutes = [
       meta: {title: '首页', icon: 'dashboard'}
     }]
   },
+  // 订单管理
+  // {
+  //   path: 'order',
+  //   component: () => import('@/views/order'),
+  //   children: [
+  //     {
+  //       path: 'info',
+  //       component: () => import('@/views/order/info'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 支付日志
+  //       path: 'pay',
+  //       component: () => import('@/views/order/pay'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
+  // 首页管理
+  // {
+  //   path: 'homepage',
+  //   component: () => import('@/views/homepage'),
+  //   children: [
+  //     {
+  //       path: 'carousel',
+  //       component: () => import('@/views/homepage/carousel'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       path: 'zone',
+  //       component: () => import('@/views/homepage/zone'),
+  //       children: [
+  //         {
+  //           path: 'list',
+  //           component: () => import('@/views/homepage/zone/list'),
+  //           meta: {requireAuth: true}
+  //         },
+  //         {
+  //           path: 'course',
+  //           component: () => import('@/views/homepage/zone/course'),
+  //           meta: {requireAuth: true, title: '专区课程'}
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: 'nav',
+  //       component: () => import('@/views/homepage/nav'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       path: 'article',
+  //       component: () => import('@/views/homepage/article'),
+  //       children: [
+  //         {
+  //           path: 'list',
+  //           component: () => import('@/views/homepage/article/list'),
+  //           meta: {requireAuth: true}
+  //         },
+  //         {
+  //           path: 'info',
+  //           component: () => import('@/views/homepage/article/info'),
+  //           meta: {requireAuth: true, title: '文章管理'}
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: 'link',
+  //       component: () => import('@/views/homepage/link'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
+  // 课程管理
+  // {
+  //   path: 'course',
+  //   component: () => import('@/views/course'),
+  //   children: [
+  //     {// 课程列表
+  //       path: 'list',
+  //       component: () => import('@/views/course/list'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 课程审核列表
+  //       path: 'audit',
+  //       component: () => import('@/views/course/audit'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 课程分类列表
+  //       path: 'category',
+  //       component: () => import('@/views/course/category'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
+  // 讲师管理
+  // {
+  //   path: 'lecturer',
+  //   component: () => import('@/views/lecturer'),
+  //   children: [
+  //     {// 讲师列表
+  //       path: 'list',
+  //       component: () => import('@/views/lecturer/list'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 讲师审核列表
+  //       path: 'audit',
+  //       component: () => import('@/views/lecturer/audit'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 讲师分润列表
+  //       path: 'profit',
+  //       component: () => import('@/views/lecturer/profit'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
+  // {
+  //   // 学员管理
+  //   path: 'user',
+  //   component: () => import('@/views/user'),
+  //   children: [
+  //     // 学员列表
+  //     {
+  //       path: 'info',
+  //       component: () => import('@/views/user/info'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 用户学习日志列表
+  //       path: 'study',
+  //       component: () => import('@/views/user/study'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
+  // {
+  //   // 站点管理
+  //   path: 'website',
+  //   component: () => import('@/views/website'),
+  //   children: [
+  //     {
+  //       // 站点设置
+  //       path: 'config',
+  //       component: () => import('@/views/website/config'),
+  //       meta: {requireAuth: true}
+  //     },
+  //     {
+  //       // 系统设置
+  //       path: 'system',
+  //       component: () => import('@/views/website/system'),
+  //       meta: {requireAuth: true}
+  //     }
+  //   ]
+  // },
   {
-    path: '/video',
-    component: Layout,
+    // 权限管理
+    path: 'pms',
+    component: () => import('@/views/pms'),
     children: [
       {
-        name: 'videoList',
-        path: 'list',
-        component: () => import('@/views/video/list'),
-        meta: {title: '视频管理'}
-      }
-    ]
-  },
-  {
-    path: '/users',
-    component: Layout,
-    children: [
+        // 用户管理
+        path: 'user',
+        component: () => import('@/views/pms/user/index'),
+        meta: {requireAuth: true}
+      },
       {
-        name: 'usersList',
-        path: 'list',
-        component: () => import('@/views/users/list'),
-        meta: {title: '用户管理'}
-      }
-    ]
-  },
-  {
-    path: '/config',
-    component: Layout,
-    children: [
+        // 角色管理
+        path: 'role',
+        component: () => import('@/views/pms/role/index'),
+        meta: {requireAuth: true}
+      },
       {
-        name: 'configList',
-        path: 'list',
-        component: () => import('@/views/config/list'),
-        meta: {title: '用户管理'}
+        // 菜单管理
+        path: 'menu',
+        component: () => import('@/views/pms/menu/index'),
+        meta: {requireAuth: true}
       }
     ]
   },

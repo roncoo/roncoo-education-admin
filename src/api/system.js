@@ -1,67 +1,110 @@
 import request from '@/utils/request'
-import * as axios from 'axios'
-import {getToken} from '@/utils/auth'
 
-// 分类--添加
-export function configSave(data = {}) {
-  return request.post('/v1/admin/config/save', data)
+// 管理员相关接口
+// 分页
+export function userPage(params, pageCurrent = 1, pageSize = 20) {
+  return request.post('/system/admin/sys/user/list', {pageCurrent: pageCurrent, pageSize: pageSize, ...params})
 }
 
-// 分类--查看
-export function configView(id) {
-  return request.get(`/v1/admin/config/view?id=${id}`)
+// 保存
+export function userSave(data = {}) {
+  return request.post('/system/admin/sys/user/save', data)
 }
 
-// 分类--删除
-export function configDelete(id) {
-  return request.delete(`/v1/admin/config/delete?id=${id}`);
+// 删除
+export function userDelete(data = {}) {
+  return request.post('/system/admin/sys/user/delete', data)
 }
 
-// 分类--编辑
-export function configEdit(data = {}) {
-  return request.put('/v1/admin/config/edit', data)
+// 更新
+export function userUpdate(data = {}) {
+  return request.post('/system/admin/sys/user/update', data)
 }
 
-// 分类管理--分页
-export function configList(params) {
-  return request.post('/v1/admin/config/list', {...params})
+// 查看
+export function userView(data = {}) {
+  return request.post('/system/admin/sys/user/view', data)
 }
 
-// 获取枚举
-export function enumList(enumName) {
-  return request.get(`/v1/admin/enum/list/${enumName}`)
+// 修改密码
+export function updatePassword(data = {}) {
+  return request.post('/system/admin/sys/user/update/password', data)
 }
 
-// 上传图片
-export const uploadPic = (params = {}, cb) => {
-  return createUpload('/v1/common/upload/pic', params, cb)
+// 角色用户列出
+export function roleUserList(data = {}) {
+  return request.post('/system/admin/sys/role/user/list', data)
 }
 
-const createUpload = (url, params = {}, cb) => {
-  const cancelToken = axios.CancelToken
-  const source = cancelToken.source()
-  const config = {
-    onUploadProgress: (progressEvent) => {
-      const complete = (progressEvent.loaded / progressEvent.total * 100 | 0)
-      if (cb) {
-        cb(complete, source)
-      }
-    },
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      token: getToken()
-    },
-    cancelToken: source.token,
-    timeout: 1000 * 60 * 90
-  }
-  return new Promise((resolve, reject) => {
-    axios.post(process.env.VUE_APP_BASE_API + url + '?token=' + getToken(), params, config).then((res) => {
-      resolve(res.data)
-    }).catch((error) => {
-      if (axios.isCancel(error)) { // 主要是这里
-        console.log('取消成功')
-      }
-      reject(error)
-    })
-  })
+// 角色用户添加
+export function roleUserSave(data = {}) {
+  return request.post('/system/admin/sys/role/user/save', data)
+}
+
+// 角色相关接口
+// 分页
+export function rolePage(params, pageCurrent = 1, pageSize = 20) {
+  return request.post('/system/admin/sys/role/list', {pageCurrent: pageCurrent, pageSize: pageSize, ...params})
+}
+
+// 添加
+export function roleSave(data = {}) {
+  return request.post('/system/admin/sys/role/save', data)
+}
+
+// 删除
+export function roleDelete(data = {}) {
+  return request.post('/system/admin/sys/role/delete', data)
+}
+
+// 更新
+export function roleUpdate(data = {}) {
+  return request.post('/system/admin/sys/role/update', data)
+}
+
+// 查看
+export function roleView(data = {}) {
+  return request.post('/system/admin/sys/role/view', data)
+}
+
+// 菜单角色相关接口
+// 列出
+export function menuRoleList(data = {}) {
+  return request.post('/system/admin/menu/role/list', data)
+}
+
+// 添加
+export function menuRoleSave(data = {}) {
+  return request.post('/system/admin/sys/menu/role/save', data)
+}
+
+// 菜单相关接口
+// 列出
+export function menuList(data = {}) {
+  return request.post('/system/admin/sys/menu/list', data)
+}
+
+// 保存
+export function menuSave(data = {}) {
+  return request.post('/system/admin/sys/menu/save', data)
+}
+
+// 删除
+export function menuDelete(data = {}) {
+  return request.post('/system/admin/sys/menu/delete', data)
+}
+
+// 更新
+export function menuUpdate(data = {}) {
+  return request.post('/system/admin/sys/menu/update', data)
+}
+
+// 查看
+export function menuView(data = {}) {
+  return request.post('/system/admin/sys/menu/view', data)
+}
+
+// 用户菜单（登录使用）
+export function userMenuList(data) {
+  return request.post('/system/admin/sys/menu/user/list', data)
 }

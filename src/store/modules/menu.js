@@ -1,5 +1,5 @@
-import mockMenuData from '@/router/menu.json5'
 import _ from 'lodash'
+import * as system from '@/api/system'
 
 function flattenMenu(menu, parents = []) {
   if (Array.isArray(menu)) {
@@ -26,15 +26,12 @@ const menu = {
   actions: {
     setMenu({commit, state}) {
       return new Promise((resolve, reject) => {
-        // TODO 后续续编辑为从服务器获取，并且做数据处理
-        commit('set_system_menu', mockMenuData)
-        resolve()
-        // getMenu().then(res => {
-        //   commit('set_system_menu', res.data)
-        //   resolve()
-        // }).catch(err => {
-        //   reject(err)
-        // })
+        system.userMenuList().then(res => {
+          commit('set_system_menu', res.data)
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
       })
     }
   }

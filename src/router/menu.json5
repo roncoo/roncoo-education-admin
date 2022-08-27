@@ -21,28 +21,5 @@
  }
 **/
 [
-  {
-    "id": 0,
-    "name": "首页",
-    "path": "/dashboard",
-    "targetName": "dashboard"
-  },
-  {
-    "id": 0,
-    "name": "视频管理",
-    "path": "/video/list",
-    "targetName": "video"
-  },
-  {
-    "id": 0,
-    "name": "用户管理",
-    "path": "/users/list",
-    "targetName": "user"
-  },
-  {
-    "id": 0,
-    "name": "系统配置",
-    "path": "/config/list",
-    "targetName": "system"
-  }
+  // 服务端加载
 ]

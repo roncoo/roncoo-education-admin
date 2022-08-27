@@ -99,7 +99,6 @@ export default {
         if (valid) {
           this.loading = true
           login(this.loginForm).then((res) => {
-            console.log(res)
             setToken(res.data.token)
             this.$router.push({path: this.redirect || '/'})
             this.loading = false
