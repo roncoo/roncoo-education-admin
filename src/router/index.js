@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
-import mains from '@/layout/components/mains'
 
 Vue.use(Router)
 
@@ -30,60 +29,7 @@ Vue.use(Router)
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
- export const asyncRouterMap = [
-  {
-    // 权限管理
-    path: '/pms',
-    component: Layout,
-    name: 'pms',
-    children: [
-      {
-        // 用户管理
-        path: 'user',
-        name: 'pmsUser',
-        component: () => import('@/views/pms/user/index'),
-        meta: { requireAuth: true }
-      },
-      {
-        // 角色管理
-        path: 'role',
-        name: 'pmsRole',
-        component: () => import('@/views/pms/role/index'),
-        meta: { requireAuth: true }
-      },
-      {
-        // 菜单管理
-        path: 'menu',
-        name: 'pmsMenu',
-        component: () => import('@/views/pms/menu/index'),
-        meta: { requireAuth: true }
-      }
-    ]
-  },
-
-  {
-    name: '内容管理',
-    path: '/homepage',
-    component: Layout,
-    meta: { title: '内容管理', icon: 'content' },
-    children: [
-      {
-        path: 'article',
-        name: '课程管理',
-        component: mains,
-        meta: { title: '课程管理', icon: 'vod' },
-        children: [
-          {
-            path: 'list',
-            name: '专题课管理',
-            component: () => import('@/views/pms/menu/index'),
-            meta: { title: '课程列表', icon: '', appMainPadding: '0px' }
-          }
-        ]
-      }
-    ]
-  }
-]
+export const asyncRouterMap = []
 
 export const constantRoutes = [
   {
@@ -91,7 +37,6 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -103,29 +48,53 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: {title: '首页', icon: 'dashboard'}
     }]
   },
   // 订单管理
-  // {
-  //   path: 'order',
-  //   component: () => import('@/views/order'),
-  //   children: [
-  //     {
-  //       path: 'info',
-  //       component: () => import('@/views/order/info'),
-  //       meta: {requireAuth: true}
-  //     },
-  //     {
-  //       // 支付日志
-  //       path: 'pay',
-  //       component: () => import('@/views/order/pay'),
-  //       meta: {requireAuth: true}
-  //     }
-  //   ]
-  // },
+  {
+    path: 'order',
+    component: Layout,
+    children: [
+      {
+        path: 'info',
+        component: () => import('@/views/order/info'),
+        meta: {requireAuth: true}
+      },
+      {
+        // 支付日志
+        path: 'pay',
+        component: () => import('@/views/order/pay'),
+        meta: {requireAuth: true}
+      }
+    ]
+  },
+  {
+    // 权限管理
+    path: '/pms',
+    component: Layout,
+    children: [
+      {
+        // 用户管理
+        path: 'user',
+        component: () => import('@/views/pms/user/index'),
+        meta: {requireAuth: true}
+      },
+      {
+        // 角色管理
+        path: 'role',
+        component: () => import('@/views/pms/role/index'),
+        meta: {requireAuth: true}
+      },
+      {
+        // 菜单管理
+        path: 'menu',
+        component: () => import('@/views/pms/menu/index'),
+        meta: {requireAuth: true}
+      }
+    ]
+  },
   // 首页管理
   // {
   //   path: 'homepage',
@@ -268,21 +237,21 @@ export const constantRoutes = [
   // },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true },
+  {path: '*', redirect: '/404', hidden: true},
   {
     path: '/',
     component: Layout,
     redirect: 'dashboard', // 设置登陆系统默认页面
     children: [
-      { path: 'iframe', component: () => import('@/views/iframe/index') },
-      { path: 'redirect/:path*', name: 'redirect', component: () => import('@/views/redirect/index') }
+      {path: 'iframe', component: () => import('@/views/iframe/index')},
+      {path: 'redirect/:path*', name: 'redirect', component: () => import('@/views/redirect/index')}
     ]
   }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRoutes
 })
 

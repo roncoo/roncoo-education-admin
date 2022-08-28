@@ -3,10 +3,11 @@
     :title="title"
     :visible.sync="visible"
     :before-close="handleClose"
-    width="400px">
+    width="400px"
+  >
     <el-form ref="formData" :model="formData" label-width="40px">
       <el-form-item label="" prop="remark">
-        <el-input v-model="formData.remark" class="form-group" type="textarea" :rows="4" placeholder="请输入内容" maxlength="50" show-word-limit/>
+        <el-input v-model="formData.remark" class="form-group" type="textarea" :rows="4" placeholder="请输入内容" maxlength="50" show-word-limit />
       </el-form-item>
     </el-form>
     <div slot="footer">
@@ -16,7 +17,7 @@
   </el-dialog>
 </template>
 <script>
-import * as orderApi from '@/api/order'
+import * as userApi from '@/api/user'
 
 export default {
   name: 'Remark',
@@ -43,11 +44,11 @@ export default {
           if (this.formData.id === undefined) {
             this.$message({
               type: 'error',
-              message: "提交失败"
+              message: '提交失败'
             });
           } else {
             this.loading.show()
-            orderApi.orderUpdate(this.formData).then(res => {
+            userApi.orderUpdate(this.formData).then(res => {
               this.loading.hide()
               if (res.code === 200 && res.data > 0) {
                 // 提交成功, 关闭窗口, 刷新列表
@@ -56,7 +57,7 @@ export default {
               } else {
                 this.$message({
                   type: 'error',
-                  message: "提交失败"
+                  message: '提交失败'
                 });
               }
             }).catch(() => {
@@ -66,7 +67,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: "提交失败"
+            message: '提交失败'
           });
         }
       })

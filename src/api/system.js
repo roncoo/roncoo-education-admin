@@ -104,6 +104,10 @@ export function menuView(data = {}) {
   return request.post('/system/admin/sys/menu/view', data)
 }
 
+export function enumList(enumName) {
+  return request.post('/system/api/enum/view', {enumName})
+}
+
 // 用户菜单（登录使用）
 export function userMenuList(data) {
   return request.post('/system/admin/sys/menu/user/list', data)

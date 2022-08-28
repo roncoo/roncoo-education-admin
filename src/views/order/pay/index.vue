@@ -3,19 +3,19 @@
     <div>
       <el-form :inline="true" size="mini">
         <el-form-item label="订单号：">
-          <el-input v-model.trim="map.orderNo"></el-input>
+          <el-input v-model.trim="map.orderNo" />
         </el-form-item>
         <el-form-item>
-          <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
-          <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
+          <el-button icon="el-icon-search" type="primary" @click="handleCheck">查询</el-button>
+          <el-button icon="el-icon-refresh" class="filter-item" @click="handleReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div>
       <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
-        <el-table-column type="index" label="序号" width="50"></el-table-column>
-        <el-table-column prop="orderNo" label="订单号"></el-table-column>
-        <el-table-column prop="serialNumber" label="流水号"></el-table-column>
+        <el-table-column type="index" label="序号" width="50" />
+        <el-table-column prop="orderNo" label="订单号" />
+        <el-table-column prop="serialNumber" label="流水号" />
         <el-table-column label="订单状态">
           <template slot-scope="scope">
             <span>{{ textOrderStatus[scope.row.orderStatus] }}</span>
@@ -26,24 +26,24 @@
             <span>{{ textPayType[scope.row.payType] }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="gmtCreate" label="下单时间"></el-table-column>
-        <el-table-column prop="payTime" label="支付时间"></el-table-column>
+        <el-table-column prop="gmtCreate" label="下单时间" />
+        <el-table-column prop="payTime" label="支付时间" />
       </el-table>
     </div>
     <el-pagination
       background
       style="float: right;margin-top: 20px; margin-bottom: 22px"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :page-size="page.pageSize"
       :page-sizes="[20, 50, 100, 200, 500, 1000]"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="page.totalCount">
-    </el-pagination>
+      :total="page.totalCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 <script>
-import * as api from '@/api/sys'
+import * as userApi from '@/api/user'
 
 export default {
   data() {
@@ -93,7 +93,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('GetOpts', { enumName: "ProfitStatusEnum", type: 'arr' }).then(res => {
+    this.$store.dispatch('GetOpts', {enumName: 'ProfitStatusEnum', type: 'arr'}).then(res => {
       this.profitStatusList = res
     })
     this.listForPage()
@@ -141,7 +141,7 @@ export default {
     // 支付记录分页列表接口
     listForPage() {
       this.ctrl.load = true
-      api.orderPaylist(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
+      userApi.orderPage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.data.list
         this.page.pageCurrent = res.data.pageCurrent
         this.page.totalCount = res.data.totalCount

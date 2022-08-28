@@ -2,14 +2,14 @@
   <div class="pad20">
     <el-form :inline="true" size="mini">
       <el-form-item label="手机号码：">
-        <el-input v-model.trim="map.mobile"></el-input>
+        <el-input v-model.trim="map.mobile" />
       </el-form-item>
       <el-form-item label="课程名称：">
-        <el-input v-model.trim="map.courseName"></el-input>
+        <el-input v-model.trim="map.courseName" />
       </el-form-item>
       <el-form-item label="支付时间：">
         <div>
-          <datePicker style="width: 357px" v-model="payTime" ref="dataRange" type="daterange"></datePicker>
+          <datePicker ref="dataRange" v-model="payTime" style="width: 357px" type="daterange" />
         </div>
       </el-form-item>
       <el-form-item label="订单状态：">
@@ -18,18 +18,18 @@
             v-for="item in opts.orderStatusList"
             :key="item.code"
             :label="item.desc"
-            :value="item.code">
-          </el-option>
+            :value="item.code"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="订单编号：">
-        <el-input v-model.trim="map.orderNo"></el-input>
+        <el-input v-model.trim="map.orderNo" />
       </el-form-item>
       <el-form-item label="后台备注：">
-        <el-input v-model.trim="map.remark"></el-input>
+        <el-input v-model.trim="map.remark" />
       </el-form-item>
       <el-form-item label="讲师名称：">
-        <el-input v-model.trim="map.lecturerName"></el-input>
+        <el-input v-model.trim="map.lecturerName" />
       </el-form-item>
       <el-form-item label="购买渠道：">
         <el-select v-model="map.channelType" class="auto-width" clearable filterable placeholder="购买渠道" style="width: 100px">
@@ -37,8 +37,8 @@
             v-for="item in opts.channelTypeList"
             :key="item.code"
             :label="item.desc"
-            :value="item.code">
-          </el-option>
+            :value="item.code"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="支付方式：">
@@ -47,14 +47,14 @@
             v-for="item in opts.payTypeList"
             :key="item.code"
             :label="item.desc"
-            :value="item.code">
-          </el-option>
+            :value="item.code"
+          />
         </el-select>
       </el-form-item>
-      <br/>
+      <br>
       <el-form-item>
-        <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
-        <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-search" type="primary" @click="handleCheck">查询</el-button>
+        <el-button icon="el-icon-refresh" class="filter-item" @click="handleReset">重置</el-button>
         <!--        <div style="display:inline" v-has="'/course/pc/order/info/statistical'">
                   <el-form-item>
                     <div>
@@ -77,8 +77,7 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="ctrl.load" border size="medium" :data="list" stripe style="width: 100%">
-      <el-table-column type="index" label="序号" width="50">
-      </el-table-column>
+      <el-table-column type="index" label="序号" width="50" />
       <el-table-column label="订单号" width="170">
         <template slot-scope="scope">
           <el-button v-has="'/course/pc/order/info/view'" type="text" @click="handleView(scope.row.id)">{{ scope.row.orderNo }}</el-button>
@@ -115,7 +114,8 @@
       <el-table-column
         label="交易类型/渠道"
         prop="tradeType"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-row v-if="scope.row.tradeType === 1" type="success" plain>线上支付</el-row>
           <el-row v-if="scope.row.tradeType === 2" type="brandColor">线下支付</el-row>
@@ -132,7 +132,8 @@
       <el-table-column
         label="订单状态 / 时间"
         prop="orderStatus"
-        width="160">
+        width="160"
+      >
         <template slot-scope="sett">
           <el-row v-if="sett.row.orderStatus === 1" type="warning" plain>待支付</el-row>
           <el-row v-if="sett.row.orderStatus === 2" type="success" plain>支付成功</el-row>
@@ -142,34 +143,31 @@
           <span>{{ sett.row.payTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="remarkCus" label="客户备注">
-      </el-table-column>
+      <el-table-column prop="remarkCus" label="客户备注" />
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
-          <el-button v-has="'/course/pc/order/info/edit'" type="success" plain @click="handleRemark(scope.row)" size="mini">备注</el-button>
+          <el-button v-has="'/course/pc/order/info/edit'" type="success" plain size="mini" @click="handleRemark(scope.row)">备注</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
       background
       style="float: right;margin-top: 20px; margin-bottom: 22px"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :page-size="page.pageSize"
       :page-sizes="[20, 50, 100, 200, 500, 1000]"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="page.totalCount">
-    </el-pagination>
-    <remark :visible="ctrl.remarkVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></remark>
-    <view-lecturer :visible="ctrl.lecturerViewVisible" :formData="formData" :lecturerExt="lecturerExt" :title="ctrl.dialogTitle" @close-callback="closeCllback"></view-lecturer>
-    <view-user :visible="ctrl.userViewVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></view-user>
-    <order-view :visible="ctrl.viewVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></order-view>
+      :total="page.totalCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+    <remark :visible="ctrl.remarkVisible" :form-data="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback" />
+    <view-lecturer :visible="ctrl.lecturerViewVisible" :form-data="formData" :lecturer-ext="lecturerExt" :title="ctrl.dialogTitle" @close-callback="closeCllback" />
+    <view-user :visible="ctrl.userViewVisible" :form-data="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback" />
+    <order-view :visible="ctrl.viewVisible" :form-data="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback" />
   </div>
 </template>
 <script>
-import * as orderApi from '@/api/order'
 import * as userApi from '@/api/user'
-import * as lecturerApi from '@/api/lecturer'
 import Remark from './remark'
 import ViewLecturer from '@/views/lecturer/list/view'
 import viewUser from '@/views/user/info/view'
@@ -177,7 +175,7 @@ import OrderView from './view'
 import datePicker from '@/components/DateRange/datePicker';
 
 export default {
-  components: { Remark, ViewLecturer, OrderView, viewUser, datePicker },
+  components: {Remark, ViewLecturer, OrderView, viewUser, datePicker},
   data() {
     return {
       ctrl: {
@@ -200,7 +198,7 @@ export default {
       payTime: '',
       totalProfit: '', // 订单收入
       platformProfit: '', // 平台收入
-      lecturerProfit: '', //讲师收入
+      lecturerProfit: '', // 讲师收入
       formData: {},
       list: [],
       lecturerExt: {},
@@ -243,13 +241,13 @@ export default {
   },
   mounted() {
     this.getList()
-    this.$store.dispatch('GetOpts', { enumName: "OrderStatusEnum", type: 'arr' }).then(res => {
+    this.$store.dispatch('GetOpts', {enumName: 'OrderStatusEnum', type: 'arr'}).then(res => {
       this.opts.orderStatusList = res
     })
-    this.$store.dispatch('GetOpts', { enumName: "ChannelTypeEnum", type: 'arr' }).then(res => {
+    this.$store.dispatch('GetOpts', {enumName: 'ChannelTypeEnum', type: 'arr'}).then(res => {
       this.opts.channelTypeList = res
     })
-    this.$store.dispatch('GetOpts', { enumName: "PayTypeEnum", type: 'arr' }).then(res => {
+    this.$store.dispatch('GetOpts', {enumName: 'PayTypeEnum', type: 'arr'}).then(res => {
       this.opts.payTypeList = res
     })
   },
@@ -271,13 +269,13 @@ export default {
       }
       this.handleCheck(this.map)
     },
-    //跳转订单备注页面
+    // 跳转订单备注页面
     handleRemark(data) {
       this.ctrl.load = true
-      orderApi.orderView(data.id).then(res => {
+      userApi.orderView(data.id).then(res => {
         this.ctrl.load = false
         this.formData = res.data
-        this.ctrl.dialogTitle = "订单备注"
+        this.ctrl.dialogTitle = '订单备注'
         this.ctrl.remarkVisible = true
       }).catch(() => {
         this.ctrl.load = false
@@ -285,7 +283,7 @@ export default {
     },
     handleUserView(userNo) {
       this.ctrl.load = true
-      userApi.userExtView({ orderUserNo: userNo }).then(res => {
+      userApi.usersView({orderUserNo: userNo}).then(res => {
         this.formData = res.data
         this.ctrl.dialogTitle = res.data.nickname
         this.ctrl.userViewVisible = true
@@ -294,23 +292,23 @@ export default {
         this.ctrl.load = false
       })
     },
-    //跳转讲师详情页面
+    // 跳转讲师详情页面
     handleLecturerView(lecturerUserNo) {
-      this.ctrl.load = true
-      lecturerApi.lecturerView({ lecturerUserNo: lecturerUserNo }).then(res => {
-        this.formData = res.data
-        this.lecturerExt = res.data.lecturerExt
-        this.ctrl.dialogTitle = res.data.lecturerName
-        this.ctrl.lecturerViewVisible = true
-        this.ctrl.load = false
-      }).catch(() => {
-        this.ctrl.load = false
-      })
+      // this.ctrl.load = true
+      // lecturerApi.lecturerView({ lecturerUserNo: lecturerUserNo }).then(res => {
+      //   this.formData = res.data
+      //   this.lecturerExt = res.data.lecturerExt
+      //   this.ctrl.dialogTitle = res.data.lecturerName
+      //   this.ctrl.lecturerViewVisible = true
+      //   this.ctrl.load = false
+      // }).catch(() => {
+      //   this.ctrl.load = false
+      // })
     },
-    //跳转订单详情页面
+    // 跳转订单详情页面
     handleView(id) {
       this.ctrl.load = true
-      orderApi.orderView(id).then(res => {
+      userApi.orderView(id).then(res => {
         this.ctrl.load = false
         this.formData = res.data
         this.ctrl.dialogTitle = '订单详情'
@@ -357,18 +355,18 @@ export default {
     },
     // 订单统计
     statistical() {
-      orderApi.orderStatistical(this.map).then(res => {
-        this.totalProfit = res.data.totalProfit.toFixed(2)
-        this.platformProfit = res.data.platformProfit.toFixed(2)
-        this.lecturerProfit = res.data.lecturerProfit.toFixed(2)
-        this.ctrl.load = false
-      }).catch(() => {
-        this.ctrl.load = false
-      })
+      // orderApi.orderStatistical(this.map).then(res => {
+      //   this.totalProfit = res.data.totalProfit.toFixed(2)
+      //   this.platformProfit = res.data.platformProfit.toFixed(2)
+      //   this.lecturerProfit = res.data.lecturerProfit.toFixed(2)
+      //   this.ctrl.load = false
+      // }).catch(() => {
+      //   this.ctrl.load = false
+      // })
     },
     getList() {
       this.ctrl.load = true
-      orderApi.orderList(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
+      userApi.orderPage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.data.list
         this.page.pageSize = res.data.pageSize
         this.page.totalCount = res.data.totalCount

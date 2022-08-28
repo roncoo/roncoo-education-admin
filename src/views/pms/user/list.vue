@@ -4,12 +4,13 @@
     width="800px"
     :title="title"
     :visible.sync="visible"
-    :before-close="handleClose">
+    :before-close="handleClose"
+  >
     <div class="pad20">
       <div>
         <el-form :inline="true" size="mini">
           <el-form-item label="用户手机">
-            <el-input v-model.trim="map.mobile"></el-input>
+            <el-input v-model.trim="map.mobile" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :loading="ctrl.load" @click="handleCheck">查询</el-button>
@@ -19,16 +20,17 @@
       </div>
       <div>
         <el-table v-loading="ctrl.load" size="medium" :data="list" stripe border style="width: 100%">
-          <el-table-column type="index" label="序号" width="50"></el-table-column>
-          <el-table-column prop="mobile" label="电话"></el-table-column>
-          <el-table-column prop="userNo" label="用户编号"></el-table-column>
-          <el-table-column prop="gmtCreate" label="注册时间"></el-table-column>
+          <el-table-column type="index" label="序号" width="50" />
+          <el-table-column prop="mobile" label="电话" />
+          <el-table-column prop="userNo" label="用户编号" />
+          <el-table-column prop="gmtCreate" label="注册时间" />
           <el-table-column
             fixed="right"
             label="操作"
-            width="100">
+            width="100"
+          >
             <template slot-scope="scope">
-              <el-button type="success" plain @click="handleChoice(scope.row)" size="mini">选择</el-button>
+              <el-button type="success" plain size="mini" @click="handleChoice(scope.row)">选择</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -37,23 +39,33 @@
         <el-pagination
           background
           style="float: right;margin-top: 20px; margin-bottom: 22px"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :page-size="page.pageSize"
           :page-sizes="[20, 50, 100, 200, 500, 1000]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="page.totalCount">
-        </el-pagination>
+          :total="page.totalCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
-      <br/>
-      <br/>
+      <br>
+      <br>
     </div>
   </el-dialog>
 </template>
 <script>
-import * as userApi from '@/api/user'
+import * as userApi from '@/api/system'
 
 export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       map: {},
@@ -99,18 +111,8 @@ export default {
       gmtCreate: ''
     }
   },
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: String,
-      default: ''
-    }
-  },
   mounted() {
-    this.$store.dispatch('GetOpts', { enumName: "StatusIdEnum", type: 'arr' }).then(res => {
+    this.$store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'arr'}).then(res => {
       this.opts.statusIdList = res
     })
     this.userExtList(1)

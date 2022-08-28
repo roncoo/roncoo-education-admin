@@ -1,5 +1,22 @@
 import request from '@/utils/request'
 
+// --- 订单相关接口
+// 分页
+export function orderPage(params, pageCurrent = 1, pageSize = 20) {
+  return request.post('/user/admin/order/info/page', {pageCurrent: pageCurrent, pageSize: pageSize, ...params})
+}
+
+// 更新
+export function orderUpdate(data = {}) {
+  return request.post('/course/pc/order/info/update', data)
+}
+
+// 查看
+export function orderView(id) {
+  return request.post('/course/pc/order/info/view', {id})
+}
+
+// --- 用户相关接口
 // 分页
 export function usersPage(params, pageCurrent = 1, pageSize = 20) {
   return request.post('/system/admin/users/page', {pageCurrent: pageCurrent, pageSize: pageSize, ...params});
