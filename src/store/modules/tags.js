@@ -12,6 +12,7 @@ const tags = {
         const menu = this.getters.menu.menuSet[url]
         const route = { ...view }
         route.name = undefined
+        if(view.name === 'Page403') return
         state.visitedViews.push({
           key: view.fullPath,
           title: menu ? (menu.name || menu.title) : view.meta.title || 'no-name',
@@ -21,9 +22,10 @@ const tags = {
     },
     ADD_CACHED_VIEW: (state, view) => {
       // state.closeCacheView = null
-      if (state.cachedViews.includes(view.fullPath)) return
+
+      if (state.cachedViews.includes(view.name)) return
       if (!view.meta.noCache) {
-        state.cachedViews.push(view.fullPath)
+        state.cachedViews.push(view.name)
       }
     },
 
@@ -41,7 +43,7 @@ const tags = {
         state.closeViews.push(view.fullPath)
       }
       for (const i of state.cachedViews) {
-        if (i === view.fullPath) {
+        if (i === view.name) {
           const index = state.cachedViews.indexOf(i)
           state.cachedViews.splice(index, 1)
           break

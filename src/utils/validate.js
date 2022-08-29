@@ -15,7 +15,7 @@ export function isExternal(path) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  const valid_map = ['admin', 'editor', 'zengk']
+  const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
 /** 合法uri*/
@@ -35,6 +35,10 @@ export function isEmail(email) {
 
 export function isCardNo(no) {
   return /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/.test(no) || /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/.test(no)
+}
+ // 正则 英文+数字
+export function isLoginName(no) {
+  return /[A-Za-z0-9.,!~@#$%&*^><|]+/gi.test(no)
 }
 
 export function isPhoneNo(no) {
@@ -65,4 +69,8 @@ export function checkPWD(no) {
   } else {
     return 0
   }
+}
+
+export function validPWd (no) {
+  return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(no)
 }

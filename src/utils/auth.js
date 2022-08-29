@@ -1,15 +1,19 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'token'
+const TokenKey = 'EDU_BOSS_TOKEN'
 
 export function getToken() {
     return Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
-    return Cookies.set(TokenKey, token)
+    return Cookies.set(TokenKey, token, {
+        expires: 1
+    })
 }
 
 export function removeToken() {
-    return Cookies.remove(TokenKey)
+    return Cookies.remove(TokenKey, {
+        expires: 1
+    })
 }

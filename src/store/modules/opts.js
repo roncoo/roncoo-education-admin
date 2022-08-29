@@ -42,11 +42,11 @@ const opts = {
       }
       return new Promise((resolve, reject) => {
         enumList(enumName).then(response => {
-          if (response.code === 200) {
-            let resData = response.data
-            setSession(enumName, response.data)
+          if (Response) {
+            let resData = response
+            setSession(enumName, response)
             if (type === 'obj') {
-              resData = toObj(response.data)
+              resData = toObj(response)
             }
             resolve(resData)
           } else {

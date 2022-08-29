@@ -11,6 +11,11 @@
   }
 }
 
+.el-pagination {
+  text-align: center;
+  padding-top: 20px;
+}
+
 .el-upload__input {
   display: none;
 }
@@ -22,6 +27,10 @@
   left: 0;
   position: relative;
   margin: 0 auto;
+}
+
+.el-dialog__header {
+  // border-bottom: 1px solid #EBEEF5;
 }
 
 // refine element ui upload
@@ -37,10 +46,19 @@
 }
 
 // dropdown
+.el-dropdown {
+  margin-left: 10px;
+}
+
 .el-dropdown-menu {
   a {
     display: block
   }
+}
+
+.el-dropdown-menu__item {
+  margin: 4px 0;
+  text-align: center;
 }
 
 // to fix el-date-picker css style
@@ -48,30 +66,31 @@
   box-sizing: content-box;
 }
 
-.app-container {
-  .el-pagination {
-    text-align: right;
-    margin-top: 12px;
-  }
-}
-
-.el-dialog{
+.el-dialog {
+  display: flex;
+  flex-direction: column;
   margin: 0 !important;
-  position: absolute;
   max-height: calc(100% - 60px - 36px);
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  .el-dialog__header{
-    text-align: center;
-  }
-  .el-dialog__body{
-    max-height: calc(100vh - 206px);
+  transform: translate(-50%, -50%);
+
+  .el-dialog__body {
+    padding-top: 20px;
+    //  flex: 1;
     overflow-y: auto;
   }
 }
 
-.form-group {
-  width: 100%;
-  max-width: 400px;
+.el-radio__input.is-checked + .el-radio__label {
+  color: var(--el-radio-text-color);
+}
+
+.el-button.is-plain.el-button--success {
+  &:focus {
+    background-color: var(--el-button-bg-color, var(--el-color-white));
+    color: var(--el-button-text-color, var(--el-text-color-regular));
+    border-color: var(--el-button-border-color, var(--el-border-color-base));
+  }
 }

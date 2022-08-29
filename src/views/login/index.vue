@@ -1,137 +1,353 @@
 <template>
   <div class="login-layout">
     <div class="container">
-      <img alt src="../../assets/images/login-logo2.jpg" class="login-logo2">
+      <img alt class="login-logo2" src="../../assets/images/login-logo.jpg"/>
       <div class="login-panel">
-        <!--        <div class="head clearfix">-->
-        <!--          <div class="logo">-->
-        <!--            <img alt src="" class="img-logo">-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <el-form
-          ref="loginForm"
-          :model="loginForm"
-          :rules="loginRules"
-          auto-complete="on"
-          label-position="left"
-        >
-          <h3 class="login-head">用户登录</h3>
-          <el-form-item class="form-group" prop="mobile">
+        <div class="head clearfix">
+          <div class="logo">
+            <img class="img-logo" src="../../assets/logo.svg"/>
+          </div>
+        </div>
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
+          <h3 class="login-head">管理员登录</h3>
+          <el-form-item class="form-group" prop="loginName">
             <el-input
               ref="mobile"
-              v-model="loginForm.mobile"
+              v-model="loginForm.loginName"
               auto-complete="on"
               class="form-input"
               name="mobile"
               placeholder="用户名"
               tabindex="1"
               type="text"
+              @keyup.enter="handleLogin"
             />
           </el-form-item>
-          <el-form-item class="form-group" prop="mobilePwd">
+          <el-form-item class="form-group" prop="loginPwd">
             <el-input
-              ref="mobilePwd"
-              v-model="loginForm.mobilePwd"
-              :type="passwordType"
+              ref="loginPwd"
+              v-model="loginForm.loginPwd"
+              :type="loginPwdType"
               auto-complete="on"
               class="form-input"
-              name="mobilePwd"
+              name="loginPwd"
               placeholder="密码"
               tabindex="2"
-              @keyup.enter.native="handleLogin"
+              @keyup.enter="handleLogin"
             />
           </el-form-item>
-          <el-button
-            :loading="loading"
-            class="submit-btn"
-            style="width:100%;margin-bottom:30px;"
-            type="primary"
-            @click.native.prevent="handleLogin"
-          >登录
+          <el-form-item v-if="imageVerification" prop="imageVerification">
+            <div class="flex_code">
+              <el-input v-model="loginForm.imageVerification" class="flex_code_input" placeholder="请输入验证码"
+                        @keyup.enter="handleLogin"/>
+              <img :src="imgCode" class="img_code" @click="getImgCode"/>
+            </div>
+          </el-form-item>
+          <el-button :loading="loading" class="submit-btn" style="width: 100%; margin-bottom: 30px" type="primary"
+                     @click.native.prevent="handleLogin"
+          >登 录
           </el-button>
         </el-form>
+      </div>
+    </div>
+    <div class="footer">
+      <div v-if="service.websiteCopyright" class="copyright">
+        <span v-html="service.websiteCopyright"/>
+      </div>
+      <div class="icp">
+        <a v-if="service.websiteIcp" class="c_ccc" href="http://beian.miit.gov.cn/"
+           target="_blank">{{ service.websiteIcp }}</a>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <img :alt="service.websitePrn" class="prn_icon" src="@/assets/prn_icon.png"/>
+        <a
+          v-if="service.websitePrn"
+          :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrn"
+          class="c_ccc"
+          target="_blank"
+        >&nbsp;{{ service.websitePrn }}
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {login} from '@/api/login';
-import {setToken} from '@/utils/auth'
+// import slideVerify from '@/components/slideVerify'
+import {getCodeImg, getWebsite} from '@/api/system';
+import {getStore, setStore} from '@/utils/storage';
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'Login',
-  components: {},
+  components: {
+    // slideVerify
+  },
   data() {
-    const validateUsername = (rule, value, callback) => {
+    const validateMobile = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入登录账号'))
+        callback(new Error('请输入登录账号'));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePass = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入登录密码'))
+        callback(new Error('请输入登录密码'));
       } else if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+        callback(new Error('密码不能小于5位'));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
+      service: {
+        websiteCopyright: '',
+        websiteIcp: '',
+        prnNo: '',
+        websitePrn: '',
+      },
       loginForm: {
-        mobile: '',
-        mobilePwd: ''
+        loginName: '',
+        loginPwd: '',
+        ip: '127.0.0.0',
+        clientType: 1,
+        imageVerification: '',
+        imageVerificationToken: '',
       },
       loginRules: {
-        mobile: [{required: true, trigger: 'blur', validator: validateUsername}],
-        mobilePwd: [{required: true, trigger: 'blur', validator: validatePass}]
+        loginName: [{required: true, trigger: 'blur', validator: validateMobile}],
+        loginPwd: [{required: true, trigger: 'blur', validator: validatePass}],
+        imageVerification: [{required: true, message: '请输入验证码', trigger: 'blur'}],
       },
+      imgs: [
+        '/vcode/01.jpg',
+        '/vcode/02.jpg',
+        '/vcode/03.jpg',
+        '/vcode/04.jpg',
+        '/vcode/05.jpg',
+        '/vcode/06.jpg',
+        '/vcode/07.jpg',
+        '/vcode/08.jpg',
+        '/vcode/09.jpg',
+        '/vcode/10.jpg',
+        '/vcode/11.jpg',
+        '/vcode/12.jpg',
+      ],
+      checkSlide: '',
+      showSlide: false,
       loading: false,
-      passwordType: 'password',
-      redirect: undefined
+      loginPwdType: 'password',
+      redirect: undefined,
+      imgCode: '',
+      errorCount: 0
+    };
+  },
+  computed: {
+    ...mapGetters(['imageVerification'])
+  },
+  mounted() {
+    this.errorCount = parseInt(getStore('loginErrorCount')) || 0
+    if (this.errorCount >= 2) {
+      this.$store.dispatch('app/toggleImageVerification', true)
     }
+    this.getWebsiteInfo();
+    this.getImgCode();
   },
   methods: {
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          login(this.loginForm).then((res) => {
-            setToken(res.data.token)
-            this.$router.push({path: this.redirect || '/'})
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+    getImgCode() {
+      getCodeImg().then((res) => {
+        this.loginForm.imageVerificationToken = res.token;
+        this.imgCode = res.img;
+      });
+    },
+    getBrowserInfo: function () {
+      /* eslint-disable */
+      const Sys = {};
+      const ua = navigator.userAgent.toLowerCase();
+      let s;
+      (s = ua.match(/rv:([\d.]+)\) like gecko/))
+        ? (Sys.ie = s[1])
+        : (s = ua.match(/msie ([\d]+)/))
+          ? (Sys.ie = s[1])
+          : (s = ua.match(/edge\/([\d]+)/))
+            ? (Sys.edge = s[1])
+            : (s = ua.match(/firefox\/([\d]+)/))
+              ? (Sys.firefox = s[1])
+              : (s = ua.match(/(?:opera|opr).([\d]+)/))
+                ? (Sys.opera = s[1])
+                : (s = ua.match(/chrome\/([\d]+)/))
+                  ? (Sys.chrome = s[1])
+                  : (s = ua.match(/version\/([\d]+).*safari/))
+                    ? (Sys.safari = s[1])
+                    : 0;
+      // 根据关系进行判断
+      if (Sys.ie)
+        return {
+          name: 'IE',
+          version: Sys.ie,
+        };
+      if (Sys.edge)
+        return {
+          name: 'EDGE',
+          version: Sys.edge,
+        };
+      if (Sys.firefox)
+        return {
+          name: 'Firefox',
+          version: Sys.firefox,
+        };
+      if (Sys.chrome)
+        return {
+          name: 'Chrome',
+          version: Sys.chrome,
+        };
+      if (Sys.opera)
+        return {
+          name: 'Opera',
+          version: Sys.opera,
+        };
+      if (Sys.safari)
+        return {
+          name: 'Safari',
+          version: Sys.safari,
+        };
+      return {
+        name: 'Unkonwn',
+        version: '0.0.0',
+      };
+    },
+    // 获取系统信息
+    getOsInfo: function () {
+      const userAgent = navigator.userAgent.toLowerCase();
+      let name = 'Unknown';
+      let version = 'Unknown';
+      if (userAgent.indexOf('win') > -1) {
+        name = 'Windows';
+        if (userAgent.indexOf('windows nt 5.0') > -1) {
+          version = 'Windows 2000';
+        } else if (userAgent.indexOf('windows nt 5.1') > -1 || userAgent.indexOf('windows nt 5.2') > -1) {
+          version = 'Windows XP';
+        } else if (userAgent.indexOf('windows nt 6.0') > -1) {
+          version = 'Windows Vista';
+        } else if (userAgent.indexOf('windows nt 6.1') > -1 || userAgent.indexOf('windows 7') > -1) {
+          version = 'Windows 7';
+        } else if (userAgent.indexOf('windows nt 6.2') > -1 || userAgent.indexOf('windows 8') > -1) {
+          version = 'Windows 8';
+        } else if (userAgent.indexOf('windows nt 6.3') > -1) {
+          version = 'Windows 8.1';
+        } else if (userAgent.indexOf('windows nt 6.2') > -1 || userAgent.indexOf('windows nt 10.0') > -1) {
+          version = 'Windows 10';
         } else {
-          return false
+          version = 'Unknown';
         }
-      })
-    }
-  }
-}
+      } else if (userAgent.indexOf('iphone') > -1) {
+        name = 'Iphone';
+      } else if (userAgent.indexOf('mac') > -1) {
+        name = 'Mac';
+      } else if (
+        userAgent.indexOf('x11') > -1 ||
+        userAgent.indexOf('unix') > -1 ||
+        userAgent.indexOf('sunname') > -1 ||
+        userAgent.indexOf('bsd') > -1
+      ) {
+        name = 'Unix';
+      } else if (userAgent.indexOf('linux') > -1) {
+        if (userAgent.indexOf('android') > -1) {
+          name = 'Android';
+        } else {
+          name = 'Linux';
+        }
+      } else {
+        name = 'Unknown';
+      }
+      return {
+        name,
+        version,
+      };
+    },
+    handleCheck() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.showSlide = true;
+        }
+      });
+    },
+    slideSuccess() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$store
+            .dispatch('user/getLoginSign', this.loginForm)
+            .then((res) => {
+              this.loginForm.sign = res.sign;
+              this.loginForm.signatureNonce = res.signatureNonce;
+              this.loginForm.timestamp = res.timestamp;
+              this.loginForm = {...this.loginForm};
+              this.handleLogin();
+
+
+            })
+            .catch(() => {
+              this.showSlide = false;
+            });
+        }
+      });
+    },
+    getWebsiteInfo() {
+      getWebsite().then((res) => {
+        if (res) {
+          this.service = res;
+        }
+      });
+    },
+    handleLogin() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.loading = true;
+          const params = {os: '', browser: '', osVersion: '', browserVersion: ''};
+          const {name: osName, version: osVersion} = this.getOsInfo();
+          const {name: browserName, version: browserVersion} = this.getBrowserInfo();
+          params.os = osName;
+          params.osVersion = osVersion;
+          params.browser = browserName;
+          params.browserVersion = browserVersion;
+          this.$store
+            .dispatch('user/login', {...this.loginForm, ...params})
+            .then((res) => {
+              setStore('loginErrorCount', 0)
+              this.$store.dispatch('app/toggleImageVerification', false);
+              this.$router.push({path: '/'});
+              this.loading = false;
+            })
+            .catch((err) => {
+              this.getImgCode()
+              this.loading = false;
+            });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 .login-layout {
-  min-height: 100%;
   position: relative;
   min-width: 100%;
-  background: url('../../assets/images/login-img.jpg') no-repeat center #2873f0;
-  background-size: auto 100%;
+  min-height: 100%;
+  background: #2873f0;
 
   .container {
-    position: fixed;
+    position: absolute;
     width: 820px;
-    height: 450px;
+    height: 520px;
     left: 50%;
-    top: 40%;
+    top: 42%;
     margin: -225px 0 0 -410px;
-
-    background: #FFFFFF;
-    box-shadow: 0px 0px 26px #0051C4;
+    background: #ffffff;
+    box-shadow: 0px 0px 26px #0051c4;
     border-radius: 8px;
   }
 
@@ -145,8 +361,13 @@ export default {
 
   .head {
     .logo {
+      min-height: 67px;
+      text-align: center;
+
       img {
-        width: 135px;
+        margin-top: 5%;
+        width: 250px;
+        vertical-align: top;
       }
     }
 
@@ -180,13 +401,13 @@ export default {
   }
 
   .login-head {
-    padding-top: 89px;
-    padding-bottom: 42px;
+    padding-top: 60px;
+    padding-bottom: 20px;
     font-weight: bold;
     font-size: 24px;
     line-height: 34px;
     color: #333333;
-    margin: 0
+    margin: 0;
   }
 
   .form-group {
@@ -323,11 +544,15 @@ export default {
   }
 
   .submit-btn {
+    margin-top: 20px;
     width: 300px;
     height: 44px;
-    margin-top: 39px;
-    background: #2388EC;
+    background: #2388ec;
     border-radius: 22px;
+
+    &:active {
+      opacity: 0.6;
+    }
   }
 
   .copyright {
@@ -347,11 +572,28 @@ export default {
     .icp {
       text-align: center;
       color: #fff;
+      line-height: 17px;
     }
 
     .prn_icon {
       vertical-align: bottom;
     }
   }
+}
+
+.flex_code {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .flex_code_input {
+    margin-right: 10px;
+    min-width: 50px !important;
+  }
+}
+
+.img_code {
+  width: 80px;
+  cursor: pointer;
 }
 </style>

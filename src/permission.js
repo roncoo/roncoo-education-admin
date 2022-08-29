@@ -1,62 +1,93 @@
-import router from './router'
+import router from './router/index'
 import store from './store'
-import {Message} from 'element-ui'
+import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import {getToken} from '@/utils/auth' // get token from cookie
-import getPageTitle from '@/utils/get-page-title'
+import { getToken } from '@/utils/auth' // get token from cookie
+import defaultSettings from '@/settings'
 
-NProgress.configure({showSpinner: false}) // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
-
-router.beforeEach(async(to, from, next) => {
+const whiteList = ['/login','/403'] // no redirect whitelist
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
-
-  // set page title
-  document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
   const hasToken = getToken()
-
   if (hasToken) {
-    if (to.path === '/login') {
-      // if is logged in, redirect to the home page
-      next({path: '/'})
-      NProgress.done()
-    } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
-      } else {
-        try {
-          if (store.getters.menu.init === false) {
-            // 设置菜单
-            const routerList = await store.dispatch('setMenu')
-            router.addRoutes(routerList)
+
+    document.title = (to.meta.title || '') + '-' + (defaultSettings.title || '在线教育');
+    if (store.getters.menuInit === false) {
+      try {
+
+        let url = '';
+        // 设置菜单
+        const routerList = await store.dispatch('setMenu')
+        const getUrl = (routerList = []) => {
+
+          let url = '';
+          for (var i = 0; i < routerList.length; i++) {
+            const e = routerList[i];
+            if (e.isLayout) {
+              if (e.children && e.children.length) {
+                url = getUrl(e.children)
+                if (url) {
+                  return url;
+                }
+              }
+            } else {
+              return e.fullPath
+            }
           }
-          // get user info
-          await store.dispatch('user/getInfo')
-          next()
-        } catch (error) {
-          // remove token and go to login page to re-login
+          return url;
+        }
+        url = getUrl(routerList)
+        routerList.forEach(e => {
+          if (e.isDashboard) {
+            e.redirect = url;
+          }
+        })
+
+        routerList.forEach(e =>router.addRoute(e))
+
+        // console.log(router.getRoutes());
+        await store.dispatch('permission/getUserPermission')
+        await store.dispatch('user/getInfo')
+        if (to.path === '/') {
+          next(url)
+        }
+        next({ path: '/redirect' + to.path, query: to.query, replace: true })
+      } catch (error) {
+        console.log(error)
+        // remove token and go to login page to re-login
+        if (process.env.ENV === 'production') {
           await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
+          ElMessage.error(error || 'Has Error')
+          next({
+            path: '/login'
+          })
           NProgress.done()
         }
       }
+    } else if (to.path === '/login') {
+      // if is logged in, redirect to the home page
+      next({ path: '/' })
+      NProgress.done()
+    } else {
+      next()
+      NProgress.done()
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
+      NProgress.done()
     } else {
+      next({
+        path: '/login'
+      })
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
   }

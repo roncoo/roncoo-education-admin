@@ -105,3 +105,16 @@ export function param2Obj(url) {
       '"}'
   )
 }
+
+/**
+ * @param {Object}
+ * @returns {string} url
+ */
+
+ export function obj2Param(obj) {
+  const arr = Object.keys(obj);
+  if (!arr.length) return "";
+    return arr.map(function (key) {
+      return "?".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(obj[key]));
+    }).join('&');
+}

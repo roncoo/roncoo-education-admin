@@ -1,13 +1,18 @@
+<template>
+  <div />
+</template>
 <script>
   export default {
     name: 'NoCache',
     beforeCreate() {
       const { params, query } = this.$route
       const { path } = params
-      this.$router.replace({ path: '/' + path, query })
-    },
-    render: function(h) {
-      return h() // avoid warning message
+      let url  = '';
+      if(path && path.length) {
+        url = path.join('/')
+      }
+      console.log(url)
+      this.$router.replace({ path: '/' + url, query })
     }
   }
 </script>

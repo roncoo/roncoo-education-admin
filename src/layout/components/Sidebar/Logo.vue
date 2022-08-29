@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'collapse':collapse}" class="sidebar-logo-container">
+  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: '',
-      logo: 'https://static.roncoos.com/cloud.png'
+      title: 'Vue Admin Template',
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }
 }
@@ -55,6 +55,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
+      width: 32px;
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;

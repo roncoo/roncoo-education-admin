@@ -1,6 +1,6 @@
-module.exports = {
+export default {
 
-  title: '管理后台',
+  title: '运营管理后台',
 
   /**
    * @type {boolean} true | false

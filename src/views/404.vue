@@ -2,26 +2,26 @@
   <div class="wscn-http404-container">
     <div class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
-        <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">
+        <img alt="404" class="pic-404__parent" src="@/assets/images/404.png">
+        <img alt="404" class="pic-404__child left" src="@/assets/images/404.png">
+        <img alt="404" class="pic-404__child mid" src="@/assets/images/404.png">
+        <img alt="404" class="pic-404__child right" src="@/assets/images/404.png">
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">OOPS!</div>
         <div class="bullshit__info">All rights reserved
-          <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
+          <a href="https://wallstreetcn.com" style="color:#20a0ff" target="_blank">wallstreetcn</a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
+        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below
+          to return to the homepage.
+        </div>
+        <a class="bullshit__return-home" href="">Back to home</a>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-
 export default {
   name: 'Page404',
   computed: {
@@ -33,27 +33,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wscn-http404-container{
-  transform: translate(-50%,-50%);
+.wscn-http404-container {
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 40%;
   left: 50%;
 }
+
 .wscn-http404 {
   position: relative;
   width: 1200px;
   padding: 0 50px;
-  overflow: hidden;
+
   .pic-404 {
     position: relative;
     float: left;
     width: 600px;
     overflow: hidden;
+
     &__parent {
       width: 100%;
     }
+
     &__child {
       position: absolute;
+
       &.left {
         width: 80px;
         top: 17px;
@@ -65,6 +69,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
+
       &.mid {
         width: 46px;
         top: 10px;
@@ -76,6 +81,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1.2s;
       }
+
       &.right {
         width: 62px;
         top: 100px;
@@ -87,6 +93,7 @@ export default {
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
+
       @keyframes cloudLeft {
         0% {
           top: 17px;
@@ -155,12 +162,14 @@ export default {
       }
     }
   }
+
   .bullshit {
     position: relative;
     float: left;
     width: 300px;
     padding: 30px 0;
     overflow: hidden;
+
     &__oops {
       font-size: 32px;
       font-weight: bold;
@@ -172,6 +181,7 @@ export default {
       animation-duration: 0.5s;
       animation-fill-mode: forwards;
     }
+
     &__headline {
       font-size: 20px;
       line-height: 24px;
@@ -184,6 +194,7 @@ export default {
       animation-delay: 0.1s;
       animation-fill-mode: forwards;
     }
+
     &__info {
       font-size: 13px;
       line-height: 21px;
@@ -195,6 +206,7 @@ export default {
       animation-delay: 0.2s;
       animation-fill-mode: forwards;
     }
+
     &__return-home {
       display: block;
       float: left;
@@ -213,6 +225,7 @@ export default {
       animation-delay: 0.3s;
       animation-fill-mode: forwards;
     }
+
     @keyframes slideUp {
       0% {
         transform: translateY(60px);

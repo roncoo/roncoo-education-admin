@@ -1,47 +1,82 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
+import App from './App.vue'
+const app = createApp(App)
 
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
-import '@/styles/index.scss' // global css
-import App from './App'
+
+import i18n from './locales/index.js'
+app.use(i18n)
+
+
 import store from './store'
-import router from './router'
+app.use(store)
 
-import '@/icons' // icon
-import '@/permission' // permission control
-import EasyCallPlugin from '@/plugins/EasyCallPlugin'
-// 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
-import uploader from 'vue-simple-uploader';
 
-Vue.use(EasyCallPlugin)
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
-// if (process.env.NODE_ENV === 'production') {
-//   const {mockXHR} = require('../mock')
-//   mockXHR()
-// }
+import router from './router/index'
+import "@/permission.js"
+app.use(router)
 
-// 编辑 el-dialog 默认点击遮照不关闭
-ElementUI.Dialog.props.closeOnClickModal.default = false;
 
-// set ElementUI lang to EN
-Vue.use(ElementUI, {locale})
 
-Vue.use(uploader)
-Vue.config.productionTip = false
+import ElementPlus  from 'element-plus';
+import 'element-plus/dist/index.css';
+import {  ElLoading   } from 'element-plus'
+console.log(ElementPlus);
+app.use(ElementPlus , {  i18n: i18n.global.t, zIndex: 3000 })
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+
+import '@/styles/index.scss' // global css
+
+
+import 'vite-plugin-svg-icons/register';
+import SvgIcon from '@/components/SvgIcon/index.vue'// svg component
+app.component('svg-icon', SvgIcon)
+
+
+
+
+
+app.config.globalProperties.checkPermission = (name) => {
+  name = name.replace(/\//g, ':');
+  return (store.getters.userPermission || []).indexOf(name) !== -1;
+  // return true;
+}
+app.config.globalProperties.parsePhone = (telCode, phone) => {
+  if(!telCode){
+    return phone
+  }
+  return '+' + telCode + '-' + phone
+}
+
+app.config.globalProperties.tips = function(text) {
+  ElMessage.success(text);
+};
+
+
+app.config.globalProperties.loading = {
+  // show 和 hide 成对使用
+  show(txt = 'Loading') {
+    this.__loading__ = ElLoading.service({
+      lock: true,
+      text: txt,
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+  },
+  hide() {
+    this.__loading__.close();
+  },
+  // start 和 stop 成对使用
+  start(txt = 'Loading') {
+
+  },
+  stop() {
+  }
+}
+
+
+
+
+app.mount('#app')
+
+
+

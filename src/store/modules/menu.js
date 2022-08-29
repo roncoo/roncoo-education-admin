@@ -1,69 +1,99 @@
-import _ from 'lodash'
-import * as system from '@/api/system'
-import { asyncRouterMap } from '@/router'
+import {asyncRouterMap} from '@/router'
+import {getUserMenu} from '@/api/system'
+function flattenMenu(menu = [], userMenu = {}, path = '') {
+    const arr = [];
+    menu.forEach(e => {
+        let menuPath = e.path
+        if (menuPath[0] !== '/' && path !== '/') {
+            menuPath = path + '/' + menuPath
+        } else {
+            menuPath = path + menuPath
+        }
+        // console.log('menuPath', menuPath)
+        if (e.hidden) {
+            if (e.children && e.children.length) {
+              e.children = flattenMenu(e.children, userMenu, menuPath)
+            }
+            arr.push(e)
+          }
+        if (userMenu[menuPath]) {
+            e.meta = {
+                title: userMenu[menuPath].name,
+                targetName: userMenu[menuPath].targetName
+            }
+            e.fullPath = menuPath;
+            e.sort = userMenu[menuPath].sort || 1
+            e.children = flattenMenu(e.children, userMenu, menuPath)
 
-function flattenMenu(menu, parents = []) {
-  if (Array.isArray(menu)) {
-    return menu.map(v => flattenMenu(v, [...parents]))
-  } else if (menu) {
-    return menu.children ? [{...menu, parents}].concat(flattenMenu(menu.children, [...parents, menu]))
-      : [{...menu, parents}]
-  }
+            arr.push(e)
+        }
+    });
+
+    arr.sort((a, b) => {
+        return a.sort - b.sort
+    });
+
+    return arr
 }
 
-function flattenMenus(menu = [], userMenu = {}, path = '') {
-  const arr = [];
-  menu.forEach(e => {
-    let menuPath = e.path
-    if (menuPath[0] !== '/' && path !== '/') {
-      menuPath = path + '/' + menuPath
-    } else {
-      menuPath = path + menuPath
-    }
-    if (e.children && e.children.length) {
-      e.children = flattenMenus(e.children, userMenu, menuPath)
-      if (e.children && e.children.length) {
-        arr.push(e)
-      }
-    } else {
-      if (userMenu[menuPath]) {
-        arr.push(e)
-      }
-    }
-  });
+const initRouter = (object = {}, list = [], path = '') => {
+    list.forEach((e, i) => {
+        e.sort = e.sort || i;
+        if (!object[path + e.path]) {
+            object[path + e.path] = e;
+        }
 
-  arr.sort((a, b) => { return a.sort - b.sort });
-  return arr
+        if (e.children && e.children.length) {
+            initRouter(object, e.children, path + e.path)
+        }
+    })
 }
 
 const menu = {
-  state: {
-    init: false,
-    menuArr: [],
-    menuSet: {}
-  },
-  mutations: {
-    set_system_menu: (state, menu) => {
-      state.init = true
-      state.menuArr = menu
-      state.menuSet = _.keyBy(_.flattenDeep(flattenMenu(menu)), 'path')
+    state: {
+        init: false,
+        menuArr: [],
+        menuSet: {},
+        UerMenu: {
+            '/:pathMatch(.*)': {
+                name: '404页面',
+                targetName: 'ad'
+            },
+            '/': {
+                name: '',
+                targetName: 'ad'
+            }
+        }
+    },
+    mutations: {
+        set_system_menu: (state, menu) => {
+            state.init = true
+            state.menuArr = menu
+            state.menuSet = menu
+        }
+    },
+    actions: {
+        setMenu({commit, state}) {
+            return new Promise((resolve, reject) => {
+                // TODO 后续续编辑为从服务器获取，并且做数据处理
+                getUserMenu().then(res => {
+                    res.forEach(e => {
+                        if (e.path[0] !== '/') {
+                            e.path = '/' + e.path
+                        }
+                    })
+                    initRouter(state.UerMenu, res, '');
+                    // console.log('UerMenu', state.UerMenu)
+                    const router = flattenMenu(asyncRouterMap, state.UerMenu);
+                    state.UerMenu = {}
+                    commit('set_system_menu', router)
+                    resolve(router)
+                }).catch(err => {
+                    console.log('getUserMenu失败', err)
+                })
+            })
+        }
     }
-  },
-  actions: {
-    setMenu({commit, state}) {
-      return new Promise((resolve, reject) => {
-        system.userMenuList().then(res => {
-          commit('set_system_menu', res.data)
-          const routerlist = flattenMenus(asyncRouterMap, state.menuSet);
-          console.log(routerlist)
-
-          resolve(routerlist || [])
-        }).catch(err => {
-          reject(err)
-        })
-      })
-    }
-  }
 }
 
 export default menu
