@@ -1,24 +1,13 @@
 <template>
-  <el-dialog
-    v-model="visible"
-    :before-close="handleClose"
-    :title="title"
-    center
-    width="600px"
-  >
+  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item v-if="info.menuName" label="菜单名称">
-        <el-input v-model="info.menuName" class="form-group" disabled/>
-      </el-form-item>
       <el-form-item label="权限名称" prop="menuName">
         <el-input v-model="form.menuName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="英文名称" prop="menuNameEn">
-        <el-input v-model="form.menuNameEn" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item label="权限标识" prop="authValue">
+        <el-input v-model="form.authValue" class="form-group" maxlength="100" show-word-limit/>
       </el-form-item>
-      <el-form-item label="权限标识" prop="routerUrl">
-        <el-input v-model="form.routerUrl" class="form-group" maxlength="100" show-word-limit/>
-      </el-form-item>
+      <!--
       <el-form-item label="权限认证值">
         <el-input v-model="text" class="w90" placeholder="这里可以批量添加，请使用|分隔" type="textarea" @change="changeList"></el-input>
       </el-form-item>
@@ -26,7 +15,7 @@
         <el-input v-model="list[i]" class="w90"/>
         <img alt="" class="hovblu" src="@/assets/images/add.png" @click="addNode">
         <img v-if="list.length > 1" alt="" class="hovblu" src="@/assets/images/delete.png" @click="delNode(i)">
-      </el-form-item>
+      </el-form-item>-->
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="form.sort" :min="0" controls-position="right"/>
       </el-form-item>
@@ -37,12 +26,11 @@
         <el-button type="primary" @click="submitForm('form')">确 定</el-button>
       </div>
     </template>
-
   </el-dialog>
 </template>
 
 <script>
-import {sysPermissionEdit, sysPermissionView} from '@/api/system';
+import {sysMenuView, sysPermissionEdit} from '@/api/system';
 
 export default {
   name: 'SysPermissionEdit',
@@ -70,14 +58,11 @@ export default {
         menuName: [
           {required: true, message: '请输入权限名称', trigger: 'blur'}
         ],
-        menuNameEn: [
-          {required: true, message: "请输入权限英文名称", trigger: "blur"},
-        ],
         sort: [
           {required: true, message: '请输入排序', trigger: 'blur'}
         ],
-        routerUrl: [
-          {required: true, message: "请输入权限标识", trigger: "blur"},
+        authValue: [
+          {required: true, message: '请输入权限标识', trigger: 'blur'}
         ]
       }
     }
@@ -85,8 +70,7 @@ export default {
   mounted() {
     this.form = Object.assign(this.info)
     if (this.form.id) {
-      sysPermissionView(this.form.id).then(res => {
-        console.log(res);
+      sysMenuView(this.form.id).then(res => {
         this.form = {...res}
         this.list = res.authValueList
         console.log(res.authValueList);
@@ -107,7 +91,7 @@ export default {
       this.form = {}
     },
     changeList(val) {
-      let arr = val.split("|")
+      let arr = val.split('|')
       arr.forEach(e => {
         e = e.replace(/\//g, ':');
         this.list.push(e)
@@ -128,7 +112,7 @@ export default {
       // 新增
       sysPermissionEdit(this.form).then(res => {
         this.loading.hide()
-        this.$message.success(res, "success");
+        this.$message.success(res, 'success');
         this.$emit('closes', this.form)
       }).catch(() => {
         this.loading.hide()

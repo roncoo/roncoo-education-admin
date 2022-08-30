@@ -36,7 +36,7 @@
       <el-table-column label="备注" prop="remark"/>
       <el-table-column label="状态" width="100px">
         <template #default="scope">
-          {{ statusEnums[scope.row.status] }}
+          {{ statusIdEnums[scope.row.status] }}
         </template>
       </el-table-column>
     </el-table>
@@ -93,7 +93,7 @@ export default {
       listLoading: true,
       selectRoleIdList: [],
       currentSelectRoleIdList: [],
-      statusEnums: {}
+      statusIdEnums: {}
     }
   },
   emits: ['closes'],
@@ -112,8 +112,8 @@ export default {
     });
 
     // 获取状态枚举
-    this.$store.dispatch('GetOpts', {enumName: 'StatusEnum', type: 'obj'}).then(res => {
-      this.statusEnums = res;
+    this.$store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then(res => {
+      this.statusIdEnums = res;
     });
   },
   methods: {

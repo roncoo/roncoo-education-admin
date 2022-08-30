@@ -14,7 +14,7 @@ export function uploadPic(data, cb, params = {}) {
             }
         }
     }
-    return request.post(`/base/boss/upload/pic${obj2Param(params)}`, formData, config)
+    return request.post(`/system/admin/upload/pic${obj2Param(params)}`, formData, config)
 }
 
 export function uploadDoc(data, cb) {
@@ -29,5 +29,5 @@ export function uploadDoc(data, cb) {
             }
         }
     }
-    return request.post('/base/boss/upload/doc', formData, config)
+    return request.post('/system/admin/upload/doc', formData, config)
 }

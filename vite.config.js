@@ -41,7 +41,7 @@ export default defineConfig({
         port: 9528, // 服务端口
         proxy: { // 代理
             '/gateway': {
-                target: 'http://dev-edu.roncoos.com/gateway',
+                target: 'http://dev-os.roncoos.com/gateway',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/gateway/, '')
             }

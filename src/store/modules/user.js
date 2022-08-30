@@ -1,200 +1,205 @@
-import {getInfo, login} from '@/api/user'
+import {getInfo, login} from '@/api/login'
 import {getToken, removeToken, setToken} from '@/utils/auth'
 import lockr from 'lockr'
 
 const getDefaultState = () => {
-    return {
-        token: getToken(),
-        name: '',
-        avatar: '',
-        userInfo: null,
-        lecturerInfo: null,
-        domainUrl: '',
-        openCustomizeDomain: '',
-        orgInfo: {
-            orgName: '加载中'
-        },
-        svgIconList: [
-            {
-                'icon': 'sketch',
-                'label': '概况'
-            },
-          {
-            'icon': 'common',
-            'label': '常用'
-          },
-          {
-            'icon': 'order',
-            'label': '订单'
-          },
-          {
-            'icon': 'order2',
-            'label': '订单2'
-          },
-          {
-            'icon': 'product',
-            'label': '产品'
-          },
-          {
-            'icon': 'product2',
-            'label': '产品2'
-          },
-          {
-            'icon': 'notice',
-            'label': '通知'
-          },
-          {
-            'icon': 'menu',
-            'label': '菜单'
-          },
-          {
-            'icon': 'role',
-            'label': '角色'
-          },
-            {
-                'icon': 'shop',
-                'label': '店铺'
-            },
-            {
-              'icon': 'shop2',
-              'label': '店铺2'
-          },
-            {
-                'icon': 'course',
-                'label': '课程'
-            },
-            {
-                'icon': 'exam',
-                'label': '考试'
-            },
-            {
-                'icon': 'class',
-                'label': '班级'
-            },
-            {
-                'icon': 'user',
-                'label': '用户'
-            },
-            {
-                'icon': 'deal',
-                'label': '交易'
-            },
-            {
-                'icon': 'marketing',
-                'label': '营销'
-            },
-            {
-                'icon': 'statistics',
-                'label': '数据'
-            },
-            {
-                'icon': 'system',
-                'label': '系统'
-            },
-            {
-                'icon': 'server',
-                'label': '服务'
-            },
-            {
-              'icon': 'diamond',
-              'label': '钻石'
-          },
-        ]
-    }
+  return {
+    token: getToken(),
+    name: '',
+    avatar: '',
+    userInfo: null,
+    lecturerInfo: null,
+    domainUrl: '',
+    openCustomizeDomain: '',
+    orgInfo: {
+      orgName: '加载中'
+    },
+    svgIconList: [
+      {
+        'icon': '概况总览',
+        'label': '概况总览'
+      },
+      {
+        'icon': '常用功能',
+        'label': '常用功能'
+      },
+      {
+        'icon': '课程订单',
+        'label': '课程订单'
+      },
+      {
+        'icon': '支付订单',
+        'label': '支付订单'
+      },
+      {
+        'icon': '首页管理',
+        'label': '首页管理'
+      },
+      {
+        'icon': '头部导航',
+        'label': '头部导航'
+      },
+      {
+        'icon': '专区管理',
+        'label': '专区管理'
+      },
+      {
+        'icon': '轮播管理',
+        'label': '轮播管理'
+      },
+      {
+        'icon': '底部文章',
+        'label': '底部文章'
+      },
+      {
+        'icon': '友情链接',
+        'label': '友情链接'
+      },
+      {
+        'icon': '课程管理',
+        'label': '课程管理'
+      },
+      {
+        'icon': '课程分类',
+        'label': '课程分类'
+      },
+      {
+        'icon': '讲师管理',
+        'label': '讲师管理'
+      },
+      {
+        'icon': '学员管理',
+        'label': '学员管理'
+      },
+      {
+        'icon': '站点管理',
+        'label': '站点管理'
+      },
+      {
+        'icon': '站点设置',
+        'label': '站点设置'
+      },
+      {
+        'icon': '系统设置',
+        'label': '系统设置'
+      },
+      {
+        'icon': '平台管理',
+        'label': '平台管理'
+      },
+      {
+        'icon': '应用管理',
+        'label': '应用管理'
+      },
+      {
+        'icon': '权限管理',
+        'label': '权限管理'
+      },
+      {
+        'icon': '用户管理',
+        'label': '用户管理'
+      },
+      {
+        'icon': '角色管理',
+        'label': '角色管理'
+      },
+      {
+        'icon': '菜单管理',
+        'label': '菜单管理'
+      }
+    ]
+  }
 }
 
 const state = getDefaultState()
 
 const mutations = {
-    RESET_STATE: (state) => {
-        Object.assign(state, getDefaultState())
-    },
-    SET_LECTURER(state, lecturerInfo) {
-        lockr.set('__directUser', lecturerInfo.directUser)
-        state.lecturerInfo = lecturerInfo
-    },
-    SET_DOMAIN_URL(state, domainUrl) {
-        state.domainUrl = domainUrl
-    },
-    SET_OPEN_DOMAIN(state, openCustomizeDomain) {
-        state.openCustomizeDomain = openCustomizeDomain
-    },
-    SET_TOKEN: (state, token) => {
-        state.token = token
-    },
-    SET_USER_INFO: (state, userInfo) => {
-        state.userInfo = userInfo
-    },
-    SET_ORG_INFO: (state, orgInfo) => {
-        state.orgInfo = orgInfo
-    },
-    SET_NAME: (state, name) => {
-        state.name = name
-    },
-    SET_AVATAR: (state, avatar) => {
-        state.avatar = avatar
-    }
+  RESET_STATE: (state) => {
+    Object.assign(state, getDefaultState())
+  },
+  SET_LECTURER(state, lecturerInfo) {
+    lockr.set('__directUser', lecturerInfo.directUser)
+    state.lecturerInfo = lecturerInfo
+  },
+  SET_DOMAIN_URL(state, domainUrl) {
+    state.domainUrl = domainUrl
+  },
+  SET_OPEN_DOMAIN(state, openCustomizeDomain) {
+    state.openCustomizeDomain = openCustomizeDomain
+  },
+  SET_TOKEN: (state, token) => {
+    state.token = token
+  },
+  SET_USER_INFO: (state, userInfo) => {
+    state.userInfo = userInfo
+  },
+  SET_ORG_INFO: (state, orgInfo) => {
+    state.orgInfo = orgInfo
+  },
+  SET_NAME: (state, name) => {
+    state.name = name
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar
+  }
 }
 
 const actions = {
-    // user login
-    login({commit}, userInfo) {
-        return new Promise((resolve, reject) => {
-            login({...userInfo}).then(data => {
-                console.log(data);
-                commit('SET_TOKEN', data.token)
-                // commit('SET_USER_INFO', data)
-                setToken(data.token)
-                resolve()
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-    },
+  // user login
+  login({commit}, userInfo) {
+    return new Promise((resolve, reject) => {
+      login({...userInfo}).then(data => {
+        //console.log(data);
+        commit('SET_TOKEN', data.token)
+        // commit('SET_USER_INFO', data)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        console.log(error)
+        reject(error)
+      })
+    })
+  },
 
-    // get user info
-    getInfo({commit, state}) {
-        return new Promise((resolve, reject) => {
-            getInfo(state.token).then(data => {
-                if (!data) {
-                    reject('Verification failed, please Login again.')
-                }
-                commit('SET_NAME', data.nickname)
-                // commit('SET_AVATAR', data.headImgUrl)
-                commit('SET_USER_INFO', data || {})
-                // commit('SET_LECTURER', data.lecturerDTO || {})
-                // commit('SET_ORG_INFO', data.orgInfoDTO || {})
-                resolve(data)
-            }).catch(error => {
-                reject(error)
-            })
-        })
-    },
+  // get user info
+  getInfo({commit, state}) {
+    return new Promise((resolve, reject) => {
+      getInfo(state.token).then(data => {
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+        commit('SET_NAME', data.nickname)
+        commit('SET_USER_INFO', data || {})
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 
-    // user logout
-    logout({commit, state}) {
-        return new Promise((resolve, reject) => {
-            removeToken() // must remove  token  first
-            commit('RESET_STATE')
-            resolve()
-        })
-    },
+  // user logout
+  logout({commit, state}) {
+    return new Promise((resolve, reject) => {
+      removeToken() // must remove  token  first
+      commit('RESET_STATE')
+      resolve()
+    })
+  },
 
-    // remove token
-    resetToken({commit}) {
-        return new Promise(resolve => {
-            removeToken() // must remove  token  first
-            commit('RESET_STATE')
-            resolve()
-        })
-    }
+  // remove token
+  resetToken({commit}) {
+    return new Promise(resolve => {
+      removeToken() // must remove  token  first
+      commit('RESET_STATE')
+      resolve()
+    })
+  }
 }
 
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
+  namespaced: true,
+  state,
+  mutations,
+  actions
 }
 

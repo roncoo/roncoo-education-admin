@@ -10,43 +10,19 @@
         </div>
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
           <h3 class="login-head">管理员登录</h3>
-          <el-form-item class="form-group" prop="loginName">
-            <el-input
-              ref="mobile"
-              v-model="loginForm.loginName"
-              auto-complete="on"
-              class="form-input"
-              name="mobile"
-              placeholder="用户名"
-              tabindex="1"
-              type="text"
-              @keyup.enter="handleLogin"
-            />
+          <el-form-item class="form-group" prop="mobile">
+            <el-input ref="mobile" v-model="loginForm.mobile" auto-complete="on" class="form-input" name="mobile" placeholder="用户名" tabindex="1" type="text" @keyup.enter="handleLogin"/>
           </el-form-item>
-          <el-form-item class="form-group" prop="loginPwd">
-            <el-input
-              ref="loginPwd"
-              v-model="loginForm.loginPwd"
-              :type="loginPwdType"
-              auto-complete="on"
-              class="form-input"
-              name="loginPwd"
-              placeholder="密码"
-              tabindex="2"
-              @keyup.enter="handleLogin"
-            />
+          <el-form-item class="form-group" prop="mobilePwd">
+            <el-input ref="mobilePwd" v-model="loginForm.mobilePwd" :type="mobilePwdType" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" @keyup.enter="handleLogin"/>
           </el-form-item>
           <el-form-item v-if="imageVerification" prop="imageVerification">
             <div class="flex_code">
-              <el-input v-model="loginForm.imageVerification" class="flex_code_input" placeholder="请输入验证码"
-                        @keyup.enter="handleLogin"/>
+              <el-input v-model="loginForm.imageVerification" class="flex_code_input" placeholder="请输入验证码" @keyup.enter="handleLogin"/>
               <img :src="imgCode" class="img_code" @click="getImgCode"/>
             </div>
           </el-form-item>
-          <el-button :loading="loading" class="submit-btn" style="width: 100%; margin-bottom: 30px" type="primary"
-                     @click.native.prevent="handleLogin"
-          >登 录
-          </el-button>
+          <el-button :loading="loading" class="submit-btn" style="width: 100%; margin-bottom: 30px" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
         </el-form>
       </div>
     </div>
@@ -55,17 +31,10 @@
         <span v-html="service.websiteCopyright"/>
       </div>
       <div class="icp">
-        <a v-if="service.websiteIcp" class="c_ccc" href="http://beian.miit.gov.cn/"
-           target="_blank">{{ service.websiteIcp }}</a>
+        <a v-if="service.websiteIcp" class="c_ccc" href="http://beian.miit.gov.cn/" target="_blank">{{ service.websiteIcp }}</a>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <img :alt="service.websitePrn" class="prn_icon" src="@/assets/prn_icon.png"/>
-        <a
-          v-if="service.websitePrn"
-          :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrn"
-          class="c_ccc"
-          target="_blank"
-        >&nbsp;{{ service.websitePrn }}
-        </a>
+        <a v-if="service.websitePrn" :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrn" class="c_ccc" target="_blank">&nbsp;{{ service.websitePrn }} </a>
       </div>
     </div>
   </div>
@@ -73,7 +42,7 @@
 
 <script>
 // import slideVerify from '@/components/slideVerify'
-import {getCodeImg, getWebsite} from '@/api/system';
+import {getCodeImg, getWebsite} from '@/api/login';
 import {getStore, setStore} from '@/utils/storage';
 import {mapGetters} from 'vuex';
 
@@ -104,39 +73,23 @@ export default {
         websiteCopyright: '',
         websiteIcp: '',
         prnNo: '',
-        websitePrn: '',
+        websitePrn: ''
       },
       loginForm: {
-        loginName: '',
-        loginPwd: '',
-        ip: '127.0.0.0',
-        clientType: 1,
+        mobile: '',
+        mobilePwd: '',
         imageVerification: '',
-        imageVerificationToken: '',
+        imageVerificationToken: ''
       },
       loginRules: {
-        loginName: [{required: true, trigger: 'blur', validator: validateMobile}],
-        loginPwd: [{required: true, trigger: 'blur', validator: validatePass}],
-        imageVerification: [{required: true, message: '请输入验证码', trigger: 'blur'}],
+        mobile: [{required: true, trigger: 'blur', validator: validateMobile}],
+        mobilePwd: [{required: true, trigger: 'blur', validator: validatePass}],
+        imageVerification: [{required: true, message: '请输入验证码', trigger: 'blur'}]
       },
-      imgs: [
-        '/vcode/01.jpg',
-        '/vcode/02.jpg',
-        '/vcode/03.jpg',
-        '/vcode/04.jpg',
-        '/vcode/05.jpg',
-        '/vcode/06.jpg',
-        '/vcode/07.jpg',
-        '/vcode/08.jpg',
-        '/vcode/09.jpg',
-        '/vcode/10.jpg',
-        '/vcode/11.jpg',
-        '/vcode/12.jpg',
-      ],
       checkSlide: '',
       showSlide: false,
       loading: false,
-      loginPwdType: 'password',
+      mobilePwdType: 'password',
       redirect: undefined,
       imgCode: '',
       errorCount: 0
@@ -156,11 +109,11 @@ export default {
   methods: {
     getImgCode() {
       getCodeImg().then((res) => {
-        this.loginForm.imageVerificationToken = res.token;
+        this.loginForm.imageVerificationToken = res.verToken;
         this.imgCode = res.img;
       });
     },
-    getBrowserInfo: function () {
+    getBrowserInfo: function() {
       /* eslint-disable */
       const Sys = {};
       const ua = navigator.userAgent.toLowerCase();
@@ -181,43 +134,49 @@ export default {
                     ? (Sys.safari = s[1])
                     : 0;
       // 根据关系进行判断
-      if (Sys.ie)
+      if (Sys.ie) {
         return {
           name: 'IE',
-          version: Sys.ie,
+          version: Sys.ie
         };
-      if (Sys.edge)
+      }
+      if (Sys.edge) {
         return {
           name: 'EDGE',
-          version: Sys.edge,
+          version: Sys.edge
         };
-      if (Sys.firefox)
+      }
+      if (Sys.firefox) {
         return {
           name: 'Firefox',
-          version: Sys.firefox,
+          version: Sys.firefox
         };
-      if (Sys.chrome)
+      }
+      if (Sys.chrome) {
         return {
           name: 'Chrome',
-          version: Sys.chrome,
+          version: Sys.chrome
         };
-      if (Sys.opera)
+      }
+      if (Sys.opera) {
         return {
           name: 'Opera',
-          version: Sys.opera,
+          version: Sys.opera
         };
-      if (Sys.safari)
+      }
+      if (Sys.safari) {
         return {
           name: 'Safari',
-          version: Sys.safari,
+          version: Sys.safari
         };
+      }
       return {
         name: 'Unkonwn',
-        version: '0.0.0',
+        version: '0.0.0'
       };
     },
     // 获取系统信息
-    getOsInfo: function () {
+    getOsInfo: function() {
       const userAgent = navigator.userAgent.toLowerCase();
       let name = 'Unknown';
       let version = 'Unknown';
@@ -262,7 +221,7 @@ export default {
       }
       return {
         name,
-        version,
+        version
       };
     },
     handleCheck() {
@@ -283,7 +242,6 @@ export default {
               this.loginForm.timestamp = res.timestamp;
               this.loginForm = {...this.loginForm};
               this.handleLogin();
-
 
             })
             .catch(() => {
@@ -327,8 +285,8 @@ export default {
           return false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

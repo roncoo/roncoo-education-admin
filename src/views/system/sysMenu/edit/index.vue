@@ -1,44 +1,26 @@
 <template>
-  <el-dialog
-    v-model="visible"
-    :before-close="handleClose"
-    :title="title"
-    center
-    width="600px"
-  >
+  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="菜单类型" prop="menuType">
         <el-radio-group v-model="form.menuType" disabled>
           <template v-for="item in menuTypeEnumList">
-            <el-radio
-              v-if="true === item.isShow"
-              :key="item.code"
-              :label="item.code"
-            >
+            <el-radio v-if="true === item.isShow" :key="item.code" :label="item.code">
               {{ item.desc }}
             </el-radio>
           </template>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="中文名称" prop="menuName">
+      <el-form-item label="菜单名称" prop="menuName">
         <el-input v-model="form.menuName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="英文名称" prop="menuNameEn">
-        <el-input v-model="form.menuNameEn" class="form-group" maxlength="50" show-word-limit/>
-      </el-form-item>
-      <el-form-item label="路由地址" prop="routerUrl">
-        <el-input v-model="form.routerUrl" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item label="路由地址" prop="menuUrl">
+        <el-input v-model="form.menuUrl" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
       <el-form-item label="图标">
         <el-row>
           <el-col :span="12">
-            <el-select v-model="form.icon" clearable filterable placeholder="请选择">
-              <el-option
-                v-for="item in svgIconList"
-                :key="item.icon"
-                :label="item.label"
-                :value="item.icon"
-              >
+            <el-select v-model="form.menuIcon" clearable filterable placeholder="请选择">
+              <el-option v-for="item in svgIconList" :key="item.icon" :label="item.label" :value="item.icon">
                 <span style="margin-right:5px;float: left">{{ item.label }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px">
                   <svg-icon :icon-class="item.icon || ''"/>
@@ -47,7 +29,7 @@
             </el-select>
           </el-col>
           <el-col :span="12" style="text-align: left">
-            <svg-icon :icon-class="form.icon || ''" class-name="icon"/>
+            <svg-icon :icon-class="form.menuIcon || ''" class-name="icon"/>
           </el-col>
         </el-row>
       </el-form-item>
@@ -61,7 +43,6 @@
         <el-button type="primary" @click="submitForm('form')">确 定</el-button>
       </div>
     </template>
-
   </el-dialog>
 </template>
 <script>
@@ -91,22 +72,22 @@ export default {
       menuTypeEnumList: [
         {
           code: 1,
-          desc: "目录",
+          desc: '目录',
           isShow: true,
-          name: "DIRECTORY",
+          name: 'DIRECTORY'
         },
         {
           code: 2,
-          desc: "菜单",
+          desc: '菜单',
           isShow: true,
-          name: "MENU",
+          name: 'MENU'
         },
         {
           code: 3,
-          desc: "权限",
+          desc: '权限',
           isShow: false,
-          name: "PERMISSION",
-        },
+          name: 'PERMISSION'
+        }
       ],
       rules: {
         sort: [
@@ -115,10 +96,7 @@ export default {
         menuName: [
           {required: true, message: '请输入菜单名称', trigger: 'blur'}
         ],
-        menuNameEn: [
-          {required: true, message: '请输入菜单英文名称', trigger: 'blur'}
-        ],
-        routerUrl: [
+        menuUrl: [
           {required: true, message: '请输入路由地址', trigger: 'blur'}
         ]
       }
@@ -148,7 +126,7 @@ export default {
       // 编辑
       sysMenuEdit(this.form).then(res => {
         this.loading.hide()
-        this.$message.success(res, "success");
+        this.$message.success(res, 'success');
         this.$emit('closes', this.form);
       }).catch(() => {
         this.loading.hide()

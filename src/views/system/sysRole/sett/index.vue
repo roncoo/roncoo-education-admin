@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {sysMenuAvailableList, sysRoleAllocationMenuAndPermission, sysRoleListSelectMenuAndPermission} from '@/api/system';
+import {sysMenuList, sysRoleAllocationMenuAndPermission, sysRoleListSelectMenuAndPermission} from '@/api/system';
 
 export default {
   name: 'SysRoleSett',
@@ -61,7 +61,7 @@ export default {
   mounted() {
     this.form.roleId = this.info.id;
     // 获取可用菜单
-    sysMenuAvailableList().then(res => {
+    sysMenuList().then(res => {
       for (const index in res) {
         const info = res[index];
         const treeInfo = {};
@@ -161,7 +161,7 @@ export default {
 
       this.form = {
         roleId: this.info.id,
-        menuIdList: menuIdList,
+        menuIdList: menuIdList
         // permissionIdList: permissionIdList
       }
 
@@ -170,7 +170,7 @@ export default {
     onSubmit() {
       // 新增
       sysRoleAllocationMenuAndPermission(this.form).then(res => {
-        this.$message.success(res, "success");
+        this.$message.success(res, 'success');
         // setTimeout(() => {
         //   window.location.reload()
         // }, 1000)

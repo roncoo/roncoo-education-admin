@@ -1,11 +1,5 @@
 <template>
-  <el-dialog
-    v-model="visible"
-    :before-close="handleClose"
-    :title="title"
-    center
-    width="600px"
-  >
+  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item v-if="info.menuName" label="菜单名称" prop="menuName">
         <el-input v-model="info.menuName" class="form-group" disabled/>
@@ -13,12 +7,10 @@
       <el-form-item label="权限名称" prop="menuName">
         <el-input v-model="form.menuName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="英文名称" prop="menuNameEn">
-        <el-input v-model="form.menuNameEn" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item label="权限标识" prop="authValue">
+        <el-input v-model="form.authValue" class="form-group" maxlength="100" show-word-limit/>
       </el-form-item>
-      <el-form-item label="权限标识" prop="routerUrl">
-        <el-input v-model="form.routerUrl" class="form-group" maxlength="100" show-word-limit/>
-      </el-form-item>
+      <!--
       <el-form-item label="权限认证值">
         <el-input v-model="text" class="w90" placeholder="这里可以批量添加，请使用|分隔" type="textarea" @change="changeList"></el-input>
       </el-form-item>
@@ -27,6 +19,7 @@
         <img alt="" class="hovblu" src="@/assets/images/add.png" @click="addNode">
         <img v-if="list.length > 1" alt="" class="hovblu" src="@/assets/images/delete.png" @click="delNode(i)">
       </el-form-item>
+      -->
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="form.sort" :min="0" controls-position="right"/>
       </el-form-item>
@@ -41,24 +34,24 @@
 </template>
 
 <script>
-import {sysPermissionSave} from "@/api/system";
+import {sysPermissionSave} from '@/api/system';
 
 export default {
-  name: "SysPermissionAdd",
+  name: 'SysPermissionAdd',
   props: {
     title: {
       type: String,
-      default: null,
+      default: null
     },
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     info: {
       type: Object,
       default: () => {
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -69,20 +62,16 @@ export default {
       list: [''],
       rules: {
         menuName: [
-          {required: true, message: "请输入权限名称", trigger: "blur"},
+          {required: true, message: '请输入权限名称', trigger: 'blur'}
         ],
-        menuNameEn: [
-          {required: true, message: "请输入权限英文名称", trigger: "blur"},
-        ],
-        routerUrl: [
-          {required: true, message: "请输入权限标识", trigger: "blur"},
+        authValue: [
+          {required: true, message: '请输入权限标识', trigger: 'blur'}
         ]
-      },
+      }
     };
   },
   mounted() {
     this.form.parentId = this.info.menuId
-
   },
   emits: ['closes'],
   methods: {
@@ -93,11 +82,11 @@ export default {
       this.list.splice(i, 1)
     },
     handleClose() {
-      this.$emit("closes");
+      this.$emit('closes');
       this.form = {};
     },
     changeList(val) {
-      let arr = val.split("|")
+      let arr = val.split('|')
       arr.forEach(e => {
         e = e.replace(/\//g, ':');
         this.list.push(e)
@@ -109,26 +98,26 @@ export default {
         if (valid) {
           this.form.authValueList = this.list
           const d = {
-            ...this.form,
+            ...this.form
           };
           d.authValueList = d.authValueList.filter(i => i && i.trim())
           d.authValueList.forEach((item, index, arr) => {
-            arr[index] = item.replace(/\//g, ":")
+            arr[index] = item.replace(/\//g, ':')
           })
-          d.routerUrl = d.routerUrl.replace(/\//g, ":");
-          if (d.menuName.indexOf(";") !== -1) {
-            d.menuName = d.menuName.split(";");
-          } else if (d.menuName.indexOf("|") !== -1) {
-            d.menuName = d.menuName.split("|");
+          d.authValue = d.authValue.replace(/\//g, ':');
+          if (d.menuName.indexOf(';') !== -1) {
+            d.menuName = d.menuName.split(';');
+          } else if (d.menuName.indexOf('|') !== -1) {
+            d.menuName = d.menuName.split('|');
           } else {
             d.menuName = d.menuName;
           }
-          if (d.routerUrl.indexOf(";") !== -1) {
-            d.routerUrl = d.routerUrl.split(";");
-          } else if (d.routerUrl.indexOf("|") !== -1) {
-            d.routerUrl = d.routerUrl.split("|");
+          if (d.authValue.indexOf(';') !== -1) {
+            d.authValue = d.authValue.split(';');
+          } else if (d.authValue.indexOf('|') !== -1) {
+            d.authValue = d.authValue.split('|');
           } else {
-            d.routerUrl = d.routerUrl;
+            d.authValue = d.authValue;
           }
           this.onSubmit(d);
         } else {
@@ -144,14 +133,14 @@ export default {
       sysPermissionSave(d)
         .then((res) => {
           this.loading.hide();
-          this.$message.success(res, "success");
-          this.$emit("closes", this.form);
+          this.$message.success(res, 'success');
+          this.$emit('closes', this.form);
         })
         .catch(() => {
           this.loading.hide();
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

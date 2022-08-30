@@ -1,7 +1,6 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 /* Layout */
 import Layout from '@/layout/index.vue'
-import mains from '@/layout/components/mains.vue'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -37,79 +36,139 @@ export const constantRoutes = [
   {
     path: '/404',
     component: () => import('@/views/404.vue'),
-    meta: { title: '404', icon: 'dashboard' },
+    meta: {title: '404', icon: 'dashboard'},
     hidden: true
   },
   {
     path: '/403',
     component: () => import('@/views/403.vue'),
-    meta: { title: '403', icon: 'dashboard' },
+    meta: {title: '403', icon: 'dashboard'},
     name: 'Page403',
     isLayout: true,
     hidden: true
-  },
+  }
 
 ]
 
 const asyncRouterMapList = [
   {
-    path: '/',
+    path: '/dashboard',
     component: Layout,
     isDashboard: true,
     children: [
       {
-        path: 'dashboard',
-        name: '概况总览',
-        component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '概况总览', icon: 'dashboard' }
+        path: '',
+        name: 'dashboard',
+        component: () => import('@/views/dashboard/index.vue')
       },
       {
         path: '/redirect/:path*',
         name: 'redirect',
         hidden: true,
-        component: () => import('@/views/redirect/index.vue')
-      },
-    ]
-  },
-  {
-    path: '/system',
-    redirect: '/system/config/list',
-    component: Layout,
-    meta: { title: '系统管理', icon: 'dashboard' },
-    children: [
-      {
-        path: 'config/list',
-        name: 'SysConfig',
-        component: () => import('@/views/system/sysConfig/list/index.vue'),
-        meta: { title: '基础配置' }
-      },
-      {
-        path: 'user/list',
-        name: 'SysUser',
-        component: () => import('@/views/system/sysUser/list/index.vue'),
-        meta: { title: '用户管理' }
-      },
-      {
-        path: 'role/list',
-        name: 'SysRole',
-        component: () => import('@/views/system/sysRole/list/index.vue'),
-        meta: { title: '角色管理' }
-      },
-      {
-        path: 'menu/list',
-        name: 'SysMenu',
-        component: () => import('@/views/system/sysMenu/list/index.vue'),
-        meta: { title: '菜单管理', noCache: true }
-      },
-      {
-        path: 'logs/list',
-        name: 'SysLog',
-        component: () => import('@/views/system/sysLog/index.vue'),
-        meta: { title: '操作日志' }
+        component: () => import('@/views/dashboard/index.vue')
       }
     ]
   },
-  { path: '/:pathMatch(.*)', redirect: '/404', isLayout: true, hidden: true },
+  {
+    path: '/common',
+    redirect: '/common/order',
+    component: Layout,
+    children: [
+      {
+        path: 'order',
+        name: 'CommonOrder',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      },
+      {
+        path: 'zone',
+        name: 'CommonZone',
+        component: () => import('@/views/system/sysRole/list/index.vue')
+      },
+      {
+        path: 'carousel',
+        name: 'CommonCarousel',
+        component: () => import('@/views/system/sysMenu/list/index.vue')
+      },
+      {
+        path: 'nav',
+        name: 'CommonNav',
+        component: () => import('@/views/system/sysMenu/list/index.vue')
+      },
+      {
+        path: 'article',
+        name: 'CommonArticle',
+        component: () => import('@/views/system/sysMenu/list/index.vue')
+      },
+      {
+        path: 'link',
+        name: 'CommonLink',
+        component: () => import('@/views/system/sysMenu/list/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/course',
+    redirect: '/course/list',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'CourseList',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      },
+      {
+        path: 'category',
+        name: 'CourseCategory',
+        component: () => import('@/views/system/sysRole/list/index.vue')
+      },
+      {
+        path: 'lecturer',
+        name: 'CourseLecturer',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/users',
+    redirect: '/users/list',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'UsersList',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      },
+      {
+        path: 'study',
+        name: 'UsersStudy',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/pms',
+    redirect: '/pms/user',
+    component: Layout,
+    children: [
+      {
+        path: 'user',
+        name: 'PmsUser',
+        component: () => import('@/views/system/sysUser/list/index.vue')
+      },
+      {
+        path: 'role',
+        name: 'PmsRole',
+        component: () => import('@/views/system/sysRole/list/index.vue')
+      },
+      {
+        path: 'menu',
+        name: 'PmsMenu',
+        component: () => import('@/views/system/sysMenu/list/index.vue'),
+        meta: {noCache: true}
+      }
+    ]
+  },
+  {path: '/:pathMatch(.*)', redirect: '/dashboard', isLayout: true, hidden: true}
 ]
 
 asyncRouterMapList.forEach(e => {
@@ -122,7 +181,7 @@ export const asyncRouterMap = [...asyncRouterMapList]
 
 const createRouters = (routerList = '') => createRouter({
   history: createWebHashHistory(),
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: routerList
 })
 

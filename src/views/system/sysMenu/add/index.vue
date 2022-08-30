@@ -11,19 +11,16 @@
       <el-form-item v-if="info.parentName" label="上级菜单">
         <el-input v-model="info.parentName" class="form-group" disabled/>
       </el-form-item>
-      <el-form-item label="中文名称" prop="menuName">
+      <el-form-item label="菜单名称" prop="menuName">
         <el-input v-model="form.menuName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="英文名称" prop="menuNameEn">
-        <el-input v-model="form.menuNameEn" class="form-group" maxlength="50" show-word-limit/>
-      </el-form-item>
-      <el-form-item label="路由地址" prop="routerUrl">
-        <el-input v-model="form.routerUrl" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item label="路由地址" prop="menuUrl">
+        <el-input v-model="form.menuUrl" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
       <el-form-item label="图标">
         <el-row>
           <el-col :span="12">
-            <el-select v-model="form.icon" clearable filterable placeholder="请选择">
+            <el-select v-model="form.menuIcon" clearable filterable placeholder="请选择">
               <el-option v-for="item in svgIconList" :key="item.icon" :label="item.label" :value="item.icon">
                 <span style="margin-right:5px;float: left">{{ item.label }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px">
@@ -33,7 +30,7 @@
             </el-select>
           </el-col>
           <el-col :span="12" style="text-align: left">
-            <svg-icon :icon-class="form.icon || ''" class-name="icon"/>
+            <svg-icon :icon-class="form.menuIcon || ''" class-name="icon"/>
           </el-col>
         </el-row>
       </el-form-item>
@@ -50,26 +47,26 @@
   </el-dialog>
 </template>
 <script>
-import {sysMenuSave} from "@/api/system";
+import {sysMenuSave} from '@/api/system';
 
 export default {
-  name: "AddSysMenu",
+  name: 'AddSysMenu',
   props: {
     title: {
       type: String,
-      default: null,
+      default: null
     },
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     info: {
       type: Object,
       default: () => {
-      },
-    },
+      }
+    }
   },
-  emits: ["closes"],
+  emits: ['closes'],
   data() {
     return {
       form: {
@@ -82,38 +79,35 @@ export default {
       svgIconList: [],
       rules: {
         menuName: [
-          {required: true, message: "请输入菜单名称", trigger: "blur"},
-        ],
-        menuNameEn: [
-          {required: true, message: "请输入菜单英文名称", trigger: "blur"},
+          {required: true, message: '请输入菜单名称', trigger: 'blur'}
         ],
         menuType: [
-          {required: true, message: "请选择菜单类型", trigger: "blur"},
+          {required: true, message: '请选择菜单类型', trigger: 'blur'}
         ],
-        routerUrl: [
-          {required: true, message: "请输入路由地址", trigger: "blur"},
-        ],
+        menuUrl: [
+          {required: true, message: '请输入路由地址', trigger: 'blur'}
+        ]
       },
       menuTypeEnumList: [
         {
           code: 1,
-          desc: "目录",
+          desc: '目录',
           isShow: true,
-          name: "DIRECTORY",
+          name: 'DIRECTORY'
         },
         {
           code: 2,
-          desc: "菜单",
+          desc: '菜单',
           isShow: true,
-          name: "MENU",
+          name: 'MENU'
         },
         {
           code: 3,
-          desc: "权限",
+          desc: '权限',
           isShow: false,
-          name: "PERMISSION",
-        },
-      ],
+          name: 'PERMISSION'
+        }
+      ]
     };
   },
   mounted() {
@@ -124,7 +118,7 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$emit("closes");
+      this.$emit('closes');
       this.form = {};
     },
     submitForm(formName) {
@@ -142,14 +136,14 @@ export default {
       sysMenuSave(this.form)
         .then((res) => {
           this.loading.hide();
-          this.$message.success(res, "success");
-          this.$emit("closes", this.form);
+          this.$message.success(res, 'success');
+          this.$emit('closes', this.form);
         })
         .catch(() => {
           this.loading.hide();
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

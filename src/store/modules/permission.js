@@ -1,6 +1,6 @@
-import { getUserPermission } from '@/api/system'
-import { getSession, setSession } from '@/utils/storage'
-import { removeSession } from '@/utils/storage'
+import {getUserPermission} from '@/api/login'
+import {getSession, removeSession, setSession} from '@/utils/storage'
+
 const state = {
   userPermission: null,
   resetPassword: false
@@ -13,7 +13,7 @@ const mutations = {
 }
 
 const actions = {
-  getUserPermission({ commit }) {
+  getUserPermission({commit}) {
     return new Promise((resolve, reject) => {
       getUserPermission().then(response => {
         setSession('userPMS', response)
@@ -28,7 +28,7 @@ const actions = {
     this.state.userPermission = null
     removeSession('userPMS')
   },
-  initPermission({ commit, state, dispatch }) {
+  initPermission({commit, state, dispatch}) {
     const sessData = getSession('userPMS')
     if (sessData) {
       commit('SAVE', sessData)
