@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {sysMenuList, sysRoleAllocationMenuAndPermission, sysRoleListSelectMenuAndPermission} from '@/api/system';
+import {sysMenuList, sysMenuRoleList, sysRoleAllocationMenuAndPermission} from '@/api/system';
 
 export default {
   name: 'SysRoleSett',
@@ -88,7 +88,7 @@ export default {
   methods: {
     settCheckMenu() {
       // 获取已选择菜单和权限
-      sysRoleListSelectMenuAndPermission(this.info.id).then(res => {
+      sysMenuRoleList(this.info.id).then(res => {
         // const checkedKeyList = [];
         // for (const index in res) {
         //     checkedKeyList.push('MENU_' + res[index]);

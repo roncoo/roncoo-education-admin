@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form class="filter-container" inline label-width="100px">
+    <el-form class="filter-container" inline label-width="80px">
       <el-form-item>
+        <el-button v-if="checkPermission('system:admin:sys:menu:view')" plain @click="listMenuPermission">刷新</el-button>
         <el-button v-if="checkPermission('system:admin:sys:menu:save')" plain type="success" @click="handleAddOneMenu">新增</el-button>
-        <el-button v-if="checkPermission('system:admin:sys:menu:view')" plain type="success" @click="listMenuPermission">刷新</el-button>
       </el-form-item>
     </el-form>
     <el-table ref="tableDom" :data="list" :load="loadTree" :tree-props="{ children: 'childrenList', hasChildren: 'hasChildren' }" border element-loading-text="Loading" fit highlight-current-row lazy row-key="id">
@@ -23,9 +23,9 @@
           {{ scope.row.authValue }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="status">
+      <el-table-column label="状态" prop="statusId">
         <template #default="scope">
-          <span :class="{ red: scope.row.status === 0 }">{{ statusIdEnums[scope.row.status] }}</span>
+          <span :class="{ red: scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort"/>
@@ -33,8 +33,8 @@
         <template #default="scope">
           <el-button v-if="scope.row.menuType === 1 || scope.row.menuType === 2" plain type="success" @click="handleAddSubMenu(scope.row)">新增</el-button>
           <el-button plain type="primary" @click="handleEditRow(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.status === 1 && checkPermission('system:admin:sys:menu:update:status')" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
-          <el-button v-if="scope.row.status === 0 && checkPermission('system:admin:sys:menu:update:status')" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+          <el-button v-if="scope.row.statusId === 1 && checkPermission('system:admin:sys:menu:update')" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+          <el-button v-if="scope.row.statusId === 0 && checkPermission('system:admin:sys:menu:update')" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
           <el-button v-if="checkPermission('system:admin:sys:menu:delete')" plain type="danger" @click="handleDeleteRow(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {sysMenuDelete, sysMenuList, sysMenuUpdateStatus, sysMenuView, sysPermissionUpdateStatus} from '@/api/system';
+import {sysMenuDelete, sysMenuEdit, sysMenuList, sysMenuView} from '@/api/system';
 import AddSysMenu from '@/views/system/sysMenu/add/index.vue';
 import AddSysPermission from '@/views/system/sysMenu/permission/add.vue';
 import EditSysMenu from '@/views/system/sysMenu/edit/index.vue';
@@ -242,9 +242,9 @@ export default {
     handleUpdateMenuStatus(row) {
       let body =
         '确定禁用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
-      let status = 0;
-      if (row.status === 0) {
-        status = 1;
+      let statusId = 0;
+      if (row.statusId === 0) {
+        statusId = 1;
         body =
           '确定启用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
       }
@@ -254,7 +254,7 @@ export default {
       })
         .then(() => {
           this.loading.start();
-          sysMenuUpdateStatus({id: row.id, status}).then((res) => {
+          sysMenuEdit({id: row.id, statusId}).then((res) => {
             this.$message.success(res);
             this.loadTreePage(row.parentId || row.menuId);
           });
@@ -265,9 +265,9 @@ export default {
     },
     handleUpdatePermissionStatus(row) {
       let body = '确定禁用权限【' + row.menuName + '】？';
-      let status = 0;
-      if (row.status === 0) {
-        status = 1;
+      let statusId = 0;
+      if (row.statusId === 0) {
+        statusId = 1;
         body = '确定启用权限【' + row.menuName + '】？';
       }
       this.$confirm(body, '编辑确认', {
@@ -276,7 +276,7 @@ export default {
       })
         .then(() => {
           this.loading.start();
-          sysPermissionUpdateStatus(row.id, status).then((res) => {
+          sysMenuEdit(row.id, statusId).then((res) => {
             this.$message.success(res);
             this.loadTreePage(row.parentId || row.menuId);
           });

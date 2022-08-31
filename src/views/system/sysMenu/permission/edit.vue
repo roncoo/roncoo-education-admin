@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {sysMenuView, sysPermissionEdit} from '@/api/system';
+import {sysMenuEdit, sysMenuView} from '@/api/system';
 
 export default {
   name: 'SysPermissionEdit',
@@ -110,7 +110,7 @@ export default {
     onSubmit() {
       this.loading.show()
       // 新增
-      sysPermissionEdit(this.form).then(res => {
+      sysMenuEdit(this.form).then(res => {
         this.loading.hide()
         this.$message.success(res, 'success');
         this.$emit('closes', this.form)

@@ -65,7 +65,7 @@ const asyncRouterMapList = [
         path: '/redirect/:path*',
         name: 'redirect',
         hidden: true,
-        component: () => import('@/views/dashboard/index.vue')
+        component: () => import('@/views/redirect/index.vue')
       }
     ]
   },

@@ -1,16 +1,8 @@
 <template>
   <div class="app-container">
-    <el-form class="filter-container" inline label-width="100px">
+    <el-form class="filter-container" inline label-width="80px">
       <el-form-item class="filter-item" label="角色名称">
         <el-input v-model="map.roleName" clearable/>
-      </el-form-item>
-      <!-- <el-form-item class="filter-item" label="角色标识">
-          <el-input v-model="map.roleValue" clearable/>
-      </el-form-item> -->
-      <el-form-item class="filter-item" label="状态">
-        <el-select v-model="map.status" clearable placeholder="请选择">
-          <el-option v-for="(value, key) in statusIdEnums" :key="key" :label="value" :value="key"/>
-        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button v-if="checkPermission('system:admin:sys:role:page')" type="primary" @click="listForQuery">查询</el-button>
@@ -46,7 +38,7 @@
 </template>
 
 <script>
-import {sysRoleDelete, sysRolePage, sysRoleUpdateStatus, sysRoleView} from '@/api/system.js'
+import {sysRoleDelete, sysRolePage, sysRoleStatusId, sysRoleView} from '@/api/system.js'
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';
@@ -160,9 +152,9 @@ export default {
     handleUpdateStatus(row) {
       {
         let body = '确定禁用角色【' + row.roleName + '】？';
-        let status = 0;
+        let statusId = 0;
         if (row.statusId === 0) {
-          status = 1;
+          statusId = 1;
           body = '确定启用角色【' + row.roleName + '】？';
         }
         this.$confirm(body, '删除确认', {
@@ -170,7 +162,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
           this.loading.start();
-          sysRoleUpdateStatus(row.id, status).then(res => {
+          sysRoleStatusId(row.id, statusId).then(res => {
             this.$message.success(res);
             this.listForPage();
           })
