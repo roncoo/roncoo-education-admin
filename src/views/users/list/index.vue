@@ -67,14 +67,13 @@ import {usersDelete, usersPage} from '@/api/user.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
-  name: 'UsersEdit',
   components: {
     Edit
   },
   setup() {
     const apis = reactive({
       getList: usersPage,
-      detale: usersDelete
+      delete: usersDelete
     })
     const state = reactive({
       ...UseTable(apis, {}),

@@ -73,14 +73,14 @@ export default function UseTable(apis = {}, PageParam = {}) {
 
   // 列表删除项目
   const tableDelete = (data, tip) => {
-    if (apis.detale) {
+    if (apis.delete) {
       ElMessageBox.confirm(tip || '确认删除当前项目?', '提示', {
         type: 'warning',
         cancelButtonText: '取消',
         confirmButtonText: '确认'
       }).then(async() => {
         try {
-          const d = await apis.detale({
+          const d = await apis.delete({
             id: data.id,
             ...data
           });
