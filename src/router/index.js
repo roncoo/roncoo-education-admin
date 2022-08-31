@@ -136,7 +136,7 @@ const asyncRouterMapList = [
       {
         path: 'list',
         name: 'UsersList',
-        component: () => import('@/views/system/sysUser/list/index.vue')
+        component: () => import('@/views/users/list.vue')
       },
       {
         path: 'study',
