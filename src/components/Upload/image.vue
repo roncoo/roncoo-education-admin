@@ -1,80 +1,48 @@
 <template>
-  <div
-    v-if="status === 1"
-    class="avatar-uploader"
-    :style="'height:' + height + 'px;width:' + width + 'px;'"
-  >
-    <div class="close-dialog" @click="closeUpload">
-      <i class="el-icon-close avatar-uploader-icon" title="取消上传" />
-    </div>
-    <el-progress
-      class="upload-progress"
-      :style="'line-height:' + height + 'px;'"
-      type="circle"
-      :percentage="int"
-    />
-  </div>
   <el-upload
-    v-else
     class="avatar-uploader"
-    name="picFile"
-    action=""
-    :style="'height:' + height + 'px;width:' + width + 'px;'"
-    :accept="accept"
+    action="https://jsonplaceholder.typicode.com/posts/"
     :show-file-list="false"
-    :http-request="upload"
     :on-success="handleAvatarSuccess"
     :before-upload="beforeAvatarUpload"
   >
-    <svg-icon class="svg-icon" icon-class="plus" v-if="status === 0"/>
-    <div v-else-if="status === 2" class="">
-      <div class="close-dialog">
-        <el-button class="reset-btn" >重新上传</el-button>
-      </div>
-      <img :src="url" class="avatar" alt="" />
-    </div>
+    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
   </el-upload>
 </template>
 
 <script>
-//import uploadmixin from '@/utils/mixin/uploadVideo'
-import { uploadPic } from "@/api/upload.js";
+import {uploadPic} from '@/api/upload.js';
+
 export default {
-  name: "UploadImage",
+  name: 'UploadImage',
   //mixins: [uploadmixin],
   props: {
     width: {
       type: Number,
-      default: 356,
+      default: 356
     },
     height: {
       type: Number,
-      default: 178,
-    },
-    fileType: {
-      // 文件类型
-      type: Number,
-      default: 2,
+      default: 178
     },
     imageUrl: {
       // 默认图片路径
       type: [String, Number],
-      default: "",
+      default: ''
     },
-    params:{
-      type:Object,
-      default:{}
+    params: {
+      type: Object,
+      default: {}
     }
   },
   data() {
     return {
-      accept: "",
-      imageType: "image/jpeg,image/png,image/gif,image/x-icon,",
-      videoType:
-        "video/mp4,video/avi,video/mpg,video/mpeg,video/ram,video/flv,video/mov,video/asf,video/3gp,video/f4v,video/wmv,video/x-ms-wmv",
+      accept: '',
+      imageType: 'image/jpeg,image/png,image/gif,image/x-icon,',
       status: 0, //  0:未上传， 1：正在上传， 2：已完成
       int: 50,
-      url: "",
+      url: ''
     };
   },
   watch: {
@@ -83,10 +51,10 @@ export default {
         this.url = newData;
         this.status = 2;
       } else {
-        this.url = "";
+        this.url = '';
         this.status = 0;
       }
-    },
+    }
   },
   mounted() {
     if (this.fileType === 2) {
@@ -99,53 +67,32 @@ export default {
       this.url = this.imageUrl;
       this.status = 2;
     } else {
-      this.url = "";
+      this.url = '';
       this.status = 0;
     }
   },
   methods: {
     upload(file) {
       uploadPic(file, (int) => {
-        this.status = 1;
         this.int = int;
-      },this.params).then((res) => {
-        console.log("res", res);
-        this.status = 3;
-        this.$emit("success", { url: res.fileUrl,...res });
+      }, this.params).then((res) => {
+        this.$emit('success', {url: res, ...res});
       });
     },
     closeUpload() {
       this.status = 0;
     },
-    // 视频
-    savaVideo(data, int) {
-      if (data.ossUrl) {
-        this.status = 2;
-        this.int = int;
-        this.url = data.ossUrl;
-        this.$emit("success", { name: data.name, url: data.ossUrl });
-      }
-      console.log(data);
-    },
-    uploadSuccess(result) {
-      console.log(result);
-    },
     handleAvatarSuccess(res, file) {
       this.url = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isIMG = this.accept.indexOf(file.type);
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (isIMG === -1) {
-        this.$message.error("不支持上传该文件格式");
-      }
+      const isLt2M = file.size / 1024 / 1024 < 10;
       if (!isLt2M) {
-        this.$message.error("上传图片大小不能超过 2MB!");
+        this.$message.error('上传图片大小不能超过 10MB');
       }
-      return isIMG !== -1 && isLt2M;
-    },
-  },
+      return isLt2M;
+    }
+  }
 };
 </script>
 
@@ -165,6 +112,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
     &:hover {
       border-color: #409eff;
     }
@@ -194,6 +142,7 @@ export default {
     height: 100% !important;
     display: flex;
     justify-content: center;
+
     svg {
       padding: 10px;
       max-width: 100%;

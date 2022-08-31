@@ -1,12 +1,6 @@
 <template>
   <div>
-    <input
-      id="file"
-      type="file"
-      :accept="fileType"
-      style="display: none"
-      @change="addUpload"
-    >
+    <input id="file" type="file" :accept="fileType" style="display: none" @change="addUpload">
   </div>
 </template>
 
@@ -17,20 +11,22 @@ export default {
   name: '',
   mixins: [uploadMiXin],
   props: {
-      fileType: {
+    fileType: {
       // 1问题图片，2问题答案，3习题图片，4习题答案
       type: [String, Number],
       default: ''
     }
   },
   data() {
-      return {
-          type: 4
+    return {
+      type: 4
 
-      }
+    }
   },
-  created() {},
-  mounted() {},
+  created() {
+  },
+  mounted() {
+  },
   methods: {
 // 加入上传列表
     addUpload(e) {
@@ -38,14 +34,14 @@ export default {
       this.receiveFile(files);
       e.target.value = '';
     },
-     // 选择上传课件
+    // 选择上传课件
     upimg() {
       this.isPolyvUpload = false;
       const myfile = document.getElementById('file');
       myfile.click();
     },
     savaVideo(fileData) {
-        this.$emit('submit', fileData)
+      this.$emit('submit', fileData)
     }
   }
 }
