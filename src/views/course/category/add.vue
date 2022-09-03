@@ -1,26 +1,17 @@
 <template>
-  <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
+  <el-dialog v-model="visible" :append-to-body="true" :title="'添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item class="form-group" label="讲师名称" prop="lecturerName">
-            <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="讲师手机" prop="lecturerMobile">
-            <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="讲师职位" prop="lecturerPosition">
-            <el-input v-model="formModel.data.lecturerPosition" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload width="400"/>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-form-item label="简介" prop="introduce">
-        <editor ref="editor" :value="formModel.data['introduce']"/>
+      <el-form-item v-if="formModel.data.parentId" class="form-group" label="上级分类" prop="categoryName">
+        <el-input v-model="formModel.data.parentCategoryName" maxlength="100" disabled></el-input>
+      </el-form-item>
+      <el-form-item class="form-group" label="名称" prop="categoryName">
+        <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
+      </el-form-item>
+      <el-form-item class="form-group" label="备注" prop="remark">
+        <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
+      </el-form-item>
+      <el-form-item class="form-group" label="排序" prop="sort">
+        <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -35,9 +26,9 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {categoryEdit, categorySave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {lecturerEdit, lecturerSave} from '@/api/user.js';
 
 export default defineComponent({
   components: {
@@ -83,7 +74,8 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel.data = {
-        ...val
+        parentId: val.id,
+        parentCategoryName: val.categoryName
       };
     });
 
@@ -110,9 +102,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await lecturerEdit(data);
+            d = await categoryEdit(data);
           } else {
-            d = await lecturerSave(data);
+            d = await categorySave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

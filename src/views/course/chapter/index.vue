@@ -9,20 +9,20 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button plain type="success" @click="openEditDialog()">添加</el-button>
+            <el-button plain type="success" @click="openEditDialog(editForm)">章添加</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="tableData.loading" :data="tableData.list" border row-key="id" :tree-props="{ children: 'periodViewRespList' }" default-expand-all>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="讲师头像">
+      <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
-          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName"/>
+          <span>{{ scope.row.chapterName }}</span>
+          <span>{{ scope.row.periodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="讲师名称" prop="lecturerName"/>
-      <el-table-column label="职位" prop="lecturerPosition"/>
+      <el-table-column label="章节描述" prop="chapterDesc"/>
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="状态">
         <template #default="scope">
@@ -31,7 +31,9 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(addForm)">节添加</el-button>
+          <el-button v-if="scope.row.periodName" plain type="primary" @click="openAddDialog(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -51,6 +53,7 @@
     </el-table>
     <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <add v-model="addModel.visible" :form="addModel.form" @updateTable="closeAddDialog"/>
   </div>
 </template>
 <script>
@@ -58,26 +61,38 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {lecturerDelete, lecturerEdit, lecturerPage} from '@/api/user.js'
+import {useRoute} from 'vue-router';
+import {courseChapterDelete, courseChapterEdit, courseChapterPage} from '@/api/course.js'
 import Edit from './edit.vue';
+import Add from './add.vue';
 
 export default defineComponent({
   components: {
-    Edit
+    Edit, Add
   },
   setup() {
+    const store = useStore();
+    const route = useRoute()
     const apis = reactive({
-      getList: lecturerPage,
-      delete: lecturerDelete,
-      updateStatus: lecturerEdit
+      getList: courseChapterPage,
+      delete: courseChapterDelete,
+      updateStatus: courseChapterEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),
       statusIdEnums: {},
       userSexEnums: {}
     });
-    const store = useStore();
+    const addForm = reactive({
+      courseId: ''
+    })
+    const editForm = reactive({
+      courseId: ''
+    })
     onMounted(() => {
+      addForm.courseId = route.query.courseId;
+      editForm.courseId = route.query.courseId;
+
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;
       });
@@ -102,6 +117,8 @@ export default defineComponent({
     };
     return {
       ...toRefs(state),
+      addForm,
+      editForm,
       handleUpdateStatus
     };
   }

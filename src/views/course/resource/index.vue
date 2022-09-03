@@ -16,13 +16,13 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="讲师头像">
+      <el-table-column label="资源类型" prop="resourceType">
         <template #default="scope">
-          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName"/>
+          <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="讲师名称" prop="lecturerName"/>
-      <el-table-column label="职位" prop="lecturerPosition"/>
+      <el-table-column label="资源名称" prop="resourceName"/>
+      <el-table-column label="资源大小" prop="resourceSize"/>
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="状态">
         <template #default="scope">
@@ -58,7 +58,7 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {lecturerDelete, lecturerEdit, lecturerPage} from '@/api/user.js'
+import {resourceDelete, resourceEdit, resourcePage} from '@/api/course.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -67,25 +67,24 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: lecturerPage,
-      delete: lecturerDelete,
-      updateStatus: lecturerEdit
+      getList: resourcePage,
+      delete: resourceDelete,
+      updateStatus: resourceEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),
       statusIdEnums: {},
-      userSexEnums: {}
+      resourceTypeEnums: {}
     });
     const store = useStore();
     onMounted(() => {
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;
       });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
+      store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
+        state.resourceTypeEnums = res;
       });
     });
-
     const handleUpdateStatus = function(row) {
       state.tableData.loading = true;
       row.statusId = row.statusId ? 0 : 1

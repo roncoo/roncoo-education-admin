@@ -15,7 +15,7 @@ export function lecturerSave(data) {
   return request.post('/user/admin/lecturer/save', data)
 }
 
-// 讲师修改
+// 讲师删除
 export function lecturerDelete(data) {
   return request.delete('/user/admin/lecturer/delete?id=' + data.id, data)
 }

@@ -2,21 +2,25 @@
   <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
-        <el-col :span="12">
-          <el-form-item class="form-group" label="讲师名称" prop="lecturerName">
+        <el-col :span="15">
+          <el-form-item class="form-group" label="课程分类" prop="lecturerName">
             <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-          <el-form-item class="form-group" label="讲师手机" prop="lecturerMobile">
-            <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
+          <el-form-item class="form-group" label="课程讲师" prop="lecturerName">
+            <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-          <el-form-item class="form-group" label="讲师职位" prop="lecturerPosition">
+          <el-form-item class="form-group" label="课程名称" prop="lecturerName">
+            <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
             <el-input v-model="formModel.data.lecturerPosition" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload width="400"/>
+          <el-form-item class="form-group" label="划线价" prop="lecturerMobile">
+            <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
           </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          
         </el-col>
       </el-row>
       <el-form-item label="简介" prop="introduce">
@@ -35,9 +39,9 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {lecturerEdit, lecturerSave} from '@/api/user.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {lecturerEdit, lecturerSave} from '@/api/user.js';
 
 export default defineComponent({
   components: {

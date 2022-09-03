@@ -114,12 +114,24 @@ const asyncRouterMapList = [
       {
         path: 'list',
         name: 'CourseList',
-        component: () => import('@/views/system/sysUser/list/index.vue')
+        component: () => import('@/views/course/list/index.vue')
+      },
+      {
+        path: 'chapter',
+        name: 'CourseChapter',
+        hidden: true,
+        component: () => import('@/views/course/chapter/index.vue'),
+        meta: {title: '章节管理'}
+      },
+      {
+        path: 'resource',
+        name: 'CourseResource',
+        component: () => import('@/views/course/resource/index.vue')
       },
       {
         path: 'category',
         name: 'CourseCategory',
-        component: () => import('@/views/system/sysRole/list/index.vue')
+        component: () => import('@/views/course/category/index.vue')
       },
       {
         path: 'lecturer',

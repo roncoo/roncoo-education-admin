@@ -16,14 +16,28 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="讲师头像">
+      <el-table-column label="课程封面">
         <template #default="scope">
-          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName"/>
+          <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
         </template>
       </el-table-column>
-      <el-table-column label="讲师名称" prop="lecturerName"/>
-      <el-table-column label="职位" prop="lecturerPosition"/>
-      <el-table-column label="排序" prop="sort"/>
+      <el-table-column label="课程名称" prop="courseName"/>
+      <el-table-column label="课程价格">
+        <template #default="scope">
+          <span v-if="scope.row.isFree == 1">免费</span>
+          <span v-if="scope.row.isFree == 0">
+            ￥{{ scope.row.coursePrice }} <br><span style="text-decoration:line-through;">￥{{ scope.row.rulingPrice }}</span>
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="上架状态">
+        <template #default="scope">
+          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="课程排序" prop="courseSort"/>
+      <el-table-column label="购买人数" prop="countBuy"/>
+      <el-table-column label="学习人数" prop="countStudy"/>
       <el-table-column label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
@@ -31,6 +45,7 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
+          <el-button plain type="success" @click="courseChapter(scope.row)">章节管理</el-button>
           <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
@@ -58,7 +73,7 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {lecturerDelete, lecturerEdit, lecturerPage} from '@/api/user.js'
+import {courseDelete, coursePage} from '@/api/course.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -67,22 +82,21 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: lecturerPage,
-      delete: lecturerDelete,
-      updateStatus: lecturerEdit
+      getList: coursePage,
+      delete: courseDelete
     })
     const state = reactive({
       ...UseTable(apis, {}),
       statusIdEnums: {},
-      userSexEnums: {}
+      putawayEnums: {}
     });
     const store = useStore();
     onMounted(() => {
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;
       });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
+      store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
+        state.putawayEnums = res;
       });
     });
 
@@ -100,9 +114,16 @@ export default defineComponent({
         state.tableData.loading = false;
       });
     };
+
+    //
+    const courseChapter = function(row) {
+      this.$router.push({path: '/course/chapter', query: {courseId: row.id}});
+    }
+
     return {
       ...toRefs(state),
-      handleUpdateStatus
+      handleUpdateStatus,
+      courseChapter
     };
   }
 });
