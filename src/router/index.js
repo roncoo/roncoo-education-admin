@@ -77,7 +77,7 @@ const asyncRouterMapList = [
       {
         path: 'order',
         name: 'CommonOrder',
-        component: () => import('@/views/system/sysUser/list/index.vue')
+        component: () => import('@/views/common/order/index.vue')
       },
       {
         path: 'zone',

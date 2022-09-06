@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 
+// 订单分页
+export function orderInfoPage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/user/admin/order/info/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 订单修改
+export function orderInfoEdit(data) {
+  return request.put('/user/admin/order/info/edit', data)
+}
+
 // 讲师分页
 export function lecturerPage(params, pageCurrent = 1, pageSize = 20) {
   return request({url: '/user/admin/lecturer/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
