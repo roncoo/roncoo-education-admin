@@ -60,6 +60,10 @@ const getDefaultState = () => {
         'label': '课程管理'
       },
       {
+        'icon': '课程资源',
+        'label': '课程资源'
+      },
+      {
         'icon': '课程分类',
         'label': '课程分类'
       },
@@ -88,12 +92,12 @@ const getDefaultState = () => {
         'label': '平台管理'
       },
       {
-        'icon': '应用管理',
-        'label': '应用管理'
-      },
-      {
         'icon': '权限管理',
         'label': '权限管理'
+      },
+      {
+        'icon': '配置管理',
+        'label': '配置管理'
       },
       {
         'icon': '用户管理',

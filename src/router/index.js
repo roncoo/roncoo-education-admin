@@ -163,6 +163,11 @@ const asyncRouterMapList = [
     component: Layout,
     children: [
       {
+        path: 'config',
+        name: 'PmsConfig',
+        component: () => import('@/views/system/config/index.vue')
+      },
+      {
         path: 'user',
         name: 'PmsUser',
         component: () => import('@/views/system/sysUser/list/index.vue')

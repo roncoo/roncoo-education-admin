@@ -1,8 +1,18 @@
 import request from '@/utils/request'
 
+// 系统配置--列出
+export function sysConfigList(data) {
+  return request({url: '/system/admin/sys/config/list', method: 'post', data: data})
+}
+
+// 系统菜单--编辑
+export function sysConfigEdit(data = {}) {
+  return request({url: '/system/admin/sys/config/edit', method: 'put', data: data})
+}
+
 // 系统菜单--列出
 export function sysMenuList(id = 0) {
-  return request({url: '/system/admin/sys/menu/list', method: 'post', data: {}})
+  return request({url: '/system/admin/sys/menu/list', method: 'post', data: {id: id}})
 }
 
 // 系统菜单--新增

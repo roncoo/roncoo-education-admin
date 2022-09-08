@@ -1,13 +1,18 @@
 <template>
-  <el-upload
-    class="avatar-uploader"
-    action="https://jsonplaceholder.typicode.com/posts/"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeAvatarUpload"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+  <div v-if="status === 1" class="avatar-uploader" :style="'height:' + height + 'px;width:' + width + 'px;'">
+    <div class="close-dialog" @click="closeUpload">
+      <i class="el-icon-close avatar-uploader-icon" title="取消上传"/>
+    </div>
+    <el-progress class="upload-progress" :style="'line-height:' + height + 'px;'" type="circle" :percentage="int"/>
+  </div>
+  <el-upload v-else class="avatar-uploader" name="picFile" action="" :style="'height:' + height + 'px;width:' + width + 'px;'" :accept="accept" :show-file-list="false" :http-request="upload" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+    <svg-icon class="svg-icon" icon-class="plus" v-if="status === 0"/>
+    <div v-else-if="status === 2" class="">
+      <div class="close-dialog">
+        <el-button class="reset-btn">重新上传</el-button>
+      </div>
+      <img :src="url" class="avatar" alt=""/>
+    </div>
   </el-upload>
 </template>
 
@@ -16,7 +21,6 @@ import {uploadPic} from '@/api/upload.js';
 
 export default {
   name: 'UploadImage',
-  //mixins: [uploadmixin],
   props: {
     width: {
       type: Number,
@@ -38,8 +42,7 @@ export default {
   },
   data() {
     return {
-      accept: '',
-      imageType: 'image/jpeg,image/png,image/gif,image/x-icon,',
+      accept: 'image/jpeg,image/png,image/gif,image/x-icon,',
       status: 0, //  0:未上传， 1：正在上传， 2：已完成
       int: 50,
       url: ''
@@ -57,12 +60,6 @@ export default {
     }
   },
   mounted() {
-    if (this.fileType === 2) {
-      this.accept = this.imageType;
-    }
-    if (this.fileType === 3) {
-      this.accept = this.videoType;
-    }
     if (this.imageUrl) {
       this.url = this.imageUrl;
       this.status = 2;
@@ -74,23 +71,32 @@ export default {
   methods: {
     upload(file) {
       uploadPic(file, (int) => {
+        this.status = 1;
         this.int = int;
       }, this.params).then((res) => {
+        this.status = 3;
         this.$emit('success', {url: res, ...res});
       });
     },
     closeUpload() {
       this.status = 0;
     },
+    uploadSuccess(result) {
+      console.log(result);
+    },
     handleAvatarSuccess(res, file) {
       this.url = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isLt2M = file.size / 1024 / 1024 < 10;
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 10MB');
+      const isIMG = this.accept.indexOf(file.type);
+      const isLtM = file.size / 1024 / 1024 < 10;
+      if (isIMG === -1) {
+        this.$message.error('不支持上传该文件格式');
       }
-      return isLt2M;
+      if (!isLtM) {
+        this.$message.error('上传图片大小不能超过 10MB!');
+      }
+      return isIMG !== -1 && isLtM;
     }
   }
 };
@@ -100,8 +106,7 @@ export default {
 .avatar-uploader {
   position: relative;
 
-  .el-upload,
-  .upload-progress {
+  .el-upload, .upload-progress {
     width: 100%;
     height: 100%;
     border: 1px dashed #d9d9d9;

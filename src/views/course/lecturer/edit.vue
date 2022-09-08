@@ -15,7 +15,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload width="400"/>
+            <upload-image :image-url="formModel.data.lecturerHead" :height="120" :width="120" class="avatar" @success=" (val) => {   formModel.data.lecturerHead = val.url;  }"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -35,13 +35,13 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import upload from '@/components/Upload/image.vue';
 import {lecturerEdit, lecturerSave} from '@/api/user.js';
 
 export default defineComponent({
   components: {
-    editor, upload
+    editor, UploadImage
   },
   props: {
     modelValue: {
@@ -77,7 +77,6 @@ export default defineComponent({
 
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
-      console.log('form', form)
       visible.value = val;
     });
     // form 数据监控
