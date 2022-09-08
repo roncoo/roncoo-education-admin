@@ -22,6 +22,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.6.3":
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.0.tgz#22b11c037b094d27a8a2504ea4dcff00f50e2259"
+  integrity sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@ctrl/tinycolor@^3.4.0":
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.1.tgz#75b4c27948c81e88ccd3a8902047bcd797f38d32"
@@ -79,6 +86,13 @@
   dependencies:
     "@intlify/core-base" "9.2.2"
     "@intlify/shared" "9.2.2"
+
+"@polyv/vod-upload-js-sdk@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@polyv/vod-upload-js-sdk/-/vod-upload-js-sdk-1.2.3.tgz#5105d976941d801bfeb52e31cdd08b515112900b"
+  integrity sha512-PC2u5gCxgyuJaTPZ04/G8SeHYMARH0KAXNd2hS7i0yXGr+TEPFpt7Z2zVGEZjPz2hIu0tccEqECvDylEMit9rQ==
+  dependencies:
+    "@babel/runtime" "^7.6.3"
 
 "@popperjs/core@^2.10.2":
   version "2.11.6"

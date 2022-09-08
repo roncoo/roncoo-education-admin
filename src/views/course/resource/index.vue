@@ -9,27 +9,40 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button plain type="success" @click="openEditDialog()">添加</el-button>
+            <el-button plain type="success" @click="localUpload">本地上传</el-button>
+            <input id="file" type="file" style="display: none" @change="addUpload">
           </el-form-item>
         </el-form>
       </div>
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="资源类型" prop="resourceType">
+      <el-table-column label="资源名称" prop="resourceName">
         <template #default="scope">
-          <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span>
+          <span>{{ scope.row.resourceName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="资源名称" prop="resourceName"/>
-      <el-table-column label="资源大小" prop="resourceSize"/>
-      <el-table-column label="排序" prop="sort"/>
-      <el-table-column label="状态">
+      <el-table-column label="资源大小" prop="resourceSize" :width="200">
+        <template #default="scope">{{ getSize(scope.row.resourceSize) }}</template>
+      </el-table-column>
+      <el-table-column label="资源类型" prop="resourceType" :width="200">
+        <template #default="scope">
+          <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
+          <span>{{ formatDuring(scope.row.videoLength) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="视频状态" prop="resourceType" :width="100">
+        <template #default="scope">
+          <span>{{ videoStatusEnums[scope.row.videoStatus] }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="排序" prop="sort" :width="100"/>
+      <el-table-column label="状态" :width="100">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="300" fixed="right" label="操作" prop="address">
+      <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
@@ -59,6 +72,8 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
 import {resourceDelete, resourceEdit, resourcePage} from '@/api/course.js'
+import {polyvUpload} from '@/utils/vod.js'
+import {getSize, formatDuring} from '@/utils/utils.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -74,7 +89,8 @@ export default defineComponent({
     const state = reactive({
       ...UseTable(apis, {}),
       statusIdEnums: {},
-      resourceTypeEnums: {}
+      resourceTypeEnums: {},
+      videoStatusEnums: {}
     });
     const store = useStore();
     onMounted(() => {
@@ -83,6 +99,9 @@ export default defineComponent({
       });
       store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
         state.resourceTypeEnums = res;
+      });
+      store.dispatch('GetOpts', {enumName: 'VideoStatusEnum', type: 'obj'}).then((res) => {
+        state.videoStatusEnums = res;
       });
     });
     const handleUpdateStatus = function(row) {
@@ -99,9 +118,23 @@ export default defineComponent({
         state.tableData.loading = false;
       });
     };
+    const localUpload = () => {
+      const myfile = document.getElementById('file');
+      myfile.click();
+    }
+    const addUpload = (e) => {
+      const file = e.target.files[0];
+      polyvUpload(file);
+      e.target.value = '';
+      state.seek();
+    }
     return {
       ...toRefs(state),
-      handleUpdateStatus
+      handleUpdateStatus,
+      localUpload,
+      addUpload,
+      getSize,
+      formatDuring
     };
   }
 });

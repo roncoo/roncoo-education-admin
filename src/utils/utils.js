@@ -13,7 +13,8 @@ export const toZhDigit = (digit) => {
   let breakLen = Math.ceil(digit.length / 4);
   let notBreakSegment = digit.length % 4 || 4;
   let segment;
-  const zeroFlag = []; const allZeroFlag = [];
+  const zeroFlag = [];
+  const allZeroFlag = [];
   let result = '';
 
   while (breakLen > 0) {
@@ -104,19 +105,35 @@ export const toZhDigit = (digit) => {
   }
 }
 
+/**
+ * 获取时长
+ * @param mss
+ * @returns {string}
+ */
+export const formatDuring = (mss) => {
+  // const days = parseInt(mss / (1000 * 60 * 60 * 24));
+  const hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = parseInt((mss % (1000 * 60)) / 1000)
+  return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
+}
+
 // 获取文件大小
 export function getSize(limit) {
   let size = '';
-  if (limit < 0.1 * 1024) { // 小于0.1KB，则转化成B
-    size = limit.toFixed(2) + 'B'
-  } else if (limit < 0.1 * 1024 * 1024) { // 小于0.1MB，则转化成KB
-    size = (limit / 1024).toFixed(2) + 'KB'
-  } else if (limit < 0.1 * 1024 * 1024 * 1024) { // 小于0.1GB，则转化成MB
-    size = (limit / (1024 * 1024)).toFixed(2) + 'MB'
-  } else if (limit < 0.1 * 1024 * 1024 * 1024 * 1024) { // 小于0.1TB，则转化成GB
-    size = (limit / (1024 * 1024 * 1024)).toFixed(2) + 'GB'
-  } else { // 其他转化成GB
-    size = (limit / (1024 * 1024 * 1024 * 1024)).toFixed(2) + 'TB'
+
+  if (limit && limit != 0) {
+    if (limit < 0.1 * 1024) { // 小于0.1KB，则转化成B
+      size = limit.toFixed(2) + 'B'
+    } else if (limit < 0.1 * 1024 * 1024) { // 小于0.1MB，则转化成KB
+      size = (limit / 1024).toFixed(2) + 'KB'
+    } else if (limit < 0.1 * 1024 * 1024 * 1024) { // 小于0.1GB，则转化成MB
+      size = (limit / (1024 * 1024)).toFixed(2) + 'MB'
+    } else if (limit < 0.1 * 1024 * 1024 * 1024 * 1024) { // 小于0.1TB，则转化成GB
+      size = (limit / (1024 * 1024 * 1024)).toFixed(2) + 'GB'
+    } else { // 其他转化成GB
+      size = (limit / (1024 * 1024 * 1024 * 1024)).toFixed(2) + 'TB'
+    }
   }
 
   const sizeStr = size + ''; // 转成字符串

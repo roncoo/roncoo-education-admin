@@ -27,6 +27,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
+    "@polyv/vod-upload-js-sdk": "^1.2.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-external-globals": "^0.6.1",
     "sass": "^1.32.13",

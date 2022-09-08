@@ -1,5 +1,14 @@
 import request from '@/utils/request'
 
+// 音视频上传参数
+export function vodConfig() {
+  return request.get('/course/admin/resource/vod/config')
+}
+
+export function saveResource(data) {
+  return request.post('/course/admin/resource/save', data);
+}
+
 export function uploadPic(data, cb, params = {}) {
   // 上传方法
   const formData = new FormData()
