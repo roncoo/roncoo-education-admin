@@ -2,26 +2,29 @@
   <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="900" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
-        <el-col :span="10">
-          <el-form-item class="form-group" label="课程分类" prop="lecturerName">
-            <el-input v-model="formModel.data.courseName" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="课程讲师" prop="lecturerName">
-            <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="课程名称" prop="lecturerName">
-            <el-input v-model="formModel.data.courseName" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
-            <el-input v-model="formModel.data.lecturerPosition" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="划线价" prop="lecturerMobile">
-            <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
+        <el-col :span="12">
+          <el-form-item class="form-group" label="" prop="lecturerHead">
+            <upload-image :image-url="formModel.data.courseLogo" :height="180" :width="360" class="avatar" @success=" (val) => {   formModel.data.courseLogo = val.url;  }"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload-image :image-url="formModel.data.courseLogo" :height="195" :width="400" class="avatar" @success=" (val) => {   formModel.data.courseLogo = val.url;  }"/>
+          <el-form-item class="form-group" label="分类" prop="lecturerName">
+            <el-input v-model="formModel.data.categoryId" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item class="form-group" label="讲师" prop="lecturerName">
+            <el-input v-model="formModel.data.lecturerId" maxlength="100" show-word-limit></el-input>
+            <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
+          </el-form-item>
+          <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
+            <el-input v-model="formModel.data.coursePrice" type="number" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item class="form-group" label="划线价" prop="lecturerMobile">
+            <el-input v-model="formModel.data.rulingPrice" type="number" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="21">
+          <el-form-item label="课程名称" prop="lecturerName">
+            <el-input v-model="formModel.data.courseName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -35,6 +38,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
+    <select-lecturer v-if="lecturer.visible" :visible="lecturer.visible" :info="lecturer.info" @close="lecturerCallback()"/>
   </el-dialog>
 </template>
 
@@ -44,10 +48,11 @@ import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 import {lecturerEdit, lecturerSave} from '@/api/user.js';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
+import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
 
 export default defineComponent({
   components: {
-    editor, UploadImage
+    editor, UploadImage, SelectLecturer
   },
   props: {
     modelValue: {
@@ -69,6 +74,11 @@ export default defineComponent({
     const ruleForm = ref(null);
     const loading = ref(false);
 
+    let lecturer = reactive({
+      visible: false,
+      info: {}
+    })
+
     let formModel = reactive({
       data: {},
       rules: {
@@ -83,7 +93,6 @@ export default defineComponent({
 
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
-      console.log('form', form)
       visible.value = val;
     });
     // form 数据监控
@@ -130,13 +139,28 @@ export default defineComponent({
       });
     };
 
+    const lecturerSelect = () => {
+      lecturer.visible = true;
+    }
+
+    const lecturerCallback = (info) => {
+      lecturer.visible = false
+      if (info != null) {
+        formModel.data.lecturerName = info.name;
+        formModel.data.lecturerid = info.lecturerId;
+      }
+    }
+
     return {
       visible,
       loading,
+      lecturer,
       formModel,
       ruleForm,
       cloneDialog,
-      onSubmit
+      onSubmit,
+      lecturerSelect,
+      lecturerCallback
     };
   }
 });

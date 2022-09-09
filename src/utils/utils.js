@@ -149,3 +149,11 @@ export function deepCopy(param) {
   return JSON.parse(JSON.stringify(param))
 }
 
+/**
+ * 深拷贝
+ * @param param
+ * @returns {any}
+ */
+export function deepCopy(param) {
+  return JSON.parse(JSON.stringify(param))
+}

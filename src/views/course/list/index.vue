@@ -65,7 +65,7 @@
       </el-table-column>
     </el-table>
     <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <edit v-model="editModel.visible" :modelValue="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
   </div>
 </template>
 <script>
