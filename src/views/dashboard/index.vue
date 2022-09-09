@@ -1,32 +1,43 @@
 <template>
   <div class="dashboard-container">
     <div class="title-info">
-      <span class="title">点播套餐使用情况【账号：{{ statisticsData.email }}】</span>
+      <span class="title">最近14天登录人数</span>
     </div>
-    <pie-vod :data="statisticsData"/>
+    <login :data="loginData"/>
+    <div class="title-info">
+      <span class="title">点播套餐使用情况【账号：{{ vodData.email }}】</span>
+    </div>
+    <vod :data="vodData"/>
   </div>
 </template>
 <script>
-import {statVod} from '@/api/dashboard.js';
-import pieVod from './pieVod.vue'
+import {statVod, statLogin} from '@/api/dashboard.js';
+import Vod from './statVod.vue'
+import Login from './statLogin.vue'
 
 export default {
   name: 'Dashboard',
-  components: {pieVod},
+  components: {Vod, Login},
   data() {
     return {
-      statisticsData: {}
+      vodData: {},
+      loginData: {}
     }
   },
   mounted() {
-    this.getStatisticsVod()
+    this.getVod()
+    this.getLogin();
   },
   methods: {
     // 统计点播数据
-    getStatisticsVod() {
+    getVod() {
       statVod().then(res => {
-        console.log(res)
-        this.statisticsData = res
+        this.vodData = res
+      })
+    },
+    getLogin() {
+      statLogin().then(res => {
+        this.loginData = res
       })
     }
   }
@@ -38,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .title-info {
-  margin: 10px 25px;
+  margin: 20px 25px;
   padding: 5px;
   background-color: #ecf8ff;
   border-left: 5px solid #50bfff;

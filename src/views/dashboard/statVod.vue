@@ -7,15 +7,9 @@
 
 <script>
 import * as echarts from 'echarts';
-// import {BarChart} from 'echarts/charts';
-// import {GridComponent} from 'echarts/components';
-// import {CanvasRenderer} from 'echarts/renderers';
-// import {LegendComponent} from 'echarts/components';
-
-//echarts.use([BarChart, GridComponent, CanvasRenderer]);
 
 export default {
-  name: 'PieVod',
+  name: 'StatVod',
   props: {
     data: {
       type: Object,
