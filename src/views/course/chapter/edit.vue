@@ -4,12 +4,17 @@
       <el-form-item class="form-group" label="章名称" prop="chapterName">
         <el-input v-model="formModel.data.chapterName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="描述" prop="chapterDesc">
-        <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
-      </el-form-item>
+      <!--      <el-form-item class="form-group" label="描述" prop="chapterDesc">
+              <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
+            </el-form-item>-->
       <el-form-item class="form-group" label="收费" prop="isFree">
-        <el-input v-model="formModel.data.isFree" maxlength="100" show-word-limit></el-input>
+        <el-radio-group v-model="formModel.data.isFree">
+          <template v-for="item in freeEnums" :key="item.code">
+            <el-radio :label="item.code">{{ item.desc }}</el-radio>
+          </template>
+        </el-radio-group>
       </el-form-item>
+
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
       </el-form-item>
@@ -25,7 +30,8 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
+import {useStore} from 'vuex';
 import {courseChapterEdit, courseChapterSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
@@ -53,6 +59,16 @@ export default defineComponent({
     const visible = ref(false);
     const ruleForm = ref(null);
     const loading = ref(false);
+
+    const state = reactive({
+      freeEnums: {}
+    });
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('GetOpts', {enumName: 'FreeEnum', type: 'obj'}).then((res) => {
+        state.freeEnums = res;
+      });
+    });
 
     let formModel = reactive({
       data: {},
@@ -115,6 +131,7 @@ export default defineComponent({
     };
 
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,

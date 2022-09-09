@@ -1,12 +1,5 @@
 <template>
   <div class="app-container">
-    <el-form class="filter-container" inline label-width="100px">
-      <el-form-item>
-        <el-button plain type="danger" @click="handleDeleteRedisRow">清空缓存</el-button>
-        <el-button plain type="warning" @click="handleSyncVideoCloudConfig">视频云设置</el-button>
-        <el-button plain type="primary" @click="handleSyncStorageConfig">存储设置</el-button>
-      </el-form-item>
-    </el-form>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="站点设置" name="1">
         <List :list="list" @reset="handleReset"></List>
@@ -31,8 +24,6 @@
 </template>
 <script>
 import {sysConfigList} from '@/api/system';
-// import SysConfigAdd from '@/views/system/config/add/index.vue';
-// import SysConfigValue from '@/views/system/config/value/index.vue';
 import List from './list.vue';
 
 export default {

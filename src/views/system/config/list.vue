@@ -17,7 +17,6 @@
           <span v-if="scope.row.contentType === 4">{{ scope.row.configValue == 1 ? '开启' : '关闭' }}</span>
           <span v-if="scope.row.contentType === 5 && scope.row.configKey === 'storagePlatform'">{{ storagePlatformEnum ? storagePlatformEnum[scope.row.configValue] : '' }}</span>
           <span v-if="scope.row.contentType === 5 && scope.row.configKey === 'vodPlatform'">{{ vodPlatformEnum ? vodPlatformEnum[scope.row.configValue] : '' }}</span>
-          <span v-if="scope.row.contentType === 5 && scope.row.configKey === 'livePlatform'">{{ livePlatformEnum ? livePlatformEnum[scope.row.configValue] : '' }}</span>
           <span v-if="scope.row.contentType === 5 && scope.row.configKey === 'smsPlatform'">{{ smsPlatformEnum ? smsPlatformEnum[scope.row.configValue] : '' }}</span>
           <br>
           <span style="color: #999;font-size: 13px">{{ scope.row.remark }}</span>

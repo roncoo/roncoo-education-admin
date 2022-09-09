@@ -3,12 +3,10 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
-          <el-form-item label="手机号码">
-            <el-input v-model="seekForm.mobile" clearable/>
-          </el-form-item>
+          <!--  <el-form-item label="章名称">
+                      <el-input v-model="seekForm.chapterName" clearable/>
+                    </el-form-item>-->
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openEditDialog(editForm)">章添加</el-button>
           </el-form-item>
         </el-form>
@@ -22,18 +20,18 @@
           <span>{{ scope.row.periodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="章节描述" prop="chapterDesc"/>
-      <el-table-column label="排序" prop="sort"/>
-      <el-table-column label="状态">
+      <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
+      <el-table-column label="排序" prop="sort" :width="100"/>
+      <el-table-column label="状态" :width="100">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(addForm)">节添加</el-button>
           <el-button v-if="scope.row.periodName" plain type="primary" @click="openAddDialog(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.chapterName" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(addForm)">节添加</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -91,7 +89,6 @@ export default defineComponent({
     })
     onMounted(() => {
       addForm.courseId = route.query.courseId;
-      editForm.courseId = route.query.courseId;
 
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;

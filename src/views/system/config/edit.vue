@@ -11,22 +11,17 @@
         <!-- 枚举类型 -->
         <el-radio-group v-if="newFormData.contentType === 5 && newFormData.configKey === 'storagePlatform'" v-model="newFormData.configValue">
           <template v-for="(item,index) in storagePlatformEnum" :key="item.code">
-            <el-radio v-if="index" :label="'' + item.code">{{ item.desc }}</el-radio>
+            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
           </template>
         </el-radio-group>
         <el-radio-group v-if="newFormData.contentType === 5 && newFormData.configKey === 'smsPlatform'" v-model="newFormData.configValue">
           <template v-for="(item,index) in smsPlatformEnum" :key="item.code">
-            <el-radio v-if="index" :label="'' + item.code">{{ item.desc }}</el-radio>
+            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
           </template>
         </el-radio-group>
         <el-radio-group v-if="newFormData.contentType === 5 && newFormData.configKey === 'vodPlatform'" v-model="newFormData.configValue">
           <template v-for="(item,index) in vodPlatformEnum" :key="item.code">
-            <el-radio v-if="index" :label="'' + item.code">{{ item.desc }}</el-radio>
-          </template>
-        </el-radio-group>
-        <el-radio-group v-if="newFormData.contentType === 5 && newFormData.configKey === 'livePlatform'" v-model="newFormData.configValue">
-          <template v-for="(item,index) in livePlatformEnum" :key="item.code">
-            <el-radio v-if="index" :label="'' + item.code">{{ item.desc }}</el-radio>
+            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
           </template>
         </el-radio-group>
       </el-form-item>

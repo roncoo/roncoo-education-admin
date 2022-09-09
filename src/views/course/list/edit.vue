@@ -12,7 +12,7 @@
             <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
           <el-form-item class="form-group" label="讲师" prop="lecturerName">
-            <el-input v-model="formModel.data.lecturerName" disabled style="width: 200px; margin-right: 20px"></el-input>
+            <el-input v-model="formModel.data.lecturerName" disabled style="width: 210px; margin-right: 20px"></el-input>
             <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
