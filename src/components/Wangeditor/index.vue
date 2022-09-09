@@ -3,20 +3,23 @@
   box-sizing: content-box;
   position: relative;
   z-index: 1;
+
   .w-e-toolbar {
     line-height: 1.15;
   }
+
   .w-e-text-container {
     height: 100% !important;
   }
 }
 </style>
 <template>
-  <div :id="ids" :style="{ height: height + 'px' }" class="wangeditor-box" />
+  <div :id="ids" :style="{ height: height + 'px' }" class="wangeditor-box"/>
 </template>
 <script>
-import { uploadPic } from '@/api/upload.js';
+import {uploadPic} from '@/api/upload.js';
 import E from 'wangeditor'
+
 export default {
   props: {
     value: {
@@ -57,7 +60,8 @@ export default {
   unmounted() {
     this.editor = null;
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     isdisabled(val) {
       this.editor.$textElem.attr('contenteditable', !this.disabled);
@@ -65,7 +69,7 @@ export default {
     setContent(val) {
       const setValueFunc = () => {
         if (val !== this.currentValue) {
-          console.log(val);
+          //console.log(val);
           this.editor && this.editor.txt && this.editor.txt.html(val);
         }
       };
@@ -87,11 +91,12 @@ export default {
     editorUpload(files, insert) {
       // console.log(files)
       const file = files[0];
-      uploadPic({ file: file }, function(int) {})
-          .then(insert)
-          .catch(() => {
-            this.$msgBox({ content: '上传图片出错，请稍后重试' });
-          });
+      uploadPic({file: file}, function(int) {
+      })
+        .then(insert)
+        .catch(() => {
+          this.$msgBox({content: '上传图片出错，请稍后重试'});
+        });
     },
     renderEditor() {
       function removeWordXml(text) {

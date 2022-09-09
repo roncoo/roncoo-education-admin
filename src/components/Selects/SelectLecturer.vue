@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :before-close="handleClose" :title="title" :visible.sync="visible" width="600px">
+  <el-dialog v-model="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
     <el-form class="filter-container" inline label-width="100px" size="mini">
       <el-form-item label="讲师名称">
         <el-input v-model="queryParams.lecturerName"/>
@@ -11,17 +11,11 @@
     </el-form>
 
     <el-table v-loading="loading" :data="page.dataList" border element-loading-text="Loading" fit highlight-current-row size="mini">
-      <el-table-column align="center" label="序号" type="index" width="50"/>
+      <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="讲师名称" prop="lecturerName"/>
-      <el-table-column label="机构信息" width="140">
-        <template slot-scope="scope">
-          <span v-if="scope.row.orgNo">{{ scope.row.orgName }}</span>
-          <span v-else class="c-warning">平台讲师</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="80">
-        <template slot-scope="scope">
-          <el-button plain size="mini" type="primary" @click="infoSelect(scope.row)">选择</el-button>
+      <el-table-column label="操作" width="100">
+        <template #default="scope">
+          <el-button plain size="min" type="primary" @click="infoSelect(scope.row)">选择</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,10 +50,11 @@ export default {
   },
   data() {
     return {
+      queryParams: {
+        statusId: 1
+      },
       page: {
-        beginPageIndex: 1,
         pageCurrent: 1,
-        endPageIndex: 8,
         pageSize: 10,
         totalCount: 0,
         totalPage: 0,
@@ -74,9 +69,6 @@ export default {
   methods: {
     listForPage() {
       this.loading = true;
-      if (this.info !== undefined && this.info.statusId !== undefined) {
-        this.queryParams.statusId = this.info.statusId;
-      }
       lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
@@ -107,7 +99,7 @@ export default {
       this.$emit('close');
     },
     infoSelect(info) {
-      this.$emit('close', {name: info.lecturerName, lecturerId: info.id});
+      this.$emit('close', {lecturerName: info.lecturerName, lecturerId: info.id});
     }
   }
 }

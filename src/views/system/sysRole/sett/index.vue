@@ -139,7 +139,6 @@ export default {
       const menuIdList = [];
       // const permissionIdList = [];
       const checkedNodes = this.$refs.tree.getCheckedNodes()
-      console.log(checkedNodes);
       for (const index in checkedNodes) {
         const info = checkedNodes[index];
         menuIdList.push(info.id)

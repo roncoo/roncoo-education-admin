@@ -106,7 +106,6 @@ export default {
         configValue: row.configValue
       })
         .then((res) => {
-          console.log('res', res);
           if (res) {
             this.$message.success(res);
             this.$emit('reset', 'success');

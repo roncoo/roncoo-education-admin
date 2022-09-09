@@ -286,7 +286,6 @@ export default {
     },
     closeAddMenu(data) {
       this.addMenuCtr.visible = false;
-      console.log('data', data);
       if (data) {
         this.loadTreePage(data.parentId || data.menuId);
       }

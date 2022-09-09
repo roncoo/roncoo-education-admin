@@ -73,7 +73,6 @@ export default {
       sysMenuView(this.form.id).then(res => {
         this.form = {...res}
         this.list = res.authValueList
-        console.log(res.authValueList);
       })
     }
   },

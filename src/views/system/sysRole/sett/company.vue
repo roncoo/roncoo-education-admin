@@ -13,28 +13,28 @@
 </template>
 
 <script>
-import {sysMenuInfoAvailableList, sysRoleMenuBatchSet, sysRoleMenuList, sysRoleSetAllocationMenuAndPermission, sysshopMenuDistributableList, sysshopMenuIdList} from "@/api/system";
-import {useStore} from "vuex";
-import {onMounted, reactive, ref, toRefs} from "vue";
-import {ElMessage} from "element-plus";
-import {useRoute} from "vue-router";
+import {sysMenuInfoAvailableList, sysRoleMenuBatchSet, sysRoleMenuList, sysRoleSetAllocationMenuAndPermission, sysshopMenuDistributableList, sysshopMenuIdList} from '@/api/system';
+import {useStore} from 'vuex';
+import {onMounted, reactive, ref, toRefs} from 'vue';
+import {ElMessage} from 'element-plus';
+import {useRoute} from 'vue-router';
 
 export default {
-  name: "SysRoleSettCompany",
+  name: 'SysRoleSettCompany',
   props: {
     title: {
       type: String,
-      default: null,
+      default: null
     },
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     info: {
       type: Object,
       default: () => {
-      },
-    },
+      }
+    }
   },
   setup(props, ctx) {
     const {title, visible, info} = toRefs(props);
@@ -47,15 +47,15 @@ export default {
     let availableList = reactive([]);
     let checkedKeyList = reactive([]);
     const defaultProps = reactive({
-      children: "children",
-      label: "label",
+      children: 'children',
+      label: 'label'
     });
     onMounted(() => {
-      console.log(info.value["defaultId"], "defaultId");
-      form.id = info.value["id"];
+      //console.log(info.value["defaultId"], "defaultId");
+      form.id = info.value['id'];
       // 获取可用菜单
       ctrl.loading = true
-      if (info.value["defaultId"]) {
+      if (info.value['defaultId']) {
         sysshopMenuDistributableList(query.sid).then((res) => {
           for (const index in res) {
             const info = res[index];
@@ -102,10 +102,10 @@ export default {
 
     function settCheckMenu() {
       // 获取已选择菜单和权限
-      if (info.value["defaultId"]) {
-        sysRoleMenuList(info.value["id"]).then((res) => {
+      if (info.value['defaultId']) {
+        sysRoleMenuList(info.value['id']).then((res) => {
           // 设置选中
-          tree["value"].setCheckedKeys(res);
+          tree['value'].setCheckedKeys(res);
         });
       } else {
         // sysshopMenuIdList(info.value['id']).then(res => {
@@ -113,13 +113,13 @@ export default {
         //     // 设置选中
         //     tree['value'].setCheckedKeys(res);
         // })
-        sysshopMenuIdList(info.value["id"]).then((res) => {
+        sysshopMenuIdList(info.value['id']).then((res) => {
           const checkedKeyList = res;
           // 设置选中
           checkedKeyList.forEach((item) => {
-            const node = tree["value"].getNode(item);
+            const node = tree['value'].getNode(item);
             if (node != null && node.isLeaf) {
-              tree["value"].setChecked(node, true);
+              tree['value'].setChecked(node, true);
             }
           });
         });
@@ -131,7 +131,7 @@ export default {
     function handleClose() {
       availableList = reactive([]);
       checkedKeyList = [];
-      ctx.emit("closes");
+      ctx.emit('closes');
     }
 
     function recursiveTreeInfo(parentId, infoList) {
@@ -155,17 +155,17 @@ export default {
     }
 
     function submitForm() {
-      const checkedNodes = tree["value"].getCheckedKeys().concat(tree["value"].getHalfCheckedKeys());
-      if (!info.value["defaultId"]) {
+      const checkedNodes = tree['value'].getCheckedKeys().concat(tree['value'].getHalfCheckedKeys());
+      if (!info.value['defaultId']) {
         form = {
-          sid: info.value["id"],
-          id: info.value["id"],
-          menuIdList: checkedNodes,
+          sid: info.value['id'],
+          id: info.value['id'],
+          menuIdList: checkedNodes
         };
       } else {
         form = {
-          roleId: info.value["id"],
-          menuIdList: checkedNodes,
+          roleId: info.value['id'],
+          menuIdList: checkedNodes
         };
       }
 
@@ -174,22 +174,22 @@ export default {
 
     function onSubmit() {
       // 新增
-      if (!info.value["defaultId"]) {
+      if (!info.value['defaultId']) {
         const {menuIdList, sid} = form;
         sysRoleSetAllocationMenuAndPermission({menuIdList, sid}).then((res) => {
-          ElMessage.success(res, "success");
+          ElMessage.success(res, 'success');
           // setTimeout(() => {
           //   window.location.reload()
           // }, 1000)
-          ctx.emit("closes", "success");
+          ctx.emit('closes', 'success');
         });
       } else {
         sysRoleMenuBatchSet(form).then((res) => {
-          ElMessage.success(res, "success");
+          ElMessage.success(res, 'success');
           // setTimeout(() => {
           //   window.location.reload()
           // }, 1000)
-          ctx.emit("closes", "success");
+          ctx.emit('closes', 'success');
         });
       }
     }
@@ -205,10 +205,10 @@ export default {
       tree,
       form,
       handleClose,
-      submitForm,
+      submitForm
     };
   },
-  emits: ["closes"],
+  emits: ['closes']
 };
 </script>
 

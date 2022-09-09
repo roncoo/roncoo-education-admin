@@ -90,7 +90,7 @@ const menu = {
           commit('set_system_menu', router)
           resolve(router)
         }).catch(err => {
-          console.log('getUserMenu失败', err)
+          console.log('getUserMenu', err)
         })
       })
     }

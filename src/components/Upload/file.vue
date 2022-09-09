@@ -102,10 +102,10 @@ export default {
         this.url = data.ossUrl;
         this.$emit('success', {name: data.name, url: data.ossUrl});
       }
-      console.log(data);
+      //console.log(data);
     },
     uploadSuccess(result) {
-      console.log(result);
+      //console.log(result);
     },
     handleAvatarSuccess(res, file) {
       this.url = URL.createObjectURL(file.raw);

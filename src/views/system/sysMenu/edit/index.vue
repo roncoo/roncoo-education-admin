@@ -104,7 +104,6 @@ export default {
   },
   mounted() {
     this.svgIconList = this.$store.state.user.svgIconList
-    console.log('info', this.info)
     this.form = Object.assign(this.info)
   },
   emits: ['closes'],

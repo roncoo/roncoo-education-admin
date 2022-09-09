@@ -2,7 +2,7 @@
   <div class="tags-view-container">
     <!-- <scroll-pane ref="scrollPane" class="tags-view-wrapper"> -->
     <el-scrollbar class="tags-view-wrapper">
-        <router-link
+      <router-link
         v-for="tag in visitedViews"
         ref="tag"
         :key="tag.route.fullPath"
@@ -13,7 +13,10 @@
         @click.middle="closeSelectedTag(tag)"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
-        {{ tag.title }}<el-icon class="el-close" @click.prevent.stop="closeSelectedTag(tag)"><close /></el-icon>
+        {{ tag.title }}
+        <el-icon class="el-close" @click.prevent.stop="closeSelectedTag(tag)">
+          <close/>
+        </el-icon>
       </router-link>
     </el-scrollbar>
 
@@ -32,25 +35,25 @@
 </template>
 
 <script>
-import ScrollPane from "@/components/ScrollPane/index.vue";
-import pathToRegexp from "path-to-regexp";
-import { Close } from "@element-plus/icons-vue"
+import ScrollPane from '@/components/ScrollPane/index.vue';
+import pathToRegexp from 'path-to-regexp';
+import {Close} from '@element-plus/icons-vue'
 
 export default {
-  name: "TagsView",
-  components: { ScrollPane, Close},
+  name: 'TagsView',
+  components: {ScrollPane, Close},
   data() {
     return {
       visible: false,
       top: 26,
       left: 0,
-      selectedTag: {},
+      selectedTag: {}
     };
   },
   computed: {
     visitedViews() {
       return this.$store.state.tags.visitedViews;
-    },
+    }
   },
   watch: {
     $route() {
@@ -61,11 +64,11 @@ export default {
     },
     visible(value) {
       if (value) {
-        document.body.addEventListener("click", this.closeMenu);
+        document.body.addEventListener('click', this.closeMenu);
       } else {
-        document.body.removeEventListener("click", this.closeMenu);
+        document.body.removeEventListener('click', this.closeMenu);
       }
-    },
+    }
   },
   mounted() {
     this.refreshTagsView();
@@ -75,9 +78,9 @@ export default {
       return tag.route.fullPath === this.$route.fullPath;
     },
     refreshTagsView() {
-      if (pathToRegexp("/redirect/:path*") && pathToRegexp("/redirect/:path*").test && !pathToRegexp("/redirect/:path*").test(this.$route.path)) {
-        this.$store.dispatch("addView", this.$route);
-        console.log('refreshTagsView', this.$route);
+      if (pathToRegexp('/redirect/:path*') && pathToRegexp('/redirect/:path*').test && !pathToRegexp('/redirect/:path*').test(this.$route.path)) {
+        this.$store.dispatch('addView', this.$route);
+        //console.log('refreshTagsView', this.$route);
       }
     },
     moveToCurrentTag() {
@@ -89,7 +92,7 @@ export default {
               // this.$refs.scrollPane.moveToTarget(tag);
               // when query is different then update
               if (tag.to.fullPath !== this.$route.fullPath) {
-                this.$store.dispatch("updateVisitedView", this.$route);
+                this.$store.dispatch('updateVisitedView', this.$route);
               }
               break;
             }
@@ -98,37 +101,37 @@ export default {
       });
     },
     refreshSelectedTag(view) {
-      this.$store.dispatch("delCachedView", view.route).then(() => {
-        const { fullPath } = view.route;
+      this.$store.dispatch('delCachedView', view.route).then(() => {
+        const {fullPath} = view.route;
         this.$nextTick(() => {
           this.$router.push({
-            path: "/redirect" + fullPath,
+            path: '/redirect' + fullPath
           });
         });
       });
     },
     closeSelectedTag(view) {
-      this.$store.dispatch("delView", view).then(({ visitedViews }) => {
+      this.$store.dispatch('delView', view).then(({visitedViews}) => {
         if (this.isActive(view)) {
           const latestView = visitedViews.slice(-1)[0];
           if (latestView) {
             this.$router.push(latestView.route.fullPath);
           } else {
-            this.$router.push("/");
+            this.$router.push('/');
           }
         }
       });
     },
     closeOthersTags() {
       this.$router.push(this.selectedTag.route);
-      this.$store.dispatch("delOthersViews", this.selectedTag).then(() => {
+      this.$store.dispatch('delOthersViews', this.selectedTag).then(() => {
         this.moveToCurrentTag();
       });
     },
     closeAllTags() {
 
-      this.$store.dispatch("delAllViews");
-      this.$router.push("/");
+      this.$store.dispatch('delAllViews');
+      this.$router.push('/');
     },
     openMenu(tag, e) {
       const menuMinWidth = 105;
@@ -149,8 +152,8 @@ export default {
     },
     closeMenu() {
       this.visible = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -164,6 +167,7 @@ export default {
   padding-left: 182px;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -178,16 +182,20 @@ export default {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+
       &:first-of-type {
         margin-left: 15px;
       }
+
       &:last-of-type {
         margin-right: 15px;
       }
+
       &.active {
         background-color: #42b983;
         color: #fff;
         border-color: #42b983;
+
         &::before {
           content: "";
           background: #fff;
@@ -201,6 +209,7 @@ export default {
       }
     }
   }
+
   .contextmenu {
     margin: 0;
     background: #fff;
@@ -213,10 +222,12 @@ export default {
     font-weight: 400;
     color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+
     li {
       margin: 0;
       padding: 7px 16px;
       cursor: pointer;
+
       &:hover {
         background: #eee;
       }
@@ -238,11 +249,13 @@ export default {
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
+
       &:before {
         transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }
+
       &:hover {
         background-color: #b4bccc;
         color: #fff;

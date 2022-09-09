@@ -68,7 +68,6 @@ export default defineComponent({
 
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
-      console.log('form', form)
       visible.value = val;
     });
     // form 数据监控

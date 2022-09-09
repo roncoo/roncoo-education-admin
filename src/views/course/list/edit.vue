@@ -9,10 +9,10 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="分类" prop="lecturerName">
-            <el-input v-model="formModel.data.categoryId" maxlength="100" show-word-limit></el-input>
+            <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
           <el-form-item class="form-group" label="讲师" prop="lecturerName">
-            <el-input v-model="formModel.data.lecturerId" maxlength="100" show-word-limit></el-input>
+            <el-input v-model="formModel.data.lecturerName" disabled style="width: 200px; margin-right: 20px"></el-input>
             <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
@@ -38,14 +38,14 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-lecturer v-if="lecturer.visible" :visible="lecturer.visible" :info="lecturer.info" @close="lecturerCallback()"/>
+    <select-lecturer v-if="lecturer.visible" :visible="lecturer.visible" :info="lecturer.info" @close="lecturerCallback"/>
   </el-dialog>
 </template>
 
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {lecturerEdit, lecturerSave} from '@/api/user.js';
+import {courseEdit, courseSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
@@ -125,9 +125,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await lecturerEdit(data);
+            d = await courseEdit(data);
           } else {
-            d = await lecturerSave(data);
+            d = await courseSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
@@ -145,9 +145,10 @@ export default defineComponent({
 
     const lecturerCallback = (info) => {
       lecturer.visible = false
+      console.log(info)
       if (info != null) {
-        formModel.data.lecturerName = info.name;
-        formModel.data.lecturerid = info.lecturerId;
+        formModel.data.lecturerName = info.lecturerName;
+        formModel.data.lecturerId = info.lecturerId;
       }
     }
 

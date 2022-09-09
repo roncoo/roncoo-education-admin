@@ -82,7 +82,7 @@ export default {
       this.status = 0;
     },
     uploadSuccess(result) {
-      console.log(result);
+      //console.log(result);
     },
     handleAvatarSuccess(res, file) {
       this.url = URL.createObjectURL(file.raw);
