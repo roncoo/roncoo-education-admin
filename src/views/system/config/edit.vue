@@ -69,7 +69,6 @@ export default {
       vodPlatformEnum: {},
       smsPlatformEnum: {},
       livePlatformEnum: {},
-      aliPaySignTypeEnum: {},
       newFormData: {},
       rules: {
         configValue: [
@@ -86,9 +85,6 @@ export default {
     });
     this.$store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'arr'}).then((res) => {
       this.vodPlatformEnum = res;
-    });
-    this.$store.dispatch('GetOpts', {enumName: 'LivePlatformEnum', type: 'arr'}).then((res) => {
-      this.livePlatformEnum = res;
     });
     this.$store.dispatch('GetOpts', {enumName: 'SmsPlatformEnum', type: 'arr'}).then((res) => {
       this.smsPlatformEnum = res;

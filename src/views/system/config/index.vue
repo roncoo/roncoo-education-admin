@@ -23,7 +23,7 @@
       <el-tab-pane label="短信设置" name="5">
         <List :list="list" @reset="handleReset"></List>
       </el-tab-pane>
-      <el-tab-pane label="支付设置" name="7">
+      <el-tab-pane label="支付设置" name="6">
         <List :list="list" @reset="handleReset"></List>
       </el-tab-pane>
     </el-tabs>

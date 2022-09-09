@@ -86,9 +86,6 @@ export default {
     this.$store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'obj'}).then((res) => {
       this.vodPlatformEnum = res;
     });
-    this.$store.dispatch('GetOpts', {enumName: 'LivePlatformEnum', type: 'obj'}).then((res) => {
-      this.livePlatformEnum = res;
-    });
     this.$store.dispatch('GetOpts', {enumName: 'SmsPlatformEnum', type: 'obj'}).then((res) => {
       this.smsPlatformEnum = res;
     });
