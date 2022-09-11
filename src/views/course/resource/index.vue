@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button plain type="success" @click="localUpload">本地上传</el-button>
+            <el-button plain type="success" @click="localUpload">上传</el-button>
             <input id="file" type="file" style="display: none" @change="addUpload">
           </el-form-item>
         </el-form>
