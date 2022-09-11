@@ -18,7 +18,7 @@
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="讲师头像">
         <template #default="scope">
-          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName"/>
+          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName" style="height:50px;"/>
         </template>
       </el-table-column>
       <el-table-column label="讲师名称" prop="lecturerName"/>

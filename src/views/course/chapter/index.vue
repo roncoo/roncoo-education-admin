@@ -18,20 +18,21 @@
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
+          <span v-if="scope.row.resourceViewResp">【{{ resourceTypeEnums[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }}】</span>
         </template>
       </el-table-column>
       <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
       <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column label="收费" :width="100">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.isFree === 0 }">{{ freeEnums[scope.row.isFree] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button v-if="scope.row.periodName" plain type="primary" @click="openAddDialog(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.chapterName" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(addForm)">节添加</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(scope.row)">节添加</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -77,24 +78,29 @@ export default defineComponent({
       updateStatus: courseChapterEdit
     })
     const state = reactive({
-      ...UseTable(apis, {}),
+      ...UseTable(apis, {courseId: route.query.courseId}),
+      freeEnums: {},
       statusIdEnums: {},
-      userSexEnums: {}
+      userSexEnums: {},
+      resourceTypeEnums: {}
     });
-    const addForm = reactive({
-      courseId: ''
-    })
     const editForm = reactive({
       courseId: ''
     })
     onMounted(() => {
-      addForm.courseId = route.query.courseId;
-
+      // 章添加修改
+      editForm.courseId = route.query.courseId;
+      store.dispatch('GetOpts', {enumName: 'FreeEnum', type: 'obj'}).then((res) => {
+        state.freeEnums = res;
+      });
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;
       });
       store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
         state.userSexEnums = res;
+      });
+      store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
+        state.resourceTypeEnums = res;
       });
     });
 
@@ -114,7 +120,6 @@ export default defineComponent({
     };
     return {
       ...toRefs(state),
-      addForm,
       editForm,
       handleUpdateStatus
     };

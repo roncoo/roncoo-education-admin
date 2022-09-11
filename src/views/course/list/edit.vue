@@ -3,27 +3,47 @@
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">
-          <el-form-item class="form-group" label="" prop="lecturerHead">
+          <el-form-item label="" prop="courseLogo">
             <upload-image :image-url="formModel.data.courseLogo" :height="180" :width="360" class="avatar" @success=" (val) => {   formModel.data.courseLogo = val.url;  }"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="form-group" label="分类" prop="lecturerName">
+          <el-form-item label="分类" prop="categoryName">
             <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-          <el-form-item class="form-group" label="讲师" prop="lecturerName">
-            <el-input v-model="formModel.data.lecturerName" disabled style="width: 210px; margin-right: 20px"></el-input>
+          <el-form-item label="讲师" prop="lecturerName">
+            <el-input v-model="formModel.data.lecturerName" disabled style="width: 230px; margin-right: 20px"></el-input>
             <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
-          <el-form-item class="form-group" label="销售价" prop="lecturerPosition">
-            <el-input v-model="formModel.data.coursePrice" type="number" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="划线价" prop="lecturerMobile">
-            <el-input v-model="formModel.data.rulingPrice" type="number" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="售价" prop="coursePrice">
+                <el-input-number v-model="formModel.data.coursePrice" :min="0" :precision="2" show-word-limit></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="划线价" prop="rulingPrice">
+                <el-input-number v-model="formModel.data.rulingPrice" :min="0" :precision="2" show-word-limit></el-input-number>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="排序" prop="courseSort">
+                <el-input v-model="formModel.data.courseSort" type="number" show-word-limit></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="状态" prop="isPutaway">
+                <el-select v-model="formModel.data.isPutaway" filterable placeholder="请选择">
+                  <el-option v-for="item in putawayEnums" :key="item.code" :label="item.desc" :value="item.code"/>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-col>
         <el-col :span="21">
-          <el-form-item label="课程名称" prop="lecturerName">
+          <el-form-item label="名称" prop="courseName">
             <el-input v-model="formModel.data.courseName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
         </el-col>
@@ -44,7 +64,8 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
+import {useStore} from 'vuex';
 import {courseEdit, courseSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
@@ -82,7 +103,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        nickname: [{required: true, courseName: '请输入课程名称', trigger: 'blur'}]
       }
     });
 
@@ -90,7 +111,15 @@ export default defineComponent({
     if (modelValue.value) {
       visible.value = modelValue.value;
     }
-
+    const state = reactive({
+      putawayEnums: {}
+    });
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('GetOpts', {enumName: 'PutawayEnum'}).then((res) => {
+        state.putawayEnums = res;
+      });
+    });
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
       visible.value = val;
@@ -145,7 +174,6 @@ export default defineComponent({
 
     const lecturerCallback = (info) => {
       lecturer.visible = false
-      console.log(info)
       if (info != null) {
         formModel.data.lecturerName = info.lecturerName;
         formModel.data.lecturerId = info.lecturerId;
@@ -153,6 +181,7 @@ export default defineComponent({
     }
 
     return {
+      ...toRefs(state),
       visible,
       loading,
       lecturer,

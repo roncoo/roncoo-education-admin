@@ -16,13 +16,18 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="课程封面">
+      <el-table-column label="封面" :width="200">
         <template #default="scope">
           <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" prop="courseName"/>
-      <el-table-column label="课程价格">
+      <el-table-column label="名称/讲师" prop="courseName">
+        <template #default="scope">
+          <span>{{ scope.row.courseName }}</span><br>
+          <span>{{ scope.row.lecturerName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="价格" :width="100">
         <template #default="scope">
           <span v-if="scope.row.isFree == 1">免费</span>
           <span v-if="scope.row.isFree == 0">
@@ -30,27 +35,32 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="上架状态">
+      <el-table-column label="购买/学习" prop="countBuy" :width="100">
+        <template #default="scope">
+          <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="排序" prop="courseSort" :width="100"/>
+      <el-table-column label="状态" :width="100">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程排序" prop="courseSort"/>
-      <el-table-column label="购买人数" prop="countBuy"/>
-      <el-table-column label="学习人数" prop="countStudy"/>
-      <el-table-column label="状态">
+      <!--      <el-table-column label="状态">
+              <template #default="scope">
+                <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+              </template>
+            </el-table-column>-->
+      <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="300" fixed="right" label="操作" prop="address">
-        <template #default="scope">
-          <el-button plain type="success" @click="courseChapter(scope.row)">章节管理</el-button>
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
+                <el-dropdown-item>
+                  <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+                </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
                   <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>

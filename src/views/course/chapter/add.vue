@@ -1,14 +1,22 @@
 <template>
-  <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '节修改' : '节添加'" :width="500" center @close="cloneDialog">
+  <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.chapterId ? '节修改' : '节添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="节名称" prop="chapterName">
-        <el-input v-model="formModel.data.chapterName" maxlength="100" show-word-limit></el-input>
+      <el-form-item class="form-group" label="节名称" prop="periodName">
+        <el-input v-model="formModel.data.periodName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="描述" prop="chapterDesc">
-        <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
+      <!--      <el-form-item class="form-group" label="描述" prop="chapterDesc">
+              <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
+            </el-form-item>-->
+      <el-form-item class="form-group" label="资源" prop="resourceName">
+        <el-input v-model="formModel.data.resourceName" disabled style="width: 210px; margin-right: 20px"></el-input>
+        <el-button plain type="primary" @click="resourceSelect">选择资源</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="收费" prop="isFree">
-        <el-input v-model="formModel.data.isFree" maxlength="100" show-word-limit></el-input>
+        <el-radio-group v-model="formModel.data.isFree">
+          <template v-for="item in freeEnums" :key="item.code">
+            <el-radio :label="item.code">{{ item.desc }}</el-radio>
+          </template>
+        </el-radio-group>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
@@ -20,19 +28,22 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
+    <select-resource v-if="resource.visible" :visible="resource.visible" :info="resource.info" @close="resourceCallback"/>
   </el-dialog>
 </template>
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
+import {useStore} from 'vuex';
 import {courseChapterPeriodEdit, courseChapterPeriodSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import SelectResource from '@/components/Selects/SelectResource.vue';
 
 export default defineComponent({
   components: {
-    editor, upload
+    editor, upload, SelectResource
   },
   props: {
     modelValue: {
@@ -53,6 +64,19 @@ export default defineComponent({
     const visible = ref(false);
     const ruleForm = ref(null);
     const loading = ref(false);
+    const state = reactive({
+      freeEnums: {}
+    });
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('GetOpts', {enumName: 'FreeEnum'}).then((res) => {
+        state.freeEnums = res;
+      });
+    });
+    let resource = reactive({
+      visible: false,
+      info: {}
+    })
 
     let formModel = reactive({
       data: {},
@@ -99,9 +123,12 @@ export default defineComponent({
           const data = {
             ...formModel.data
           };
-          if (data.id) {
+          if (data.chapterId) {
             d = await courseChapterPeriodEdit(data);
           } else {
+            data.chapterId = data.id
+            data.id = ''
+            data.periodViewRespList = {}
             d = await courseChapterPeriodSave(data);
           }
           if (d) {
@@ -114,13 +141,30 @@ export default defineComponent({
       });
     };
 
+    const resourceSelect = () => {
+      resource.visible = true;
+    }
+
+    const resourceCallback = (info) => {
+      resource.visible = false
+      console.log(info)
+      if (info != null) {
+        formModel.data.resourceName = info.resourceName;
+        formModel.data.resourceId = info.resourceId;
+      }
+    }
+
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,
       ruleForm,
       cloneDialog,
-      onSubmit
+      onSubmit,
+      resource,
+      resourceSelect,
+      resourceCallback
     };
   }
 });

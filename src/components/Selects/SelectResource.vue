@@ -1,8 +1,8 @@
 <template>
   <el-dialog v-model="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
     <el-form class="filter-container" inline label-width="100px" size="mini">
-      <el-form-item label="讲师名称">
-        <el-input v-model="queryParams.lecturerName"/>
+      <el-form-item label="资源名称">
+        <el-input v-model="queryParams.resourceName"/>
       </el-form-item>
       <el-form-item>
         <el-button class="filter-item" type="primary" @click="handleQuery">查询</el-button>
@@ -12,7 +12,13 @@
 
     <el-table v-loading="loading" :data="page.dataList" border element-loading-text="Loading" fit highlight-current-row size="mini">
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="讲师名称" prop="lecturerName"/>
+      <el-table-column label="资源名称" prop="resourceName"/>
+      <el-table-column label="资源类型" prop="resourceType" :width="200">
+        <template #default="scope">
+          <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
+          <span>{{ formatDuring(scope.row.videoLength) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="scope">
           <el-button plain size="min" type="primary" @click="infoSelect(scope.row)">选择</el-button>
@@ -25,10 +31,11 @@
 </template>
 
 <script>
-import {lecturerPage} from '@/api/user.js';
+import {resourcePage} from '@/api/course.js';
+import {getSize, formatDuring} from '@/utils/utils.js'
 
 export default {
-  name: 'SelectLecturer',
+  name: 'SelectResource',
   props: {
     visible: {
       type: Boolean,
@@ -36,7 +43,7 @@ export default {
     },
     title: {
       type: String,
-      default: '请选择讲师'
+      default: '请选择资源'
     },
     info: {
       type: Object,
@@ -56,16 +63,25 @@ export default {
         totalPage: 0,
         dataList: []
       },
-      loading: false
+      loading: false,
+      resourceTypeEnums: {}
     };
   },
   created() {
     this.listForPage();
   },
+  mounted() {
+    this.$store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
+      this.resourceTypeEnums = res;
+    });
+  },
   methods: {
+    formatDuring(data) {
+      return formatDuring(data)
+    },
     listForPage() {
       this.loading = true;
-      lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
+      resourcePage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount
@@ -95,7 +111,7 @@ export default {
       this.$emit('close');
     },
     infoSelect(info) {
-      this.$emit('close', {lecturerName: info.lecturerName, lecturerId: info.id});
+      this.$emit('close', {resourceName: info.resourceName, resourceId: info.id});
     }
   }
 }

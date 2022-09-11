@@ -65,13 +65,16 @@ export default defineComponent({
     });
     const store = useStore();
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'FreeEnum', type: 'obj'}).then((res) => {
+      store.dispatch('GetOpts', {enumName: 'FreeEnum'}).then((res) => {
         state.freeEnums = res;
       });
     });
 
     let formModel = reactive({
-      data: {},
+      data: {
+        isFree: 1,
+        sort: 1
+      },
       rules: {
         //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
       }
