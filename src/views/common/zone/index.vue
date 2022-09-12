@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
-          <el-form-item label="课程名称">
-            <el-input v-model="seekForm.courseName" clearable/>
+          <el-form-item label="专区名称">
+            <el-input v-model="seekForm.zoneName" clearable/>
           </el-form-item>
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
@@ -16,44 +16,25 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="封面" :width="200">
+      <el-table-column label="专区名称" prop="zoneName">
         <template #default="scope">
-          <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
+          <span>{{ scope.row.zoneName }}</span><br>
         </template>
       </el-table-column>
-      <el-table-column label="名称/讲师" prop="courseName">
+      <el-table-column label="描述" prop="zoneDesc">
         <template #default="scope">
-          <span>{{ scope.row.courseName }}</span><br>
-          <span>{{ scope.row.lecturerName }}</span>
+          <span>{{ scope.row.zoneDesc }}</span><br>
         </template>
       </el-table-column>
-      <el-table-column label="价格" :width="100">
+      <el-table-column label="排序" prop="sort" :width="100"/>
+      <el-table-column label="状态" :width="100">
         <template #default="scope">
-          <span v-if="scope.row.isFree == 1">免费</span>
-          <span v-if="scope.row.isFree == 0">
-            ￥{{ scope.row.coursePrice }} <br><span style="text-decoration:line-through;">￥{{ scope.row.rulingPrice }}</span>
-          </span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="购买/学习" prop="countBuy" :width="100">
-        <template #default="scope">
-          <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" prop="courseSort" :width="100"/>
-      <el-table-column label="售卖" :width="100">
-        <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
-        </template>
-      </el-table-column>
-      <!--      <el-table-column label="状态">
-              <template #default="scope">
-                <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
-              </template>
-            </el-table-column>-->
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
+          <el-button plain type="success" @click="zoneCourse(scope.row)">课程</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -83,7 +64,7 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {courseDelete, coursePage} from '@/api/course.js'
+import {zoneDelete, zonePage} from '@/api/course.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -92,8 +73,8 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: coursePage,
-      delete: courseDelete
+      getList: zonePage,
+      delete: zoneDelete
     })
     const state = reactive({
       ...UseTable(apis, {}),
@@ -104,9 +85,6 @@ export default defineComponent({
     onMounted(() => {
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
         state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
-        state.putawayEnums = res;
       });
     });
 
@@ -126,14 +104,14 @@ export default defineComponent({
     };
 
     //
-    const courseChapter = function(row) {
-      this.$router.push({path: '/course/chapter', query: {courseId: row.id}});
+    const zoneCourse = function(row) {
+      this.$router.push({path: '/common/course', query: {zoneId: row.id}});
     }
 
     return {
       ...toRefs(state),
       handleUpdateStatus,
-      courseChapter
+      zoneCourse
     };
   }
 });

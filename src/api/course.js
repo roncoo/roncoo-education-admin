@@ -1,5 +1,45 @@
 import request from '@/utils/request'
 
+// 专区课程分页
+export function zoneCoursePage(data) {
+  return request({url: '/course/admin/zone/course/page', method: 'post', data: {data}})
+}
+
+// 专区课程修改
+export function zoneCourseEdit(data) {
+  return request.put('/course/admin/zone/course/edit', data)
+}
+
+// 专区课程保存
+export function zoneCourseSave(data) {
+  return request.post('/course/admin/zone/course/save', data)
+}
+
+// 专区课程修改
+export function zoneCourseDelete(data) {
+  return request.delete('/course/admin/zone/course/delete?id=' + data.id, data)
+}
+
+// 专区分页
+export function zonePage(data) {
+  return request({url: '/course/admin/zone/page', method: 'post', data: {data}})
+}
+
+// 专区修改
+export function zoneEdit(data) {
+  return request.put('/course/admin/zone/edit', data)
+}
+
+// 专区保存
+export function zoneSave(data) {
+  return request.post('/course/admin/zone/save', data)
+}
+
+// 专区修改
+export function zoneDelete(data) {
+  return request.delete('/course/admin/zone/delete?id=' + data.id, data)
+}
+
 // 分类列表
 export function categoryList(data) {
   return request({url: '/course/admin/category/list', method: 'post', data: {data}})

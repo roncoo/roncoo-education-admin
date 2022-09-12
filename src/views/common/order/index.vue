@@ -3,6 +3,9 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
+          <el-form-item label="订单号">
+            <el-input v-model="seekForm.orderNo" clearable/>
+          </el-form-item>
           <el-form-item label="手机号码">
             <el-input v-model="seekForm.mobile" clearable/>
           </el-form-item>

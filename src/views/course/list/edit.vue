@@ -49,7 +49,7 @@
         </el-col>
       </el-row>
       <el-form-item label="简介" prop="introduce">
-        <editor ref="editor" :value="formModel.data['introduce']"/>
+        <editor ref="editor" :value="formModel.data.introduce" @input="handleChangeIntro"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -180,6 +180,11 @@ export default defineComponent({
       }
     }
 
+    // 富文本改变
+    const handleChangeIntro = (value) => {
+      formModel.data.introduce = value
+    }
+
     return {
       ...toRefs(state),
       visible,
@@ -190,7 +195,8 @@ export default defineComponent({
       cloneDialog,
       onSubmit,
       lecturerSelect,
-      lecturerCallback
+      lecturerCallback,
+      handleChangeIntro
     };
   }
 });

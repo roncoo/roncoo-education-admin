@@ -82,7 +82,14 @@ const asyncRouterMapList = [
       {
         path: 'zone',
         name: 'CommonZone',
-        component: () => import('@/views/system/sysRole/list/index.vue')
+        component: () => import('@/views/common/zone/index.vue')
+      },
+      {
+        path: 'course',
+        name: 'ZoneCourse',
+        hidden: true,
+        component: () => import('@/views/common/zone/course/index.vue'),
+        meta: {title: '专区课程'}
       },
       {
         path: 'carousel',
@@ -120,7 +127,7 @@ const asyncRouterMapList = [
         path: 'chapter',
         name: 'CourseChapter',
         hidden: true,
-        component: () => import('@/views/course/chapter/index.vue'),
+        component: () => import('@/views/course/list/chapter/index.vue'),
         meta: {title: '章节管理'}
       },
       {
