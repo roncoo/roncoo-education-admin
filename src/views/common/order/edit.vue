@@ -1,12 +1,6 @@
 <template>
   <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="用户昵称" prop="nickname">
-        <el-input v-model="formModel.data.nickname" maxlength="100" show-word-limit></el-input>
-      </el-form-item>
-      <el-form-item class="form-group" label="用户年龄" prop="userAge">
-        <el-input type="number" v-model="formModel.data.userAge" maxlength="500" show-word-limit></el-input>
-      </el-form-item>
       <el-form-item class="form-group" label="备注" prop="remark">
         <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
       </el-form-item>
@@ -23,7 +17,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {usersEdit} from '@/api/user.js';
+import {orderInfoEdit} from '@/api/user.js';
 
 export default defineComponent({
   components: {},
@@ -93,9 +87,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await usersEdit(data);
+            d = await orderInfoEdit(data);
           } else {
-            d = await save(data);
+            //
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

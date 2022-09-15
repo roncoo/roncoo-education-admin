@@ -28,7 +28,7 @@
       <el-table-column label="资源类型" prop="resourceType" :width="200">
         <template #default="scope">
           <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
-          <span>{{ formatDuring(scope.row.videoLength) }}</span>
+          <span>{{ formatDuring(scope.row.videoLength * 1000) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="视频状态" prop="resourceType" :width="100">

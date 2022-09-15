@@ -18,7 +18,7 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="订单号">
+      <el-table-column label="订单号" :width="180">
         <template #default="scope">
           {{ scope.row.orderNo }}
         </template>
@@ -28,21 +28,34 @@
           {{ scope.row.courseViewVO.courseName }}
         </template>
       </el-table-column>
-      <el-table-column label="手机号码" prop="mobile"/>
-      <el-table-column label="支付方式">
+      <el-table-column label="手机号码" prop="mobile" :width="150"/>
+      <el-table-column label="支付方式" :width="150">
         <template #default="scope">
           <span>{{ payTypeEnumEnums[scope.row.payType] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="订单状态">
+      <el-table-column label="订单状态" :width="100">
         <template #default="scope">
           <span>{{ orderStatusEnums[scope.row.orderStatus] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="客户备注" prop="remarkCus"/>
+      <el-table-column label="价格" :width="100">
+        <template #default="scope">
+          <span v-if="scope.row.coursePrice == 0">免费</span>
+          <span v-else>
+            ￥{{ scope.row.coursePrice }} <br><span style="text-decoration:line-through;">￥{{ scope.row.rulingPrice }}</span>
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="客户/备注" prop="remarkCus" :width="100">
+        <template #default="scope">
+          {{ scope.row.remarkCus }}<br>
+          {{ scope.row.remark }}
+        </template>
+      </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="primary" @click="openEditDialog(scope.row)">备注</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -16,7 +16,7 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="封面" :width="200">
+      <el-table-column label="封面" :width="120">
         <template #default="scope">
           <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
         </template>
