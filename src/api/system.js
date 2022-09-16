@@ -1,5 +1,85 @@
 import request from '@/utils/request'
 
+// 头部导航分页
+export function navPage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/system/admin/website/nav/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 头部导航修改
+export function navEdit(data) {
+  return request.put('/system/admin/website/nav/edit', data)
+}
+
+// 头部导航保存
+export function navSave(data) {
+  return request.post('/system/admin/website/nav/save', data)
+}
+
+// 头部导航删除
+export function navDelete(data) {
+  return request.delete('/system/admin/website/nav/delete?id=' + data.id, data)
+}
+
+// 轮播分页
+export function carouselPage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/system/admin/website/carousel/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 轮播修改
+export function carouselEdit(data) {
+  return request.put('/system/admin/website/carousel/edit', data)
+}
+
+// 轮播保存
+export function carouselSave(data) {
+  return request.post('/system/admin/website/carousel/save', data)
+}
+
+// 轮播删除
+export function carouselDelete(data) {
+  return request.delete('/system/admin/website/carousel/delete?id=' + data.id, data)
+}
+
+// 文章分页
+export function articlePage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/system/admin/website/article/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 文章修改
+export function articleEdit(data) {
+  return request.put('/system/admin/website/article/edit', data)
+}
+
+// 文章保存
+export function articleSave(data) {
+  return request.post('/system/admin/website/article/save', data)
+}
+
+// 文章删除
+export function articleDelete(data) {
+  return request.delete('/system/admin/website/article/delete?id=' + data.id, data)
+}
+
+// 友情链接分页
+export function linkPage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/system/admin/website/link/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 友情链接修改
+export function linkEdit(data) {
+  return request.put('/system/admin/website/link/edit', data)
+}
+
+// 友情链接保存
+export function linkSave(data) {
+  return request.post('/system/admin/website/link/save', data)
+}
+
+// 友情链接删除
+export function linkDelete(data) {
+  return request.delete('/system/admin/website/link/delete?id=' + data.id, data)
+}
+
 // 系统配置--列出
 export function sysConfigList(data) {
   return request({url: '/system/admin/sys/config/list', method: 'post', data: data})

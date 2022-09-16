@@ -94,22 +94,22 @@ const asyncRouterMapList = [
       {
         path: 'carousel',
         name: 'CommonCarousel',
-        component: () => import('@/views/system/sysMenu/list/index.vue')
+        component: () => import('@/views/common/carousel/index.vue')
       },
       {
         path: 'nav',
         name: 'CommonNav',
-        component: () => import('@/views/system/sysMenu/list/index.vue')
+        component: () => import('@/views/common/nav/index.vue')
       },
       {
         path: 'article',
         name: 'CommonArticle',
-        component: () => import('@/views/system/sysMenu/list/index.vue')
+        component: () => import('@/views/common/article/index.vue')
       },
       {
         path: 'link',
         name: 'CommonLink',
-        component: () => import('@/views/system/sysMenu/list/index.vue')
+        component: () => import('@/views/common/link/index.vue')
       }
     ]
   },
