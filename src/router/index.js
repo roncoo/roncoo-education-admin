@@ -134,11 +134,6 @@ const asyncRouterMapList = [
         path: 'category',
         name: 'CourseCategory',
         component: () => import('@/views/course/category/index.vue')
-      },
-      {
-        path: 'lecturer',
-        name: 'CourseLecturer',
-        component: () => import('@/views/course/lecturer/index.vue')
       }
     ]
   },
@@ -153,9 +148,9 @@ const asyncRouterMapList = [
         component: () => import('@/views/users/list/index.vue')
       },
       {
-        path: 'study',
-        name: 'UsersStudy',
-        component: () => import('@/views/system/sysUser/list/index.vue')
+        path: 'lecturer',
+        name: 'CourseLecturer',
+        component: () => import('@/views/users/lecturer/index.vue')
       }
     ]
   },
