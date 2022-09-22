@@ -4,9 +4,6 @@
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.data.periodName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <!--      <el-form-item class="form-group" label="描述" prop="chapterDesc">
-              <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
       <el-form-item class="form-group" label="资源" prop="resourceName">
         <el-input v-model="formModel.data.resourceName" disabled style="width: 210px; margin-right: 20px"></el-input>
         <el-button plain type="primary" @click="resourceSelect">选择资源</el-button>
@@ -19,7 +16,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
+        <el-input-number v-model="formModel.data.sort"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -81,7 +78,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        periodName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 

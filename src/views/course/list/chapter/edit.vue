@@ -4,9 +4,6 @@
       <el-form-item class="form-group" label="章名称" prop="chapterName">
         <el-input v-model="formModel.data.chapterName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <!--      <el-form-item class="form-group" label="描述" prop="chapterDesc">
-              <el-input v-model="formModel.data.chapterDesc" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
       <el-form-item class="form-group" label="收费" prop="isFree">
         <el-radio-group v-model="formModel.data.isFree">
           <template v-for="item in freeEnums" :key="item.code">
@@ -14,9 +11,8 @@
           </template>
         </el-radio-group>
       </el-form-item>
-
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
+        <el-input-number v-model="formModel.data.sort" min="1"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -76,7 +72,7 @@ export default defineComponent({
         sort: 1
       },
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        chapterName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 

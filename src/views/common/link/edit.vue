@@ -8,9 +8,9 @@
         <el-input v-model="formModel.data.linkUrl" maxlength="255" show-word-limit></el-input>
       </el-form-item>
       <el-form-item label="跳转方式" prop="linkTarget">
-        <el-select v-model="formModel.data.linkTarget" filterable placeholder="请选择">
-          <el-option v-for="item in targetEnums" :key="item.code" :label="item.desc" :value="item.code"/>
-        </el-select>
+        <el-radio-group v-model="formModel.data.linkTarget">
+          <el-radio v-for="item in targetEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formModel.data.sort"></el-input-number>

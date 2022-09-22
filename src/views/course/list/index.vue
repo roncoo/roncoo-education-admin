@@ -83,7 +83,7 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {courseDelete, coursePage} from '@/api/course.js'
+import {courseDelete, courseEdit, coursePage} from '@/api/course.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -93,7 +93,8 @@ export default defineComponent({
   setup() {
     const apis = reactive({
       getList: coursePage,
-      delete: courseDelete
+      delete: courseDelete,
+      updateStatus: courseEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),
@@ -125,7 +126,7 @@ export default defineComponent({
       });
     };
 
-    //
+    //章节跳转
     const courseChapter = function(row) {
       this.$router.push({path: '/course/chapter', query: {courseId: row.id}});
     }

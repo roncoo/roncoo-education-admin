@@ -4,8 +4,13 @@
       <el-form-item class="form-group" label="用户昵称" prop="nickname">
         <el-input v-model="formModel.data.nickname" maxlength="100" show-word-limit></el-input>
       </el-form-item>
+      <el-form-item label="用户性别" prop="userSex">
+        <el-radio-group v-model="formModel.data.userSex">
+          <el-radio v-for="item in userSexEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item class="form-group" label="用户年龄" prop="userAge">
-        <el-input type="number" v-model="formModel.data.userAge" maxlength="500" show-word-limit></el-input>
+        <el-input-number v-model="formModel.data.userAge" maxlength="500"></el-input-number>
       </el-form-item>
       <el-form-item class="form-group" label="备注" prop="remark">
         <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
@@ -22,8 +27,9 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {usersEdit} from '@/api/user.js';
+import {useStore} from 'vuex';
 
 export default defineComponent({
   components: {},
@@ -58,6 +64,16 @@ export default defineComponent({
     if (modelValue.value) {
       visible.value = modelValue.value;
     }
+
+    const state = reactive({
+      userSexEnums: {}
+    });
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('GetOpts', {enumName: 'UserSexEnum'}).then((res) => {
+        state.userSexEnums = res;
+      });
+    });
 
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
@@ -108,6 +124,7 @@ export default defineComponent({
     };
 
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,

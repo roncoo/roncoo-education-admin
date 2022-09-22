@@ -6,7 +6,7 @@
         <el-button plain type="primary" @click="courseSelect">选择课程</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input v-model="formModel.data.sort" maxlength="100" show-word-limit></el-input>
+        <el-input-number v-model="formModel.data.sort"/>
       </el-form-item>
     </el-form>
     <template #footer>

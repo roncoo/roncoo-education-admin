@@ -64,7 +64,7 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {usersDelete, usersPage} from '@/api/user.js'
+import {usersDelete, usersEdit, usersPage} from '@/api/user.js'
 import Edit from './edit.vue';
 
 export default defineComponent({
@@ -74,7 +74,8 @@ export default defineComponent({
   setup() {
     const apis = reactive({
       getList: usersPage,
-      delete: usersDelete
+      delete: usersDelete,
+      updateStatus: usersEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),
@@ -93,7 +94,8 @@ export default defineComponent({
 
     const handleUpdateStatus = function(row) {
       state.tableData.loading = true;
-      apis.updateStatus({id: row.id}).then((res) => {
+      row.statusId = row.statusId ? 0 : 1
+      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
         if (res) {
           ElMessage({
             type: 'success',

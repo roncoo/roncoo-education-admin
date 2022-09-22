@@ -5,16 +5,16 @@
       <el-form-item label="图片" prop="carouselHead">
         <upload-image :image-url="formModel.data.carouselImg" :height="100" :width="400" class="avatar" @success=" (val) => {   formModel.data.carouselImg = val.url;  }"/>
       </el-form-item>
-      <el-form-item class="form-group" label="描述" prop="carouselTitle">
+      <el-form-item class="form-group" label="说明" prop="carouselTitle">
         <el-input v-model="formModel.data.carouselTitle" maxlength="255" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="地址" prop="carouselUrl">
         <el-input v-model="formModel.data.carouselUrl" maxlength="255" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
-        <el-select v-model="formModel.data.carouselTarget" filterable placeholder="请选择">
-          <el-option v-for="item in targetEnums" :key="item.code" :label="item.desc" :value="item.code"/>
-        </el-select>
+        <el-radio-group v-model="formModel.data.carouselTarget">
+          <el-radio v-for="item in targetEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.data.sort"></el-input-number>
@@ -66,7 +66,7 @@ export default defineComponent({
         sort: 1
       },
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 

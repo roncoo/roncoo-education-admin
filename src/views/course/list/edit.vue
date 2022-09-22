@@ -30,11 +30,11 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="排序" prop="courseSort">
-                <el-input v-model="formModel.data.courseSort" type="number" show-word-limit></el-input>
+                <el-input-number v-model="formModel.data.courseSort"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="状态" prop="isPutaway">
+              <el-form-item label="售卖" prop="isPutaway">
                 <el-select v-model="formModel.data.isPutaway" filterable placeholder="请选择">
                   <el-option v-for="item in putawayEnums" :key="item.code" :label="item.desc" :value="item.code"/>
                 </el-select>
