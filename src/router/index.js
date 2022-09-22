@@ -102,11 +102,6 @@ const asyncRouterMapList = [
         component: () => import('@/views/common/nav/index.vue')
       },
       {
-        path: 'article',
-        name: 'CommonArticle',
-        component: () => import('@/views/common/article/index.vue')
-      },
-      {
         path: 'link',
         name: 'CommonLink',
         component: () => import('@/views/common/link/index.vue')

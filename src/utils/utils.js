@@ -106,7 +106,7 @@ export const toZhDigit = (digit) => {
 }
 
 /**
- * 获取时长
+ * 格式化时长
  * @param mss
  * @returns {string}
  */
@@ -122,7 +122,7 @@ export const formatDuring = (mss) => {
 export function getSize(limit) {
   let size = '';
 
-  if (limit && limit != 0) {
+  if (limit && limit !== 0) {
     if (limit < 0.1 * 1024) { // 小于0.1KB，则转化成B
       size = limit.toFixed(2) + 'B'
     } else if (limit < 0.1 * 1024 * 1024) { // 小于0.1MB，则转化成KB
