@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-container">
-    <div class="title-info">
+    <div v-if="checkPermission('user:admin:stat:login')" class="title-info">
       <span class="title">最近14天登录人数</span>
     </div>
-    <login :data="loginData"/>
-    <div class="title-info">
+    <login v-if="checkPermission('user:admin:stat:login')" :data="loginData"/>
+    <div v-if="checkPermission('system:admin:stat:vod')" class="title-info">
       <span class="title">点播套餐使用情况【账号：{{ vodData.email }}】</span>
     </div>
-    <vod :data="vodData"/>
+    <vod v-if="checkPermission('system:admin:stat:vod')" :data="vodData"/>
   </div>
 </template>
 <script>
