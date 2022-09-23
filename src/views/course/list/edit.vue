@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="分类" prop="categoryName">
-            <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
+            <el-cascader v-model="formModel.data['categoryId']" :options="formModel.categoryList" :props="{value: 'id',label: 'categoryName',children: 'childrenList',checkStrictly: true,emitPath: false}" filterable clearable placeholder="请选择" :show-all-levels="false"/>
           </el-form-item>
           <el-form-item label="讲师" prop="lecturerName">
             <el-input v-model="formModel.data.lecturerName" disabled style="width: 230px; margin-right: 20px"></el-input>
@@ -66,7 +66,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {useStore} from 'vuex';
-import {courseEdit, courseSave} from '@/api/course.js';
+import {categoryList, courseEdit, courseSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
@@ -101,11 +101,24 @@ export default defineComponent({
     })
 
     let formModel = reactive({
+      categoryList: [],
       data: {},
       rules: {
         nickname: [{required: true, courseName: '请输入课程名称', trigger: 'blur'}]
       }
     });
+
+    // 获取分类列表
+    const listCategory = () => {
+      return new Promise((resolve, reject) => {
+        categoryList({categoryType: 1}).then(res => {
+          formModel.categoryList = res
+          resolve()
+        }).then(() => {
+          reject()
+        })
+      })
+    }
 
     let {modelValue, form} = toRefs(props);
     if (modelValue.value) {
@@ -116,6 +129,9 @@ export default defineComponent({
     });
     const store = useStore();
     onMounted(() => {
+      // 获取分类
+      listCategory()
+
       store.dispatch('GetOpts', {enumName: 'PutawayEnum'}).then((res) => {
         state.putawayEnums = res;
       });

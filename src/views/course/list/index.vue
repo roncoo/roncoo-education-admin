@@ -21,10 +21,10 @@
           <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
         </template>
       </el-table-column>
-      <el-table-column label="名称/讲师" prop="courseName">
+      <el-table-column label="名称/分类-讲师" prop="courseName">
         <template #default="scope">
           <span>{{ scope.row.courseName }}</span><br>
-          <span>{{ scope.row.lecturerName }}</span>
+          <span>{{ scope.row.categoryName }} - 【{{ scope.row.lecturerName }}】</span>
         </template>
       </el-table-column>
       <el-table-column label="价格" :width="100">
@@ -40,17 +40,17 @@
           <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="courseSort" :width="100"/>
-      <el-table-column label="售卖" :width="100">
+      <el-table-column label="排序" prop="courseSort" :width="80"/>
+      <el-table-column label="售卖" :width="80">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="状态">
-              <template #default="scope">
-                <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
-              </template>
-            </el-table-column>-->
+      <el-table-column label="状态" :width="80">
+        <template #default="scope">
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+        </template>
+      </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
