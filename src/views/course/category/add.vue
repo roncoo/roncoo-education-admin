@@ -7,9 +7,9 @@
       <el-form-item class="form-group" label="名称" prop="categoryName">
         <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="备注" prop="remark">
-        <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
-      </el-form-item>
+      <!--      <el-form-item class="form-group" label="备注" prop="remark">
+              <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
+            </el-form-item>-->
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.data.sort"/>
       </el-form-item>
@@ -57,7 +57,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -74,6 +74,7 @@ export default defineComponent({
     watch(form, async(val) => {
       formModel.data = {
         parentId: val.id,
+        sort: 1,
         parentCategoryName: val.categoryName
       };
     });

@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import {createStore} from 'vuex'
 import getters from './getters'
 import app from './modules/app'
 import settings from './modules/settings'
@@ -8,10 +8,9 @@ import tags from './modules/tags'
 import opts from './modules/opts'
 import permission from './modules/permission'
 
-
 const store = createStore({
   modules: {
-     app,
+    app,
     settings,
     user,
     menu,

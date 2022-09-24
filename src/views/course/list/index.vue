@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('course:admin:course:save')" plain type="success" @click="openEditDialog()">添加</el-button>
+            <el-button v-if="checkPermission('course:admin:course:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column label="名称/分类-讲师" prop="courseName">
         <template #default="scope">
-          <span>{{ scope.row.courseName }}</span><br>
+          <span><a :href="'/course/'+scope.row.id" target="_blank"> {{ scope.row.courseName }}</a></span><br>
           <span>{{ scope.row.categoryName }} - 【{{ scope.row.lecturerName }}】</span>
         </template>
       </el-table-column>
@@ -91,6 +91,12 @@ export default defineComponent({
     Edit
   },
   setup() {
+    const initData = reactive({
+      coursePrice: 0.00,
+      rulingPrice: 0.00,
+      isPutaway: 1,
+      courseSort: 1
+    })
     const apis = reactive({
       getList: coursePage,
       delete: courseDelete,
@@ -133,6 +139,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      initData,
       handleUpdateStatus,
       courseChapter
     };

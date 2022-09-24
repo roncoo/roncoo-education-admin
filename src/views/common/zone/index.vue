@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('course:admin:zone:save')" plain type="success" @click="openEditDialog()">添加</el-button>
+            <el-button v-if="checkPermission('course:admin:zone:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -81,6 +81,10 @@ export default defineComponent({
       statusIdEnums: {},
       putawayEnums: {}
     });
+    const initData = reactive({
+      statusId: 1,
+      sort: 1
+    })
     const store = useStore();
     onMounted(() => {
       store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
@@ -110,6 +114,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      initData,
       handleUpdateStatus,
       zoneCourse
     };

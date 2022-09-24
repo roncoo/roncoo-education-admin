@@ -3,14 +3,17 @@
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">
-          <el-form-item class="form-group" label="讲师名称" prop="lecturerName">
+          <el-form-item class="form-group" label="名称" prop="lecturerName">
             <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-          <el-form-item class="form-group" label="讲师手机" prop="lecturerMobile">
-            <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
-          </el-form-item>
-          <el-form-item class="form-group" label="讲师职位" prop="lecturerPosition">
+          <el-form-item class="form-group" label="职位" prop="lecturerPosition">
             <el-input v-model="formModel.data.lecturerPosition" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <!--          <el-form-item class="form-group" label="手机" prop="lecturerMobile">
+                      <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
+                    </el-form-item>-->
+          <el-form-item label="排序" prop="sort">
+            <el-input-number v-model="formModel.data.sort"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
