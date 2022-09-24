@@ -22,7 +22,7 @@ export function getInfo() {
 
 // 获取当前登录用户菜单
 export function getUserMenu(data = {}) {
-  return request({url: '/system/admin/sys/menu/user/list', method: 'post', data: data})
+  return request({url: '/system/admin/sys/menu/user/list', method: 'post', data})
 }
 
 // 获取当前登录用户权限

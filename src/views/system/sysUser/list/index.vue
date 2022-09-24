@@ -5,8 +5,8 @@
         <el-input v-model="map.mobile" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="checkPermission('system:admin:sys:user:view')" type="primary" @click="listForQuery">查询</el-button>
-        <el-button v-if="checkPermission('system:admin:sys:user:view')" @click="handleReset">刷新</el-button>
+        <el-button type="primary" @click="listForQuery">查询</el-button>
+        <el-button @click="handleReset">刷新</el-button>
         <el-button v-if="checkPermission('system:admin:sys:user:save')" plain type="success" @click="handleAddRow">新增</el-button>
       </el-form-item>
     </el-form>
@@ -28,7 +28,7 @@
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="操作" width="240">
         <template #default="scope">
-          <el-button v-if="checkPermission('system:admin:sys:user:set:role')" plain type="warning" @click="handleAllocation(scope.row.id)">角色分配</el-button>
+          <el-button v-if="checkPermission('system:admin:sys:user:edit')" plain type="warning" @click="handleAllocation(scope.row.id)">角色分配</el-button>
           <el-dropdown style="margin-left: 10px">
             <el-button>
               更多操作<i class="el-icon-arrow-down el-icon--right"/>
@@ -36,14 +36,14 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('system:admin:sys:user:update')" plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
+                  <el-button v-if="checkPermission('system:admin:sys:user:edit')" plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-if="checkPermission('system:admin:sys:user:password')" plain type="warning" @click="handleUpdatePassword(scope.row.id)">密码</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="scope.row.statusId === 0 && checkPermission('system:admin:sys:user:update')" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId === 1 && checkPermission('system:admin:sys:user:update')" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0 && checkPermission('system:admin:sys:user:edit')" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1 && checkPermission('system:admin:sys:user:edit')" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-if="checkPermission('system:admin:sys:user:delete')" plain type="danger" @click="handleDeleteRow(scope.row)">删除</el-button>

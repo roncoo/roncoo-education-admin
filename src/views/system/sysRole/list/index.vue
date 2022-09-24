@@ -22,10 +22,10 @@
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="操作" width="360">
         <template #default="scope">
-          <el-button v-if="checkPermission('system:admin:sys:role:allocation:menu')" plain type="warning" @click="handleSettRow(scope.row)">分配菜单</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:update')" plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:update') && scope.row.statusId ===1 " plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:update') && scope.row.statusId ===0 " plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+          <el-button v-if="checkPermission('system:admin:sys:role:edit')" plain type="warning" @click="handleSettRow(scope.row)">分配菜单</el-button>
+          <el-button v-if="checkPermission('system:admin:sys:role:edit')" plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
+          <el-button v-if="checkPermission('system:admin:sys:role:edit') && scope.row.statusId ===1 " plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+          <el-button v-if="checkPermission('system:admin:sys:role:edit') && scope.row.statusId ===0 " plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
           <el-button v-if="checkPermission('system:admin:sys:role:delete')" plain type="danger" @click="handleDeleteRow(scope.row)">删除</el-button>
         </template>
       </el-table-column>

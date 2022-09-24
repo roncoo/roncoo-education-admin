@@ -69,7 +69,7 @@ export default {
   },
   emits: ['closes'],
   mounted() {
-    this.form.id = this.info.id;
+    this.form.userId = this.info.id;
   },
   methods: {
     handleClose() {

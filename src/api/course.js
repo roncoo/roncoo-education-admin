@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 // 专区课程分页
 export function zoneCoursePage(data) {
-  return request({url: '/course/admin/zone/course/page', method: 'post', data: {data}})
+  return request({url: '/course/admin/zone/course/page', method: 'post', data})
 }
 
 // 专区课程修改
@@ -22,7 +22,7 @@ export function zoneCourseDelete(data) {
 
 // 专区分页
 export function zonePage(data) {
-  return request({url: '/course/admin/zone/page', method: 'post', data: {data}})
+  return request({url: '/course/admin/zone/page', method: 'post', data})
 }
 
 // 专区修改
@@ -42,7 +42,7 @@ export function zoneDelete(data) {
 
 // 分类列表
 export function categoryList(data) {
-  return request({url: '/course/admin/category/list', method: 'post', data: {data}})
+  return request({url: '/course/admin/category/list', method: 'post', data: data})
 }
 
 // 分类修改

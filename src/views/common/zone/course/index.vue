@@ -3,9 +3,6 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
-          <!--  <el-form-item label="章名称">
-                      <el-input v-model="seekForm.chapterName" clearable/>
-                    </el-form-item>-->
           <el-form-item>
             <el-button plain type="success" @click="openEditDialog(editForm)">课程添加</el-button>
           </el-form-item>

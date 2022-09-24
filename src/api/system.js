@@ -85,7 +85,7 @@ export function sysConfigList(data) {
   return request({url: '/system/admin/sys/config/list', method: 'post', data: data})
 }
 
-// 系统菜单--编辑
+// 系统配置--编辑
 export function sysConfigEdit(data = {}) {
   return request({url: '/system/admin/sys/config/edit', method: 'put', data: data})
 }
@@ -112,7 +112,7 @@ export function sysMenuDelete(id) {
 
 // 系统菜单--编辑
 export function sysMenuEdit(data = {}) {
-  return request({url: '/system/admin/sys/menu/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/menu/edit', method: 'post', data: data})
 }
 
 // 系统权限--新增
@@ -152,13 +152,13 @@ export function sysRoleDelete(id) {
 
 // 系统角色--编辑
 export function sysRoleEdit(data = {}) {
-  return request({url: '/system/admin/sys/role/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/role/edit', method: 'post', data: data})
 }
 
 // 系统角色--状态编辑
 export function sysRoleStatusId(id, statusId) {
   return request({
-    url: '/system/admin/sys/role/update', method: 'post', data: {id: id, statusId: statusId}
+    url: '/system/admin/sys/role/edit', method: 'post', data: {id: id, statusId: statusId}
   })
 }
 
@@ -184,7 +184,7 @@ export function sysRoleMenuDelete(id) {
 
 // 系统角色菜单--编辑
 export function sysRoleMenuEdit(data = {}) {
-  return request({url: '/system/admin/sys/role/menu/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/role/menu/edit', method: 'post', data: data})
 }
 
 // 系统用户--分配角色
@@ -219,12 +219,12 @@ export function sysUserDelete(id) {
 
 // 系统用户--编辑
 export function sysUserEdit(data = {}) {
-  return request({url: '/system/admin/sys/user/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/user/edit', method: 'post', data: data})
 }
 
 // 系统用户状态--编辑
 export function sysUserStatusId(data = {}) {
-  return request({url: '/system/admin/sys/user/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/user/edit', method: 'post', data: data})
 }
 
 // 系统用户密码--编辑
@@ -254,7 +254,7 @@ export function sysUserRoleDelete(id) {
 
 // 系统用户角色--编辑
 export function sysUserRoleEdit(data = {}) {
-  return request({url: '/system/admin/sys/user/role/update', method: 'post', data: data})
+  return request({url: '/system/admin/sys/user/role/edit', method: 'post', data: data})
 }
 
 // 获取枚举

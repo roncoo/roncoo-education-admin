@@ -23,7 +23,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
-        <template #default="scope">
+        <template v-if="checkPermission('system:admin:sys:config:edit')" #default="scope">
           <!-- 布尔类型 -->
           <el-switch v-if="scope.row.contentType === 4" v-model="scope.row.configValue" active-color="#13ce66" active-text="开启" active-value="1" inactive-color="#ff4949" inactive-text="关闭" inactive-value="0" @change="changBooleanValue(scope.row)"/>
           <!--  不为布尔类型 -->

@@ -1,21 +1,12 @@
 <template>
   <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item label="权限名称" prop="menuName">
-        <el-input v-model="form.menuName" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item label="权限名称" class="form-group" prop="menuName">
+        <el-input v-model="form.menuName" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="权限标识" prop="authValue">
-        <el-input v-model="form.authValue" class="form-group" maxlength="100" show-word-limit/>
+      <el-form-item label="权限标识" class="form-group" prop="authValue">
+        <el-input v-model="form.authValue" type="textarea" maxlength="250" show-word-limit/>
       </el-form-item>
-      <!--
-      <el-form-item label="权限认证值">
-        <el-input v-model="text" class="w90" placeholder="这里可以批量添加，请使用|分隔" type="textarea" @change="changeList"></el-input>
-      </el-form-item>
-      <el-form-item v-for="(v,i) in list" :key="i" ref="options" label="权限认证值">
-        <el-input v-model="list[i]" class="w90"/>
-        <img alt="" class="hovblu" src="@/assets/images/add.png" @click="addNode">
-        <img v-if="list.length > 1" alt="" class="hovblu" src="@/assets/images/delete.png" @click="delNode(i)">
-      </el-form-item>-->
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="form.sort" :min="0" controls-position="right"/>
       </el-form-item>
