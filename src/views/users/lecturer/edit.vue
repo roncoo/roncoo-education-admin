@@ -23,7 +23,7 @@
         </el-col>
       </el-row>
       <el-form-item label="简介" prop="introduce">
-        <editor ref="editor" :value="formModel.data['introduce']"/>
+        <editor ref="editor" :value="formModel.data.introduce" @input="handleChangeIntro"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -69,7 +69,9 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        lecturerName: [{required: true, message: '不能为空', trigger: 'blur'}],
+        lecturerPosition: [{required: true, message: '不能为空', trigger: 'blur'}],
+        introduce: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -125,14 +127,18 @@ export default defineComponent({
         loading.value = false;
       });
     };
-
+// 富文本改变
+    const handleChangeIntro = (value) => {
+      formModel.data.introduce = value
+    }
     return {
       visible,
       loading,
       formModel,
       ruleForm,
       cloneDialog,
-      onSubmit
+      onSubmit,
+      handleChangeIntro
     };
   }
 });
