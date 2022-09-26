@@ -5,7 +5,7 @@
     </div>
     <login v-if="checkPermission('user:admin:stat:login')" :data="loginData"/>
     <div v-if="checkPermission('system:admin:stat:vod')" class="title-info">
-      <span class="title">点播套餐使用情况【账号：{{ vodData.email }}】</span>
+      <span class="title">视频云使用情况</span>
     </div>
     <vod v-if="checkPermission('system:admin:stat:vod')" :data="vodData"/>
   </div>
