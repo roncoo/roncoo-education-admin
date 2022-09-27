@@ -242,7 +242,6 @@ export default {
               this.loginForm.timestamp = res.timestamp;
               this.loginForm = {...this.loginForm};
               this.handleLogin();
-
             })
             .catch(() => {
               this.showSlide = false;

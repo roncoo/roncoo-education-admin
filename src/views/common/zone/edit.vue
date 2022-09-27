@@ -60,9 +60,7 @@ export default defineComponent({
     const loading = ref(false);
 
     let formModel = reactive({
-      data: {
-        statusId: 1
-      },
+      data: {},
       rules: {
         zoneName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }

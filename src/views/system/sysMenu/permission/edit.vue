@@ -5,7 +5,7 @@
         <el-input v-model="form.menuName" maxlength="50" show-word-limit/>
       </el-form-item>
       <el-form-item label="权限标识" class="form-group" prop="authValue">
-        <el-input v-model="form.authValue" type="textarea" maxlength="250" show-word-limit/>
+        <el-input v-model="form.authValue" type="textarea" maxlength="500" show-word-limit/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="form.sort" :min="0" controls-position="right"/>

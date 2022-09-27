@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('user:admin:lecturer:save')" plain type="success" @click="openEditDialog()">添加</el-button>
+            <el-button v-if="checkPermission('user:admin:lecturer:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -66,6 +66,9 @@ export default defineComponent({
     Edit
   },
   setup() {
+    const initData = reactive({
+      sort: 1
+    })
     const apis = reactive({
       getList: lecturerPage,
       delete: lecturerDelete,
@@ -102,6 +105,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(state),
+      initData,
       handleUpdateStatus
     };
   }
