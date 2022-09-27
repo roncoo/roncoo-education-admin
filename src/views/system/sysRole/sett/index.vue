@@ -64,23 +64,13 @@ export default {
     sysMenuList().then(res => {
       for (const index in res) {
         const info = res[index];
-        const treeInfo = {};
-        // if (info.type === 2) {
-        //     treeInfo.id = 'PMS_' + info.id;
-        // } else {
-        //     treeInfo.id = 'MENU_' + info.id;
-        // }
-        treeInfo.id = info.id;
-
-        treeInfo.label = info.menuName;
+        const treeInfo = {id: info.id, label:  info.menuName};
         info.childrenList = info.childrenList || [];
         if (info.childrenList.length > 0) {
           treeInfo.children = this.recursiveTreeInfo(info.id, info.childrenList);
         }
-
         this.availableList.push(treeInfo);
       }
-
       // 设置选中
       this.settCheckMenu();
     })
@@ -89,16 +79,7 @@ export default {
     settCheckMenu() {
       // 获取已选择菜单和权限
       sysMenuRoleList(this.info.id).then(res => {
-        // const checkedKeyList = [];
-        // for (const index in res) {
-        //     checkedKeyList.push('MENU_' + res[index]);
-        // }
-        // for (const index in res.permissionList) {
-        //     checkedKeyList.push('PMS_' + res.permissionList[index]);
-        // }
-        const checkedKeyList = res
-        // 设置选中
-        checkedKeyList.forEach(item => {
+        res.forEach(item => {
           const node = this.$refs.tree.getNode(item);
           if (node != null && node.isLeaf) {
             this.$refs.tree.setChecked(node, true);
@@ -118,16 +99,10 @@ export default {
         if (info.parentId !== parentId) {
           continue;
         }
-
-        const treeInfo = {};
-        // if (info.type === 2) {
-        //     treeInfo.id = 'PMS_' + info.id;
-        // } else {
-        //     treeInfo.id = 'MENU_' + info.id;
-        // }
-        treeInfo.id = info.id;
-        treeInfo.label = info.menuName;
-
+        const treeInfo = {
+          label: info.menuName,
+          id: info.id
+        };
         if (info.childrenList != null && info.childrenList.length > 0) {
           treeInfo.children = this.recursiveTreeInfo(info.id, info.childrenList);
         }
@@ -136,34 +111,17 @@ export default {
       return resultList;
     },
     submitForm() {
-      const menuIdList = [];
-      // const permissionIdList = [];
+      let menuIdList = [];
       const checkedNodes = this.$refs.tree.getCheckedNodes()
       for (const index in checkedNodes) {
-        const info = checkedNodes[index];
-        menuIdList.push(info.id)
-        // if (info.id.indexOf('PMS_') === 0) {
-        //     permissionIdList.push(info.id.substr(4))
-        // } else if (info.id.indexOf('MENU_') === 0) {
-        //     menuIdList.push(info.id.substr(5))
-        // }
+        menuIdList.push(checkedNodes[index].id)
       }
-      // const halfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
-      // for (const index in halfCheckedKeys) {
-      //     const idInfo = halfCheckedKeys[index];
-      //     if (idInfo.indexOf('PMS_') === 0) {
-      //         permissionIdList.push(idInfo.substr(4))
-      //     } else if (idInfo.indexOf('MENU_') === 0) {
-      //         menuIdList.push(idInfo.substr(5))
-      //     }
-      // }
-
+      const halfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
+      menuIdList = menuIdList.concat(halfCheckedKeys)
       this.form = {
         roleId: this.info.id,
         menuIdList: menuIdList
-        // permissionIdList: permissionIdList
       }
-
       this.onSubmit()
     },
     onSubmit() {
