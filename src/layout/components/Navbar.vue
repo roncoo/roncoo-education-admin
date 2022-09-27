@@ -3,9 +3,10 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
     <breadcrumb class="breadcrumb-container"/>
     <div class="right-menu">
-      <a v-if="checkPermission('system:admin:sys:config:list')" target="_blank" class="nav-item" @click="handleRow">系统配置</a><span>&nbsp;&nbsp;|</span>
+      <a v-if="checkPermission('system:admin:sys:config:list')" target="_blank" class="nav-item" @click="handleRow">系统配置<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span></a>
+      <a href="/" target="_blank" class="nav-item">平台首页</a><span>&nbsp;&nbsp;|</span>
       <el-dropdown class="avatar-container" size="medium" @command="commandFn" trigger="hover">
-        <span class="el-link">{{ userInfo.nickname }}<el-icon><arrow-down/></el-icon></span>
+        <span class="el-link">{{ userInfo.realName }}<el-icon><arrow-down/></el-icon></span>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
             <router-link v-if="checkPermission('user:admin:users:page')" to="/pms/user">
@@ -77,7 +78,6 @@ export default {
       this.i18n.locale = item.type
       this.languageName = item.name;
       this.$store.dispatch('app/toggleLanguage', item.type);
-
     },
     commandFn(e) {
       if (e === 'logout') {
@@ -88,7 +88,7 @@ export default {
       }
     },
     async reset() {
-      this.$store.dispatch('app/toggleResetPassword', true);
+      this.$store.dispatch('user/password', true);
     },
     handleRow() {
       this.$router.push(`/pms/config`)

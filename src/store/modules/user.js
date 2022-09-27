@@ -88,10 +88,6 @@ const getDefaultState = () => {
         'label': '系统设置'
       },
       {
-        'icon': '平台管理',
-        'label': '平台管理'
-      },
-      {
         'icon': '权限管理',
         'label': '权限管理'
       },
