@@ -7,13 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
+    websiteLogo: '',
     userInfo: null,
-    lecturerInfo: null,
-    domainUrl: '',
-    openCustomizeDomain: '',
-    orgInfo: {
-      orgName: '加载中'
-    },
     svgIconList: [
       {
         'icon': '概况总览',
@@ -117,30 +112,11 @@ const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
   },
-  SET_LECTURER(state, lecturerInfo) {
-    lockr.set('__directUser', lecturerInfo.directUser)
-    state.lecturerInfo = lecturerInfo
-  },
-  SET_DOMAIN_URL(state, domainUrl) {
-    state.domainUrl = domainUrl
-  },
-  SET_OPEN_DOMAIN(state, openCustomizeDomain) {
-    state.openCustomizeDomain = openCustomizeDomain
-  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
   SET_USER_INFO: (state, userInfo) => {
     state.userInfo = userInfo
-  },
-  SET_ORG_INFO: (state, orgInfo) => {
-    state.orgInfo = orgInfo
-  },
-  SET_NAME: (state, name) => {
-    state.name = name
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
   }
 }
 
@@ -151,7 +127,6 @@ const actions = {
       login({...userInfo}).then(data => {
         //console.log(data);
         commit('SET_TOKEN', data.token)
-        // commit('SET_USER_INFO', data)
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -168,7 +143,6 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-        commit('SET_NAME', data.nickname)
         commit('SET_USER_INFO', data || {})
         resolve(data)
       }).catch(error => {

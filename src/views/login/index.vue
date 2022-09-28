@@ -5,7 +5,8 @@
       <div class="login-panel">
         <div class="head clearfix">
           <div class="logo">
-            <img class="img-logo" src="../../assets/logo.svg"/>
+            <img v-if="service.websiteLogo" :src="service.websiteLogo" />
+            <img v-else class="img-logo" src="../../assets/logo.svg"/>
           </div>
         </div>
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
@@ -267,20 +268,17 @@ export default {
           params.osVersion = osVersion;
           params.browser = browserName;
           params.browserVersion = browserVersion;
-          this.$store
-            .dispatch('user/login', {...this.loginForm, ...params})
-            .then((res) => {
+          this.$store.dispatch('user/login', {...this.loginForm, ...params}).then((res) => {
               setStore('loginErrorCount', 0)
+              setStore('websiteLogo', this.service.websiteLogo)
               this.$store.dispatch('app/toggleImageVerification', false);
               this.$router.push({path: '/'});
               this.loading = false;
-            })
-            .catch((err) => {
+            }).catch((err) => {
               this.getImgCode()
               this.loading = false;
             });
         } else {
-          console.log('error submit');
           return false;
         }
       });

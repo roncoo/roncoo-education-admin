@@ -5,8 +5,8 @@
     <div class="main-container" :class="{'fixed-main-container':fixedHeader}">
       <div :class="{'fixed-header':fixedHeader}">
         <div class="logo">
-          <img v-if="orgLogoImg" :src="orgLogoImg" alt="">
-          <img src="../assets/logo.svg" style="width: 80%;" alt="">
+          <img v-if="websiteLogo" :src="websiteLogo" style="width: 80%;" alt="领课教育系统">
+          <img v-else src="../assets/logo.svg" style="width: 80%;" alt="领课教育系统">
         </div>
         <navbar />
         <tags-view />
@@ -21,11 +21,14 @@
 import { Navbar, Sidebar, AppMain, TagsView } from './components/index.js'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapGetters } from 'vuex'
+import {getStore} from '@/utils/storage';
 
 export default {
   name: 'Layout',
   data() {
-    return {}
+    return {
+      websiteLogo:''
+    }
   },
   components: {
     // ResetPassword,
@@ -37,8 +40,7 @@ export default {
   mixins: [ResizeMixin],
   computed: {
     ...mapGetters([
-      'resetPassword',
-      'orgLogoImg'
+      'resetPassword'
     ]),
     sidebar() {
       return this.$store.state.app.sidebar
@@ -57,6 +59,9 @@ export default {
         mobile: this.device === 'mobile'
       }
     }
+  },
+  mounted() {
+     this.websiteLogo = getStore('websiteLogo')
   },
   methods: {
     handleClickOutside() {
@@ -116,8 +121,6 @@ export default {
       }
     }
   }
-
-
   .mobile .fixed-header {
     width: 100%;
   }
