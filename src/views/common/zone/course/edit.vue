@@ -26,7 +26,7 @@ import {useStore} from 'vuex';
 import {zoneCourseEdit, zoneCourseSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import SelectCourse from '@/components/Selects/Selectcourse.vue';
+import SelectCourse from '@/components/Selects/SelectCourse.vue';
 
 export default defineComponent({
   components: {
