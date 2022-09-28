@@ -18,7 +18,7 @@
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
-          <span v-if="scope.row.resourceViewResp">【{{ resourceTypeEnums[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }}】</span>
+          <span v-if="scope.row.resourceViewResp"> 【{{ resourceTypeEnums[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }} | {{ formatDuring(scope.row.resourceViewResp.videoLength*1000) }} 】</span>
         </template>
       </el-table-column>
       <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
@@ -62,6 +62,7 @@ import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
 import {useRoute} from 'vue-router';
 import {courseChapterDelete, courseChapterEdit, courseChapterPage} from '@/api/course.js'
+import { formatDuring} from '@/utils/utils.js'
 import Edit from './edit.vue';
 import Add from './add.vue';
 
@@ -121,7 +122,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       editForm,
-      handleUpdateStatus
+      handleUpdateStatus,
+      formatDuring
     };
   }
 });
