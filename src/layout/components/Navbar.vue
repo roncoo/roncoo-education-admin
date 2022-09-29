@@ -3,9 +3,9 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
     <breadcrumb class="breadcrumb-container"/>
     <div class="right-menu">
-      <a href="https://www.roncoo.net/" target="_blank" class="nav-item">商业版咨询</a><span>&nbsp;&nbsp;|</span>
+      <a href="https://www.roncoo.net/" target="_blank" class="nav-item">商业版咨询</a><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
       <a v-if="checkPermission('system:admin:sys:config:list')" target="_blank" class="nav-item" @click="handleRow">系统配置<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span></a>
-      <a href="/" target="_blank" class="nav-item">平台首页</a><span>&nbsp;&nbsp;|</span>
+      <a href="/" target="_blank" class="nav-item">前端首页</a><span>&nbsp;&nbsp;|</span>
       <el-dropdown class="avatar-container" size="medium" @command="commandFn" trigger="hover">
         <span class="el-link">{{ userInfo.realName }}<el-icon><arrow-down/></el-icon></span>
         <template #dropdown>
