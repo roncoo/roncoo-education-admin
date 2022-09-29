@@ -106,7 +106,7 @@ export default {
       this.$store.dispatch('app/toggleImageVerification', true)
     }
     this.getWebsiteInfo();
-    this.getImgCode();
+    //this.getImgCode();
   },
   methods: {
     getImgCode() {
