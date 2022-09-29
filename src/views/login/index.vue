@@ -5,7 +5,7 @@
       <div class="login-panel">
         <div class="head clearfix">
           <div class="logo">
-            <img v-if="service.websiteLogo" :src="service.websiteLogo" />
+            <img v-if="service.websiteLogo" :src="service.websiteLogo"/>
             <img v-else class="img-logo" src="../../assets/logo.svg"/>
           </div>
         </div>
@@ -24,6 +24,7 @@
             </div>
           </el-form-item>
           <el-button :loading="loading" class="submit-btn" style="width: 100%; margin-bottom: 30px" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
+          <div>账号：18800000000/123456（需要本地部署）</div>
         </el-form>
       </div>
     </div>
@@ -77,8 +78,8 @@ export default {
         websitePrn: ''
       },
       loginForm: {
-        mobile: '',
-        mobilePwd: '',
+        mobile: '13300000000',
+        mobilePwd: '123456',
         imageVerification: '',
         imageVerificationToken: ''
       },
@@ -269,15 +270,15 @@ export default {
           params.browser = browserName;
           params.browserVersion = browserVersion;
           this.$store.dispatch('user/login', {...this.loginForm, ...params}).then((res) => {
-              setStore('loginErrorCount', 0)
-              setStore('websiteLogo', this.service.websiteLogo)
-              this.$store.dispatch('app/toggleImageVerification', false);
-              this.$router.push({path: '/'});
-              this.loading = false;
-            }).catch((err) => {
-              this.getImgCode()
-              this.loading = false;
-            });
+            setStore('loginErrorCount', 0)
+            setStore('websiteLogo', this.service.websiteLogo)
+            this.$store.dispatch('app/toggleImageVerification', false);
+            this.$router.push({path: '/'});
+            this.loading = false;
+          }).catch((err) => {
+            this.getImgCode()
+            this.loading = false;
+          });
         } else {
           return false;
         }
