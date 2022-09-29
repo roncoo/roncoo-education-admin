@@ -36,7 +36,7 @@
         <a v-if="service.websiteIcp" class="c_ccc" href="http://beian.miit.gov.cn/" target="_blank">{{ service.websiteIcp }}</a>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <img :alt="service.websitePrn" class="prn_icon" src="@/assets/prn_icon.png"/>
-        <a v-if="service.websitePrn" :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrn" class="c_ccc" target="_blank">&nbsp;{{ service.websitePrn }} </a>
+        <a v-if="service.websitePrn" :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrnNo" class="c_ccc" target="_blank">&nbsp;{{ service.websitePrn }} </a>
       </div>
     </div>
   </div>
