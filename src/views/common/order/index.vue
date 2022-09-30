@@ -29,9 +29,12 @@
         </template>
       </el-table-column>
       <el-table-column label="手机号码" prop="mobile" :width="150"/>
-      <el-table-column label="支付方式" :width="150">
+      <el-table-column label="支付方式/时间" :width="160">
         <template #default="scope">
           <span>{{ payTypeEnumEnums[scope.row.payType] }}</span>
+          <br>
+          <span v-if="scope.row.orderStatus === 2">{{ scope.row.payTime }}</span>
+          <span v-else>{{ scope.row.gmtCreate }}</span>
         </template>
       </el-table-column>
       <el-table-column label="订单状态" :width="100">

@@ -15,21 +15,21 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
+      <el-table-column label="手机号码" prop="mobile"/>
       <el-table-column label="用户头像">
         <template #default="scope">
           <img :src="scope.row.userHead" :alt="scope.row.nickname" style="height:50px;"/>
         </template>
       </el-table-column>
-      <el-table-column label="手机号码" prop="mobile"/>
       <el-table-column label="用户昵称" prop="nickname"/>
+      <el-table-column label="用户年龄" prop="userAge"/>
       <el-table-column label="用户性别">
         <template #default="scope">
           <span>{{ userSexEnums[scope.row.userSex] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户年龄" prop="userAge"/>
-      <el-table-column label="注册时间" prop="gmtCreate" :min-width="120"/>
       <el-table-column label="备注" prop="remark"/>
+      <el-table-column label="注册时间" prop="gmtCreate" :min-width="120"/>
       <el-table-column label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
