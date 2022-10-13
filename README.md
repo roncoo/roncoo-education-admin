@@ -68,7 +68,3 @@
 ### 官方交流群（加群即可获取sql脚本）
 
 <img src="images/qun.jpg" alt="领课教育系统-官方开源群" width="200"/>
-
-## 项目推荐
-
-##### 龙果支付系统(roncoo-pay)：[码云地址](https://gitee.com/roncoocom/roncoo-pay) | [Github地址](https://github.com/roncoo/roncoo-pay)
