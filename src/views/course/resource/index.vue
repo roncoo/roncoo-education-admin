@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
-          <el-form-item label="手机号码">
-            <el-input v-model="seekForm.mobile" clearable/>
+          <el-form-item label="资源名称">
+            <el-input v-model="seekForm.resourceName" clearable/>
           </el-form-item>
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>

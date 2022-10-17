@@ -3,7 +3,7 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
-          <el-form-item label="手机号码">
+          <el-form-item label="导航名称">
             <el-input v-model="seekForm.navTitle" clearable/>
           </el-form-item>
           <el-form-item>

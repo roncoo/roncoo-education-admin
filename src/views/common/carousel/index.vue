@@ -2,16 +2,9 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
-          <el-form-item label="手机号码">
-            <el-input v-model="seekForm.carouselTitle" clearable/>
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('system:admin:website:carousel:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
-          </el-form-item>
-        </el-form>
+        <el-button v-if="checkPermission('system:admin:website:carousel:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
+        <br>
+        <br>
       </div>
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
