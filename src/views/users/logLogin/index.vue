@@ -21,6 +21,7 @@
       </el-table-column>
       <el-table-column label="操作系统" prop="os"/>
       <el-table-column label="浏览器" prop="browser"/>
+      <el-table-column label="登录时间" prop="gmtCreate"/>
       <el-table-column label="登录状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.loginStatus === 0 }">{{ loginStatusEnums[scope.row.loginStatus] }}</span>
