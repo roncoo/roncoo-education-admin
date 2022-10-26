@@ -149,8 +149,13 @@ const asyncRouterMapList = [
       },
       {
         path: 'lecturer',
-        name: 'CourseLecturer',
+        name: 'UsersLecturer',
         component: () => import('@/views/users/lecturer/index.vue')
+      },
+      {
+        path: 'logLogin',
+        name: 'usersLogLogin',
+        component: () => import('@/views/users/logLogin/index.vue')
       }
     ]
   },

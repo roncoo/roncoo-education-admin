@@ -44,3 +44,8 @@ export function usersEdit(data) {
 export function usersDelete(data) {
   return request.delete('/user/admin/users/delete?id=' + data.id, data)
 }
+
+// 登录日志
+export function logLoginPage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/user/admin/log/login/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
