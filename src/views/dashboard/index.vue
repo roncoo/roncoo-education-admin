@@ -4,7 +4,7 @@
       <span class="title">最近14天登录人数</span>
       <span style="margin-left: 300px;color: red;">演示环境仅提供查看功能，本地部署能体验更多功能</span>
     </div>
-    <login v-if="checkPermission('user:admin:stat:login')" :data="loginData"/>
+    <login v-if="checkPermission('user:admin:stat:login')" :data="statData"/>
     <div v-if="checkPermission('system:admin:stat:vod')" class="title-info">
       <span class="title">视频云使用情况</span>
     </div>
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       vodData: {},
-      loginData: {}
+      statData: {}
     }
   },
   mounted() {
@@ -38,7 +38,7 @@ export default {
     },
     getLogin() {
       statLogin().then(res => {
-        this.loginData = res
+        this.statData = res
       })
     }
   }

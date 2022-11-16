@@ -32,20 +32,20 @@ export default {
   mounted() {
     this.pieOne = echarts.init(document.getElementById('cachePieOne'), 'light');
     this.pieTwo = echarts.init(document.getElementById('cachePieTwo'), 'light');
+    this.vodOptions();
   },
-
   methods: {
     vodOptions: function() {
       // 总流量
       const totalFlow = this.data.totalFlow;
       // 已用流量
-      const usedFlow = this.data.usedFlow.toFixed(2);
+      const usedFlow = this.data.usedFlow ? this.data.usedFlow.toFixed(2) : 0;
       // 剩余流量
       const surplusFlow = (totalFlow - usedFlow).toFixed(2);
       // 总空间
       const totalSpace = this.data.totalSpace;
       // 已用空间
-      const usedSpace = this.data.usedSpace.toFixed(2);
+      const usedSpace = this.data.usedSpace ? this.data.usedSpace.toFixed(2) : 0;
       // 剩余流量
       const surplusSpace = (totalSpace - usedSpace).toFixed(2);
       const option1 = {
