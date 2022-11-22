@@ -44,9 +44,6 @@ export default {
   }
 };
 </script>
-<script setup>
-
-</script>
 
 <style lang="scss" scoped>
 .title-info {
@@ -56,9 +53,5 @@ export default {
   border-left: 5px solid #50bfff;
   border-radius: 4px;
   font-size: 16px;
-
-  span {
-  }
-
 }
 </style>

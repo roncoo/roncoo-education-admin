@@ -30,41 +30,38 @@ export default {
     this.parseOption()
   },
   methods: {
-    parseOption: function() {
+    parseOption() {
       const option = {
-        title: {
-          // text: '统计'
-        },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
           data: ['登录人数', '注册人数']
         },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
+        xAxis: {
+          type: 'category',
+          axisTick: {show: false},
+          data: this.data.dateList
         },
         yAxis: {
           type: 'value'
-        },
-        xAxis: {
-          type: 'category',
-          data: this.data.dateList
         },
         series: [
           {
             name: '登录人数',
             type: 'line',
-            data: this.data.loginList
+            data: this.data.loginList,
+            label: {
+              show: false,
+              position: 'center'
+            }
           },
           {
             name: '注册人数',
             type: 'line',
             data: this.data.registerList
           }
+
         ]
       };
       this.myChart.setOption(option)
