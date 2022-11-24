@@ -16,9 +16,8 @@ export default {
     }
   },
   data() {
-    return {
-      myChart: undefined
-    }
+    this.myChart = null
+    return {}
   },
   watch: {
     data() {
@@ -33,7 +32,10 @@ export default {
     parseOption() {
       const option = {
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+          }
         },
         legend: {
           data: ['登录人数', '注册人数']
