@@ -16,7 +16,7 @@ export default {
     }
   },
   data() {
-    this.myChart = null
+    this.myChart = {}
     return {}
   },
   watch: {

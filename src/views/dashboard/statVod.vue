@@ -24,10 +24,9 @@ export default {
     }
   },
   data() {
-    return {
-      pieOne: {},
-      pieTwo: {}
-    };
+    this.pieOne = {}
+    this.pieTwo = {}
+    return {}
   },
   mounted() {
     this.pieOne = echarts.init(document.getElementById('cachePieOne'), 'light');
