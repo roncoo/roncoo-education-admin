@@ -139,3 +139,13 @@ export function courseSave(data) {
 export function courseDelete(data) {
   return request.delete('/course/admin/course/delete?id=' + data.id, data)
 }
+
+// 分页
+export function userCoursePage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/course/admin/user/course/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 分页
+export function userStudyePage(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/course/admin/user/study/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}

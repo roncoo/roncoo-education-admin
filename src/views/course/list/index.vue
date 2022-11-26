@@ -51,8 +51,9 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="200" fixed="right" label="操作" prop="address">
+      <el-table-column :width="280" fixed="right" label="操作" prop="address">
         <template #default="scope">
+          <el-button plain type="success" @click="courseRecord(scope.row)">数据</el-button>
           <el-button v-if="checkPermission('course:admin:course:edit')" plain type="success" @click="courseChapter(scope.row)">章节</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
@@ -132,16 +133,21 @@ export default defineComponent({
       });
     };
 
-    //章节跳转
+    //章节
     const courseChapter = function(row) {
       this.$router.push({path: '/course/chapter', query: {courseId: row.id}});
     }
 
+    //数据
+    const courseRecord = function(row) {
+      this.$router.push({path: '/course/record', query: {courseId: row.id}});
+    }
+
     return {
-      ...toRefs(state),
-      initData,
+      ...toRefs(state), initData,
       handleUpdateStatus,
-      courseChapter
+      courseChapter,
+      courseRecord
     };
   }
 });

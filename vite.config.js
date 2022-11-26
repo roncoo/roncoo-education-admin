@@ -42,7 +42,8 @@ export default defineConfig({
     proxy: { // 代理
       '/gateway': {
         //target: 'http://localhost:8180',
-        target: 'http://dev-os.roncoos.com/gateway',
+        //target: 'http://dev-os.roncoos.com/gateway',
+        target: 'https://eduos.roncoo.net/gateway',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/gateway/, '')
       }

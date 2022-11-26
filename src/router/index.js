@@ -126,6 +126,13 @@ const asyncRouterMapList = [
         meta: {title: '章节管理'}
       },
       {
+        path: 'record',
+        name: 'CourseRecord',
+        hidden: true,
+        component: () => import('@/views/course/list/record/index.vue'),
+        meta: {title: '学习管理'}
+      },
+      {
         path: 'resource',
         name: 'CourseResource',
         component: () => import('@/views/course/resource/index.vue')
