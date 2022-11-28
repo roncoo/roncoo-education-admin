@@ -67,9 +67,9 @@ export default defineComponent({
     })
     const studyRecord = (row) => {
       userStudyePage({userId: row.userId, courseId: route.query.courseId}).then((res) => {
-        study.info = res
+        study.info = res.list
+        study.visible = true
       });
-      study.visible = true;
     }
     const studyCallback = () => {
       study.visible = false

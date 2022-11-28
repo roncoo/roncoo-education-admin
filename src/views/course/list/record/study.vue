@@ -1,23 +1,35 @@
 <template>
-  <el-dialog v-model="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
-    <el-table :data="info" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all>
+  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="800px" @close="cloneDialog">
+    <el-table :data="info" row-key="id" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all>
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="观看进度" prop="courseProgress">
+        <template #default="scope">
+          <el-progress
+            v-if="scope.row.progress"
+            :percentage="scope.row.progress"
+            :stroke-width="25"
+            :text-inside="true"
+          />
+        </template>
+      </el-table-column>
     </el-table>
   </el-dialog>
 </template>
 <script>
-import {defineComponent, onMounted, reactive, ref, toRefs} from 'vue';
+import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 
 export default defineComponent({
   props: {
-    visible: {
+    modelValue: {
       type: Boolean,
-      default: false
+      default: () => {
+        return false;
+      }
     },
     title: {
       type: String,
@@ -30,17 +42,26 @@ export default defineComponent({
       }
     }
   },
-  setup() {
+  emits: ['update:modelValue'],
+  setup(props, {emit}) {
+
     const state = reactive({});
     const visible = ref(false);
+    let {modelValue, info} = toRefs(props);
+    // 弹窗是否要打开监控
+    watch(modelValue, async(val) => {
+      visible.value = val;
+    });
+    console.log('info', info)
 
-    const handleClose = () => {
+    const cloneDialog = () => {
       visible.value = false;
+      emit('update:modelValue', false);
     };
     return {
       ...toRefs(state),
       visible,
-      handleClose
+      cloneDialog
     };
   }
 });
