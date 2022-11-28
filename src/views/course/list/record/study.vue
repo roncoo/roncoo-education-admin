@@ -7,14 +7,14 @@
           <span>{{ scope.row.periodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="观看进度" prop="courseProgress">
+      <el-table-column label="学习时间" prop="gmtCreate" width="200">
         <template #default="scope">
-          <el-progress
-            v-if="scope.row.progress"
-            :percentage="scope.row.progress"
-            :stroke-width="25"
-            :text-inside="true"
-          />
+          <span v-if="scope.row.progress >0">{{ scope.row.gmtCreate }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="学习进度" prop="courseProgress" width="200">
+        <template #default="scope">
+          <el-progress v-if="scope.row.progress" :percentage="scope.row.progress" :stroke-width="25" :text-inside="true"/>
         </template>
       </el-table-column>
     </el-table>
