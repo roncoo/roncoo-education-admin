@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
+  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">

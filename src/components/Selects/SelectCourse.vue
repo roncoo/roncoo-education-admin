@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
+  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
     <el-form class="filter-container" inline label-width="100px" size="mini">
       <el-form-item label="课程名称">
         <el-input v-model="queryParams.courseName"/>

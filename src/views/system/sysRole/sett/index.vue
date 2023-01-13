@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="visible"
+    :model-value="visible"
     :before-close="handleClose"
     :title="title"
     center

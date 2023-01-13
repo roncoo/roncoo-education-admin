@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :before-close="handleClose" :title="title" width="800px">
+  <el-dialog :model-value="visible" :before-close="handleClose" :title="title" width="800px">
     <el-form ref="form" :model="newFormData" :rules="rules">
       <el-form-item prop="configValue">
         <!-- 文本类型 -->

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="visible"
+    :model-value="visible"
     :before-close="handleClose"
     width="450px"
     title="修改密码"

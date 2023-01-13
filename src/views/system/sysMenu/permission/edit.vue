@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
+  <el-dialog :model-value="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="权限名称" class="form-group" prop="menuName">
         <el-input v-model="form.menuName" maxlength="50" show-word-limit/>

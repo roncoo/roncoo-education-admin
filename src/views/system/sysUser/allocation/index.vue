@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" v-loading="dialogLoading" :before-close="handleClose" :title="title" center width="600px">
+  <el-dialog :model-value="visible" v-loading="dialogLoading" :before-close="handleClose" :title="title" center width="600px">
     <el-form class="filter-container" inline label-width="80px">
       <el-form-item class="filter-item" label="角色名称">
         <el-input v-model="map.roleName"/>
