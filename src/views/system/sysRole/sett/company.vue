@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="400px">
+  <el-dialog :model-value="visible" :before-close="handleClose" :title="title" center width="400px">
     <div v-loading="ctrl.loading" style="min-height: 10vh">
       <el-tree ref="tree" :data="availableList" :props="defaultProps" accordion highlight-current node-key="id" show-checkbox/>
     </div>

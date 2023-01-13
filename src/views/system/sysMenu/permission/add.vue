@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" :before-close="handleClose" :title="title" center width="600px">
+  <el-dialog :model-value="visible" :before-close="handleClose" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item v-if="info.menuName" label="菜单名称" prop="menuName">
         <el-input v-model="info.menuName" class="form-group" disabled/>

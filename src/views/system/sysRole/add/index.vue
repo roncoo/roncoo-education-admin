@@ -1,7 +1,7 @@
 <template>
     <el-dialog
             :title="title"
-            v-model="visible"
+            :model-value="visible"
             width="600px"
             center
             :before-close="handleClose"

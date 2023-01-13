@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" v-model="visible" width="600px" center :before-close="handleClose">
+  <el-dialog :title="title" :model-value="visible" width="600px" center :before-close="handleClose">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="登录账号" prop="mobile">
         <el-input v-model="form.mobile" class="form-group" maxlength="11" show-word-limit/>
