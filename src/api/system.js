@@ -80,6 +80,11 @@ export function linkDelete(data) {
   return request.delete('/system/admin/website/link/delete?id=' + data.id, data)
 }
 
+// 视频云初始化
+export function videoInit() {
+  return request({url: '/system/admin/sys/config/video/init', method: 'get'})
+}
+
 // 系统配置--列出
 export function sysConfigList(data) {
   return request({url: '/system/admin/sys/config/list', method: 'post', data: data})

@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <el-form class="filter-container" inline label-width="100px">
+      <el-form-item>
+        <el-button v-if="checkPermission('system:admin:sys:config:video:init')" plain type="primary" @click="videoInitHandle">视频设置</el-button>
+      </el-form-item>
+    </el-form>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="站点设置" name="1">
         <List :list="list" @reset="handleReset"></List>
@@ -23,7 +28,7 @@
   </div>
 </template>
 <script>
-import {sysConfigList} from '@/api/system';
+import {sysConfigList, videoInit} from '@/api/system';
 import List from './list.vue';
 
 export default {
@@ -55,6 +60,16 @@ export default {
     handleReset() {
       this.map.configType = this.activeName;
       this.listForList();
+    },
+    videoInitHandle() {
+      this.$confirm('视频云初始化', '视频云设置', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+        videoInit().then((res) => {
+          this.$message.success(res);
+        });
+      });
     }
   }
 };
