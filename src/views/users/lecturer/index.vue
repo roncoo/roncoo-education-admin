@@ -29,19 +29,19 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="300" fixed="right" label="操作" prop="address">
+      <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button v-if="checkPermission('user:admin:lecturer:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>
-                  <el-button v-if="checkPermission('user:admin:lecturer:edit') && scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="checkPermission('user:admin:lecturer:edit') && scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                <el-dropdown-item v-if="checkPermission('user:admin:lecturer:edit')">
+                  <el-button v-if=" scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if=" scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button v-if="checkPermission('user:admin:lecturer:delete')" plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                <el-dropdown-item v-if="checkPermission('user:admin:lecturer:delete')">
+                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

@@ -37,17 +37,17 @@
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="checkPermission('user:admin:users:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="success" @click="userRecord(scope.row)">数据</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>
-                  <el-button v-if="checkPermission('user:admin:users:edit') && scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="checkPermission('user:admin:users:edit') && scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                <el-dropdown-item v-if="checkPermission('user:admin:users:edit')">
+                  <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button v-if="checkPermission('user:admin:users:delete')" plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                <el-dropdown-item v-if="checkPermission('user:admin:users:edit')">
+                  <el-button v-if=" scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -106,9 +106,15 @@ export default defineComponent({
         state.tableData.loading = false;
       });
     };
+
+    //数据
+    const userRecord = function(row) {
+      this.$router.push({path: '/users/record', query: {userId: row.id}});
+    }
     return {
       ...toRefs(state),
-      handleUpdateStatus
+      handleUpdateStatus,
+      userRecord
     };
   }
 });

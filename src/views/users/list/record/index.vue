@@ -12,8 +12,12 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="手机号码" prop="mobile" min-width="20"/>
-      <el-table-column label="用户昵称" prop="nickname" min-width="20"/>
+      <el-table-column label="封面" prop="courseLogo" min-width="20">
+        <template #default="scope">
+          <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="课程名称" prop="courseName" min-width="20"/>
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
           <el-progress
@@ -39,7 +43,8 @@ import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
-import {userCourseRecord, userStudyePage} from '@/api/course.js'
+import {userStudyePage} from '@/api/course.js'
+import {userCoursePage} from '@/api/user.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
 
@@ -48,10 +53,10 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const apis = reactive({
-      getList: userCourseRecord
+      getList: userCoursePage
     })
     const state = reactive({
-      ...UseTable(apis, {courseId: route.query.courseId}),
+      ...UseTable(apis, {userId: route.query.userId}),
       loginStatusEnums: {}
     });
     const store = useStore();
@@ -66,7 +71,7 @@ export default defineComponent({
       info: {}
     })
     const studyRecord = (row) => {
-      userStudyePage({userId: row.userId, courseId: route.query.courseId}).then((res) => {
+      userStudyePage({courseId: row.courseId, userId: route.query.userId}).then((res) => {
         study.info = res.list
         study.visible = true
       });

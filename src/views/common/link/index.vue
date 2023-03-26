@@ -29,7 +29,7 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="300" fixed="right" label="操作" prop="address">
+      <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button v-if="checkPermission('system:admin:website:link:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>

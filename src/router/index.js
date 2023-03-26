@@ -160,6 +160,13 @@ const asyncRouterMapList = [
         component: () => import('@/views/users/lecturer/index.vue')
       },
       {
+        path: 'record',
+        name: 'UserRecord',
+        hidden: true,
+        component: () => import('@/views/users/list/record/index.vue'),
+        meta: {title: '学习管理'}
+      },
+      {
         path: 'logLogin',
         name: 'usersLogLogin',
         component: () => import('@/views/users/logLogin/index.vue')

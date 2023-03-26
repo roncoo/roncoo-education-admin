@@ -141,8 +141,8 @@ export function courseDelete(data) {
 }
 
 // 分页
-export function userCoursePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/user/course/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+export function userCourseRecord(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/course/admin/user/course/record', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
 }
 
 // 分页
