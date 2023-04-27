@@ -36,10 +36,10 @@
         <study v-model="study.visible" :info="study.info" @close="studyCallback"/>
       </el-tab-pane>
       <el-tab-pane label="课程评论" name="comment">
-        ttt
+        待实现
       </el-tab-pane>
       <el-tab-pane label="课程收藏" name="collect">
-        sss
+        待实现
       </el-tab-pane>
     </el-tabs>
   </div>
