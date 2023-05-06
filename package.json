@@ -1,6 +1,6 @@
 {
   "name": "roncoo-education-admin",
-  "version": "11.0.0-RELEASE",
+  "version": "12.0.0-RELEASE",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
