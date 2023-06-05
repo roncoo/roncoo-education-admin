@@ -82,7 +82,7 @@ import { resourceDelete, resourceEdit, resourcePage } from '@/api/course.js'
 import { polyvUpload } from '@/utils/vod.js'
 import { getSize, formatDuring } from '@/utils/utils.js'
 import Edit from './edit.vue';
-import UploaderBtn from '@/components/upload/UploaderBtn.vue';
+import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 import bus from '@/utils/bus';
 
 export default defineComponent({
@@ -103,7 +103,7 @@ export default defineComponent({
       videoStatusEnums: {}
     });
     const store = useStore();
-    
+
     const handleUpdateStatus = function (row) {
       state.tableData.loading = true;
       row.statusId = row.statusId ? 0 : 1
