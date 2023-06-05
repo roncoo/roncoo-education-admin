@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import upload from '@/utils/upload';
 
 // 专区课程分页
 export function zoneCoursePage(data) {
@@ -148,4 +149,28 @@ export function userCourseRecord(params, pageCurrent = 1, pageSize = 20) {
 // 分页
 export function userStudyePage(params, pageCurrent = 1, pageSize = 20) {
   return request({url: '/course/admin/user/study/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+/**
+ * 资源库添加
+ * @param data
+ */
+export function resourceLibrarySave(data) {
+    return upload({
+        url: '/resource/admin/material/save',
+        method: 'post',
+        data
+    })
+}
+/**
+ * 素材信息预览
+ * @param data
+ * @returns {*}
+ */
+export function resourceLibraryPreview(data) {
+  return request({
+      url: '/resource/admin/material/preview',
+      method: 'post',
+      data
+  })
 }

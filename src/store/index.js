@@ -7,6 +7,7 @@ import menu from './modules/menu'
 import tags from './modules/tags'
 import opts from './modules/opts'
 import permission from './modules/permission'
+import upload from './modules/upload'
 
 const store = createStore({
   modules: {
@@ -16,7 +17,8 @@ const store = createStore({
     menu,
     tags,
     opts,
-    permission
+    permission,
+    upload
   },
   getters
 })

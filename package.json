@@ -13,6 +13,7 @@
     "echarts": "^5.2.2",
     "js-cookie": "2.2.0",
     "lockr": "^0.8.5",
+    "mitt": "^3.0.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-browserify": "^1.0.1",
@@ -22,7 +23,9 @@
     "vue-router": "^4.*",
     "vuex": "4.*",
     "wangeditor": "^4.*",
-    "sortablejs": "^1.13.0"
+    "sortablejs": "^1.13.0",
+    "simple-uploader.js": "^0.6.0",
+    "browser-md5-file": "^1.1.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.2",
