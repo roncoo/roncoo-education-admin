@@ -15,7 +15,7 @@ import { onMounted, ref, reactive, onUnmounted } from "vue";
 import { ElConfigProvider } from 'element-plus'
 import ElementPlusZhCn from "element-plus/lib/locale/lang/zh-cn";
 import ElementPlusEn from "element-plus/lib/locale/lang/en";
-import FixedUploadPanel from '@/components/upload/FixedUploadPanel.vue';
+import FixedUploadPanel from '@/components/Upload/FixedUploadPanel.vue';
 import Preview from '@/views/course/material/preview.vue'
 import bus from '@/utils/bus';
 export default {
