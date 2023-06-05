@@ -9,9 +9,6 @@
       <el-tab-pane label="站点设置" name="1">
         <List :list="list" @reset="handleReset"></List>
       </el-tab-pane>
-      <el-tab-pane label="系统设置" name="2">
-        <List :list="list" @reset="handleReset"></List>
-      </el-tab-pane>
       <el-tab-pane label="视频设置" name="3">
         <List :list="list" @reset="handleReset"></List>
       </el-tab-pane>

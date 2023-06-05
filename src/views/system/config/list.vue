@@ -10,9 +10,7 @@
       <el-table-column label="参数">
         <template #default="scope">
           <span v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && scope.row.configShow">{{ scope.row.configValue }}</span>
-          <el-button v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && !scope.row.configShow" type="text" @click="openRow(scope.row)">
-            【点击查看详情】
-          </el-button>
+          <el-button v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && !scope.row.configShow" type="text" @click="openRow(scope.row)">【点击查看详情】</el-button>
           <img v-if="scope.row.contentType === 3" :alt="scope.row.configName" :src="scope.row.configValue" class="list_avatar"/>
           <span v-if="scope.row.contentType === 4">{{ scope.row.configValue == 1 ? '开启' : '关闭' }}</span>
           <span v-if="scope.row.contentType === 5 && scope.row.configKey === 'storagePlatform'">{{ storagePlatformEnum ? storagePlatformEnum[scope.row.configValue] : '' }}</span>
