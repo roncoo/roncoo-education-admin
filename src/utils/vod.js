@@ -61,10 +61,10 @@ export function getPolyvVideoSign() {
   vodConfig().then(res => {
     //console.log(res)
     polyvClient.updateUserData({
-      userid: res.polyvConfig.userid,
-      ptime: res.polyvConfig.ptime,
-      sign: res.polyvConfig.sign,
-      hash: res.polyvConfig.hash
+      userid: res.vodUploadConfig.userid,
+      ptime: res.vodUploadConfig.ptime,
+      sign: res.vodUploadConfig.sign,
+      hash: res.vodUploadConfig.hash
     });
     // 更新用户数据（由于sign等用户信息有效期为3分钟，需要每隔3分钟更新一次）
     setTimeout(() => {

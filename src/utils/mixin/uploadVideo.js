@@ -1,5 +1,5 @@
-import { mapGetters } from 'vuex'
-import { vodConfig } from '@/api/upload'
+import {mapGetters} from 'vuex'
+import {vodConfig} from '@/api/upload'
 import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
 import UploadFragment from '@/utils/mixin/UploadFragment';
 // import uploaderCC from '@/utils/uploadCC'
@@ -55,7 +55,6 @@ export default {
     // this.initPolyv()
   },
   methods: {
-
     startUpload(_file, cb) {
       console.log(_file)
       if (this.uploading) {
@@ -67,12 +66,9 @@ export default {
         _file.vodModel = res.vodModel
         if (this.videoPlatType === 2) {
           // 上传保利威
-          this.getPolyvVideoSign(res.polyvConfig, () => {
+          this.getPolyvVideoSign(res.vodUploadConfig, () => {
             this.polyvUpload(_file, cb)
           })
-        } else if (this.videoPlatType === 3) {
-          // 上传百家云
-          // this.baijiayunUpload(_file, cb)
         } else {
           // 其他的分片上传
           this.initSimpleUpload(JSON.parse(res.vodUploadConfig))
@@ -150,16 +146,16 @@ export default {
     },
     // 获取保利威上传sign
     getPolyvVideoSign(res, cb) {
-        if (!this.polyvClient) this.initPolyv()
-        this.polyvClient.updateUserData({
-          userid: res.userid, // Polyv云点播账号的ID
-          ptime: res.ptime, // 时间戳，注意：系统时间不正确会导致校验失败
-          sign: res.sign, // 是根据将secretkey和ts按照顺序拼凑起来的字符串进行MD5计算得到的值
-          hash: res.hash // 是根据将ts和writeToken按照顺序拼凑起来的字符串进行MD5计算得到的值
-        });
-        if (cb) {
-          cb()
-        }
+      if (!this.polyvClient) this.initPolyv()
+      this.polyvClient.updateUserData({
+        userid: res.userid, // Polyv云点播账号的ID
+        ptime: res.ptime, // 时间戳，注意：系统时间不正确会导致校验失败
+        sign: res.sign, // 是根据将secretkey和ts按照顺序拼凑起来的字符串进行MD5计算得到的值
+        hash: res.hash // 是根据将ts和writeToken按照顺序拼凑起来的字符串进行MD5计算得到的值
+      });
+      if (cb) {
+        cb()
+      }
     },
     // polyv上传
     polyvUpload(_file) {
@@ -168,7 +164,7 @@ export default {
       const fileSetting = {
         title: undefined, // 标题
         desc: undefined, // 描述
-        cataid: _file.polyvConfig.cataid, // 上传分类目录ID
+        cataid: _file.vodUploadConfig.cataid, // 上传分类目录ID
         tag: 'course', // 标签
         luping: 1, //  是否录屏优化。当值为1时，上传的视频不再采取默认的压缩编码机制，视频尺寸不再压缩，保证视频的清晰度。默认值为0
         keepsource: 0, // 是否源文件播放（不对视频进行编码）：0为编码，1为不编码
@@ -218,32 +214,32 @@ export default {
       const _that = this
       // console.log(_stat)
       _that.cancelToken = {}
-        // console.log(res)
-        uploadBaijiayun(_file.file, _file.config.uploadUrl, (p) => {
-          // console.log(p)
-          _file.progress = parseInt(p)
-          _file.status = 'uploading'
-          if (cb) cb(parseInt(p))
-        }, _that.cancelToken).then(result => {
-          _that.uploading = false
-          if (result.msg === 'success') {
-            _file.status = 'success'
-            _file.file = null;
-            _that.savaVideo(Object.assign({
-              vid: result.fid,
-              materialName: _file.name
-            }, _file), _file)
-          } else {
-            this.$message.error('上传失败')
-            _file.status = 'fail'
-            if (_that.nextUpload) _that.nextUpload()
-          }
-        }).catch((msgs) => {
-          _that.uploading = false
+      // console.log(res)
+      uploadBaijiayun(_file.file, _file.config.uploadUrl, (p) => {
+        // console.log(p)
+        _file.progress = parseInt(p)
+        _file.status = 'uploading'
+        if (cb) cb(parseInt(p))
+      }, _that.cancelToken).then(result => {
+        _that.uploading = false
+        if (result.msg === 'success') {
+          _file.status = 'success'
+          _file.file = null;
+          _that.savaVideo(Object.assign({
+            vid: result.fid,
+            materialName: _file.name
+          }, _file), _file)
+        } else {
+          this.$message.error('上传失败')
           _file.status = 'fail'
           if (_that.nextUpload) _that.nextUpload()
-          console.log('error', msgs)
-        })
+        }
+      }).catch((msgs) => {
+        _that.uploading = false
+        _file.status = 'fail'
+        if (_that.nextUpload) _that.nextUpload()
+        console.log('error', msgs)
+      })
     }
   }
 }
