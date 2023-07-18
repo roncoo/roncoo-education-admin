@@ -2,7 +2,7 @@ import {mapGetters} from 'vuex'
 import {vodConfig} from '@/api/upload'
 import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
 import UploadFragment from '@/utils/mixin/UploadFragment';
-// import uploaderCC from '@/utils/uploadCC'
+
 export default {
   mixins: [UploadFragment],
   data() {
@@ -50,9 +50,7 @@ export default {
     })
   },
   mounted() {
-    // this.initOssConfig()
     this.errorMessage = ''
-    // this.initPolyv()
   },
   methods: {
     startUpload(_file, cb) {
@@ -89,7 +87,7 @@ export default {
     initOssConfig(file, cb) {
       vodConfig({fileName: file.name, fileSize: file.size}).then(res => {
         if (res) {
-          this.videoPlatType = res.vodPlatform // 1保利威、2百家云、3获得场景、4欢拓云、10私有云
+          this.videoPlatType = res.vodPlatform // 1私有云、2保利威、3百家云、4获得场景
           if (cb) {
             console.log(res);
             cb(res)

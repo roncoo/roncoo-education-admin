@@ -8,7 +8,7 @@
 -->
 <template>
   <div v-if="fileInfo.status === 'uploading'" class="upload-btn uploading_panel" style="width: 80px;">
-    <el-progress class="progress-panel" :text-inside="true" :stroke-width="28" :percentage="fileInfo.progress" />
+    <el-progress class="progress-panel" :text-inside="true" :stroke-width="28" :percentage="fileInfo.progress"/>
     <el-button class="close-btn" plain type="primary" @click="handleCloseUpload">{{ $t('cancelUpload') }}</el-button>
   </div>
   <span v-else>
@@ -24,7 +24,7 @@
       :http-request="upload"
     > <el-button :icon="icon" :type="btnType" :plain="plain" :class="btnClass">
       {{ btnText }}
-      <slot name="btn-content" />
+      <slot name="btn-content"/>
     </el-button>
     </el-upload>
   </span>
@@ -36,6 +36,7 @@ import uploadFiles from '@/utils/mixin/UploadFiles';
 import {mapGetters} from 'vuex';
 import {uploadDoc, saveResource} from '@/api/upload';
 import {ElMessage} from 'element-plus';
+
 export default {
   name: 'UploaderBtn',
   mixins: [uploadVideo, uploadFiles],
@@ -128,7 +129,7 @@ export default {
       if (this.mode === 'async') {
         this.$store.dispatch('upload/uploadFile', {refId: this.refId, file: file.file, custom: this.custom})
       } else {
-         this.awaitUpload(file.file)
+        this.awaitUpload(file.file)
       }
     },
     awaitUpload(_file) {
@@ -215,7 +216,7 @@ export default {
           return false
       }
     },
-     beforeUploadPic(type, nameType, file) {
+    beforeUploadPic(type, nameType, file) {
       // const ids = this.$store.state.upload.fileList.map(el => el.resourceName)
       // if (ids.indexOf(file.name) > -1) {
       //   ElMessage.error(this.$t('learn.errorName'))
@@ -231,7 +232,7 @@ export default {
         return false;
       }
     },
-     beforeUploadVideo(type, nameType, file) {
+    beforeUploadVideo(type, nameType, file) {
       const isLt10G = file.size / 1024 / 1024 / 1024 < 10;
       if (['3gp', 'asf', 'avi', 'dat', 'flv', 'f4v', 'm4v', 'mkv', 'mov', 'mp4', 'mpe', 'mpg', 'mpeg', 'rmvb', 'vob', 'wmv'].indexOf(nameType) === -1) {
         ElMessage.error(this.$t('uploader.errorUploadVideo'))
@@ -242,7 +243,7 @@ export default {
         return false;
       }
     },
-     beforeUploadAudio(type, nameType, file) {
+    beforeUploadAudio(type, nameType, file) {
       const isLt1G = file.size / 1024 / 1024 / 1024 < 1;
       if (['aac', 'wav', 'wma', 'mp3'].indexOf(nameType) === -1) {
         ElMessage.error(this.$t('uploader.errorUploadAudio'))
@@ -253,7 +254,7 @@ export default {
         return false;
       }
     },
-     beforeUploadDocument(type, nameTypes, file) {
+    beforeUploadDocument(type, nameTypes, file) {
       // const ids = this.$store.state.upload.fileList.map(el => el.resourceName)
       // if (ids.indexOf(file.name) > -1) {
       //   ElMessage.error(this.$t('learn.errorName'))
@@ -305,7 +306,7 @@ export default {
         },
         // parallel: 5, // 分片数量
         // partSize: 1024 * 1024 * 40, // 分片大小
-        meta: { year: 2020, people: 'test' },
+        meta: {year: 2020, people: 'test'},
         mime: _file.file.type
       }).then(result => {
         that.fileUploading = false
@@ -361,7 +362,6 @@ export default {
           fileInfo.status = 'saveSuccess'
           form.coursewareId = res.data
           this.$emit('success', form)
-          // console.log(res)
         }).catch(() => {
           fileInfo.status = 'saveFail'
         });
@@ -372,11 +372,9 @@ export default {
     },
     // 保存文件
     savaVideo(data, fileInfo) {
-      console.log('savaVideo', data, fileInfo, this.refId)
       if (this.refId) {
         const refId = this.refId === '0' ? undefined : this.refId
         const form = {
-          userNo: refId,
           materialName: fileInfo.name,
           vodPlatform: fileInfo.videoType,
           materialType: this.fileTypeInt[fileInfo.type],
@@ -390,11 +388,9 @@ export default {
         }
         fileInfo.status = 'save'
         saveResource(form).then(res => {
-          console.log('saveResource', res)
           fileInfo.status = 'saveSuccess'
           form.coursewareId = res.data
           this.$emit('success', form)
-          // console.log(res)
         }).catch(() => {
           fileInfo.status = 'saveFail'
         });
@@ -408,30 +404,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload-btn{
+.upload-btn {
   display: inline-block;
   // margin-left: 10px;
   // margin-right: 10px;
 }
-.uploading_panel{
-  .progress-panel{
+
+.uploading_panel {
+  .progress-panel {
   }
-  .close-btn{
+
+  .close-btn {
     display: none;
   }
-  &:hover{
-    .progress-panel{
+
+  &:hover {
+    .progress-panel {
       display: none;
     }
-    .close-btn{
+
+    .close-btn {
       display: block;
     }
   }
 }
 </style>
 <style lang="scss">
-.uploading_panel{
-  .el-progress-bar__outer, .el-progress-bar__inner{
+.uploading_panel {
+  .el-progress-bar__outer, .el-progress-bar__inner {
     border-radius: 3px;
   }
 }

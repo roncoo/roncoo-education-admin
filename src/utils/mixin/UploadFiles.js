@@ -1,9 +1,9 @@
-
 import {uploadDoc, uploadPic} from '@/api/upload'
+
 export default {
   data() {
     return {
-      filePlatType: 2, // 存储品台， 1：阿里云，2：本地存储（MinIO）
+      filePlatType: 2, // 存储平台， 1：阿里云，2：本地存储（MinIO）
       aliFileClient: undefined, // 阿里上传SDK实例
       aliFileResumeClient: undefined, // 阿里续传SDK实例
       tempFileCheckpoint: undefined, // 续传对象
@@ -18,32 +18,6 @@ export default {
     // this.initFileOssConfig()
   },
   methods: {
-    // 初始化oss上传配置
-    // initFileOssConfig() {
-    //   getUploadConfig({}).then(({data}) => {
-    //     const res = data
-    //     // 1: 阿里云OSS， 2： MinIO(本地存储)
-    //     this.filePlatType = res.fileStorageType
-    //     if (this.filePlatType === 1) {
-    //       if (res.directory) {
-    //         this.fileDirectoryPath = res.directory + '/'
-    //       }
-    //       this.aliyunOssUrl = res.aliyunOssUrl
-    //       const ossConfig = {
-    //         // region以杭州为例（oss-cn-hangzhou），其他region按实际情况填写。
-    //         region: res.endPoint,
-    //         // 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录RAM控制台创建RAM账号。
-    //         accessKeyId: res.aliyunAccessKeyId,
-    //         accessKeySecret: res.aliyunccessKeySecret,
-    //         bucket: res.aliyunOssBucket
-    //       }
-    //       this.aliFileClient = new OSS(ossConfig);
-    //       this.aliFileResumeClient = new OSS(ossConfig);
-    //     }
-    //   }).catch(msg => {
-    //
-    //   })
-    // },
     // 暂停上传
     stopUploadFile(_file) {
       if (this.type === 1) {
@@ -63,9 +37,7 @@ export default {
       console.log('_file', _file)
       const that = this
       that.cancelToken = {}
-      const form = new FormData()
-      form.append('docFile', _file.file)
-      uploadDoc(form, (p) => {
+      uploadDoc(_file, (p) => {
         _file.progress = p
         _file.status = 'uploading'
       }, that.cancelToken).then(res => {
@@ -106,30 +78,30 @@ export default {
     // 上传本地（minIO）
     UploadFile(file, callback) {
       this.getWidthHeight(file).then(_file => {
-      this.type = 1
-      console.log('_file', _file)
-      const that = this
-      that.cancelToken = {}
-      const form = new FormData()
-      form.append('picFile', _file.file)
-      uploadPic(form, (p) => {
-        _file.progress = p
-        _file.status = 'uploading'
-      }, that.cancelToken).then(res => {
-        const _data = {
-          materialUrl: res.fileUrl,
-          materialName: _file.name,
-          width: _file.width,
-          height: _file.height,
-          entConfigType: 1,
-          ...res
-        }
-        console.log(res, _data)
-        if (that.saveFile) that.saveFile(_data, _file);
-        if (callback) callback(_data)
-      }).catch(() => {
-        _file.status = 'fail'
-      })
+        this.type = 1
+        console.log('_file', _file)
+        const that = this
+        that.cancelToken = {}
+        const form = new FormData()
+        form.append('picFile', _file.file)
+        uploadPic(form, (p) => {
+          _file.progress = p
+          _file.status = 'uploading'
+        }, that.cancelToken).then(res => {
+          const _data = {
+            materialUrl: res.fileUrl,
+            materialName: _file.name,
+            width: _file.width,
+            height: _file.height,
+            entConfigType: 1,
+            ...res
+          }
+          console.log(res, _data)
+          if (that.saveFile) that.saveFile(_data, _file);
+          if (callback) callback(_data)
+        }).catch(() => {
+          _file.status = 'fail'
+        })
       })
     },
     // ali-oss上传
@@ -157,7 +129,7 @@ export default {
         },
         // parallel: 5, // 分片数量
         // partSize: 1024 * 1024 * 40, // 分片大小
-        meta: { year: 2020, people: 'test' },
+        meta: {year: 2020, people: 'test'},
         mime: _file.file.type
       }).then(result => {
         that.fileUploading = false
@@ -199,7 +171,7 @@ export default {
           _file.status = 'uploading'
         },
         checkpoint: that.tempCheckpoint,
-        meta: { year: 2020, people: 'test' },
+        meta: {year: 2020, people: 'test'},
         mime: _file.file.type
       }).then(result => {
         _file.status = 'success'
