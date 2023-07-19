@@ -49,7 +49,7 @@ export default {
           ...res
         }
         console.log(res, _data)
-        if (that.saveFile) that.saveFile(_data, _file);
+        if (that.savaVideo) that.savaVideo(_data, _file);
         if (callback) callback(_data)
       }).catch(() => {
         _file.status = 'saveFail'
@@ -97,7 +97,7 @@ export default {
             ...res
           }
           console.log(res, _data)
-          if (that.saveFile) that.saveFile(_data, _file);
+          if (that.savaVideo) that.savaVideo(_data, _file);
           if (callback) callback(_data)
         }).catch(() => {
           _file.status = 'fail'
@@ -145,7 +145,7 @@ export default {
           url: fileUrl,
           name: _file.name
         }
-        if (that.saveFile) that.saveFile(_data, _file);
+        if (that.savaVideo) that.savaVideo(_data, _file);
         if (callback) callback(_data)
       }).catch(error => {
         that.fileUploading = false
@@ -186,7 +186,7 @@ export default {
           url: fileUrl,
           name: _file.file.name
         }
-        if (that.saveFile) that.saveFile(_data, _file);
+        if (that.savaVideo) that.savaVideo(_data, _file);
         if (callback) callback(_data)
       }).catch(error => {
         if (error.status === 0) {
