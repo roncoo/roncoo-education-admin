@@ -356,6 +356,8 @@ export default {
         }
         if (data.vid) {
           form.videoVid = data.vid
+        } else {
+          form.resourceUrl = data.url
         }
         fileInfo.status = 'save'
         saveResource(form).then(res => {
@@ -384,7 +386,7 @@ export default {
         if (data.vid) {
           form.vid = data.vid
         } else {
-          form.ossUrl = data.url
+          form.resourceUrl = data.url
         }
         fileInfo.status = 'save'
         saveResource(form).then(res => {

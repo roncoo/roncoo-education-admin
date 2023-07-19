@@ -6,32 +6,41 @@
         <div class="upload_text">{{ $t('uploader.upload') }}（{{ successList.length }}/{{ fileList.length }}）</div>
         <div class="dialog_btn">
           <el-icon v-if="hideList" class="" :title="$t('uploader.showList')"
-            @click="hideList = false"><FullScreen /></el-icon>
+                   @click="hideList = false"
+          >
+            <FullScreen/>
+          </el-icon>
           <el-icon v-else class="ctrl_min_btn" :title="$t('uploader.min')" @click="hideList = true">
-            <Connection />
+            <Connection/>
           </el-icon>
           <el-icon class="close_btn" :title="$t('uploader.closeList')" @click="handleClosePanel">
-            <Close />
+            <Close/>
           </el-icon>
         </div>
       </div>
       <div v-show="!hideList" class="upload_file_list">
         <div v-for="item in fileList" :key="item.uid" class="upload_file_item">
-          <div class="file_type"><i :class="item.type | fileType" /></div>
+          <div class="file_type"><i :class="item.type | fileType"/></div>
           <div class="file_name">{{ item.name }}</div>
           <div class="file_size">{{ getSize(item.size) }}</div>
           <div class="file_progress_number">{{ item.progress }} %</div>
           <div class="file_status c-brand">{{ tipList[item.status] }}</div>
           <div v-if="item.status === 'uploading'" class="file_ctrl_btn" @click.stop="stopUpload(item)">
-            <el-icon class=""><el-icon-video-pause /></el-icon>
+            <el-icon class="">
+              <el-icon-video-pause/>
+            </el-icon>
           </div>
           <div v-if="item.status === 'fail'" class="file_ctrl_btn" @click.stop="startUpload(item)">
-            <el-icon class=""><el-icon-video-play /></el-icon>
+            <el-icon class="">
+              <el-icon-video-play/>
+            </el-icon>
           </div>
           <div v-if="item.status === 'stop'" class="file_ctrl_btn" @click.stop="resumeUpload(item)">
-            <el-icon class=""><el-icon-video-play /></el-icon>
+            <el-icon class="">
+              <el-icon-video-play/>
+            </el-icon>
           </div>
-          <div class="file_progress" :style="{ width: item.progress + '%' }" />
+          <div class="file_progress" :style="{ width: item.progress + '%' }"/>
         </div>
       </div>
     </div>
@@ -41,14 +50,14 @@
 <script>
 import uploadVideo from '@/utils/mixin/uploadVideo';
 import uploadFiles from '@/utils/mixin/UploadFiles';
-import { getSize } from '@/utils/utils';
-import { saveResource } from '@/api/upload';
+import {getSize} from '@/utils/utils';
+import {saveResource} from '@/api/upload';
 import bus from '@/utils/bus';
-import { FullScreen, Close, Connection } from '@element-plus/icons-vue'
+import {FullScreen, Close, Connection} from '@element-plus/icons-vue'
 
 export default {
   name: 'FixedUploadPanel',
-  components: { FullScreen, Close, Connection },
+  components: {FullScreen, Close, Connection},
   filters: {
     fileType(val) {
       if (val === 'image') {
@@ -65,7 +74,7 @@ export default {
   data() {
     return {
       that: this,
-      fileTypeInt: { 'video': 1, 'audio': 2, 'document': 3, 'zip': 5, 'image': 4 },
+      fileTypeInt: {'video': 1, 'audio': 2, 'document': 3, 'zip': 5, 'image': 4},
       hideList: false,
       files: [],
       tipList: {
@@ -107,7 +116,7 @@ export default {
   mounted() {
     // console.log(this.$store.getters)
     const _that = this
-    window.onbeforeunload = function (e) {
+    window.onbeforeunload = function(e) {
       const event = window.event || e;
       if (_that.successList.length !== _that.fileList.length) {
         event.returnValue = (_that.$t('uploader.noUploadSuccess'));
@@ -147,12 +156,10 @@ export default {
         resourceType: this.fileTypeInt[fileInfo.type],
         resourceName: data.materialName,
         resourceSize: fileInfo.materialSize,
-        resourceUrl: data.materialUrl,
-        vodModel: fileInfo.vodModel,
-        countPage: data.pageCount,
+        resourceUrl: data.materialUrl || data.docUrl,
+        docPage: data.pageCount,
         width: data.width,
         height: data.height,
-        videoVid: '',
         ...fileInfo.custom
       }
       if (data.vid || data.fid) {
@@ -261,6 +268,7 @@ export default {
   .dialog_btn {
     text-align: right;
     width: 100px;
+
     .ctrl_min_btn {
       transform: rotateX(180deg);
     }

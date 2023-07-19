@@ -29,17 +29,20 @@
       <el-table-column label="资源类型" prop="resourceType" :width="200">
         <template #default="scope">
           <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
-          <span>{{ formatDuring(scope.row.videoLength * 1000) }}</span>
+          <span v-if="scope.row.resourceType<3">{{ formatDuring(scope.row.videoLength * 1000) }}</span>
+          <span v-else>{{ scope.row.docPage }} 页</span>
         </template>
       </el-table-column>
-      <el-table-column label="视频状态" prop="resourceType" :width="100">
+      <el-table-column label="状态" prop="videoStatus" :width="100">
         <template #default="scope">
-          <span>{{ videoStatusEnums[scope.row.videoStatus] }}</span>
+          <span v-if="scope.row.resourceType<3">{{ videoStatusEnums[scope.row.videoStatus] }}</span>
+          <span v-else>成功</span>
         </template>
       </el-table-column>
-      <el-table-column label="视频平台" prop="vodPlatform" :width="100">
+      <el-table-column label="平台" prop="vodPlatform" :width="100">
         <template #default="scope">
-          <span>{{ vodPlatformEnums[scope.row.vodPlatform] }}</span>
+          <span v-if="scope.row.resourceType<3">{{ vodPlatformEnums[scope.row.vodPlatform] }}</span>
+          <span v-else>{{ storagePlatformEnums[scope.row.storagePlatform] }}</span>
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort" :width="100"/>
@@ -114,6 +117,7 @@ export default defineComponent({
       statusIdEnums: {},
       resourceTypeEnums: {},
       vodPlatformEnums: {},
+      storagePlatformEnums: {},
       videoStatusEnums: {}
     });
     const store = useStore();
@@ -145,6 +149,9 @@ export default defineComponent({
       });
       store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'obj'}).then((res) => {
         state.vodPlatformEnums = res;
+      });
+      store.dispatch('GetOpts', {enumName: 'StoragePlatformEnum', type: 'obj'}).then((res) => {
+        state.storagePlatformEnums = res;
       });
       store.dispatch('GetOpts', {enumName: 'VideoStatusEnum', type: 'obj'}).then((res) => {
         state.videoStatusEnums = res;

@@ -45,7 +45,6 @@ export default {
           materialUrl: res.fileUrl,
           materialName: _file.name,
           pageCount: res.pageCount,
-          entConfigType: 1,
           ...res
         }
         console.log(res, _data)

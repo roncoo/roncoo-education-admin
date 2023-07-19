@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
+  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="800px" @close="handleClose">
     <el-form class="filter-container" inline label-width="100px" size="mini">
       <el-form-item label="资源名称">
         <el-input v-model="queryParams.resourceName"/>
@@ -16,7 +16,8 @@
       <el-table-column label="资源类型" prop="resourceType" :width="200">
         <template #default="scope">
           <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
-          <span>{{ formatDuring(scope.row.videoLength * 1000) }}</span>
+          <span v-if="scope.row.resourceType<3">{{ formatDuring(scope.row.videoLength * 1000) }}</span>
+          <span v-else>{{ scope.row.docPage }} 页</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="100">
