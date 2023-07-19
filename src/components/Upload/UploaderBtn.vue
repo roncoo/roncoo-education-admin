@@ -322,7 +322,7 @@ export default {
           url: fileUrl,
           name: _file.name
         }
-        if (that.savaFile) that.savaFile(_data, _file);
+        if (that.saveFile) that.saveFile(_data, _file);
       }).catch(error => {
         that.fileUploading = false
         console.error(error)
@@ -372,8 +372,6 @@ export default {
     },
     // 保存文件
     savaVideo(data, fileInfo) {
-      console.log('savaVideo', data, fileInfo)
-      console.log('refId', this.refId)
       if (this.refId) {
         const refId = this.refId === '0' ? undefined : this.refId
         const form = {
