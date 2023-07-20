@@ -1,8 +1,13 @@
 <template>
   <div class="dashboard-container">
+    <div class="info">
+      <p>特别说明：</p>
+      <p>1.演示环境仅提供查看功能，本地部署能体验更多功能</p>
+      <p>2.可提供有偿指导服务：请联系作者：18302045627（微信同号）</p>
+      <p>3.点播平台：私有化选项，属于付费功能，请联系作者：18302045627（微信同号）</p>
+    </div>
     <div v-if="checkPermission('user:admin:stat:login')" class="title-info">
       <span class="title">最近14天登录人数</span>
-      <span style="margin-left: 300px;color: red;">演示环境仅提供查看功能，本地部署能体验更多功能</span>
     </div>
     <login v-if="checkPermission('user:admin:stat:login')" :data="statData"/>
     <div v-if="checkPermission('system:admin:stat:vod')" class="title-info">
@@ -46,6 +51,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.info {
+  margin: 20px 25px;
+  padding: 5px;
+  background-color: #f5f7fa;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .title-info {
   margin: 20px 25px;
   padding: 5px;
