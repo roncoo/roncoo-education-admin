@@ -61,7 +61,8 @@ export default {
       this.uploading = true
       this.initOssConfig(_file, res => {
         Object.assign(_file, res)
-        _file.vodModel = res.vodModel
+        
+        res.vodUploadConfig = JSON.parse(res.vodUploadConfig)
         if (this.videoPlatType === 2) {
           // 上传保利威
           this.getPolyvVideoSign(res.vodUploadConfig, () => {
@@ -69,7 +70,7 @@ export default {
           })
         } else {
           // 其他的分片上传
-          this.initSimpleUpload(JSON.parse(res.vodUploadConfig))
+          this.initSimpleUpload(res.vodUploadConfig)
           this.fenpianUpload(_file, this.videoPlatType)
         }
       })
