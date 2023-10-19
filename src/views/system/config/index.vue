@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form class="filter-container" inline label-width="100px">
       <el-form-item>
-        <el-button v-if="checkPermission('system:admin:sys:config:video:init')" plain type="primary" @click="videoInitHandle">视频设置</el-button>
+        <el-button v-if="checkPermission('system:admin:sys:config:video:init')" plain type="primary" @click="videoInitHandle">视频云初始化</el-button>
       </el-form-item>
     </el-form>
     <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -59,7 +59,7 @@ export default {
       this.listForList();
     },
     videoInitHandle() {
-      this.$confirm('视频云初始化', '视频云设置', {
+      this.$confirm('请先完成视频设置，再进行视频云初始化', '视频云初始化', {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       }).then(() => {

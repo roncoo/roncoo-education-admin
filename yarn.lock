@@ -85,10 +85,10 @@
   resolved "https://registry.npmmirror.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz#d7c6e6755c78567a951e04ab52ef0fd26de59f32"
   integrity sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==
 
-"@polyv/vod-upload-js-sdk@^1.2.3":
-  version "1.5.0"
-  resolved "https://registry.npmmirror.com/@polyv/vod-upload-js-sdk/-/vod-upload-js-sdk-1.5.0.tgz#e8dd27684b556ba4d6191d0dd41e7207cec63907"
-  integrity sha512-2bwcncuNf9mpd5EuQkQwgmm150P2+N9j7LnrNTzmmuR8dO3+86hGalGblDN8QR9Xxg1ldhFJ+IXI2LBSH4sHHA==
+"@polyv/vod-upload-js-sdk@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@polyv/vod-upload-js-sdk/-/vod-upload-js-sdk-1.6.0.tgz#63eac5b497f084d3166941e53a4ee3d0e56863cd"
+  integrity sha512-LBZgNccDr3DrOCj+5Q/c1LTvG9+URZ3aMytHcHbAOVeztH70NA6WUZTOPovcUVf0BAVtQc+0Is/dZu+wqTkK3A==
 
 "@popperjs/core@^2.10.2":
   version "2.11.8"
