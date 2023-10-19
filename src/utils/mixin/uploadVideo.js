@@ -1,6 +1,6 @@
 import {mapGetters} from 'vuex'
 import {vodConfig} from '@/api/upload'
-import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
+// import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
 import UploadFragment from '@/utils/mixin/UploadFragment';
 
 export default {
