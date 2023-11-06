@@ -36,10 +36,10 @@
         <study v-model="study.visible" :info="study.info" @close="studyCallback"/>
       </el-tab-pane>
       <el-tab-pane label="课程评论" name="comment">
-
+        <course-comment v-if="activeName === 'comment'"/>
       </el-tab-pane>
       <el-tab-pane label="课程收藏" name="collect">
-
+        <course-collect v-if="activeName === 'collect'"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -52,9 +52,11 @@ import {useStore} from 'vuex';
 import {userCourseRecord, userStudyePage} from '@/api/course.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
+import CourseComment from '../courseComment.vue';
+import CourseCollect from '../courseCollect.vue';
 
 export default defineComponent({
-  components: {Study},
+  components: {Study, CourseComment, CourseCollect},
   setup() {
     const route = useRoute()
     const apis = reactive({
@@ -80,7 +82,9 @@ export default defineComponent({
       study.visible = false
     }
     const handleClick = (target, action) => {
-      console.log(target.props.name)
+      if (target.props.name === 'course') {
+        state.getTableData()
+      }
     }
 
     return {

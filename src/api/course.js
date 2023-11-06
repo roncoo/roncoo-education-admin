@@ -151,17 +151,33 @@ export function userStudyePage(params, pageCurrent = 1, pageSize = 20) {
   return request({url: '/course/admin/user/study/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
 }
 
+// 课程评论
+export function userCourseComment(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/course/admin/user/course/comment/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
+// 课程评论删除
+export function courseCommentDelete(data) {
+  return request.delete('/course/admin/user/course/comment/delete?id=' + data.id, data)
+}
+
+// 课程收藏
+export function userCourseCollect(params, pageCurrent = 1, pageSize = 20) {
+  return request({url: '/course/admin/user/course/collect/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+}
+
 /**
  * 资源库添加
  * @param data
  */
 export function resourceLibrarySave(data) {
-    return upload({
-        url: '/resource/admin/material/save',
-        method: 'post',
-        data
-    })
+  return upload({
+    url: '/resource/admin/material/save',
+    method: 'post',
+    data
+  })
 }
+
 /**
  * 素材信息预览
  * @param data
@@ -169,8 +185,8 @@ export function resourceLibrarySave(data) {
  */
 export function resourceLibraryPreview(data) {
   return request({
-      url: '/resource/admin/material/preview',
-      method: 'post',
-      data
+    url: '/resource/admin/material/preview',
+    method: 'post',
+    data
   })
 }
