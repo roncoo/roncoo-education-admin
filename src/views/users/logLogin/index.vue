@@ -33,7 +33,6 @@
 </template>
 <script>
 import UseTable from '@/composables/UseTable.js';
-import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useStore} from 'vuex';
 import {logLoginPage} from '@/api/user.js'

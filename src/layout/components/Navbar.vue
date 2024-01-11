@@ -28,7 +28,6 @@
 
 <script>
 import {mapGetters} from 'vuex';
-import {useI18n} from 'vue-i18n'
 import Breadcrumb from '@/components/Breadcrumb/index.vue';
 import Hamburger from '@/components/Hamburger/index.vue'
 import {ArrowDown} from '@element-plus/icons'
@@ -40,32 +39,14 @@ export default {
     ArrowDown
   },
   data() {
-    const i18n = useI18n()
     return {
-      customizeDomain: '',
-      languageName: '中文',
-      languageList: [
-        {
-          type: 'zh-cn',
-          name: '中文'
-        },
-        {
-          type: 'en',
-          name: 'English'
-        }
-      ],
-      i18n
+      customizeDomain: ''
     };
   },
   computed: {
-    ...mapGetters(['sidebar', 'userInfo', 'language'])
+    ...mapGetters(['sidebar', 'userInfo'])
   },
   created() {
-    this.languageList.forEach(e => {
-      if (e.type === this.language) {
-        this.languageName = e.name
-      }
-    })
   },
   methods: {
     toggleSideBar() {
@@ -74,11 +55,6 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout');
       window.location.reload();
-    },
-    languageFn(item) {
-      this.i18n.locale = item.type
-      this.languageName = item.name;
-      this.$store.dispatch('app/toggleLanguage', item.type);
     },
     commandFn(e) {
       if (e === 'logout') {

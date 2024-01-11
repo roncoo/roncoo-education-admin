@@ -15,11 +15,9 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
   if (hasToken) {
-
     document.title = (to.meta.title || '') + '-' + (defaultSettings.title || '在线教育');
     if (store.getters.menuInit === false) {
       try {
-
         let url = '';
         // 设置菜单
         const routerList = await store.dispatch('setMenu')

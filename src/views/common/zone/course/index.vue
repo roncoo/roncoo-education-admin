@@ -42,7 +42,7 @@
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="primary" @click="openEditDialog(scope.row)">排序</el-button>
           <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
           <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
           <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>

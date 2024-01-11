@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     vue(),
     viteSvgIcons({
-      // 配置路劲在你的src里的svg存放文件
+      // 配置路径在你的src里的svg存放文件
       iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
       symbolId: 'icon-[name]'
     })

@@ -3,10 +3,6 @@ import App from './App.vue'
 
 const app = createApp(App)
 
-import i18n from './locales/index.js'
-
-app.use(i18n)
-
 import store from './store'
 
 app.use(store)
@@ -18,9 +14,10 @@ app.use(router)
 
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
-import {ElLoading} from 'element-plus'
 
-app.use(ElementPlus, {i18n: i18n.global.t, zIndex: 3000})
+app.use(ElementPlus, {zIndex: 3000})
+
+import {ElLoading, ElMessage} from 'element-plus'
 
 import '@/styles/index.scss' // global css
 

@@ -1,10 +1,6 @@
 <template>
   <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="课程" prop="courseName">
-        <el-input v-model="formModel.data.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
-        <el-button plain type="primary" @click="courseSelect">选择课程</el-button>
-      </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.data.sort"/>
       </el-form-item>

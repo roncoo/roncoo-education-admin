@@ -19,7 +19,6 @@
     "path-browserify": "^1.0.1",
     "path-to-regexp": "2.4.0",
     "vue": "^3.2.*",
-    "vue-i18n": "^9.*",
     "vue-router": "^4.*",
     "vuex": "4.*",
     "wangeditor": "^4.*",

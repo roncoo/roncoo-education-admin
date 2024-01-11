@@ -1,26 +1,25 @@
 <template>
-  <el-dialog v-model="modelValue" top="5vh" custom-class="preview_dialog" c :title="t('single.LearnTaskTimPreview')" :before-close="cloneDialog" :width="700" :append-to-body="true">
+  <el-dialog v-model="modelValue" top="5vh" custom-class="preview_dialog" title="预览" :before-close="cloneDialog" :width="700" :append-to-body="true">
     <div class="video_body_content">
       <div class="video_content clearfix">
         <div class="win_box">
-          <div v-if="ctrl.isVideo" id="player" ref="videoBox" class="video_win" />
+          <div v-if="ctrl.isVideo" id="player" ref="videoBox" class="video_win"/>
         </div>
       </div>
     </div>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="cloneDialog">{{ t('close') }}</el-button>
+        <el-button @click="cloneDialog">关闭</el-button>
       </div>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import {useI18n} from 'vue-i18n';
 import {computed, onMounted, onUnmounted, reactive, ref, toRefs, watch} from 'vue';
 import {useStore} from 'vuex';
 import {resourceLibraryPreview} from '@/api/course';
-// import {jsonp} from 'vue-jsonp'
+
 export default {
   name: 'Preview',
   props: {
@@ -34,12 +33,12 @@ export default {
     },
     videoInfo: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     }
   },
   setup(props, {emit}) {
-    const {t} = useI18n()
-    const { type, videoInfo, modelValue} = toRefs(props)
+    const {type, videoInfo, modelValue} = toRefs(props)
     const store = useStore()
     const videoBox = ref(null)
     const opts = reactive({
@@ -93,24 +92,24 @@ export default {
         disableSeek: 0, // 是否禁止拖拽， 0：可以， 1：禁止
         user_name: _that.userInfo.userName, // 用户名， 主要用于数据统计
         user_number: _that.userInfo.userNo, // 用户id， 主要用于数据统计
-        onended: function () {
+        onended: function() {
           console.log('onplayend event')
           // 视频播放结束清空保存记录定时器任务
         },
-        onplay: function () {
+        onplay: function() {
           console.log('onplaybegin event')
         },
-        onpause: function () {
+        onpause: function() {
           console.log('onplaypause event')
         },
-        ontimeupdate: function (data) {
+        ontimeupdate: function(data) {
           console.log('ontimeupdate event')
         },
-        onseeked: function (data) {
+        onseeked: function(data) {
           console.log('onseek event')
           console.log('seekTime:' + data.currentTime)
         },
-        onerror: function (data) {
+        onerror: function(data) {
           console.log('onerror event')
           console.log(data.msg)
         }
@@ -213,9 +212,9 @@ export default {
         //   opts.ipInfo = res
         // })
         ctrl.isVideo = type.value === 'video'
-            getView()
-      }else{
-        if(map.player) {
+        getView()
+      } else {
+        if (map.player) {
           if ([1, 4, 10].includes(opts.video['vodPlatform'])) {
             map.player.destroy()
             map.player = null
@@ -227,14 +226,14 @@ export default {
         }
       }
     })
-    onMounted(()=>{
-      if(modelValue.value){
+    onMounted(() => {
+      if (modelValue.value) {
         ctrl.isVideo = type.value === 'video'
         getView()
       }
     })
-    onUnmounted(()=>{
-      if(map.player)
+    onUnmounted(() => {
+      if (map.player) {
         if (opts.video['vodPlatform'] === 2) {
           map.player.destroy()
           map.player = null
@@ -243,6 +242,7 @@ export default {
           map.player = null
           $('#player').html('')
         }
+      }
     })
     return {
       opts,
@@ -250,7 +250,6 @@ export default {
       modelValue,
       videoInfo,
       videoBox,
-      t,
       cloneDialog
     }
   }
@@ -258,26 +257,29 @@ export default {
 </script>
 
 <style scoped>
-.video_body_content{
+.video_body_content {
   position: relative;
   width: 100%;
   min-height: 400px;
   overflow: hidden;
 }
-.win_box{
+
+.win_box {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.video_content,.win_box,.video_win{
+
+.video_content, .win_box, .video_win {
   width: 100%;
   height: 400px;
 }
-.video_win_img{
+
+.video_win_img {
   height: 400px;
 }
 
-.dialog-footer{
+.dialog-footer {
   text-align: center;
 }
 

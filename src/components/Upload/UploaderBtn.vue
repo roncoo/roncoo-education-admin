@@ -9,7 +9,7 @@
 <template>
   <div v-if="fileInfo.status === 'uploading'" class="upload-btn uploading_panel" style="width: 80px;">
     <el-progress class="progress-panel" :text-inside="true" :stroke-width="28" :percentage="fileInfo.progress"/>
-    <el-button class="close-btn" plain type="primary" @click="handleCloseUpload">{{ $t('cancelUpload') }}</el-button>
+    <el-button class="close-btn" plain type="primary" @click="handleCloseUpload">取消上传</el-button>
   </div>
   <span v-else>
     <el-upload
@@ -212,73 +212,70 @@ export default {
         case 'zip':
           return this.beforeUploadRar(name, nameTypes, file)
         default:
-          ElMessage.error(this.$t('uploader.uploadError'))
+          ElMessage.error('uploader.uploadError')
           return false
       }
     },
     beforeUploadPic(type, nameType, file) {
       // const ids = this.$store.state.upload.fileList.map(el => el.resourceName)
       // if (ids.indexOf(file.name) > -1) {
-      //   ElMessage.error(this.$t('learn.errorName'))
       //   return false
       // }
       const isLt10M = file.size / 1024 / 1024 < this.imageSize;
       if (['jpg', 'jpeg', 'png'].indexOf(nameType) === -1) {
-        ElMessage.error(this.$t('uploader.errorUploadPic'))
+        ElMessage.error('uploader.errorUploadPic')
         return false
       }
       if (!isLt10M) {
-        ElMessage.error(this.imageTip || this.$t('uploader.errorUploadPicSize'))
+        ElMessage.error(this.imageTip || 'uploader.errorUploadPicSize')
         return false;
       }
     },
     beforeUploadVideo(type, nameType, file) {
       const isLt10G = file.size / 1024 / 1024 / 1024 < 10;
       if (['3gp', 'asf', 'avi', 'dat', 'flv', 'f4v', 'm4v', 'mkv', 'mov', 'mp4', 'mpe', 'mpg', 'mpeg', 'rmvb', 'vob', 'wmv'].indexOf(nameType) === -1) {
-        ElMessage.error(this.$t('uploader.errorUploadVideo'))
+        ElMessage.error('uploader.errorUploadVideo')
         return false
       }
       if (!isLt10G) {
-        ElMessage.error(this.$t('uploader.errorUploadVideoSize'))
+        ElMessage.error('uploader.errorUploadVideoSize')
         return false;
       }
     },
     beforeUploadAudio(type, nameType, file) {
       const isLt1G = file.size / 1024 / 1024 / 1024 < 1;
       if (['aac', 'wav', 'wma', 'mp3'].indexOf(nameType) === -1) {
-        ElMessage.error(this.$t('uploader.errorUploadAudio'))
+        ElMessage.error('uploader.errorUploadAudio')
         return false
       }
       if (!isLt1G) {
-        ElMessage.error(this.$t('uploader.errorUploadAudioSize'))
+        ElMessage.error('uploader.errorUploadAudioSize')
         return false;
       }
     },
     beforeUploadDocument(type, nameTypes, file) {
       // const ids = this.$store.state.upload.fileList.map(el => el.resourceName)
       // if (ids.indexOf(file.name) > -1) {
-      //   ElMessage.error(this.$t('learn.errorName'))
       //   return false
       // }
       if (['pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt', 'ppt', 'pptx'].indexOf(nameTypes) > -1) {
         const isLt1G = file.size / 1024 / 1024 / 1024 < 1;
         if (!isLt1G) {
-          ElMessage.error(this.$t('uploader.errorUploadDocumentSize'))
+          ElMessage.error('uploader.errorUploadDocumentSize')
           return false;
         }
       } else {
-        ElMessage.error(this.$t('uploader.uploadErrorDocumentMessage'))
+        ElMessage.error('uploader.uploadErrorDocumentMessage')
         return false;
       }
     },
     beforeUploadRar(type, nameTypes, file) {
       // const ids = this.$store.state.upload.fileList.map(el => el.resourceName)
       // if (ids.indexOf(file.name) > -1) {
-      //   ElMessage.error(this.$t('learn.errorName'))
       //   return false
       // }
       if (['zip', 'rar'].indexOf(nameTypes) === -1) {
-        ElMessage.error(this.$t('uploader.errorUploadZip'))
+        ElMessage.error('uploader.errorUploadZip')
         return false
       } else {
         type = 'zip'
@@ -290,7 +287,7 @@ export default {
           return false;
         }
       } else {
-        ElMessage.error(this.$t('uploader.uploadZipErrorMessage'))
+        ElMessage.error('uploader.uploadZipErrorMessage')
         return false
       }
     },

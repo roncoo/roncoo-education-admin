@@ -3,7 +3,6 @@ const getters = {
   appLoading: state => state.app.appLoading,
   sidebar: state => state.app.sidebar,
   device: state => state.app.device,
-  language:  state => state.app.language,
   user: state => state.user,
   token: state => state.user.token,
   userInfo: state => state.user.userInfo,
@@ -15,6 +14,6 @@ const getters = {
   visitedViews: state => state.tags.visitedViews,
   cachedViews: state => state.tags.cachedViews,
   userPermission: state => state.permission.userPermission,
-  imageVerification : state => state.app.loginImageVerification
+  imageVerification: state => state.app.loginImageVerification
 }
 export default getters

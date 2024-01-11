@@ -3,17 +3,17 @@
   <div v-show="fileList.length > 0" id="FixedUploadPanel" class="fixed_upload_panel">
     <div class="upload_file_container" :class="{ 'hidden_list': hideList }">
       <div class="upload_head">
-        <div class="upload_text">{{ $t('uploader.upload') }}（{{ successList.length }}/{{ fileList.length }}）</div>
+        <div class="upload_text">上传（{{ successList.length }}/{{ fileList.length }}）</div>
         <div class="dialog_btn">
-          <el-icon v-if="hideList" class="" :title="$t('uploader.showList')"
+          <el-icon v-if="hideList" class="" title="显示列表"
                    @click="hideList = false"
           >
             <FullScreen/>
           </el-icon>
-          <el-icon v-else class="ctrl_min_btn" :title="$t('uploader.min')" @click="hideList = true">
+          <el-icon v-else class="ctrl_min_btn" title="最小" @click="hideList = true">
             <Connection/>
           </el-icon>
-          <el-icon class="close_btn" :title="$t('uploader.closeList')" @click="handleClosePanel">
+          <el-icon class="close_btn" title="关闭列表" @click="handleClosePanel">
             <Close/>
           </el-icon>
         </div>
@@ -27,17 +27,14 @@
           <div class="file_status c-brand">{{ tipList[item.status] }}</div>
           <div v-if="item.status === 'uploading'" class="file_ctrl_btn" @click.stop="stopUpload(item)">
             <el-icon class="">
-              <el-icon-video-pause/>
             </el-icon>
           </div>
           <div v-if="item.status === 'fail'" class="file_ctrl_btn" @click.stop="startUpload(item)">
             <el-icon class="">
-              <el-icon-video-play/>
             </el-icon>
           </div>
           <div v-if="item.status === 'stop'" class="file_ctrl_btn" @click.stop="resumeUpload(item)">
             <el-icon class="">
-              <el-icon-video-play/>
             </el-icon>
           </div>
           <div class="file_progress" :style="{ width: item.progress + '%' }"/>
@@ -78,17 +75,17 @@ export default {
       hideList: false,
       files: [],
       tipList: {
-        success: this.$t('uploader.success'),
-        fail: this.$t('uploader.fail'),
-        uploading: this.$t('uploader.uploading'),
-        stop: this.$t('uploader.stop'),
-        save: this.$t('uploader.save'),
-        saveSuccess: this.$t('uploader.saveSuccess'),
-        saveFail: this.$t('uploader.saveFail'),
-        transcoding: this.$t('uploader.transcoding'),
-        md5: this.$t('uploader.md5'),
-        merging: this.$t('uploader.merging'),
-        ready: this.$t('uploader.other')
+        success: 'uploader.success',
+        fail: 'uploader.fail',
+        uploading: 'uploader.uploading',
+        stop: 'uploader.stop',
+        save: 'uploader.save',
+        saveSuccess: 'uploader.saveSuccess',
+        saveFail: 'uploader.saveFail',
+        transcoding: 'uploader.transcoding',
+        md5: 'uploader.md5',
+        merging: 'uploader.merging',
+        ready: 'uploader.other'
       }
     }
   },
@@ -119,7 +116,7 @@ export default {
     window.onbeforeunload = function(e) {
       const event = window.event || e;
       if (_that.successList.length !== _that.fileList.length) {
-        event.returnValue = (_that.$t('uploader.noUploadSuccess'));
+        event.returnValue = 'uploader.noUploadSuccess';
       }
     }
   },
@@ -214,10 +211,10 @@ export default {
         }
       })
       if (startFile) {
-        this.$confirm(this.$t('uploader.uploadingTip'), this.$t('uploader.warning'), {
+        this.$confirm('uploader.uploadingTip', 'uploader.warning', {
           type: 'warning',
-          cancelButtonText: this.$t('cancel'),
-          confirmButtonText: this.$t('determine')
+          cancelButtonText: 'cancel',
+          confirmButtonText: 'determine'
         }).then(() => {
           this.$store.commit('upload/REMOVE_LIST')
           this.uploading = false
