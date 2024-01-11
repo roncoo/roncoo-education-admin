@@ -30,13 +30,6 @@ app.config.globalProperties.checkPermission = (name) => {
   return (store.getters.userPermission || []).indexOf(name) !== -1;
   // return true;
 }
-app.config.globalProperties.parsePhone = (telCode, phone) => {
-  if (!telCode) {
-    return phone
-  }
-  return '+' + telCode + '-' + phone
-}
-
 app.config.globalProperties.tips = function(text) {
   ElMessage.success(text);
 };
@@ -56,7 +49,6 @@ app.config.globalProperties.loading = {
   },
   // start 和 stop 成对使用
   start(txt = 'Loading') {
-
   },
   stop() {
   }

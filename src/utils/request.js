@@ -3,7 +3,6 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 import store from '@/store'
 import {getToken} from '@/utils/auth'
 import {setStore} from '@/utils/storage';
-
 import router from '@/router';
 
 const BaseURL = '/gateway'
@@ -130,13 +129,11 @@ service.interceptors.response.use(
   },
   error => {
     console.error('err', error) // for debug
-    // if(error.message) {
     ElMessage({
       message: error.message,
       type: 'error',
       duration: 5 * 1000
     })
-    // }
     return Promise.reject(error)
   }
 )

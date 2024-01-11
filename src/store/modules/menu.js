@@ -76,7 +76,6 @@ const menu = {
   actions: {
     setMenu({commit, state}) {
       return new Promise((resolve, reject) => {
-        // TODO 后续续编辑为从服务器获取，并且做数据处理
         getUserMenu().then(res => {
           res.forEach(e => {
             if (e.path[0] !== '/') {
@@ -84,7 +83,6 @@ const menu = {
             }
           })
           initRouter(state.UerMenu, res, '');
-          // console.log('UerMenu', state.UerMenu)
           const router = flattenMenu(asyncRouterMap, state.UerMenu);
           state.UerMenu = {}
           commit('set_system_menu', router)

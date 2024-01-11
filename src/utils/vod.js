@@ -59,7 +59,6 @@ export function initPolyv() {
 
 export function getPolyvVideoSign() {
   vodConfig().then(res => {
-    //console.log(res)
     polyvClient.updateUserData({
       userid: res.vodUploadConfig.userid,
       ptime: res.vodUploadConfig.ptime,
@@ -70,7 +69,6 @@ export function getPolyvVideoSign() {
     setTimeout(() => {
       getPolyvVideoSign()
     }, 1000 * 60 * 2)
-
     polyvClient.startAll();
   })
 }

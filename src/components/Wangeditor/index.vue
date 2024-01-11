@@ -1,18 +1,3 @@
-<style lang="scss" rel="stylesheet/scss">
-.wangeditor-box {
-  box-sizing: content-box;
-  position: relative;
-  z-index: 1;
-
-  .w-e-toolbar {
-    line-height: 1.15;
-  }
-
-  .w-e-text-container {
-    height: 100% !important;
-  }
-}
-</style>
 <template>
   <div :id="ids" :style="{ height: height + 'px' }" class="wangeditor-box"/>
 </template>
@@ -166,3 +151,18 @@ export default {
   }
 };
 </script>
+<style lang="scss" rel="stylesheet/scss">
+.wangeditor-box {
+  box-sizing: content-box;
+  position: relative;
+  z-index: 1;
+
+  .w-e-toolbar {
+    line-height: 1.15;
+  }
+
+  .w-e-text-container {
+    height: 100% !important;
+  }
+}
+</style>
