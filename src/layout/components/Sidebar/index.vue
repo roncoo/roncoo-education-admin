@@ -30,3 +30,20 @@ if (import.meta.env.VITE_PERMISSION_MODE === 'CONSTANT') {
 
 
 </script>
+
+<style lang="scss" scoped>
+.el-aside {
+  > :deep(.el-menu) {
+    position: fixed;
+    margin-top: 60px;
+    width: 200px;
+    border-right: 0 none;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  > :deep(.el-menu--collapse) {
+    width: 64px;
+  }
+}
+</style>

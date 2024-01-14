@@ -12,3 +12,17 @@ import {useSidebarStore} from '@/store/modules/sidebar'
 
 const sidebarStore = useSidebarStore()
 </script>
+
+<style lang="scss" scoped>
+.main-content {
+  position: relative;
+  margin-left: 200px;
+  padding-top: 90px;
+  -webkit-transition: left 0.3s ease-in-out;
+  transition: margin-left 0.3s ease-in-out;
+
+  &.content-collapse {
+    margin-left: 64px;
+  }
+}
+</style>

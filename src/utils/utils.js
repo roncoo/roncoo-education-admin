@@ -158,7 +158,7 @@ export function deepCopy(param) {
   return JSON.parse(JSON.stringify(param))
 }
 
-export function getEnum(enumName, type = 'attr') {
+export async function getEnum(enumName, type = 'attr') {
   const enumAttr = getSession(enumName)
   if (enumAttr) {
     if (type === 'obj') {
@@ -166,13 +166,12 @@ export function getEnum(enumName, type = 'attr') {
     }
     return enumAttr
   } else {
-    systemApi.getEnum({enumName}).then((res) => {
-      setSession(enumName, res)
-      if (type === 'obj') {
-        return toObj(res)
-      }
-      return res
-    })
+    const res = await systemApi.getEnum({enumName});
+    setSession(enumName, res)
+    if (type === 'obj') {
+      return toObj(res)
+    }
+    return res
   }
 }
 

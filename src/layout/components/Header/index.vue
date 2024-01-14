@@ -6,7 +6,6 @@
       <MoIcon icon-name="ep-expand" class="text-sm" v-if="sidebar.collapse"/>
       <MoIcon icon-name="ep-fold" class="text-sm" v-else/>
     </div>
-
     <div class="flex items-center pr-4 ml-auto">
       <el-switch
         v-model="darkMode"
@@ -98,3 +97,19 @@ const handleCommand = (command) => {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.header {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid var(--el-border-color);
+
+  .logo {
+    color: var(--el-color-primary);
+  }
+}
+</style>
