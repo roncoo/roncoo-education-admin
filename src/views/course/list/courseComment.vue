@@ -32,7 +32,7 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {userCourseComment, courseCommentDelete} from '@/api/course.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 
@@ -47,7 +47,6 @@ export default defineComponent({
     const state = reactive({
       ...UseTable(apis, {courseId: route.query.courseId})
     });
-    const store = useStore();
 
     return {
       ...toRefs(state)

@@ -27,10 +27,11 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {useStore} from 'vuex';
+
 import {courseChapterEdit, courseChapterSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -59,11 +60,9 @@ export default defineComponent({
     const state = reactive({
       freeEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'FreeEnum'}).then((res) => {
-        state.freeEnums = res;
-      });
+      state.freeEnums = getEnum('FreeEnum', 'obj')
     });
 
     let formModel = reactive({

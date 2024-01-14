@@ -17,8 +17,9 @@
 
 <script>
 import {computed, onMounted, onUnmounted, reactive, ref, toRefs, watch} from 'vue';
-import {useStore} from 'vuex';
+
 import {resourceLibraryPreview} from '@/api/course';
+import {useUserStore} from '@/store/modules/user';
 
 export default {
   name: 'Preview',
@@ -48,7 +49,7 @@ export default {
     const map = reactive({
       player: null,
       userInfo: computed(() => {
-        return store.state.user.userInfo
+        return useUserStore().getUserInfo
       })
     })
     const ctrl = reactive({

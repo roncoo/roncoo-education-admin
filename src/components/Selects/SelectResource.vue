@@ -72,23 +72,23 @@ export default {
     this.listForPage();
   },
   mounted() {
-    this.$store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
-      this.resourceTypeEnums = res;
-    });
+    // this.$store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
+    //   this.resourceTypeEnums = res;
+    // });
   },
   methods: {
     formatDuring(data) {
       return formatDuring(data)
     },
     listForPage() {
-      this.loading = true;
+
       resourcePage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount
         this.page.pageSize = res.pageSize
       }).finally(() => {
-        this.loading = false;
+
       })
     },
     handleQuery() {

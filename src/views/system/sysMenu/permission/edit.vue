@@ -98,14 +98,14 @@ export default {
       })
     },
     onSubmit() {
-      this.loading.show()
+
       // 新增
       sysMenuEdit(this.form).then(res => {
-        this.loading.hide()
+
         this.$message.success(res, 'success');
         this.$emit('closes', this.form)
       }).catch(() => {
-        this.loading.hide()
+
       })
     }
   }

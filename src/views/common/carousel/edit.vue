@@ -35,7 +35,7 @@ import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
 import {carouselEdit, carouselSave} from '@/api/system.js';
-import {useStore} from 'vuex';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -77,11 +77,9 @@ export default defineComponent({
     const state = reactive({
       targetEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'TargetEnum'}).then((res) => {
-        state.targetEnums = res;
-      });
+      state.targetEnums = getEnum('TargetEnum');
     });
 
     // 弹窗是否要打开监控

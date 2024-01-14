@@ -1,11 +1,13 @@
-import request from '@/utils/request'
+import {getRequest} from '@/utils/request'
 
-// 点播数据
-export function statVod() {
-  return request({url: '/system/admin/stat/vod', method: 'get'})
-}
+export const statApi = {
+  // 用户注册登录统计
+  login: () => {
+    return getRequest('/user/admin/stat/login?dates=-14')
+  },
 
-// 登录数据
-export function statLogin() {
-  return request({url: '/user/admin/stat/login?dates=-14', method: 'get'})
+  // 点播用量统计
+  vod: () => {
+    return getRequest('/system/admin/stat/vod')
+  }
 }

@@ -1,4 +1,10 @@
-import request from '@/utils/request'
+import request, {postRequest} from '@/utils/request'
+
+export const systemApi = {
+  getEnum: (enumName) => {
+    return postRequest('/system/api/common/enum', enumName)
+  }
+}
 
 // 头部导航分页
 export function navPage(params, pageCurrent = 1, pageSize = 20) {

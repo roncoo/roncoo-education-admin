@@ -14,7 +14,7 @@
 
 <script>
 import {sysMenuInfoAvailableList, sysRoleMenuBatchSet, sysRoleMenuList, sysRoleSetAllocationMenuAndPermission, sysshopMenuDistributableList, sysshopMenuIdList} from '@/api/system';
-import {useStore} from 'vuex';
+
 import {onMounted, reactive, ref, toRefs} from 'vue';
 import {ElMessage} from 'element-plus';
 import {useRoute} from 'vue-router';
@@ -39,7 +39,7 @@ export default {
   setup(props, ctx) {
     const {title, visible, info} = toRefs(props);
     const {query} = useRoute();
-    const store = useStore();
+
     let form = reactive({});
     const ctrl = reactive({
       loading: false

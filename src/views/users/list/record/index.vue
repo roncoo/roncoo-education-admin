@@ -42,11 +42,12 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {userStudyePage} from '@/api/course.js'
 import {userCoursePage} from '@/api/user.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {Study},
@@ -59,11 +60,9 @@ export default defineComponent({
       ...UseTable(apis, {userId: route.query.userId}),
       loginStatusEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'LoginStatusEnum', type: 'obj'}).then((res) => {
-        state.loginStatusEnums = res;
-      });
+      state.loginStatusEnums = getEnum('LoginStatusEnum', 'obj');
     });
 
     let study = reactive({

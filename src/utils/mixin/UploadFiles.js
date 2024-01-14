@@ -1,4 +1,4 @@
-import {uploadDoc, uploadPic} from '@/api/upload'
+import {uploadApi} from '@/api/upload'
 
 export default {
   data() {
@@ -37,7 +37,7 @@ export default {
       console.log('_file', _file)
       const that = this
       that.cancelToken = {}
-      uploadDoc(_file, (p) => {
+      uploadApi.doc(_file, (p) => {
         _file.progress = p
         _file.status = 'uploading'
       }, that.cancelToken).then(res => {
@@ -83,7 +83,7 @@ export default {
         that.cancelToken = {}
         const form = new FormData()
         form.append('picFile', _file.file)
-        uploadPic(form, (p) => {
+        uploadApi.pic(form, (p) => {
           _file.progress = p
           _file.status = 'uploading'
         }, that.cancelToken).then(res => {

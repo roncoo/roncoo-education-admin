@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="checkPermission('course:admin:resource:edit')" plain type="primary"
+          <el-button plain type="primary"
                      @click="openEditDialog(scope.row)"
           >编辑
           </el-button>
@@ -62,17 +62,17 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:resource:edit') && scope.row.statusId == 0" plain
+                  <el-button v-if="scope.row.statusId == 0" plain
                              type="success" @click="handleUpdateStatus(scope.row)"
                   >启用
                   </el-button>
-                  <el-button v-if="checkPermission('course:admin:resource:edit') && scope.row.statusId == 1" plain
+                  <el-button v-if="scope.row.statusId == 1" plain
                              type="danger" @click="handleUpdateStatus(scope.row)"
                   >禁用
                   </el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:resource:delete')" plain type="danger"
+                  <el-button plain type="danger"
                              @click="tableDelete(scope.row)"
                   >删除
                   </el-button>
@@ -94,9 +94,9 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {resourceDelete, resourceEdit, resourcePage} from '@/api/course.js'
-import {getSize, formatDuring} from '@/utils/utils.js'
+import {getSize, formatDuring, getEnum} from '@/utils/utils.js'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 import bus from '@/utils/bus';
@@ -120,7 +120,6 @@ export default defineComponent({
       storagePlatformEnums: {},
       videoStatusEnums: {}
     });
-    const store = useStore();
 
     const handleUpdateStatus = function(row) {
       state.tableData.loading = true;
@@ -141,21 +140,11 @@ export default defineComponent({
       myfile.click();
     }
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
-        state.resourceTypeEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'obj'}).then((res) => {
-        state.vodPlatformEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'StoragePlatformEnum', type: 'obj'}).then((res) => {
-        state.storagePlatformEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'VideoStatusEnum', type: 'obj'}).then((res) => {
-        state.videoStatusEnums = res;
-      });
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.resourceTypeEnums = getEnum('ResourceTypeEnum', 'obj');
+      state.vodPlatformEnums = getEnum('VodPlatformEnum', 'obj');
+      state.storagePlatformEnums = getEnum('StoragePlatformEnum', 'obj');
+      state.videoStatusEnums = getEnum('VideoStatusEnum', 'obj');
       bus.on('uploadFileSuccess', state.seek)
     });
     onUnmounted(() => {

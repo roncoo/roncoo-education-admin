@@ -65,11 +65,12 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {useStore} from 'vuex';
+
 import {categoryList, courseEdit, courseSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -127,14 +128,11 @@ export default defineComponent({
     const state = reactive({
       putawayEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
       // 获取分类
       listCategory()
-
-      store.dispatch('GetOpts', {enumName: 'PutawayEnum'}).then((res) => {
-        state.putawayEnums = res;
-      });
+      state.putawayEnums = getEnum('PutawayEnum');
     });
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {

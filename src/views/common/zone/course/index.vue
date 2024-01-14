@@ -57,17 +57,18 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {useRoute} from 'vue-router';
 import {zoneCourseDelete, zoneCourseEdit, zoneCoursePage} from '@/api/course.js'
 import Edit from './edit.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
     Edit
   },
   setup() {
-    const store = useStore();
+
     const route = useRoute()
     const apis = reactive({
       getList: zoneCoursePage,
@@ -87,18 +88,10 @@ export default defineComponent({
     onMounted(() => {
       // 章添加修改
       editForm.zoneId = route.query.zoneId;
-      store.dispatch('GetOpts', {enumName: 'FreeEnum', type: 'obj'}).then((res) => {
-        state.freeEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
-        state.putawayEnums = res;
-      });
+      state.freeEnums = getEnum('FreeEnum', 'obj');
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.userSexEnums = getEnum('UserSexEnum', 'obj');
+      state.putawayEnums = getEnum('PutawayEnum', 'obj');
     });
 
     const handleUpdateStatus = function(row) {

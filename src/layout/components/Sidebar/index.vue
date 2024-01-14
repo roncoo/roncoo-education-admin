@@ -1,59 +1,32 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
-    <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
-        :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
-        :collapse-transition="false"
-        mode="vertical"
-      >
-        <sidebar-item v-for="route in menuArr" :key="route.path" :item="route" :base-path="route.path" />
-      </el-menu>
-    </el-scrollbar>
-
-  </div>
+  <el-aside width="200px">
+    <el-menu
+      class="shadow bg-white/75 dark:bg-black/75 backdrop-blur-sm"
+      :class="sidebar.collapse"
+      :collapse="sidebar.collapse"
+      router
+    >
+      <SidebarItem :item="item" v-for="item in items" :key="item.name"/>
+    </el-menu>
+  </el-aside>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import router from '@/router'
+import {useSidebarStore} from '@/store/modules/sidebar'
+import {useUserStore} from '@/store/modules/user'
 import SidebarItem from './SidebarItem.vue'
-import variables from '@/styles/variables.scss'
 
-export default {
-  components: { SidebarItem },
-  computed: {
-    ...mapGetters([
-      'menuArr',
-      'sidebar'
-    ]),
-    routes() {
-      return this.$router.options.routes
-    },
-    activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      return path
-    },
-    showLogo() {
-      return this.$store.state.settings.sidebarLogo
-    },
-    variables() {
-      return variables
-    },
-    isCollapse() {
-      return !this.sidebar.opened
-    }
-  },
-  mounted() {
-  }
+const sidebar = useSidebarStore()
+const useUser = useUserStore()
+
+let items
+
+if (import.meta.env.VITE_PERMISSION_MODE === 'CONSTANT') {
+  items = router.options.routes.filter((r) => !r.hidden)
+} else {
+  items = useUser.menuRoutes
 }
+
+
 </script>

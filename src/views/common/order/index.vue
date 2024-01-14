@@ -70,9 +70,10 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {orderInfoPage} from '@/api/user.js'
 import Edit from './edit.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -87,14 +88,10 @@ export default defineComponent({
       payTypeEnumEnums: {},
       orderStatusEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'PayTypeEnum', type: 'obj'}).then((res) => {
-        state.payTypeEnumEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'OrderStatusEnum', type: 'obj'}).then((res) => {
-        state.orderStatusEnums = res;
-      });
+      state.payTypeEnumEnums = getEnum('PayTypeEnum', 'obj');
+      state.orderStatusEnums = getEnum('OrderStatusEnum', 'obj');
     });
 
     const handleUpdateStatus = function(row) {

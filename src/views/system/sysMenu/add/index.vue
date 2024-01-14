@@ -111,7 +111,7 @@ export default {
     };
   },
   mounted() {
-    this.svgIconList = this.$store.state.user.svgIconList;
+    //this.svgIconList = this.$store.state.user.svgIconList;
     // this.$store.dispatch('GetOpts', { enumName: 'MenuTypeEnum', type: 'arr' }).then(res => {
     //   this.menuTypeEnumList = res;
     // });
@@ -131,16 +131,16 @@ export default {
       });
     },
     onSubmit() {
-      this.loading.show();
+
       // 新增
       sysMenuSave(this.form)
         .then((res) => {
-          this.loading.hide();
+
           this.$message.success(res, 'success');
           this.$emit('closes', this.form);
         })
         .catch(() => {
-          this.loading.hide();
+
         });
     }
   }

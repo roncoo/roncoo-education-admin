@@ -126,18 +126,18 @@ export default {
       });
     },
     onSubmit(d) {
-      this.loading.show()
+
       // 新增
       d.menuType = 3
       d.outLink = 0
       sysPermissionSave(d)
         .then((res) => {
-          this.loading.hide();
+
           this.$message.success(res, 'success');
           this.$emit('closes', this.form);
         })
         .catch(() => {
-          this.loading.hide();
+
         });
     }
   }

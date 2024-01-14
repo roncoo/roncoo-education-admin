@@ -42,10 +42,10 @@
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-if="checkPermission('user:admin:users:edit')">
+                <el-dropdown-item>
                   <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item v-if="checkPermission('user:admin:users:edit')">
+                <el-dropdown-item>
                   <el-button v-if=" scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
                   <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
@@ -63,9 +63,10 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {usersDelete, usersEdit, usersPage} from '@/api/user.js'
 import Edit from './edit.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -82,16 +83,11 @@ export default defineComponent({
       statusIdEnums: {},
       userSexEnums: {}
     });
-    const store = useStore();
-    onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
-      });
-    });
 
+    onMounted(() => {
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.userSexEnums = getEnum('UserSexEnum', 'obj');
+    });
     const handleUpdateStatus = function(row) {
       state.tableData.loading = true;
       row.statusId = row.statusId ? 0 : 1
@@ -111,6 +107,7 @@ export default defineComponent({
     const userRecord = function(row) {
       this.$router.push({path: '/users/record', query: {userId: row.id}});
     }
+
     return {
       ...toRefs(state),
       handleUpdateStatus,

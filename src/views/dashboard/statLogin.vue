@@ -1,4 +1,7 @@
 <template>
+  <div class="title-info">
+    <span class="title">最近14天登录人数</span>
+  </div>
   <div id="axis" class="axis"/>
 </template>
 
@@ -75,5 +78,14 @@ export default {
 <style scoped>
 .axis {
   height: 400px;
+}
+
+.title-info {
+  margin: 20px 25px;
+  padding: 5px;
+  background-color: #ecf8ff;
+  border-left: 5px solid #50bfff;
+  border-radius: 4px;
+  font-size: 16px;
 }
 </style>

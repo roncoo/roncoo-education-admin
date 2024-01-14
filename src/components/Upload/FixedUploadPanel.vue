@@ -48,7 +48,6 @@
 import uploadVideo from '@/utils/mixin/uploadVideo';
 import uploadFiles from '@/utils/mixin/UploadFiles';
 import {getSize} from '@/utils/utils';
-import {saveResource} from '@/api/upload';
 import bus from '@/utils/bus';
 import {FullScreen, Close, Connection} from '@element-plus/icons-vue'
 
@@ -91,7 +90,7 @@ export default {
   },
   computed: {
     fileList() {
-      return [...this.$store.getters['upload/fileList']]
+      // return [...this.$store.getters['upload/fileList']]
     },
     successList() {
       const arr = []
@@ -163,11 +162,10 @@ export default {
         form.videoVid = data.vid || data.fid
       }
 
-      this.$store.commit('upload/UPLOAD_FILE_STATUS', fileInfo)
+      // this.$store.commit('upload/UPLOAD_FILE_STATUS', fileInfo)
       fileInfo.status = 'save'
 
-      saveResource(form).then(res => {
-        console.log('saveResource', res)
+      uploadApi.saveResource(form).then(res => {
         if (res) {
           fileInfo.status = 'saveSuccess'
           bus.emit('uploadFileSuccess')
@@ -216,11 +214,11 @@ export default {
           cancelButtonText: 'cancel',
           confirmButtonText: 'determine'
         }).then(() => {
-          this.$store.commit('upload/REMOVE_LIST')
+          //this.$store.commit('upload/REMOVE_LIST')
           this.uploading = false
         });
       } else {
-        this.$store.commit('upload/REMOVE_LIST')
+        //this.$store.commit('upload/REMOVE_LIST')
         this.uploading = false
       }
     }

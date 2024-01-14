@@ -103,7 +103,7 @@ export default {
     }
   },
   mounted() {
-    this.svgIconList = this.$store.state.user.svgIconList
+    //this.svgIconList = this.$store.state.user.svgIconList
     this.form = Object.assign(this.info)
   },
   emits: ['closes'],
@@ -121,14 +121,14 @@ export default {
       })
     },
     onSubmit() {
-      this.loading.show()
+
       // 编辑
       sysMenuEdit(this.form).then(res => {
-        this.loading.hide()
+
         this.$message.success(res, 'success');
         this.$emit('closes', this.form);
       }).catch(() => {
-        this.loading.hide()
+
       })
     }
   }

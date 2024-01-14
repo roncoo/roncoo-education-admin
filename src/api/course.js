@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import upload from '@/utils/upload';
 
 // 专区课程分页
 export function zoneCoursePage(data) {
@@ -164,18 +163,6 @@ export function courseCommentDelete(data) {
 // 课程收藏
 export function userCourseCollect(params, pageCurrent = 1, pageSize = 20) {
   return request({url: '/course/admin/user/course/collect/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
-
-/**
- * 资源库添加
- * @param data
- */
-export function resourceLibrarySave(data) {
-  return upload({
-    url: '/resource/admin/material/save',
-    method: 'post',
-    data
-  })
 }
 
 /**

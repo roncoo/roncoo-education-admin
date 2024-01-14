@@ -1,5 +1,5 @@
 import {mapGetters} from 'vuex'
-import {vodConfig} from '@/api/upload'
+import {uploadApi} from '@/api/upload'
 // import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
 import UploadFragment from '@/utils/mixin/UploadFragment';
 
@@ -61,7 +61,7 @@ export default {
       this.uploading = true
       this.initOssConfig(_file, res => {
         Object.assign(_file, res)
-        
+
         res.vodUploadConfig = JSON.parse(res.vodUploadConfig)
         if (this.videoPlatType === 2) {
           // 上传保利威
@@ -86,7 +86,7 @@ export default {
     },
     // 初始化上传配置
     initOssConfig(file, cb) {
-      vodConfig({fileName: file.name, fileSize: file.size}).then(res => {
+      uploadApi.getVodConfig().then(res => {
         if (res) {
           this.videoPlatType = res.vodPlatform // 1私有云、2保利威、3百家云、4获得场景
           if (cb) {

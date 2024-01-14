@@ -38,6 +38,7 @@
 import {sysConfigEdit} from '@/api/system';
 import Wangeditor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
+import {getEnum} from '@/utils/utils';
 
 export default {
   name: 'EditSysConfig',
@@ -74,16 +75,9 @@ export default {
   },
   mounted() {
     this.newFormData = {...this.formData};
-    // 枚举类型
-    this.$store.dispatch('GetOpts', {enumName: 'StoragePlatformEnum', type: 'arr'}).then((res) => {
-      this.storagePlatformEnum = res;
-    });
-    this.$store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'arr'}).then((res) => {
-      this.vodPlatformEnum = res;
-    });
-    this.$store.dispatch('GetOpts', {enumName: 'SmsPlatformEnum', type: 'arr'}).then((res) => {
-      this.smsPlatformEnum = res;
-    });
+    this.storagePlatformEnum = getEnum('StoragePlatformEnum');
+    this.vodPlatformEnum = getEnum('VodPlatformEnum');
+    this.smsPlatformEnum = getEnum('SmsPlatformEnum');
   },
   emits: ['close-callback'],
   methods: {
@@ -101,15 +95,15 @@ export default {
       this.onSubmit();
     },
     onSubmit() {
-      this.loading = true;
+
       // 编辑
       sysConfigEdit(this.newFormData
       ).then((res) => {
-        this.loading = false;
+
         this.$message.success(res);
         this.$emit('close-callback', 'success');
       }).catch(() => {
-        this.loading = false;
+
       });
     }
   }

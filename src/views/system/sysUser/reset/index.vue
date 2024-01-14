@@ -86,14 +86,14 @@ export default {
       })
     },
     onSubmit() {
-      this.loading.show()
+
       // 新增
       sysUserPassword(this.form).then(res => {
-        this.loading.hide()
+
         this.$message.success(res, 'success')
         this.$emit('closes', 'success')
       }).catch(() => {
-        this.loading.hide()
+
       })
     }
   }

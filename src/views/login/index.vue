@@ -5,23 +5,16 @@
       <div class="login-panel">
         <div class="head clearfix">
           <div class="logo">
-            <img v-if="service.websiteLogo" :src="service.websiteLogo"/>
-            <img v-else class="img-logo" src="../../assets/logo.svg"/>
+            <img alt="logo" src="@/assets/logo.svg"/>
           </div>
         </div>
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
+        <el-form ref="loginForm" :model="loginForm" auto-complete="on" label-position="left">
           <h3 class="login-head">管理员登录</h3>
           <el-form-item class="form-group" prop="mobile">
-            <el-input ref="mobile" v-model="loginForm.mobile" auto-complete="on" class="form-input" name="mobile" placeholder="用户名" tabindex="1" type="text" @keyup.enter="handleLogin"/>
+            <el-input v-model="loginForm.mobile" auto-complete="on" class="form-input" name="mobile" placeholder="用户名" tabindex="1" type="text" @keyup.enter="handleLogin"/>
           </el-form-item>
           <el-form-item class="form-group" prop="mobilePwd">
-            <el-input ref="mobilePwd" v-model="loginForm.mobilePwd" :type="mobilePwdType" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" @keyup.enter="handleLogin"/>
-          </el-form-item>
-          <el-form-item v-if="imageVerification" prop="imageVerification">
-            <div class="flex_code">
-              <el-input v-model="loginForm.imageVerification" class="flex_code_input" placeholder="请输入验证码" @keyup.enter="handleLogin"/>
-              <img :src="imgCode" class="img_code" @click="getImgCode"/>
-            </div>
+            <el-input v-model="loginForm.mobilePwd" type="password" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" @keyup.enter="handleLogin"/>
           </el-form-item>
           <el-button :loading="loading" class="submit-btn" style="width: 100%; margin-bottom: 30px" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
           <div>账号：18800000000/123456（需要本地部署）</div>
@@ -42,250 +35,70 @@
   </div>
 </template>
 
-<script>
-// import slideVerify from '@/components/slideVerify'
-import {getCodeImg, getWebsite} from '@/api/login';
-import {getStore, setStore} from '@/utils/storage';
-import {mapGetters} from 'vuex';
+<script setup>
+import {loginApi} from '@/api/login';
+import {ref, reactive, onMounted} from 'vue';
+import {setToken} from '@/utils/cookie';
+import {useRouter} from 'vue-router';
+import {useUserStore} from '@/store/modules/user';
 
-export default {
-  name: 'Login',
-  components: {
-    // slideVerify
-  },
-  data() {
-    const validateMobile = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入登录账号'));
-      } else {
-        callback();
-      }
-    };
-    const validatePass = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入登录密码'));
-      } else if (value.length < 5) {
-        callback(new Error('密码不能小于5位'));
-      } else {
-        callback();
-      }
-    };
-    return {
-      service: {
-        websiteCopyright: '',
-        websiteIcp: '',
-        prnNo: '',
-        websitePrn: ''
-      },
-      loginForm: {
-        mobile: '13300000000',
-        mobilePwd: '123456',
-        imageVerification: '',
-        imageVerificationToken: ''
-      },
-      loginRules: {
-        mobile: [{required: true, trigger: 'blur', validator: validateMobile}],
-        mobilePwd: [{required: true, trigger: 'blur', validator: validatePass}],
-        imageVerification: [{required: true, message: '请输入验证码', trigger: 'blur'}]
-      },
-      checkSlide: '',
-      showSlide: false,
-      loading: false,
-      mobilePwdType: 'password',
-      redirect: undefined,
-      imgCode: '',
-      errorCount: 0
-    };
-  },
-  computed: {
-    ...mapGetters(['imageVerification'])
-  },
-  mounted() {
-    this.errorCount = parseInt(getStore('loginErrorCount')) || 0
-    if (this.errorCount >= 2) {
-      this.$store.dispatch('app/toggleImageVerification', true)
+const router = useRouter();
+const loading = ref(false)
+
+const service = ref({
+  websiteLogo: '',
+  websiteCopyright: '',
+  websiteIcp: '',
+  prnNo: '',
+  websitePrn: ''
+})
+const loginForm = reactive({
+  mobile: '13300000000',
+  mobilePwd: '123456'
+})
+
+function getImgCode() {
+  loginApi.getCodeImg().then((res) => {
+    this.loginForm.imageVerificationToken = res.verToken;
+    this.imgCode = res.img;
+  });
+}
+
+function handleCheck() {
+  this.$refs.loginForm.validate((valid) => {
+    if (valid) {
+      this.showSlide = true;
     }
-    this.getWebsiteInfo();
-    //this.getImgCode();
-  },
-  methods: {
-    getImgCode() {
-      getCodeImg().then((res) => {
-        this.loginForm.imageVerificationToken = res.verToken;
-        this.imgCode = res.img;
-      });
-    },
-    getBrowserInfo: function() {
-      /* eslint-disable */
-      const Sys = {};
-      const ua = navigator.userAgent.toLowerCase();
-      let s;
-      (s = ua.match(/rv:([\d.]+)\) like gecko/))
-        ? (Sys.ie = s[1])
-        : (s = ua.match(/msie ([\d]+)/))
-          ? (Sys.ie = s[1])
-          : (s = ua.match(/edge\/([\d]+)/))
-            ? (Sys.edge = s[1])
-            : (s = ua.match(/firefox\/([\d]+)/))
-              ? (Sys.firefox = s[1])
-              : (s = ua.match(/(?:opera|opr).([\d]+)/))
-                ? (Sys.opera = s[1])
-                : (s = ua.match(/chrome\/([\d]+)/))
-                  ? (Sys.chrome = s[1])
-                  : (s = ua.match(/version\/([\d]+).*safari/))
-                    ? (Sys.safari = s[1])
-                    : 0;
-      // 根据关系进行判断
-      if (Sys.ie) {
-        return {
-          name: 'IE',
-          version: Sys.ie
-        };
-      }
-      if (Sys.edge) {
-        return {
-          name: 'EDGE',
-          version: Sys.edge
-        };
-      }
-      if (Sys.firefox) {
-        return {
-          name: 'Firefox',
-          version: Sys.firefox
-        };
-      }
-      if (Sys.chrome) {
-        return {
-          name: 'Chrome',
-          version: Sys.chrome
-        };
-      }
-      if (Sys.opera) {
-        return {
-          name: 'Opera',
-          version: Sys.opera
-        };
-      }
-      if (Sys.safari) {
-        return {
-          name: 'Safari',
-          version: Sys.safari
-        };
-      }
-      return {
-        name: 'Unkonwn',
-        version: '0.0.0'
-      };
-    },
-    // 获取系统信息
-    getOsInfo: function() {
-      const userAgent = navigator.userAgent.toLowerCase();
-      let name = 'Unknown';
-      let version = 'Unknown';
-      if (userAgent.indexOf('win') > -1) {
-        name = 'Windows';
-        if (userAgent.indexOf('windows nt 5.0') > -1) {
-          version = 'Windows 2000';
-        } else if (userAgent.indexOf('windows nt 5.1') > -1 || userAgent.indexOf('windows nt 5.2') > -1) {
-          version = 'Windows XP';
-        } else if (userAgent.indexOf('windows nt 6.0') > -1) {
-          version = 'Windows Vista';
-        } else if (userAgent.indexOf('windows nt 6.1') > -1 || userAgent.indexOf('windows 7') > -1) {
-          version = 'Windows 7';
-        } else if (userAgent.indexOf('windows nt 6.2') > -1 || userAgent.indexOf('windows 8') > -1) {
-          version = 'Windows 8';
-        } else if (userAgent.indexOf('windows nt 6.3') > -1) {
-          version = 'Windows 8.1';
-        } else if (userAgent.indexOf('windows nt 6.2') > -1 || userAgent.indexOf('windows nt 10.0') > -1) {
-          version = 'Windows 10';
-        } else {
-          version = 'Unknown';
-        }
-      } else if (userAgent.indexOf('iphone') > -1) {
-        name = 'Iphone';
-      } else if (userAgent.indexOf('mac') > -1) {
-        name = 'Mac';
-      } else if (
-        userAgent.indexOf('x11') > -1 ||
-        userAgent.indexOf('unix') > -1 ||
-        userAgent.indexOf('sunname') > -1 ||
-        userAgent.indexOf('bsd') > -1
-      ) {
-        name = 'Unix';
-      } else if (userAgent.indexOf('linux') > -1) {
-        if (userAgent.indexOf('android') > -1) {
-          name = 'Android';
-        } else {
-          name = 'Linux';
-        }
-      } else {
-        name = 'Unknown';
-      }
-      return {
-        name,
-        version
-      };
-    },
-    handleCheck() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.showSlide = true;
-        }
-      });
-    },
-    slideSuccess() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.$store
-            .dispatch('user/getLoginSign', this.loginForm)
-            .then((res) => {
-              this.loginForm.sign = res.sign;
-              this.loginForm.signatureNonce = res.signatureNonce;
-              this.loginForm.timestamp = res.timestamp;
-              this.loginForm = {...this.loginForm};
-              this.handleLogin();
-            })
-            .catch(() => {
-              this.showSlide = false;
-            });
-        }
-      });
-    },
-    getWebsiteInfo() {
-      getWebsite().then((res) => {
-        if (res) {
-          this.service = res;
-        }
-      });
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          const params = {os: '', browser: '', osVersion: '', browserVersion: ''};
-          const {name: osName, version: osVersion} = this.getOsInfo();
-          const {name: browserName, version: browserVersion} = this.getBrowserInfo();
-          params.os = osName;
-          params.osVersion = osVersion;
-          params.browser = browserName;
-          params.browserVersion = browserVersion;
-          this.$store.dispatch('user/login', {...this.loginForm, ...params}).then((res) => {
-            setStore('loginErrorCount', 0)
-            setStore('websiteLogo', this.service.websiteLogo)
-            this.$store.dispatch('app/toggleImageVerification', false);
-            this.$router.push({path: '/'});
-            this.loading = false;
-          }).catch((err) => {
-            this.getImgCode()
-            this.loading = false;
-          });
-        } else {
-          return false;
-        }
-      });
-    }
+  });
+}
+
+onMounted(() => {
+  getWebsite()
+})
+
+async function getWebsite() {
+  let res = await loginApi.getWebsite();
+  service.value = res;
+}
+
+async function handleLogin() {
+  loading.value = true
+  try {
+    const res = await loginApi.login(loginForm)
+    setToken(res.token)
+
+    //更新用户信息到store
+    await useUserStore().setUserInfo()
+    //useUserStore().setMenuInfo()
+
+    // todo 初始化路由
+    router.push('/');
+  } catch (error) {
+    console.error(error)
+  } finally {
+    loading.value = false;
   }
-};
+}
 </script>
 
 <style lang="scss">

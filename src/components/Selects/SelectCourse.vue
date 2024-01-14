@@ -64,23 +64,23 @@ export default {
     this.listForPage();
   },
   mounted() {
-    this.$store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
-      this.putawayEnums = res;
-    });
+    // this.$store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
+    //   this.putawayEnums = res;
+    // });
   },
   methods: {
     formatDuring(data) {
       return formatDuring(data)
     },
     listForPage() {
-      this.loading = true;
+
       coursePage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount
         this.page.pageSize = res.pageSize
       }).finally(() => {
-        this.loading = false;
+
       })
     },
     handleQuery() {

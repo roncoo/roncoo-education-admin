@@ -34,8 +34,8 @@
 <script>
 import UseTable from '@/composables/UseTable.js';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
 import {logLoginPage} from '@/api/user.js'
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {},
@@ -47,11 +47,8 @@ export default defineComponent({
       ...UseTable(apis, {}),
       loginStatusEnums: {}
     });
-    const store = useStore();
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'LoginStatusEnum', type: 'obj'}).then((res) => {
-        state.loginStatusEnums = res;
-      });
+      state.loginStatusEnums = getEnum('LoginStatusEnum', 'obj');
     });
 
     return {

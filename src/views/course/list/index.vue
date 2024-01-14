@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('course:admin:course:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
+            <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -54,20 +54,20 @@
       <el-table-column :width="280" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="courseRecord(scope.row)">数据</el-button>
-          <el-button v-if="checkPermission('course:admin:course:edit')" plain type="success" @click="courseChapter(scope.row)">章节</el-button>
+          <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:course:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+                  <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:course:edit') && scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="checkPermission('course:admin:course:edit') && scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:course:delete')" plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -83,9 +83,10 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {courseDelete, courseEdit, coursePage} from '@/api/course.js'
 import Edit from './edit.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -108,14 +109,10 @@ export default defineComponent({
       statusIdEnums: {},
       putawayEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'PutawayEnum', type: 'obj'}).then((res) => {
-        state.putawayEnums = res;
-      });
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.putawayEnums = getEnum('PutawayEnum', 'obj');
     });
 
     const handleUpdateStatus = function(row) {

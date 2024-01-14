@@ -80,14 +80,14 @@ export default {
       })
     },
     onSubmit() {
-      this.loading.show()
+
       // 编辑
       sysUserEdit(this.form).then(res => {
-        this.loading.hide()
+
         this.$message.success(res, 'success')
         this.$emit('closes', 'success')
       }).catch(() => {
-        this.loading.hide()
+
       })
     }
   }

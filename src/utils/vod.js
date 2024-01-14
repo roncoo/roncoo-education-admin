@@ -1,6 +1,6 @@
 import {ElMessage} from 'element-plus'
 import {default as PlvVideoUpload} from '@polyv/vod-upload-js-sdk';
-import {saveResource, vodConfig} from '../api/upload';
+import {uploadApi} from '../api/upload';
 
 let polyvClient = {}
 
@@ -30,7 +30,7 @@ export function polyvUpload(file) {
       FileSucceed: function(uploadInfo) { // 文件上传成功回调
         //console.log(uploadInfo)
         const resource = {resourceName: uploadInfo.fileData.filename, resourceSize: uploadInfo.fileData.filesize, videoVid: uploadInfo.fileData.vid}
-        saveResource(resource);
+        uploadApi.saveResource(resource);
       },
       FileFailed: function(uploadInfo) { // 文件上传失败回调
         console.error(uploadInfo)
@@ -58,7 +58,7 @@ export function initPolyv() {
 }
 
 export function getPolyvVideoSign() {
-  vodConfig().then(res => {
+  uploadApi.getVodConfig().then(res => {
     polyvClient.updateUserData({
       userid: res.vodUploadConfig.userid,
       ptime: res.vodUploadConfig.ptime,

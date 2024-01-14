@@ -43,7 +43,7 @@ watch(() => props.modelValue, async(val) => {
 
 const emit = defineEmits(['update:modelValue', 'updateTable'])
 
-let formModel = reactive({})
+const formModel = reactive({})
 watch(() => props.form, async(val) => {
   formModel.id = val.id
   formModel.sort = val.sort == undefined ? 1 : val.sort
@@ -66,7 +66,7 @@ const onSubmit = () => {
   }
 };
 
-let course = reactive({
+const course = reactive({
   visible: false,
   info: {}
 })

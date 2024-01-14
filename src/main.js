@@ -1,60 +1,37 @@
 import {createApp} from 'vue'
-import App from './App.vue'
-
-const app = createApp(App)
-
-import store from './store'
-
-app.use(store)
-
-import router from './router/index'
-import '@/permission.js'
-
-app.use(router)
-
 import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
-
-app.use(ElementPlus, {zIndex: 3000})
-
-import {ElLoading, ElMessage} from 'element-plus'
-
-import '@/styles/index.scss' // global css
-
 import 'vite-plugin-svg-icons/register';
+import App from './App.vue'
+import router, {createNewRouter} from './router/index'
+import store from './store/index'
 import SvgIcon from '@/components/SvgIcon/index.vue'// svg component
-app.component('svg-icon', SvgIcon)
+import 'element-plus/dist/index.css';
+import '@/styles/index.scss'
+import {getToken} from '@/utils/cookie';
+import {loginApi} from '@/api/login';
 
-app.config.globalProperties.checkPermission = (name) => {
-  name = name.replace(/\//g, ':');
-  return (store.getters.userPermission || []).indexOf(name) !== -1;
-  // return true;
-}
-app.config.globalProperties.tips = function(text) {
-  ElMessage.success(text);
-};
-
-app.config.globalProperties.loading = {
-  // show 和 hide 成对使用
-  show(txt = 'Loading') {
-    this.__loading__ = ElLoading.service({
-      lock: true,
-      text: txt,
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    });
-  },
-  hide() {
-    this.__loading__.close();
-  },
-  // start 和 stop 成对使用
-  start(txt = 'Loading') {
-  },
-  stop() {
-  }
+if (getToken()) {
+  loginApi.getUserInfo().then((res) => {
+    const routerList = res.routerList.filter((e) => e.path);
+    createNewRouter(routerList)
+    init()
+  })
+} else {
+  init()
 }
 
-app.mount('#app')
+function init() {
+  const app = createApp(App)
+  app.use(router)
+  app.use(store)
+  app.use(ElementPlus)
+  // 组件
+  app.component('svg-icon', SvgIcon)
+
+  app.mount('#app')
+}
+
+
 
 
 

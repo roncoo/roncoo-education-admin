@@ -2,7 +2,7 @@
   <div :id="ids" :style="{ height: height + 'px' }" class="wangeditor-box"/>
 </template>
 <script>
-import {uploadPic} from '@/api/upload.js';
+import {uploadApi} from '@/api/upload.js';
 import E from 'wangeditor'
 
 export default {
@@ -76,7 +76,7 @@ export default {
     editorUpload(files, insert) {
       // console.log(files)
       const file = files[0];
-      uploadPic({file: file}, function(int) {
+      uploadApi.pic({file: file}, function(int) {
       })
         .then(insert)
         .catch(() => {

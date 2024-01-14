@@ -29,7 +29,8 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {usersEdit} from '@/api/user.js';
-import {useStore} from 'vuex';
+
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {},
@@ -65,14 +66,12 @@ export default defineComponent({
       visible.value = modelValue.value;
     }
 
-    const state = reactive({
+    const state = ref({
       userSexEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum'}).then((res) => {
-        state.userSexEnums = res;
-      });
+      state.userSexEnums = getEnum('UserSexEnum');
     });
 
     // 弹窗是否要打开监控

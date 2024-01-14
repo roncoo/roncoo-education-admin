@@ -62,10 +62,10 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {useRoute} from 'vue-router';
 import {courseChapterDelete, courseChapterEdit, courseChapterPage} from '@/api/course.js'
-import {formatDuring} from '@/utils/utils.js'
+import {formatDuring, getEnum} from '@/utils/utils.js'
 import Edit from './edit.vue';
 import Add from './add.vue';
 
@@ -74,7 +74,7 @@ export default defineComponent({
     Edit, Add
   },
   setup() {
-    const store = useStore();
+
     const route = useRoute()
     const apis = reactive({
       getList: courseChapterPage,
@@ -94,18 +94,10 @@ export default defineComponent({
     onMounted(() => {
       // 章添加修改
       editForm.courseId = route.query.courseId;
-      store.dispatch('GetOpts', {enumName: 'FreeEnum', type: 'obj'}).then((res) => {
-        state.freeEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'ResourceTypeEnum', type: 'obj'}).then((res) => {
-        state.resourceTypeEnums = res;
-      });
+      state.freeEnums = getEnum('FreeEnum', 'obj');
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.userSexEnums = getEnum('UserSexEnum', 'obj');
+      state.resourceTypeEnums = getEnum('ResourceTypeEnum', 'obj');
     });
 
     const handleUpdateStatus = function(row) {

@@ -32,6 +32,7 @@
 
 <script>
 import {sysRolePage, sysRoleUserList, sysRoleUserSave} from '@/api/system';
+import {getEnum} from '@/utils/utils';
 
 export default {
   name: 'AllocationSysRole',
@@ -81,9 +82,7 @@ export default {
       this.listForPage();
     });
     // 获取状态枚举
-    this.$store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then(res => {
-      this.statusIdEnums = res;
-    });
+    this.statusIdEnums = getEnum('StatusIdEnum', 'obj')
   },
   methods: {
     // 选中角色
@@ -114,7 +113,7 @@ export default {
       this.listForPage();
     },
     listForPage() {
-      this.loading = true;
+
       sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.list
         this.page.pageCurrent = res.pageCurrent
@@ -133,7 +132,7 @@ export default {
           }
         });
       }).finally(() => {
-        this.loading = false;
+
       })
     },
     handleClose() {

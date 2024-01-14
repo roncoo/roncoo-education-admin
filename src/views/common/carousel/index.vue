@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-button v-if="checkPermission('system:admin:website:carousel:save')" plain type="success" @click="openEditDialog(initData)">添加</el-button>
+        <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
         <br>
         <br>
       </div>
@@ -32,17 +32,17 @@
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="checkPermission('system:admin:website:carousel:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('system:admin:website:carousel:edit') && scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="checkPermission('system:admin:website:carousel:edit') && scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('system:admin:website:carousel:delete')" plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -58,9 +58,9 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
 import {carouselDelete, carouselEdit, carouselPage} from '@/api/system.js'
 import Edit from './edit.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -81,14 +81,10 @@ export default defineComponent({
       statusIdEnums: {},
       targetEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'TargetEnum', type: 'obj'}).then((res) => {
-        state.targetEnums = res;
-      });
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.targetEnums = getEnum('TargetEnum', 'obj');
     });
     const handleUpdateStatus = function(row) {
       state.tableData.loading = true;

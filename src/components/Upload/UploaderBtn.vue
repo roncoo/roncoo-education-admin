@@ -34,7 +34,7 @@
 import uploadVideo from '@/utils/mixin/uploadVideo';
 import uploadFiles from '@/utils/mixin/UploadFiles';
 import {mapGetters} from 'vuex';
-import {uploadDoc, saveResource} from '@/api/upload';
+import {uploadApi} from '@/api/upload';
 import {ElMessage} from 'element-plus';
 
 export default {
@@ -127,7 +127,7 @@ export default {
     upload(file) {
       this.status = 1
       if (this.mode === 'async') {
-        this.$store.dispatch('upload/uploadFile', {refId: this.refId, file: file.file, custom: this.custom})
+        // this.$store.dispatch('upload/uploadFile', {refId: this.refId, file: file.file, custom: this.custom})
       } else {
         this.awaitUpload(file.file)
       }
@@ -293,7 +293,7 @@ export default {
     },
     uploadDoc(_file) {
       const that = this
-      uploadDoc(_file, {
+      uploadApi.doc(_file, {
         progress: function(p, checkpoint) {
           // 断点记录点。浏览器重启后无法直接继续上传，您需要手动触发上传操作。
           _file.tempCheckpoint = checkpoint;
@@ -357,7 +357,7 @@ export default {
           form.resourceUrl = data.url
         }
         fileInfo.status = 'save'
-        saveResource(form).then(res => {
+        uploadApi.saveResource(form).then(res => {
           fileInfo.status = 'saveSuccess'
           form.coursewareId = res.data
           this.$emit('success', form)
@@ -386,7 +386,7 @@ export default {
           form.resourceUrl = data.url
         }
         fileInfo.status = 'save'
-        saveResource(form).then(res => {
+        uploadApi.saveResource(form).then(res => {
           fileInfo.status = 'saveSuccess'
           form.coursewareId = res.data
           this.$emit('success', form)

@@ -1,101 +1,55 @@
 <template>
-  <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!(onlyOneChild.children && onlyOneChild.children.length)||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta.title" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <svg-icon v-if="onlyOneChild.meta.targetName" class="submenu-icon" :iconClass="onlyOneChild.meta.targetName"></svg-icon>
-          <span class="menu_title">{{onlyOneChild.meta.title}}</span>
-        </el-menu-item>
-      </app-link>
-    </template>
-
-    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template #title>
-          <svg-icon v-if="item.meta.targetName" class="submenu-icon"  :iconClass="item.meta.targetName"></svg-icon>
-          <span class="menu_title">{{ item.meta.title }}</span>
-        </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
+  <el-sub-menu
+    :index="getPath(parentPath, item.path)"
+    v-if="filteredItems && filteredItems.length > 0"
+  >
+    <template #title>
+      <MoIcon
+        :icon-name="item.meta.icon"
+        v-if="level === 0 && item.meta.icon"
+        class="ml-1 mr-1 text-lg"
       />
-    </el-sub-menu>
-  </div>
+
+      <span>{{ $t(`route.${item.meta.title}`) }}</span>
+    </template>
+    <SidebarItem
+      :item="item1"
+      :parent-path="getPath(parentPath, item.path)"
+      :level="level + 1"
+      v-for="(item1, index1) in filteredItems"
+    />
+  </el-sub-menu>
+  <el-menu-item :index="getPath(parentPath, item.path)" v-else>
+    <MoIcon :icon-name="item.meta.icon" v-if="level === 0" class="ml-1 mr-1 text-lg"/>
+    <template #title>{{ $t(`route.${item.meta.title}`) }}</template>
+  </el-menu-item>
 </template>
 
-<script>
-import path from 'path-browserify'
-import { isExternal } from '@/utils/validate'
-import Item from './Item.vue'
-import AppLink from './Link.vue'
-import FixiOSBug from './FixiOSBug'
+<script setup name="SidebarItem">
+import {computed} from 'vue'
 
-export default {
-  name: 'SidebarItem',
-  components: { Item, AppLink },
-  mixins: [FixiOSBug],
-  props: {
-    // route object
-    item: {
-      type: Object,
-      required: true
-    },
-    isNest: {
-      type: Boolean,
-      default: false
-    },
-    basePath: {
-      type: String,
-      default: ''
+const props = defineProps({
+  item: {
+    type: Object, default: () => {
     }
   },
-  data() {
-    // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
-    this.onlyOneChild = null
-    return {}
-  },
-  methods: {
-    hasOneShowingChild(children = [], parent) {
-      const showingChildren = children.filter(item => {
-        if (item.hidden) {
-          return false
-        } else {
-          // Temp set(will be used if only has one showing child)
-          this.onlyOneChild = item
-          return true
-        }
-      })
+  parentPath: {type: String, default: ''},
+  level: {type: Number, default: 0}
+})
 
-      // When there is only one child router, the child router is displayed by default
-      if (showingChildren.length === 1) {
-        return true
-      }
+const filteredItems = computed(() => {
+  if (props.item.children) {
+    return props.item.children.filter((val) => !val.hidden)
+  } else {
+    return null
+  }
+})
 
-      // Show parent if there are no child router to display
-      if (showingChildren.length === 0) {
-        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
-        return true
-      }
-
-      return false
-    },
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath
-      }
-      if (isExternal(this.basePath)) {
-        return this.basePath
-      }
-      return path.resolve(this.basePath, routePath)
-    }
+function getPath(parentPath, path) {
+  if (parentPath) {
+    return `${parentPath}/${path}`
+  } else {
+    return path
   }
 }
 </script>
-
-<style scoped>
-
-</style>

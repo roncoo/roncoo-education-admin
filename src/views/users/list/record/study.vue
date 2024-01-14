@@ -52,7 +52,6 @@ export default defineComponent({
     watch(modelValue, async(val) => {
       visible.value = val;
     });
-    console.log('info', info)
 
     const cloneDialog = () => {
       visible.value = false;

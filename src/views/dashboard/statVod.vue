@@ -1,4 +1,7 @@
 <template>
+  <div class="title-info">
+    <span class="title">视频云使用情况</span>
+  </div>
   <div class="cache_pie">
     <div class="axis" id="cachePieTwo"></div>
     <div class="axis" id="cachePieOne"></div>
@@ -194,5 +197,14 @@ export default {
     height: 280px;
     display: inline-block;
   }
+}
+
+.title-info {
+  margin: 20px 25px;
+  padding: 5px;
+  background-color: #ecf8ff;
+  border-left: 5px solid #50bfff;
+  border-radius: 4px;
+  font-size: 16px;
 }
 </style>

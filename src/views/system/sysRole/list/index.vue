@@ -5,9 +5,9 @@
         <el-input v-model="map.roleName" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="checkPermission('system:admin:sys:role:page')" type="primary" @click="listForQuery">查询</el-button>
-        <el-button v-if="checkPermission('system:admin:sys:role:page')" @click="handleReset">刷新</el-button>
-        <el-button v-if="checkPermission('system:admin:sys:role:save')" plain type="success" @click="handleAddRow">新增</el-button>
+        <el-button type="primary" @click="listForQuery">查询</el-button>
+        <el-button @click="handleReset">刷新</el-button>
+        <el-button plain type="success" @click="handleAddRow">新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="list" border element-loading-text="Loading" fit highlight-current-row>
@@ -22,11 +22,11 @@
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="操作" width="360">
         <template #default="scope">
-          <el-button v-if="checkPermission('system:admin:sys:role:edit')" plain type="warning" @click="handleSettRow(scope.row)">分配菜单</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:edit')" plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:edit') && scope.row.statusId ===1 " plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:edit') && scope.row.statusId ===0 " plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-          <el-button v-if="checkPermission('system:admin:sys:role:delete')" plain type="danger" @click="handleDeleteRow(scope.row)">删除</el-button>
+          <el-button plain type="warning" @click="handleSettRow(scope.row)">分配菜单</el-button>
+          <el-button plain type="primary" @click="handleUpdateRow(scope.row.id)">编辑</el-button>
+          <el-button v-if="scope.row.statusId ===1 " plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+          <el-button v-if="scope.row.statusId ===0 " plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+          <el-button plain type="danger" @click="handleDeleteRow(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,6 +42,7 @@ import {sysRoleDelete, sysRolePage, sysRoleStatusId, sysRoleView} from '@/api/sy
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';
+import {getEnum} from '@/utils/utils';
 
 export default {
   name: 'SysRole',
@@ -78,9 +79,7 @@ export default {
     this.listForPage()
   },
   mounted() {
-    this.$store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then(res => {
-      this.statusIdEnums = res;
-    });
+    this.statusIdEnums = getEnum('StatusIdEnum', 'obj')
   },
   methods: {
     handleDeleteRow(row) {
@@ -90,12 +89,12 @@ export default {
           confirmButtonText: '确认',
           cancelButtonText: '取消'
         }).then(() => {
-          this.loading.show();
+
           sysRoleDelete(row.id).then(res => {
             this.$message.success(res);
-            this.loading.hide();
+
             this.listForPage();
-          }).catch(this.loading.hide)
+          }).catch(
         }).catch(() => {
 
         })
@@ -161,7 +160,7 @@ export default {
           confirmButtonText: '确认',
           cancelButtonText: '取消'
         }).then(() => {
-          this.loading.start();
+
           sysRoleStatusId(row.id, statusId).then(res => {
             this.$message.success(res);
             this.listForPage();
@@ -177,7 +176,7 @@ export default {
     },
     listForPage() {
       // this.listLoading = true
-      this.loading.start()
+
       sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.list
         this.page.pageCurrent = res.pageCurrent

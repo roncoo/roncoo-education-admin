@@ -64,14 +64,14 @@ export default {
   },
   methods: {
     listForPage() {
-      this.loading = true;
+
       lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount
         this.page.pageSize = res.pageSize
       }).finally(() => {
-        this.loading = false;
+
       })
     },
     handleQuery() {

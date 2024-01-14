@@ -21,7 +21,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
-        <template v-if="checkPermission('system:admin:sys:config:edit')" #default="scope">
+        <template #default="scope">
           <!-- 布尔类型 -->
           <el-switch v-if="scope.row.contentType === 4" v-model="scope.row.configValue" active-color="#13ce66" active-text="开启" active-value="1" inactive-color="#ff4949" inactive-text="关闭" inactive-value="0" @change="changBooleanValue(scope.row)"/>
           <!--  不为布尔类型 -->
@@ -38,6 +38,7 @@
 import {sysConfigEdit} from '@/api/system';
 import SysConfigEdit from './edit.vue';
 import SysConfigValue from './value.vue';
+import {getEnum} from '@/utils/utils';
 
 export default {
   components: {SysConfigEdit, SysConfigValue},
@@ -77,22 +78,16 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch('GetOpts', {enumName: 'StoragePlatformEnum', type: 'obj'}).then((res) => {
-      this.storagePlatformEnum = res;
-    });
-    this.$store.dispatch('GetOpts', {enumName: 'VodPlatformEnum', type: 'obj'}).then((res) => {
-      this.vodPlatformEnum = res;
-    });
-    this.$store.dispatch('GetOpts', {enumName: 'SmsPlatformEnum', type: 'obj'}).then((res) => {
-      this.smsPlatformEnum = res;
-    });
+    this.storagePlatformEnum = getEnum('StoragePlatformEnum', 'obj');
+    this.vodPlatformEnum = getEnum('VodPlatformEnum', 'obj');
+    this.smsPlatformEnum = getEnum('SmsPlatformEnum', 'obj');
   },
   methods: {
     changBooleanValue(row) {
       if (!this.trigger) {
         return;
       }
-      this.loading = true;
+      //
       sysConfigEdit({
         ...row,
         id: row.id,
@@ -106,7 +101,7 @@ export default {
           }
         })
         .finally(() => {
-          this.loading = false;
+          //
         });
     },
     openRow(row) {

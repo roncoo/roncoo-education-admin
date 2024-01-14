@@ -26,7 +26,7 @@ export function lecturerSave(data) {
 }
 
 // 讲师删除
-export function lecturerDelete(data) {
+export function lecturerDelete(data = {}) {
   return request.delete('/user/admin/lecturer/delete?id=' + data.id, data)
 }
 

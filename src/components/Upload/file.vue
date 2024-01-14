@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {uploadPic} from '@/api/upload.js';
+import {uploadApi} from '@/api/upload.js';
 
 export default {
   name: 'UploadImage',
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     upload(file) {
-      uploadPic(file, (int) => {
+      uploadApi.pic(file, (int) => {
         this.status = 1;
         this.int = int;
       }, this.params).then((res) => {

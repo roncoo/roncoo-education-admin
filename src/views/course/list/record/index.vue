@@ -48,7 +48,7 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {userCourseRecord, userStudyePage} from '@/api/course.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
@@ -66,7 +66,6 @@ export default defineComponent({
       ...UseTable(apis, {courseId: route.query.courseId}),
       activeName: 'course'
     });
-    const store = useStore();
 
     let study = reactive({
       visible: false,

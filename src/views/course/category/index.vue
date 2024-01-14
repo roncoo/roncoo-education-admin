@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button @click="seek()" type="primary"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
-            <el-button v-if="checkPermission('course:admin:category:save')" plain type="success" @click="openAddDialog(initData)">添加</el-button>
+            <el-button plain type="success" @click="openAddDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -29,18 +29,18 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="checkPermission('course:admin:category:save')" plain type="success" @click="openAddDialog(scope.row)">添加</el-button>
-          <el-button v-if="checkPermission('course:admin:category:edit')" plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="success" @click="openAddDialog(scope.row)">添加</el-button>
+          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:category:edit') && scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="checkPermission('course:admin:category:edit') && scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if="checkPermission('course:admin:category:delete')" plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -56,11 +56,12 @@
 import UseTable from '@/composables/UseTable.js';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {useStore} from 'vuex';
+
 import {useRoute} from 'vue-router';
 import {categoryDelete, categoryEdit, categoryList} from '@/api/course.js'
 import Edit from './edit.vue';
 import Add from './add.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -70,7 +71,7 @@ export default defineComponent({
     const initData = reactive({
       sort: 1
     })
-    const store = useStore();
+
     const route = useRoute()
     const apis = reactive({
       getList: categoryList,
@@ -91,12 +92,8 @@ export default defineComponent({
     onMounted(() => {
       addForm.courseId = route.query.courseId;
       editForm.courseId = route.query.courseId;
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum', type: 'obj'}).then((res) => {
-        state.statusIdEnums = res;
-      });
-      store.dispatch('GetOpts', {enumName: 'UserSexEnum', type: 'obj'}).then((res) => {
-        state.userSexEnums = res;
-      });
+      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+      state.UserSexEnum = getEnum('UserSexEnum', 'obj');
     });
 
     const handleUpdateStatus = function(row) {

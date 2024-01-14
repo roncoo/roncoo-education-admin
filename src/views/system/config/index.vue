@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form class="filter-container" inline label-width="100px">
       <el-form-item>
-        <el-button v-if="checkPermission('system:admin:sys:config:video:init')" plain type="primary" @click="videoInitHandle">视频云初始化</el-button>
+        <el-button plain type="primary" @click="videoInitHandle">视频云初始化</el-button>
       </el-form-item>
     </el-form>
     <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -49,7 +49,6 @@ export default {
       this.listForList();
     },
     listForList() {
-      this.loading.start();
       sysConfigList(this.map).then((res) => {
         this.list = res;
       });

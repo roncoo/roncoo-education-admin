@@ -30,10 +30,11 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {useStore} from 'vuex';
+
 import {zoneEdit, zoneSave} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {
@@ -73,11 +74,9 @@ export default defineComponent({
     const state = reactive({
       statusIdEnums: {}
     });
-    const store = useStore();
+
     onMounted(() => {
-      store.dispatch('GetOpts', {enumName: 'StatusIdEnum'}).then((res) => {
-        state.statusIdEnums = res;
-      });
+      state.statusIdEnums = getEnum('StatusIdEnum');
     });
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {

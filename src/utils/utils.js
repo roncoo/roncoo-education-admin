@@ -1,3 +1,7 @@
+import {systemApi} from '@/api/system';
+import {getSession, getStore, setSession} from '@/utils/storage';
+import {toObject} from 'element-plus/es/utils/util';
+
 /**
  * 阿拉伯数字转中文数字,
  * 如果传入数字时则最多处理到21位，超过21位js会自动将数字表示成科学计数法，导致精度丢失和处理出错
@@ -152,4 +156,30 @@ export function getSize(limit) {
  */
 export function deepCopy(param) {
   return JSON.parse(JSON.stringify(param))
+}
+
+export function getEnum(enumName, type = 'attr') {
+  const enumAttr = getSession(enumName)
+  if (enumAttr) {
+    if (type === 'obj') {
+      return toObj(enumAttr)
+    }
+    return enumAttr
+  } else {
+    systemApi.getEnum({enumName}).then((res) => {
+      setSession(enumName, res)
+      if (type === 'obj') {
+        return toObj(res)
+      }
+      return res
+    })
+  }
+}
+
+function toObj(attr) {
+  const obj = {}
+  for (var i = 0; i < attr.length; i++) {
+    obj[attr[i].code] = attr[i].desc
+  }
+  return obj
 }
