@@ -94,9 +94,9 @@ export default {
             this.$message.success(res);
 
             this.listForPage();
-          }).catch(
-        }).catch(() => {
+          }).catch(() => {
 
+          })
         })
       }
     },

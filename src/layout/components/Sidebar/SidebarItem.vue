@@ -1,20 +1,19 @@
 <template>
-
-  <el-sub-menu v-for="item in menuList" :key="item.id">
-    <router-link v-if="item.menuType === 2" :to="item.path">
-      <template #title>
-        <el-icon>
-          <icon-menu/>
-        </el-icon>
+  <el-sub-menu v-for="item in menuList" :index="item.id" :key="item.id">
+    <template #title>
+      <el-icon>
+        <icon-menu/>
+      </el-icon>
+      <router-link v-if="item.menuType === 2" :to="item.path">
         {{ item.menuName }}
-      </template>
-      <SidebarItem :menu-list="item.children"/>
-    </router-link>
+      </router-link>
+    </template>
+    <SidebarItem :menu-list="item.children"/>
   </el-sub-menu>
 </template>
 
 <script setup name="SidebarItem">
-import menuList from 'wangeditor/src/menus/menu-list';
+import {Menu as IconMenu} from '@element-plus/icons-vue'
 
 const props = defineProps({
   menuList: {

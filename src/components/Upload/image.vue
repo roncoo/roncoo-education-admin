@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="less">
 .avatar-uploader {
   position: relative;
 

@@ -186,7 +186,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="less">
 .cache_pie {
   display: flex;
   justify-content: center;

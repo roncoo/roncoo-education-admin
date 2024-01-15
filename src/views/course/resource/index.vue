@@ -99,7 +99,6 @@ import {resourceDelete, resourceEdit, resourcePage} from '@/api/course.js'
 import {getSize, formatDuring, getEnum} from '@/utils/utils.js'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
-import bus from '@/utils/bus';
 
 export default defineComponent({
   components: {
@@ -145,10 +144,8 @@ export default defineComponent({
       state.vodPlatformEnums = getEnum('VodPlatformEnum', 'obj');
       state.storagePlatformEnums = getEnum('StoragePlatformEnum', 'obj');
       state.videoStatusEnums = getEnum('VideoStatusEnum', 'obj');
-      bus.on('uploadFileSuccess', state.seek)
     });
     onUnmounted(() => {
-      bus.off('uploadFileSuccess');
     });
     return {
       ...toRefs(state),

@@ -1,6 +1,4 @@
-import {mapGetters} from 'vuex'
 import {uploadApi} from '@/api/upload'
-// import PlvVideoUpload from '@polyv/vod-upload-js-sdk';
 import UploadFragment from '@/utils/mixin/UploadFragment';
 
 export default {
@@ -44,10 +42,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      'websiteInfo': 'app/websiteInfo',
-      'userToken': 'userToken'
-    })
+    'websiteInfo': 'app/websiteInfo',
+    'userToken': 'userToken'
   },
   mounted() {
     this.errorMessage = ''

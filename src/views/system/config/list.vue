@@ -135,7 +135,7 @@ export default {
 };
 </script>
 
-<style lang="scss" type="text/css">
+<style lang="less" type="text/css">
 .tips {
   padding: 5px;
 }

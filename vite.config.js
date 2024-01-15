@@ -1,24 +1,16 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import viteSvgIcons from 'vite-plugin-svg-icons';
 import path from 'path';
-
-const {resolve} = require('path');
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
   plugins: [
-    vue(),
-    viteSvgIcons({
-      // 配置路径在你的src里的svg存放文件
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/images/icons/svg')],
-      symbolId: 'icon-[name]'
-    })
+    vue()
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src')
     }
   },
   css: {

@@ -1,8 +1,8 @@
 <template>
   <el-aside>
     <el-scrollbar>
-      <el-menu v-for="item in menuList" :key="item.id">
-        <el-sub-menu>
+      <el-menu v-for="item in menuList">
+        <el-sub-menu :index="item.menuName" :key="item.id">
           <template #title>
             <el-icon>
               <icon-menu/>
@@ -26,5 +26,5 @@ const menuList = computed(() => useUserStore().getMenuList)
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 </style>

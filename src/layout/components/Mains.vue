@@ -13,6 +13,6 @@ import {useSidebarStore} from '@/store/modules/sidebar'
 const sidebarStore = useSidebarStore()
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>

@@ -33,7 +33,6 @@
 <script>
 import uploadVideo from '@/utils/mixin/uploadVideo';
 import uploadFiles from '@/utils/mixin/UploadFiles';
-import {mapGetters} from 'vuex';
 import {uploadApi} from '@/api/upload';
 import {ElMessage} from 'element-plus';
 
@@ -100,9 +99,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      'websiteInfo': 'app/websiteInfo'
-    }),
+    'websiteInfo': 'app/websiteInfo',
     accept() {
       if (this.fileType === 'video') {
         return 'video/mp4,video/avi,video/mpg,video/mpeg,video/ram,video/flv,video/mov,video/asf,video/3gp,video/f4v,video/wmv,video/x-ms-wmv'
@@ -402,7 +399,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .upload-btn {
   display: inline-block;
   // margin-left: 10px;
@@ -428,7 +425,7 @@ export default {
   }
 }
 </style>
-<style lang="scss">
+<style lang="less">
 .uploading_panel {
   .el-progress-bar__outer, .el-progress-bar__inner {
     border-radius: 3px;

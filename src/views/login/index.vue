@@ -85,7 +85,7 @@ async function handleLogin() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .container {
   height: 100vh;
   background: #2873f0;
