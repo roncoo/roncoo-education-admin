@@ -2,28 +2,33 @@ import {defineStore} from 'pinia'
 import {getToken, removeToken} from '@/utils/cookie'
 import {loginApi} from '@/api/login'
 
-export const useUserStore = defineStore('user', {
+export const useUserStore = defineStore({
+  id: 'user',
   state: () => ({
     token: '',
-    userInfo: {},
-    menuInfo: {},
-    routerInfo: {}
+    mobile: '',
+    realName: '',
+    routerList: [],
+    menuList: []
   }),
   getters: {
-    getToken() {
-      if (!this.token) {
-        this.token = getToken()
+    getToken(state) {
+      if (!state.token) {
+        state.token = getToken()
       }
       return this.token
     },
-    getUserInfo() {
-      return this.userInfo
+    getMobile(state) {
+      return state.mobile
     },
-    getMenuInfo() {
-      return this.menuInfo
+    getRealName(state) {
+      return state.realName
     },
-    getRouterInfo() {
-      return this.routerInfo
+    getRouterList(state) {
+      return state.routerList
+    },
+    getMenuList(state) {
+      return state.menuList
     }
   },
   actions: {
@@ -32,46 +37,12 @@ export const useUserStore = defineStore('user', {
       this.token = token
     },
 
-    // set userInfo
-    setUserInfo() {
-      return new Promise((resolve, reject) => {
-        loginApi.getUserInfo().then(res => {
-          this.userInfo = res
-          resolve(res)
-        }).catch(error => {
-          console.error(error)
-          reject(error)
-        })
-      })
-    },
-
-    setMenuInfo() {
-      return new Promise((resolve, reject) => {
-        loginApi.getUserMenu().then(res => {
-          res.forEach(e => {
-            if (e.path[0] !== '/') {
-              e.path = '/' + e.path
-            }
-          })
-          this.menuInfo = res;
-          resolve(res)
-        }).catch(error => {
-          console.error(error)
-          reject(error)
-        })
-      })
-    },
-
-    setRouterInfo() {
-      return new Promise((resolve, reject) => {
-        loginApi.getUserPermission().then(res => {
-          this.routerInfo = res
-          resolve(res)
-        }).catch(error => {
-          console.error(error)
-          reject(error)
-        })
-      })
+    // 登录操作
+    login(data) {
+      this.mobile = data.mobile
+      this.realName = data.realName
+      this.routerInfo = data.routerList
+      this.menuList = data.menuList
     },
 
     // logout

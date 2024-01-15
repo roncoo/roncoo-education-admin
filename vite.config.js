@@ -12,7 +12,7 @@ export default defineConfig({
     vue(),
     viteSvgIcons({
       // 配置路径在你的src里的svg存放文件
-      iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/images/icons/svg')],
       symbolId: 'icon-[name]'
     })
   ],

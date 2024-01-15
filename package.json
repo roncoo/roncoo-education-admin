@@ -1,6 +1,7 @@
 {
   "name": "roncoo-education-admin",
   "version": "14.0.0-RELEASE",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -25,7 +26,6 @@
     "sortablejs": "^1.13.0",
     "vue": "^3.2.*",
     "vue-router": "^4.*",
-    "vuex": "4.*",
     "wangeditor": "^4.*"
   },
   "devDependencies": {

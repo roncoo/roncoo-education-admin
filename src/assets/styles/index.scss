@@ -1,3 +1,15 @@
+body {
+  margin: 0;
+}
+
+img {
+  border: 0 none;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  vertical-align: top;
+}
+
 // 弹框居中
 .el-dialog {
   display: flex;
@@ -19,12 +31,4 @@
 .el-pagination {
   text-align: center;
   padding-top: 10px;
-}
-
-img {
-  border: 0 none;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  vertical-align: top;
 }

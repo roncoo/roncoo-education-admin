@@ -151,7 +151,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss">
 .wangeditor-box {
   box-sizing: content-box;
   position: relative;

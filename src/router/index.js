@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 /* Layout */
 import Layout from '@/layout/index.vue'
+import {useUserStore} from '@/store/modules/user';
 
 // 静态路由
 const constantRoutes = [
@@ -61,7 +62,9 @@ export default router
 const routerMap = new Map();
 
 // 创建路由
-export function createNewRouter(menuList) {
+export function createNewRouter(data) {
+  data = data ? data : useUserStore().getMenuList || []
+  const menuList = data.filter((e) => e.path);
   const routerList = [];
   const modules = import.meta.glob('../views/**/**.vue');
   for (const e of menuList) {

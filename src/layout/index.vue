@@ -1,7 +1,11 @@
 <template>
-  <header :class="{ 'header-collapse': sidebarStore.collapse }"/>
-  <sidebar/>
-  <mains/>
+  <el-container>
+    <sidebar/>
+    <el-container>
+      <header :class="{ 'header-collapse': sidebarStore.collapse }"/>
+      <mains/>
+    </el-container>
+  </el-container>
 </template>
 <script setup>
 import Header from './components/Header/index.vue'
