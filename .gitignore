@@ -1,5 +1,5 @@
-node_modules/
-dist/
+node_modules
+dist
 npm-debug.log*
 yarn-debug.log*
 
@@ -15,10 +15,8 @@ yarn-debug.log*
 *.project
 *.settings
 *.mvn
-*.project
 *.springBeans
 *.factorypath
 
 package-lock.json
-yarn.lock
 pnpm-lock.yaml

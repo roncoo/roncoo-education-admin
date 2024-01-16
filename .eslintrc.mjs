@@ -5,11 +5,14 @@ module.exports = {
         node: true,
         es6: true
     },
+    plugins: ['vue'],
     parser: 'vue-eslint-parser',
     parserOptions: {
         parser: '@typescript-eslint/parser',
         sourceType: 'module'
     },
-    extends: ['eslint:recommended'],
+    extends: [
+        'eslint:recommended'
+    ],
     rules: {}
 }

@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {zhCN} from 'element-plus/dist/locale/zh-cn.min.js';
+import {zhCN} from 'element-plus/dist/locale/zh-cn.min.js'
 import {ElConfigProvider} from 'element-plus'
 </script>

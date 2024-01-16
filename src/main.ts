@@ -15,9 +15,9 @@ if (!getToken()) {
 } else {
     // 初始化（用户已登录）
     loginApi.getUserInfo().then((res: { routerList: any; }) => {
-        useUserStore().login(res)
         createNewRouter(res.routerList)
         init()
+        useUserStore().login(res)
     })
 }
 
