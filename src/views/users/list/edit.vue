@@ -28,7 +28,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {usersEdit} from '@/api/user.js';
+import {usersEdit} from '@/api/user';
 
 import {getEnum} from '@/utils/utils';
 

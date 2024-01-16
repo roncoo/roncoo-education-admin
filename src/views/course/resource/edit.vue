@@ -22,7 +22,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {resourceEdit, resourceSave} from '@/api/course.js';
+import {resourceEdit, resourceSave} from '@/api/course';
 
 export default defineComponent({
   components: {

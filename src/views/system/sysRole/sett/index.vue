@@ -1,20 +1,20 @@
 <template>
   <el-dialog
-    :model-value="visible"
-    :before-close="handleClose"
-    :title="title"
-    center
-    width="400px"
+      :model-value="visible"
+      :before-close="handleClose"
+      :title="title"
+      center
+      width="400px"
   >
     <div style="min-height: 10vh">
       <el-tree
-        ref="tree"
-        :data="availableList"
-        :props="defaultProps"
-        accordion
-        highlight-current
-        node-key="id"
-        show-checkbox
+          ref="tree"
+          :data="availableList"
+          :props="defaultProps"
+          accordion
+          highlight-current
+          node-key="id"
+          show-checkbox
       />
     </div>
 
@@ -64,7 +64,7 @@ export default {
     sysMenuList().then(res => {
       for (const index in res) {
         const info = res[index];
-        const treeInfo = {id: info.id, label:  info.menuName};
+        const treeInfo = {id: info.id, label: info.menuName};
         info.childrenList = info.childrenList || [];
         if (info.childrenList.length > 0) {
           treeInfo.children = this.recursiveTreeInfo(info.id, info.childrenList);

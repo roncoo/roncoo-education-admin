@@ -17,7 +17,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {orderInfoEdit} from '@/api/user.js';
+import {orderInfoEdit} from '@/api/user';
 
 export default defineComponent({
   components: {},

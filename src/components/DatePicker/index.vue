@@ -8,16 +8,16 @@
     </el-select>
     <el-date-picker v-model="startDate" value-format="YYYY-MM-DD" type="date" placeholder="选择天" v-if="collectDateType === 1" class="w250" :editable="false" :clearable="false" :disabled-date="disabledDate"/>
     <el-date-picker
-      v-model="startDate"
-      type="week"
-      :format="format.startTime + ' 至 ' + format.endTime"
-      value-format="YYYY-MM-DD"
-      placeholder="选择周"
-      v-if="collectDateType === 2"
-      @change="handleWeekChange"
-      class="w250"
-      :editable="false"
-      :disabled-date="disabledDate"
+        v-model="startDate"
+        type="week"
+        :format="format.startTime + ' 至 ' + format.endTime"
+        value-format="YYYY-MM-DD"
+        placeholder="选择周"
+        v-if="collectDateType === 2"
+        @change="handleWeekChange"
+        class="w250"
+        :editable="false"
+        :disabled-date="disabledDate"
     />
     <el-date-picker v-model="startDate" value-format="YYYY-MM-DD" type="month" placeholder="选择月" v-if="collectDateType === 3" class="w250" :editable="false" :clearable="false" :disabled-date="disabledDate"/>
     <el-date-picker v-model="startDate" value-format="YYYY-MM-DD" type="year" placeholder="选择年" v-if="collectDateType === 4" class="w250" :editable="false" :clearable="false" :disabled-date="disabledDate"/>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {parseTime} from '@/utils';
+import {parseTime} from '@/utils/index';
 import {onMounted, reactive, ref, watch} from 'vue';
 
 const dayTime = 24 * 60 * 60 * 1000

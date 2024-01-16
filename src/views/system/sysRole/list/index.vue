@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {sysRoleDelete, sysRolePage, sysRoleStatusId, sysRoleView} from '@/api/system.js'
+import {sysRoleDelete, sysRolePage, sysRoleStatusId, sysRoleView} from '@/api/system'
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';

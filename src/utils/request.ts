@@ -1,8 +1,8 @@
 import axios from 'axios'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {getToken, removeToken} from '@/utils/cookie'
-import router from '@/router';
-import {useUserStore} from '@/store/modules/user';
+import router from '@/router/index'
+import {useUserStore} from '@/store/modules/user'
 
 const BaseURL = '/gateway'
 const pending = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识

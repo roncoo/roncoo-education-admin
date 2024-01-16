@@ -34,7 +34,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import {carouselEdit, carouselSave} from '@/api/system.js';
+import {carouselEdit, carouselSave} from '@/api/system';
 import {getEnum} from '@/utils/utils';
 
 export default defineComponent({

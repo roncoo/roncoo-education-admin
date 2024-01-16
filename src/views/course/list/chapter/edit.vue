@@ -28,7 +28,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {courseChapterEdit, courseChapterSave} from '@/api/course.js';
+import {courseChapterEdit, courseChapterSave} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
 import {getEnum} from '@/utils/utils';

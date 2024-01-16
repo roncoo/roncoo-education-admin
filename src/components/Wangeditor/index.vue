@@ -2,7 +2,7 @@
   <div :id="ids" :style="{ height: height + 'px' }" class="wangeditor-box"/>
 </template>
 <script>
-import {uploadApi} from '@/api/upload.js';
+import {uploadApi} from '@/api/upload';
 import E from 'wangeditor'
 
 export default {
@@ -78,10 +78,10 @@ export default {
       const file = files[0];
       uploadApi.pic({file: file}, function(int) {
       })
-        .then(insert)
-        .catch(() => {
-          this.$msgBox({content: '上传图片出错，请稍后重试'});
-        });
+          .then(insert)
+          .catch(() => {
+            this.$msgBox({content: '上传图片出错，请稍后重试'});
+          });
     },
     renderEditor() {
       function removeWordXml(text) {

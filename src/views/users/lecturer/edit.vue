@@ -40,7 +40,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import {lecturerEdit, lecturerSave} from '@/api/user.js';
+import {lecturerEdit, lecturerSave} from '@/api/user';
 
 export default defineComponent({
   components: {

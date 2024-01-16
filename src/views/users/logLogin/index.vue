@@ -32,9 +32,9 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {logLoginPage} from '@/api/user.js'
+import {logLoginPage} from '@/api/user'
 import {getEnum} from '@/utils/utils';
 
 export default defineComponent({

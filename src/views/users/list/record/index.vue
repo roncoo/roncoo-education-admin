@@ -39,12 +39,12 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {userStudyePage} from '@/api/course.js'
-import {userCoursePage} from '@/api/user.js'
+import {userStudyePage} from '@/api/course'
+import {userCoursePage} from '@/api/user'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
 import {getEnum} from '@/utils/utils';

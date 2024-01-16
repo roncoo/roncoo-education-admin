@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {uploadApi} from '@/api/upload.js';
+import {uploadApi} from '@/api/upload';
 
 export default {
   name: 'UploadImage',

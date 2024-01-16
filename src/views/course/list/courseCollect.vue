@@ -22,11 +22,11 @@
 
 <script>
 
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {userCourseCollect} from '@/api/course.js'
+import {userCourseCollect} from '@/api/course'
 import {useRoute} from 'vue-router/dist/vue-router';
 
 export default defineComponent({

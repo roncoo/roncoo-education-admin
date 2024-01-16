@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import {statApi} from '@/api/dashboard.js';
+import {statApi} from '@/api/dashboard';
 import Vod from './statVod.vue'
 import Login from './statLogin.vue'
 

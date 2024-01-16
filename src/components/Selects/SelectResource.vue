@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import {resourcePage} from '@/api/course.js';
-import {getSize, formatDuring} from '@/utils/utils.js'
+import {resourcePage} from '@/api/course';
+import {getSize, formatDuring} from '@/utils/utils'
 
 export default {
   name: 'SelectResource',

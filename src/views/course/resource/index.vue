@@ -91,12 +91,12 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
 
-import {resourceDelete, resourceEdit, resourcePage} from '@/api/course.js'
-import {getSize, formatDuring, getEnum} from '@/utils/utils.js'
+import {resourceDelete, resourceEdit, resourcePage} from '@/api/course'
+import {getSize, formatDuring, getEnum} from '@/utils/utils'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 

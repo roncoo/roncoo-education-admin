@@ -53,12 +53,12 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
-import {categoryDelete, categoryEdit, categoryList} from '@/api/course.js'
+import {categoryDelete, categoryEdit, categoryList} from '@/api/course'
 import Edit from './edit.vue';
 import Add from './add.vue';
 import {getEnum} from '@/utils/utils';

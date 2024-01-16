@@ -41,7 +41,7 @@ import {ref, reactive, onMounted} from 'vue';
 import {setToken} from '@/utils/cookie';
 import {useRouter} from 'vue-router';
 import {useUserStore} from '@/store/modules/user';
-import {Discount} from '@element-plus/icons-vue';
+import {createNewRouter} from '@/router/index';
 
 const router = useRouter();
 const loading = ref(false)
@@ -76,6 +76,8 @@ async function handleLogin() {
     // 更新store
     await useUserStore().login(res)
     // 初始化路由
+    createNewRouter(res.routerList)
+    console.log('111', res.routerList)
     await router.push('/');
   } catch (error) {
     console.error(error)

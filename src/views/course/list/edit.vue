@@ -66,7 +66,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {categoryList, courseEdit, courseSave} from '@/api/course.js';
+import {categoryList, courseEdit, courseSave} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';

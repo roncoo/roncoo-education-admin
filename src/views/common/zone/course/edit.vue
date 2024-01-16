@@ -22,7 +22,7 @@
 <script setup>
 import {reactive, ref, toRefs, watch} from 'vue';
 import {ElMessage} from 'element-plus';
-import {zoneCourseEdit, zoneCourseSave} from '@/api/course.js';
+import {zoneCourseEdit, zoneCourseSave} from '@/api/course';
 import SelectCourse from '@/components/Selects/Course/index.vue';
 
 const props = defineProps({

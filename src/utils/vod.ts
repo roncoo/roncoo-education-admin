@@ -18,21 +18,21 @@ export function polyvUpload(file) {
   const uploader = polyvClient.addFile(
     file, // file 为待上传的文件对象
     {
-      FileStarted: function(uploadInfo) { // 文件开始上传回调
+      FileStarted: function (uploadInfo) { // 文件开始上传回调
         //console.log('开始')
       },
-      FileProgress: function(uploadInfo) { // 文件上传过程返回上传进度信息回调
+      FileProgress: function (uploadInfo) { // 文件上传过程返回上传进度信息回调
         //console.log('过程')
       },
-      FileStopped: function(uploadInfo) { // 文件暂停上传回调
+      FileStopped: function (uploadInfo) { // 文件暂停上传回调
         //console.log('暂停')
       },
-      FileSucceed: function(uploadInfo) { // 文件上传成功回调
+      FileSucceed: function (uploadInfo) { // 文件上传成功回调
         //console.log(uploadInfo)
         const resource = {resourceName: uploadInfo.fileData.filename, resourceSize: uploadInfo.fileData.filesize, videoVid: uploadInfo.fileData.vid}
         uploadApi.saveResource(resource);
       },
-      FileFailed: function(uploadInfo) { // 文件上传失败回调
+      FileFailed: function (uploadInfo) { // 文件上传失败回调
         console.error(uploadInfo)
         //ElMessage.error(uploadInfo);
       }

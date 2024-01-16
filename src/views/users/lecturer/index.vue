@@ -54,10 +54,10 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable.js';
+import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {lecturerDelete, lecturerEdit, lecturerPage} from '@/api/user.js'
+import {lecturerDelete, lecturerEdit, lecturerPage} from '@/api/user'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 

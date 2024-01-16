@@ -33,7 +33,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {courseChapterPeriodEdit, courseChapterPeriodSave} from '@/api/course.js';
+import {courseChapterPeriodEdit, courseChapterPeriodSave} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
 import SelectResource from '@/components/Selects/SelectResource.vue';

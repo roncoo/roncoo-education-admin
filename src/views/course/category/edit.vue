@@ -23,7 +23,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {categoryEdit, categorySave} from '@/api/course.js';
+import {categoryEdit, categorySave} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
 

@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import {coursePage} from '@/api/course.js';
-import {getSize, formatDuring} from '@/utils/utils.js'
+import {coursePage} from '@/api/course';
+import {getSize, formatDuring} from '@/utils/utils'
 
 export default {
   name: 'SelectCourse',
