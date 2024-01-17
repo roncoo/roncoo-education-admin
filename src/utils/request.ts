@@ -5,10 +5,10 @@ import router from '@/router/index'
 import {useUserStore} from '@/store/modules/user'
 
 const BaseURL = '/gateway'
-const pending = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+const pending: any[] = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 const CancelToken = axios.CancelToken;
 
-const removePending = (config, isCancel) => {
+const removePending = (config: any, isCancel: boolean) => {
     for (const p in pending) {
         // 枚举不处理
         if (config.url.indexOf('enum') === -1) {
@@ -16,7 +16,7 @@ const removePending = (config, isCancel) => {
                 if (isCancel) {
                     pending[p].f(); // 执行取消操作
                 }
-                pending.splice(p, 1); // 把这条记录从数组中移除
+                pending.splice(Number(p), 1); // 把这条记录从数组中移除
             }
         }
     }
@@ -32,7 +32,6 @@ const request = axios.create({
 request.interceptors.request.use(
     config => {
         removePending(config, true); // 在一个ajax发送前执行一下取消操作
-
         const token = getToken()
         if (token) {
             config.headers['token'] = token
@@ -53,10 +52,10 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         // 在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
-        removePending({url: response.config.url.replace(BaseURL, ''), method: response.config.method}, false);
+        removePending({url: response.config.url ? response.config.url.replace(BaseURL, '') : '', method: response.config.method}, false);
         const res = response.data
         // console.log(res)
-        if (res.code && res.code !== 200) {
+        if (response.status !== 200 || res.code && res.code !== 200) {
             if (res.code === 99 || res.code === 301) {
                 removeToken()
                 router.push('/login')
@@ -98,28 +97,42 @@ export default request
 /**
  * post请求
  */
-export const postRequest = (url, data = {}) => {
-    return request({url, data: data, method: 'post'});
+export const postRequest = (url: string, data = {}) => {
+    return request({url: url, data: data, method: 'post'});
 }
 
 /**
  * get请求
  */
-export const getRequest = (url, params) => {
-    return request({url, params: params, method: 'get'});
+export const getRequest = (url: string) => {
+    return request({url: url, method: 'get'});
 }
 
 /**
  * put请求
  */
-export const putRequest = (url, data = {}) => {
-    return request({url, data: data, method: 'put'});
+export const putRequest = (url: string, data = {}) => {
+    return request({url: url, data: data, method: 'put'});
 }
 
 /**
  * delete请求
  */
-export const deleteRequest = (url, params) => {
-    return request({url, params: params, method: 'delete'});
+export const deleteRequest = (url: string) => {
+    return request({url: url, method: 'delete'});
 }
 
+export const upload = (data: any, cb: any, fileName: string) => {
+    const formData = new FormData()
+    formData.append(fileName, data.file)
+    const config = {
+        onUploadProgress: (progressEvent: any) => {
+            const videoUploadPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+            // 计算上传进度
+            if (cb) {
+                cb(videoUploadPercent)
+            }
+        }
+    }
+    return request.post('/system/admin/upload/doc', formData, config)
+}

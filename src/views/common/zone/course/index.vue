@@ -59,7 +59,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
-import {zoneCourseDelete, zoneCourseEdit, zoneCoursePage} from '@/api/course'
+import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -71,9 +71,9 @@ export default defineComponent({
 
     const route = useRoute()
     const apis = reactive({
-      getList: zoneCoursePage,
-      delete: zoneCourseDelete,
-      updateStatus: zoneCourseEdit
+      getList: courseApi.zoneCoursePage,
+      delete: courseApi.zoneCourseDelete,
+      updateStatus: courseApi.zoneCourseEdit
     })
     const state = reactive({
       ...UseTable(apis, {zoneId: route.query.zoneId}),

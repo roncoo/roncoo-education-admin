@@ -2,26 +2,23 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 /* Layout */
 import Layout from '@/layout/index.vue'
 import {useUserStore} from '@/store/modules/user';
+import {getToken, removeToken} from "@/utils/cookie";
 
 // 静态路由
 const constantRoutes = [
     {
         path: '/login',
-        component: () => import('@/views/login/index.vue'),
-        hidden: true
+        component: () => import('@/views/login.vue')
     },
     {
         path: '/404',
         component: () => import('@/views/404.vue'),
-        meta: {title: '404'},
-        hidden: true
+        meta: {title: '404'}
     },
     {
         path: '/403',
         component: () => import('@/views/403.vue'),
-        meta: {title: '403'},
-        hidden: true,
-        isLayout: true
+        meta: {title: '403'}
     },
     {
         path: '/',
@@ -51,6 +48,12 @@ router.beforeEach(async (to, from, next) => {
         next();
         return;
     }
+
+    if (!getToken()) {
+        next({path: '/login'});
+        return;
+    }
+
     // 获取路由
     let toRouterInfo = routerMap.get(to.name);
     next();

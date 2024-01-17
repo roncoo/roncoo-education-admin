@@ -58,7 +58,7 @@ import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {navDelete, navEdit, navPage} from '@/api/system'
+import {systemApi} from '@/api/system'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -72,9 +72,9 @@ export default defineComponent({
       sort: 1
     })
     const apis = reactive({
-      getList: navPage,
-      delete: navDelete,
-      updateStatus: navEdit
+      getList: systemApi.navPage,
+      delete: systemApi.navDelete,
+      updateStatus: systemApi.navEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

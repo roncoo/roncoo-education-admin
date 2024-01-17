@@ -30,8 +30,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-
-import {zoneEdit, zoneSave} from '@/api/course';
+import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
 import {getEnum} from '@/utils/utils';
@@ -112,9 +111,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await zoneEdit(data);
+            d = await courseApi.zoneEdit(data);
           } else {
-            d = await zoneSave(data);
+            d = await courseApi.zoneSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

@@ -28,20 +28,20 @@
       <div>
         <a v-if="service.websiteIcp" href="http://beian.miit.gov.cn/" target="_blank">{{ service.websiteIcp }}</a>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <img v-if="service.websitePrn" :alt="service.websitePrn" src="@/assets/images/common/beian.png"/>
+        <img v-if="service.websitePrn" :alt="service.websitePrn" src="../assets/images/common/beian.png"/>
         <a v-if="service.websitePrn" :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrnNo" target="_blank">&nbsp;{{ service.websitePrn }} </a>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import {loginApi} from '@/api/login';
+<script setup lang="ts">
+import {loginApi} from '@/api/login.js';
 import {ref, reactive, onMounted} from 'vue';
-import {setToken} from '@/utils/cookie';
+import {setToken} from '@/utils/cookie.js';
 import {useRouter} from 'vue-router';
-import {useUserStore} from '@/store/modules/user';
-import {createNewRouter} from '@/router/index';
+import {useUserStore} from '@/store/modules/user.js';
+import {createNewRouter} from '@/router/index.js';
 
 const router = useRouter();
 const loading = ref(false)
@@ -62,9 +62,10 @@ onMounted(() => {
   getWebsite()
 })
 
-async function getWebsite() {
-  let res = await loginApi.getWebsite();
-  service.value = res;
+function getWebsite() {
+  loginApi.getWebsite().then((res) => {
+    service.value = res;
+  })
 }
 
 async function handleLogin() {

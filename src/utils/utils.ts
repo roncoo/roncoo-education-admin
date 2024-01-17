@@ -1,5 +1,6 @@
 import {systemApi} from '@/api/system';
-import {getSession, getStore, setSession} from '@/utils/storage';
+import {getSession, setSession} from '@/utils/storage';
+import { AxiosResponse } from 'axios';
 
 /**
  * 阿拉伯数字转中文数字,
@@ -7,7 +8,7 @@ import {getSession, getStore, setSession} from '@/utils/storage';
  * 传入数字字符串则没有限制
  * @param {number|string} digit
  */
-export const toZhDigit = (digit) => {
+export const toZhDigit = (digit: string | any[]) => {
   digit = typeof digit === 'number' ? String(digit) : digit;
   const zh = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
   const unit = ['千', '百', '十', ''];
@@ -113,7 +114,7 @@ export const toZhDigit = (digit) => {
  * @param mss
  * @returns {string}
  */
-export const formatDuring = (mss) => {
+export const formatDuring = (mss: number) => {
   // const days = parseInt(mss / (1000 * 60 * 60 * 24));
   const hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
   const minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60))
@@ -122,7 +123,7 @@ export const formatDuring = (mss) => {
 }
 
 // 获取文件大小
-export function getSize(limit) {
+export function getSize(limit: number) {
   let size = '';
 
   if (limit && limit !== 0) {
@@ -153,11 +154,11 @@ export function getSize(limit) {
  * @param param
  * @returns {any}
  */
-export function deepCopy(param) {
+export function deepCopy(param: any) {
   return JSON.parse(JSON.stringify(param))
 }
 
-export async function getEnum(enumName, type = 'attr') {
+export async function getEnum(enumName: string, type = 'attr') {
   const enumAttr = getSession(enumName)
   if (enumAttr) {
     if (type === 'obj') {
@@ -174,7 +175,7 @@ export async function getEnum(enumName, type = 'attr') {
   }
 }
 
-function toObj(attr) {
+function toObj(attr: string | any[] | AxiosResponse<any, any>) {
   const obj = {}
   for (var i = 0; i < attr.length; i++) {
     obj[attr[i].code] = attr[i].desc

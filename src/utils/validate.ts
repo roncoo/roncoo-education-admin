@@ -6,7 +6,7 @@
  * @param {string} path
  * @returns {Boolean}
  */
-export function isExternal(path) {
+export function isExternal(path: string) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 
@@ -14,42 +14,42 @@ export function isExternal(path) {
  * @param {string} str
  * @returns {Boolean}
  */
-export function validUsername(str) {
+export function validUsername(str: string) {
   const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
 /** 合法uri*/
-export function validateURL(textval) {
+export function validateURL(textval: string) {
   const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
   return urlregex.test(textval)
 }
-export function isMoney(number) {
+export function isMoney(number: string) {
   return /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test(number)
 }
 /**
   *邮箱
 * */
-export function isEmail(email) {
+export function isEmail(email: string) {
   return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(email)
 }
 
-export function isCardNo(no) {
+export function isCardNo(no: string) {
   return /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/.test(no) || /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/.test(no)
 }
  // 正则 英文+数字
-export function isLoginName(no) {
+export function isLoginName(no: string) {
   return /[A-Za-z0-9.,!~@#$%&*^><|]+/gi.test(no)
 }
 
-export function isPhoneNo(no) {
+export function isPhoneNo(no: string) {
   return /^1[3456789]\d{9}$/.test(no)
 }
 /** 2-20个字符，以大小写字母或中文开头，可包含数字、“.”、“_”、“:”或“-”*/
-export function ecsName(name) {
+export function ecsName(name: string) {
   return /^[A-Za-z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_.:-]{1,19}$/.test(name)
 }
 /** 2-128个字符，以字母或中文开头，可包含数字，"_"或"-"*/
-export function networkName(name) {
+export function networkName(name: string) {
   return /^[A-Za-z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_-]{1,127}$/.test(name)
 }
 /** 检测密码强度，
@@ -57,7 +57,7 @@ export function networkName(name) {
  * 2：中-字母+数字，字母+特殊字符，数字+特殊字符
  * 3：强-字母+数字+特殊字符
  */
-export function checkPWD(no) {
+export function checkPWD(no: string) {
   if (/^(?![a-zA-z]+$)(?!\d+$)(?![!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$)(?![a-zA-z\d]+$)(?![a-zA-z!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$)(?![\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$)[a-zA-Z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/.test(no)) {
     return 3
   } else
@@ -71,6 +71,6 @@ export function checkPWD(no) {
   }
 }
 
-export function validPWd (no) {
+export function validPWd (no: string) {
   return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(no)
 }

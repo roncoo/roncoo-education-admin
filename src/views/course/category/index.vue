@@ -58,7 +58,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
-import {categoryDelete, categoryEdit, categoryList} from '@/api/course'
+import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
 import Add from './add.vue';
 import {getEnum} from '@/utils/utils';
@@ -74,9 +74,9 @@ export default defineComponent({
 
     const route = useRoute()
     const apis = reactive({
-      getList: categoryList,
-      delete: categoryDelete,
-      updateStatus: categoryEdit
+      getList: courseApi.categoryList,
+      delete: courseApi.categoryDelete,
+      updateStatus: courseApi.categoryEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

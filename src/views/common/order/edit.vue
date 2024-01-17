@@ -17,7 +17,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {orderInfoEdit} from '@/api/user';
+import * as userApi from '@/api/user.js';
 
 export default defineComponent({
   components: {},
@@ -87,7 +87,7 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await orderInfoEdit(data);
+            d = await userApi.orderInfoEdit(data);
           } else {
             //
           }

@@ -71,9 +71,9 @@ import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {orderInfoPage} from '@/api/user'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
+import * as userApi from '@/api/user.js';
 
 export default defineComponent({
   components: {
@@ -81,7 +81,7 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: orderInfoPage
+      getList: userApi.orderInfoPage
     })
     const state = reactive({
       ...UseTable(apis, {}),

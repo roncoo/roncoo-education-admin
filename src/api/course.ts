@@ -1,179 +1,178 @@
-import request from '@/utils/request'
+import {deleteRequest, postRequest, putRequest} from '@/utils/request'
 
-// 专区课程分页
-export function zoneCoursePage(data) {
-  return request({url: '/course/admin/zone/course/page', method: 'post', data})
-}
+export const courseApi = {
+    // 专区课程分页
+    zoneCoursePage: (data: any) => {
+        return postRequest('/course/admin/zone/course/page', data)
+    },
 
 // 专区课程修改
-export function zoneCourseEdit(data) {
-  return request.put('/course/admin/zone/course/edit', data)
-}
+    zoneCourseEdit: (data: any) => {
+        return putRequest('/course/admin/zone/course/edit', data)
+    },
 
 // 专区课程保存
-export function zoneCourseSave(data) {
-  return request.post('/course/admin/zone/course/save', data)
-}
+    zoneCourseSave: (data: any) => {
+        return postRequest('/course/admin/zone/course/save', data)
+    },
 
 // 专区课程修改
-export function zoneCourseDelete(data) {
-  return request.delete('/course/admin/zone/course/delete?id=' + data.id, data)
-}
+    zoneCourseDelete: (data: any) => {
+        return deleteRequest('/course/admin/zone/course/delete?id=' + data.id)
+    },
 
 // 专区分页
-export function zonePage(data) {
-  return request({url: '/course/admin/zone/page', method: 'post', data})
-}
+    zonePage: (data: any) => {
+        return postRequest('/course/admin/zone/page', data)
+    },
 
 // 专区修改
-export function zoneEdit(data) {
-  return request.put('/course/admin/zone/edit', data)
-}
+    zoneEdit: (data: any) => {
+        return putRequest('/course/admin/zone/edit', data)
+    },
 
 // 专区保存
-export function zoneSave(data) {
-  return request.post('/course/admin/zone/save', data)
-}
+    zoneSave: (data: any) => {
+        return postRequest('/course/admin/zone/save', data)
+    },
 
 // 专区修改
-export function zoneDelete(data) {
-  return request.delete('/course/admin/zone/delete?id=' + data.id, data)
-}
+    zoneDelete: (data: any) => {
+        return deleteRequest('/course/admin/zone/delete?id=' + data.id)
+    },
 
 // 分类列表
-export function categoryList(data) {
-  return request({url: '/course/admin/category/list', method: 'post', data: data})
-}
+    categoryList: (data: any) => {
+        return postRequest('/course/admin/category/list', data)
+    },
 
 // 分类修改
-export function categoryEdit(data) {
-  return request.put('/course/admin/category/edit', data)
-}
+    categoryEdit: (data: any) => {
+        return putRequest('/course/admin/category/edit', data)
+    },
 
 // 分类保存
-export function categorySave(data) {
-  return request.post('/course/admin/category/save', data)
-}
+    categorySave: (data: any) => {
+        return postRequest('/course/admin/category/save', data)
+    },
 
 // 分类修改
-export function categoryDelete(data) {
-  return request.delete('/course/admin/category/delete?id=' + data.id, data)
-}
+    categoryDelete: (data: any) => {
+        return deleteRequest('/course/admin/category/delete?id=' + data.id)
+    },
 
 // 资源分页
-export function resourcePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/resource/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    resourcePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/resource/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 资源修改
-export function resourceEdit(data) {
-  return request.put('/course/admin/resource/edit', data)
-}
+    resourceEdit: (data: any) => {
+        return putRequest('/course/admin/resource/edit', data)
+    },
 
 // 资源保存
-export function resourceSave(data) {
-  return request.post('/course/admin/resource/save', data)
-}
+    resourceSave: (data: any) => {
+        return postRequest('/course/admin/resource/save', data)
+    },
 
 // 资源修改
-export function resourceDelete(data) {
-  return request.delete('/course/admin/resource/delete?id=' + data.id, data)
-}
+    resourceDelete: (data: any) => {
+        return deleteRequest('/course/admin/resource/delete?id=' + data.id)
+    },
 
 // 课程章节分页
-export function courseChapterPeriodPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/course/chapter/period/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    courseChapterPeriodPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/course/chapter/period/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 课程章节修改
-export function courseChapterPeriodEdit(data) {
-  return request.put('/course/admin/course/chapter/period/edit', data)
-}
+    courseChapterPeriodEdit: (data: any) => {
+        return putRequest('/course/admin/course/chapter/period/edit', data)
+    },
 
 // 课程章节保存
-export function courseChapterPeriodSave(data) {
-  return request.post('/course/admin/course/chapter/period/save', data)
-}
+    courseChapterPeriodSave: (data: any) => {
+        return postRequest('/course/admin/course/chapter/period/save', data)
+    },
 
 // 课程章节修改
-export function courseChapterPeriodDelete(data) {
-  return request.delete('/course/admin/course/chapter/period/delete?id=' + data.id, data)
-}
+    courseChapterPeriodDelete: (data: any) => {
+        return deleteRequest('/course/admin/course/chapter/period/delete?id=' + data.id)
+    },
 
 // 课程章分页
-export function courseChapterPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/course/chapter/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    courseChapterPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/course/chapter/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 课程章修改
-export function courseChapterEdit(data) {
-  return request.put('/course/admin/course/chapter/edit', data)
-}
+    courseChapterEdit: (data: any) => {
+        return putRequest('/course/admin/course/chapter/edit', data)
+    },
 
 // 课程章保存
-export function courseChapterSave(data) {
-  return request.post('/course/admin/course/chapter/save', data)
-}
+    courseChapterSave: (data: any) => {
+        return postRequest('/course/admin/course/chapter/save', data)
+    },
 
 // 课程章修改
-export function courseChapterDelete(data) {
-  return request.delete('/course/admin/course/chapter/delete?id=' + data.id, data)
-}
+    courseChapterDelete: (data: any) => {
+        return deleteRequest('/course/admin/course/chapter/delete?id=' + data.id)
+    },
 
 // 课程分页
-export function coursePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/course/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    coursePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/course/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 课程修改
-export function courseEdit(data) {
-  return request.put('/course/admin/course/edit', data)
-}
+    courseEdit: (data: any) => {
+        return putRequest('/course/admin/course/edit', data)
+    },
 
 // 课程保存
-export function courseSave(data) {
-  return request.post('/course/admin/course/save', data)
-}
+    courseSave: (data: any) => {
+        return postRequest('/course/admin/course/save', data)
+    },
 
 // 课程修改
-export function courseDelete(data) {
-  return request.delete('/course/admin/course/delete?id=' + data.id, data)
-}
+    courseDelete: (data: any) => {
+        return deleteRequest('/course/admin/course/delete?id=' + data.id)
+    },
 
 // 分页
-export function userCourseRecord(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/user/course/record', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    userCourseRecord: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/user/course/record', {pageCurrent, pageSize, ...params})
+    },
 
 // 分页
-export function userStudyePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/user/study/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    userStudyePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/user/study/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 课程评论
-export function userCourseComment(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/user/course/comment/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    userCourseComment: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/user/course/comment/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 课程评论删除
-export function courseCommentDelete(data) {
-  return request.delete('/course/admin/user/course/comment/delete?id=' + data.id, data)
-}
+    courseCommentDelete: (data: any) => {
+        return deleteRequest('/course/admin/user/course/comment/delete?id=' + data.id)
+    },
 
 // 课程收藏
-export function userCourseCollect(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/course/admin/user/course/collect/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+    userCourseCollect: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/user/course/collect/page', {pageCurrent, pageSize, ...params})
+    },
+
+    /**
+     * 素材信息预览
+     * @param data
+     * @returns {*},
+     */
+    resourceLibraryPreview: (data: any) => {
+        return postRequest('/resource/admin/material/preview', data)
+    }
 }
 
-/**
- * 素材信息预览
- * @param data
- * @returns {*}
- */
-export function resourceLibraryPreview(data) {
-  return request({
-    url: '/resource/admin/material/preview',
-    method: 'post',
-    data
-  })
-}

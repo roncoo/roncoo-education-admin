@@ -1,7 +1,6 @@
 <template>
   <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="600" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-
       <el-form-item label="图片" prop="carouselHead">
         <upload-image :image-url="formModel.data.carouselImg" :height="100" :width="400" class="avatar" @success=" (val) => {   formModel.data.carouselImg = val.url;  }"/>
       </el-form-item>
@@ -34,7 +33,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import {carouselEdit, carouselSave} from '@/api/system';
+import {systemApi} from '@/api/system';
 import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
@@ -116,9 +115,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await carouselEdit(data);
+            d = await systemApi.carouselEdit(data);
           } else {
-            d = await carouselSave(data);
+            d = await systemApi.carouselSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

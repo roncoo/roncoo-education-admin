@@ -7,13 +7,13 @@ export const loginApi = {
     getCodeImg: () => {
         return getRequest('/system/api/common/code')
     },
-    login: (data) => {
+    login: (data: any) => {
         return postRequest('/system/admin/login/password', data)
     },
     getUserInfo: () => {
         return getRequest('/system/admin/sys/user/current')
     },
-    getUserMenu: (data) => {
+    getUserMenu: (data: any) => {
         return postRequest('/system/admin/sys/menu/user/list', data)
     },
     getUserPermission: () => {

@@ -1,274 +1,268 @@
-import request, {postRequest} from '@/utils/request'
+import {deleteRequest, getRequest, postRequest, putRequest} from '@/utils/request'
 
 export const systemApi = {
-  getEnum: (enumName) => {
-    return postRequest('/system/api/common/enum', enumName)
-  }
-}
+    getEnum: (data: {}) => {
+        return postRequest('/system/api/common/enum', data)
+    },
 
-// 头部导航分页
-export function navPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/website/nav/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    // 头部导航分页
+    navPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/website/nav/page', {pageCurrent, pageSize, ...params})
+    },
 
-// 头部导航修改
-export function navEdit(data) {
-  return request.put('/system/admin/website/nav/edit', data)
-}
+    // 头部导航修改
+    navEdit: (data: any) => {
+        return putRequest('/system/admin/website/nav/edit', data)
+    },
 
 // 头部导航保存
-export function navSave(data) {
-  return request.post('/system/admin/website/nav/save', data)
-}
+    navSave: (data: any) => {
+        return postRequest('/system/admin/website/nav/save', data)
+    },
 
 // 头部导航删除
-export function navDelete(data) {
-  return request.delete('/system/admin/website/nav/delete?id=' + data.id, data)
-}
+    navDelete: (data: any) => {
+        return deleteRequest('/system/admin/website/nav/delete?id=' + data.id)
+    },
 
 // 轮播分页
-export function carouselPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/website/carousel/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    carouselPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/website/carousel/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 轮播修改
-export function carouselEdit(data) {
-  return request.put('/system/admin/website/carousel/edit', data)
-}
+    carouselEdit: (data: any) => {
+        return putRequest('/system/admin/website/carousel/edit', data)
+    },
 
 // 轮播保存
-export function carouselSave(data) {
-  return request.post('/system/admin/website/carousel/save', data)
-}
+    carouselSave: (data: any) => {
+        return postRequest('/system/admin/website/carousel/save', data)
+    },
 
 // 轮播删除
-export function carouselDelete(data) {
-  return request.delete('/system/admin/website/carousel/delete?id=' + data.id, data)
-}
+    carouselDelete: (data: any) => {
+        return deleteRequest('/system/admin/website/carousel/delete?id=' + data.id)
+    },
 
 // 文章分页
-export function articlePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/website/article/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    articlePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/website/article/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 文章修改
-export function articleEdit(data) {
-  return request.put('/system/admin/website/article/edit', data)
-}
+    articleEdit: (data: any) => {
+        return putRequest('/system/admin/website/article/edit', data)
+    },
 
 // 文章保存
-export function articleSave(data) {
-  return request.post('/system/admin/website/article/save', data)
-}
+    articleSave: (data: any) => {
+        return postRequest('/system/admin/website/article/save', data)
+    },
 
 // 文章删除
-export function articleDelete(data) {
-  return request.delete('/system/admin/website/article/delete?id=' + data.id, data)
-}
+    articleDelete: (data: any) => {
+        return deleteRequest('/system/admin/website/article/delete?id=' + data.id)
+    },
 
 // 友情链接分页
-export function linkPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/website/link/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    linkPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/website/link/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 友情链接修改
-export function linkEdit(data) {
-  return request.put('/system/admin/website/link/edit', data)
-}
+    linkEdit: (data: any) => {
+        return putRequest('/system/admin/website/link/edit', data)
+    },
 
 // 友情链接保存
-export function linkSave(data) {
-  return request.post('/system/admin/website/link/save', data)
-}
+    linkSave: (data: any) => {
+        return postRequest('/system/admin/website/link/save', data)
+    },
 
 // 友情链接删除
-export function linkDelete(data) {
-  return request.delete('/system/admin/website/link/delete?id=' + data.id, data)
-}
+    linkDelete: (data: any) => {
+        return deleteRequest('/system/admin/website/link/delete?id=' + data.id)
+    },
 
 // 视频云初始化
-export function videoInit() {
-  return request({url: '/system/admin/sys/config/video/init', method: 'get'})
-}
+    videoInit: () => {
+        return getRequest('/system/admin/sys/config/video/init')
+    },
 
 // 系统配置--列出
-export function sysConfigList(data) {
-  return request({url: '/system/admin/sys/config/list', method: 'post', data: data})
-}
+    sysConfigList: (data: any) => {
+        return postRequest('/system/admin/sys/config/list', data)
+    },
 
 // 系统配置--编辑
-export function sysConfigEdit(data = {}) {
-  return request({url: '/system/admin/sys/config/edit', method: 'put', data: data})
-}
+    sysConfigEdit: (data: any) => {
+        return putRequest('/system/admin/sys/config/edit', data)
+    },
 
 // 系统菜单--列出
-export function sysMenuList(id = 0) {
-  return request({url: '/system/admin/sys/menu/list', method: 'post', data: {id: id}})
-}
+    sysMenuList: (data: any) => {
+        return postRequest('/system/admin/sys/menu/list', data)
+    },
 
 // 系统菜单--新增
-export function sysMenuSave(data = {}) {
-  return request({url: '/system/admin/sys/menu/save', method: 'post', data: data})
-}
+    sysMenuSave: (data: any) => {
+        return postRequest('/system/admin/sys/menu/save', data)
+    },
 
 // 系统菜单--查看
-export function sysMenuView(id) {
-  return request({url: '/system/admin/sys/menu/view', method: 'post', data: {id: id}})
-}
+    sysMenuView: (data: any) => {
+        return postRequest('/system/admin/sys/menu/view', data)
+    },
 
 // 系统菜单--删除
-export function sysMenuDelete(id) {
-  return request({url: '/system/admin/sys/menu/delete', method: 'post', data: {id: id}})
-}
+    sysMenuDelete: (data: any) => {
+        return deleteRequest('/system/admin/sys/menu/delete' + data.id)
+    },
 
 // 系统菜单--编辑
-export function sysMenuEdit(data = {}) {
-  return request({url: '/system/admin/sys/menu/edit', method: 'post', data: data})
-}
+    sysMenuEdit: (data: any) => {
+        return putRequest('/system/admin/sys/menu/edit', data)
+    },
 
 // 系统权限--新增
-export function sysPermissionSave(data = {}) {
-  return request({url: '/system/admin/sys/menu/save', method: 'post', data: data})
-}
+    sysPermissionSave: (data: any) => {
+        return postRequest('/system/admin/sys/menu/save', data)
+    },
 
 // 获取指定角色的权限
-export function sysMenuRoleList(id) {
-  return request.post('/system/admin/sys/menu/role/list', {roleId: id});
-}
+    sysMenuRoleList: (data: any) => {
+        return postRequest('/system/admin/sys/menu/role/list', data);
+    },
 
 // 分配菜单
-export function sysRoleAllocationMenuAndPermission(data = {}) {
-  return request({url: '/system/admin/sys/menu/role/save', method: 'post', data: data});
-}
+    sysRoleAllocationMenuAndPermission: (data: any) => {
+        return postRequest('/system/admin/sys/menu/role/save', data);
+    },
 
 // 系统角色--分页
-export function sysRolePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/sys/role/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    sysRolePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/sys/role/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 系统角色--新增
-export function sysRoleSave(data = {}) {
-  return request({url: '/system/admin/sys/role/save', method: 'post', data: data})
-}
+    sysRoleSave: (data: any) => {
+        return postRequest('/system/admin/sys/role/save', data)
+    },
 
 // 系统角色--查看
-export function sysRoleView(id) {
-  return request.post('/system/admin/sys/role/view', {id})
-}
+    sysRoleView: (data: any) => {
+        return postRequest('/system/admin/sys/role/view', data)
+    },
 
 // 系统角色--删除
-export function sysRoleDelete(id) {
-  return request.post('/system/admin/sys/role/delete', {id})
-}
+    sysRoleDelete: (data: any) => {
+        return postRequest('/system/admin/sys/role/delete', data)
+    },
 
 // 系统角色--编辑
-export function sysRoleEdit(data = {}) {
-  return request({url: '/system/admin/sys/role/edit', method: 'post', data: data})
-}
+    sysRoleEdit: (data: any) => {
+        return putRequest('/system/admin/sys/role/edit', data)
+    },
 
 // 系统角色--状态编辑
-export function sysRoleStatusId(id, statusId) {
-  return request({
-    url: '/system/admin/sys/role/edit', method: 'post', data: {id: id, statusId: statusId}
-  })
-}
+    sysRoleStatusId: (data: any) => {
+        return postRequest('/system/admin/sys/role/edit', data)
+    },
 
 // 系统角色菜单--新增
-export function sysRoleMenuSave(data = {}) {
-  return request({url: '/system/admin/sys/role/menu/save', method: 'post', data: data})
-}
+    sysRoleMenuSave: (data: any) => {
+        return postRequest('/system/admin/sys/role/menu/save', data)
+    },
 
 // 系统角色菜单--分页
-export function sysRoleMenuPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/sys/role/menu/list', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    sysRoleMenuPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/sys/role/menu/list', {pageCurrent, pageSize, ...params})
+    },
 
 // 系统角色菜单--查看
-export function sysRoleMenuView(id) {
-  return request.post('/system/admin/sys/role/menu/view', {id})
-}
+    sysRoleMenuView: (data: any) => {
+        return postRequest('/system/admin/sys/role/menu/view', data)
+    },
 
 // 系统角色菜单--删除
-export function sysRoleMenuDelete(id) {
-  return request.post('/system/admin/sys/role/menu/delete', {id})
-}
+    sysRoleMenuDelete: (data: any) => {
+        return deleteRequest('/system/admin/sys/role/menu/delete/' + data.id)
+    },
 
 // 系统角色菜单--编辑
-export function sysRoleMenuEdit(data = {}) {
-  return request({url: '/system/admin/sys/role/menu/edit', method: 'post', data: data})
-}
+    sysRoleMenuEdit: (data: any) => {
+        return putRequest('/system/admin/sys/role/menu/edit', data)
+    },
 
 // 系统用户--分配角色
-export function sysRoleUserSave(data = {}) {
-  return request({url: '/system/admin/sys/role/user/save', method: 'post', data: data})
-}
+    sysRoleUserSave: (data: any) => {
+        return postRequest('/system/admin/sys/role/user/save', data)
+    },
 
 // 系统用户--查看已分配角色
-export function sysRoleUserList(id) {
-  return request.post('/system/admin/sys/role/user/list', {userId: id})
-}
+    sysRoleUserList: (data: any) => {
+        return postRequest('/system/admin/sys/role/user/list', data)
+    },
 
 // 系统用户--分页
-export function sysUserPage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/sys/user/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    sysUserPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/sys/user/page', {pageCurrent, pageSize, ...params})
+    },
 
 // 系统用户--新增
-export function sysUserSave(data = {}) {
-  return request({url: '/system/admin/sys/user/save', method: 'post', data: data})
-}
+    sysUserSave: (data: any) => {
+        return postRequest('/system/admin/sys/user/save', data)
+    },
 
 // 系统用户--查看
-export function sysUserView(id) {
-  return request.post('/system/admin/sys/user/view', {id})
-}
+    sysUserView: (data: any) => {
+        return postRequest('/system/admin/sys/user/view', data)
+    },
 
 // 系统用户--删除
-export function sysUserDelete(id) {
-  return request.post('/system/admin/sys/user/delete', {id})
-}
+    sysUserDelete: (data: any) => {
+        return postRequest('/system/admin/sys/user/delete', data)
+    },
 
 // 系统用户--编辑
-export function sysUserEdit(data = {}) {
-  return request({url: '/system/admin/sys/user/edit', method: 'post', data: data})
-}
+    sysUserEdit: (data: any) => {
+        return putRequest('/system/admin/sys/user/edit', data)
+    },
 
 // 系统用户状态--编辑
-export function sysUserStatusId(data = {}) {
-  return request({url: '/system/admin/sys/user/edit', method: 'post', data: data})
-}
+    sysUserStatusId: (data: any) => {
+        return postRequest('/system/admin/sys/user/edit', data)
+    },
 
 // 系统用户密码--编辑
-export function sysUserPassword(data = {}) {
-  return request({url: '/system/admin/sys/user/password', method: 'post', data: data})
-}
+    sysUserPassword: (data: any) => {
+        return postRequest('/system/admin/sys/user/password', data)
+    },
 
 // 系统用户角色--分页
-export function sysUserRolePage(params, pageCurrent = 1, pageSize = 20) {
-  return request({url: '/system/admin/sys/user/role/list', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    sysUserRolePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/system/admin/sys/user/role/list', {pageCurrent, pageSize, ...params})
+    },
 
 // 系统用户角色--新增
-export function sysUserRoleSave(data = {}) {
-  return request({url: '/system/admin/sys/user/role/save', method: 'post', data: data})
-}
+    sysUserRoleSave: (data: any) => {
+        return postRequest('/system/admin/sys/user/role/save', data)
+    },
 
 // 系统用户角色--查看
-export function sysUserRoleView(id) {
-  return request.post('/system/admin/sys/user/role/view', {id})
-}
+    sysUserRoleView: (data: any) => {
+        return postRequest('/system/admin/sys/user/role/view', data)
+    },
 
 // 系统用户角色--删除
-export function sysUserRoleDelete(id) {
-  return request.post('/system/admin/sys/user/role/delete', {id})
-}
+    sysUserRoleDelete: (data: any) => {
+        return postRequest('/system/admin/sys/user/role/delete', data)
+    },
 
 // 系统用户角色--编辑
-export function sysUserRoleEdit(data = {}) {
-  return request({url: '/system/admin/sys/user/role/edit', method: 'post', data: data})
+    sysUserRoleEdit: (data: any) => {
+        return putRequest('/system/admin/sys/user/role/edit', data)
+    }
 }
 
-// 获取枚举
-export function enumList(enumName) {
-  return request({url: '/system/api/common/enum', method: 'post', data: {enumName: enumName}})
-}

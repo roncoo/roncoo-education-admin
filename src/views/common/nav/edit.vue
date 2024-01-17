@@ -30,7 +30,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import {navEdit, navSave} from '@/api/system';
+import {systemApi} from '@/api/system';
 import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
@@ -114,9 +114,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await navEdit(data);
+            d = await systemApi.navEdit(data);
           } else {
-            d = await navSave(data);
+            d = await systemApi.navSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

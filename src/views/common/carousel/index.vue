@@ -58,7 +58,7 @@
 import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {carouselDelete, carouselEdit, carouselPage} from '@/api/system'
+import {systemApi} from '@/api/system'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -72,9 +72,9 @@ export default defineComponent({
       sort: 1
     })
     const apis = reactive({
-      getList: carouselPage,
-      delete: carouselDelete,
-      updateStatus: carouselEdit
+      getList: systemApi.carouselPage,
+      delete: systemApi.carouselDelete,
+      updateStatus: systemApi.carouselEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

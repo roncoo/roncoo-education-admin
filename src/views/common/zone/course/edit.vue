@@ -20,9 +20,9 @@
 </template>
 
 <script setup>
-import {reactive, ref, toRefs, watch} from 'vue';
+import {reactive, ref, watch} from 'vue';
 import {ElMessage} from 'element-plus';
-import {zoneCourseEdit, zoneCourseSave} from '@/api/course';
+import {courseApi} from '@/api/course';
 import SelectCourse from '@/components/Selects/Course/index.vue';
 
 const props = defineProps({
@@ -55,9 +55,9 @@ const onSubmit = () => {
   }
   let d = null;
   if (data.id) {
-    d = zoneCourseEdit(data)
+    d = courseApi.zoneCourseEdit(data)
   } else {
-    d = zoneCourseSave(data)
+    d = courseApi.zoneCourseSave(data)
   }
   if (d) {
     ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'})

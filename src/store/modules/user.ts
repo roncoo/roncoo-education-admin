@@ -1,6 +1,5 @@
 import {defineStore} from 'pinia'
 import {getToken, removeToken} from '@/utils/cookie'
-import {loginApi} from '@/api/login'
 
 export const useUserStore = defineStore({
     id: 'user',
@@ -33,12 +32,12 @@ export const useUserStore = defineStore({
     },
     actions: {
         // set token
-        setToken(token) {
+        setToken(token: any) {
             this.token = token
         },
 
         // 登录操作
-        login(data) {
+        login(data: any) {
             this.mobile = data.mobile
             this.realName = data.realName
             this.routerList = data.routerList

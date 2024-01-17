@@ -4,7 +4,6 @@
       <el-menu
           mode="vertical"
           v-for="item in menuList"
-          collapse="false"
       >
         <div class="menu-main-item" @mouseenter="showSubMenu(item)">
           <el-menu-item

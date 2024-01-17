@@ -4,7 +4,7 @@
   </el-config-provider>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import {ElConfigProvider} from 'element-plus'
 </script>

@@ -57,7 +57,7 @@
 import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {linkDelete, linkEdit, linkPage} from '@/api/system'
+import {systemApi} from '@/api/system'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -71,9 +71,9 @@ export default defineComponent({
       sort: 1
     })
     const apis = reactive({
-      getList: linkPage,
-      delete: linkDelete,
-      updateStatus: linkEdit
+      getList: systemApi.linkPage,
+      delete: systemApi.linkDelete,
+      updateStatus: systemApi.linkEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),
