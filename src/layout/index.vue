@@ -2,13 +2,13 @@
   <el-container>
     <sidebar/>
     <el-container>
-      <header-avatar/>
+      <header-top/>
       <mains/>
     </el-container>
   </el-container>
 </template>
 <script setup>
-import HeaderAvatar from './components/Header/index.vue'
+import HeaderTop from './components/HeaderTop/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Mains from './components/Mains.vue'
 

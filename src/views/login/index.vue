@@ -73,10 +73,10 @@ async function handleLogin() {
     const res = await loginApi.login(loginForm)
     // 存入cookie
     setToken(res.token)
-    // 初始化路由
-    createNewRouter(res.routerList)
     // 更新store
     await useUserStore().login(res)
+    // 初始化路由
+    createNewRouter(res.routerList)
     await router.push('/')
   } catch (error) {
     console.error(error)

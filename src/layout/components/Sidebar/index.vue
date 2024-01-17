@@ -1,28 +1,30 @@
 <template>
-  <el-aside class="sidebar-container">
-    <div class="menu">
+  <el-aside class="sidebar-container" @mouseleave="restoreSubMenu">
+    <div class="menu-main">
       <el-menu
-          :collapse="false"
           mode="vertical"
           v-for="item in menuList"
+          collapse="false"
       >
-        <el-sub-menu @mouseenter="openSubMenu(item)"
-                     :index="item.menuName"
-                     :key="item.id"
-        >
-          <template #title>
+        <div class="menu-main-item" @mouseenter="showSubMenu(item)">
+          <el-menu-item
+              :index="item.menuName"
+              :key="item.id"
+          >
             {{ item.menuName }}
-          </template>
-        </el-sub-menu>
+          </el-menu-item>
+        </div>
       </el-menu>
     </div>
-    <div class="menu">
-      <el-menu mode="vertical">
-        <el-menu-item v-for="sub in subMenu">
-          <router-link v-if="sub.menuType === 2" :to="sub.path">
-            {{ sub.menuName }}
-          </router-link>
-        </el-menu-item>
+    <div class="menu-sub">
+      <el-menu mode="vertical" v-for="sub in subMenu">
+        <div class="menu-sub-item" @click="openMenu(sub)">
+          <el-menu-item>
+            <router-link v-if="sub.menuType === 2" :to="sub.path">
+              {{ sub.menuName }}
+            </router-link>
+          </el-menu-item>
+        </div>
       </el-menu>
     </div>
   </el-aside>
@@ -30,20 +32,28 @@
 
 <script setup>
 import {computed, ref} from 'vue'
-import {Menu as IconMenu} from '@element-plus/icons-vue'
 import {useUserStore} from '@/store/modules/user';
-import SidebarItem from '@/layout/components/Sidebar/SidebarItem.vue';
+import Mains from '@/layout/components/Mains.vue';
 
 // 当前子菜单
 const subMenu = ref([])
 
 const menuList = computed(() => useUserStore().getMenuList)
 
-function openSubMenu(menu) {
-  subMenu.value = menu.children
-  console.log(subMenu)
+// 显示子菜单
+function showSubMenu(sub) {
+  subMenu.value = sub.children
 }
 
+// 重置子菜单
+function restoreSubMenu() {
+  subMenu.value = []
+}
+
+// 打开菜单
+function openMenu(menu) {
+  //subMenu.value = menu
+}
 
 </script>
 
@@ -51,10 +61,27 @@ function openSubMenu(menu) {
 .sidebar-container {
   overflow: auto;
   padding-top: 54px;
-  min-height: 100vh;
-  background-color: #15213e;
 
-  .menu {
+  .menu-main {
+    width: 90px;
+    float: left;
+    min-height: calc(100vh - 50px);
+    background-color: #15213e;
+    padding-left: 10px;
+
+    .menu-main-item {
+
+      .el-menu-item {
+        background-color: #fff;
+        width: 90px;
+        height: 50px;
+        margin: 10px 0;
+        border-radius: 10px 0 0 10px;
+      }
+    }
+  }
+
+  .menu-sub {
     width: 100px;
     float: left;
   }
