@@ -8,6 +8,7 @@ import store from '@/store/index'
 import {getToken} from '@/utils/cookie';
 import {loginApi} from '@/api/login';
 import {useUserStore} from '@/store/modules/user';
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 if (!getToken()) {
     // 初始化（用户没登录）
@@ -26,5 +27,8 @@ function init() {
     app.use(router)
     app.use(store)
     app.use(ElementPlus)
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(key, component)
+    }
     app.mount('#app')
 }

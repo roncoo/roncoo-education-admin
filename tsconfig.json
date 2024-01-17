@@ -2,7 +2,22 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+
+    /* Bundler mode */
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",
     "paths": {
       "@/*": [
@@ -11,11 +26,11 @@
     }
   },
   "include": [
-    "src/**/*",
-    "env.d.ts"
+    "src/**/*"
   ],
-  "exclude": [
-    "node_modules",
-    "dist"
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

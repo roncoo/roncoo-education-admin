@@ -1,16 +1,11 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path';
-import eslintPlugin from "vite-plugin-eslint";
 
 export default defineConfig({
     base: './',
     plugins: [
-        vue(),
-        eslintPlugin({
-            cache: false,
-            include: ['src/**/*.vue', 'src/**/*.ts'] // 检查的文件
-        }),
+        vue()
     ],
     resolve: {
         alias: {

@@ -1,11 +1,9 @@
 <template>
   <el-header>
-    <div class="toolbar">
+    <div class="header-content">
       <el-dropdown>
-        <el-icon style="margin-right: 8px; margin-top: 1px"
-        >
-          <setting
-          />
+        <el-icon>
+          <setting/>
         </el-icon>
         <template #dropdown>
           <el-dropdown-menu>
@@ -20,7 +18,11 @@
   </el-header>
 </template>
 <script setup>
+
 </script>
 
 <style lang="less" scoped>
+.header-content {
+  height: 50px;
+}
 </style>

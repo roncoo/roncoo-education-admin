@@ -2,13 +2,13 @@
   <el-container>
     <sidebar/>
     <el-container>
-      <header :class="{ 'header-collapse': sidebarStore.collapse }"/>
+      <header-avatar/>
       <mains/>
     </el-container>
   </el-container>
 </template>
 <script setup>
-import Header from './components/Header/index.vue'
+import HeaderAvatar from './components/Header/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Mains from './components/Mains.vue'
 

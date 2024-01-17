@@ -77,8 +77,7 @@ async function handleLogin() {
     createNewRouter(res.routerList)
     // 更新store
     await useUserStore().login(res)
-    console.log('111', res.routerList)
-    await router.push('/');
+    await router.push('/')
   } catch (error) {
     console.error(error)
   } finally {

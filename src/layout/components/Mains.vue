@@ -7,7 +7,7 @@
     </div>
   </el-main>
 </template>
-<script setup>
+<script lang="ts" setup>
 import {useSidebarStore} from '@/store/modules/sidebar'
 
 const sidebarStore = useSidebarStore()
