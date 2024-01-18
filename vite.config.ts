@@ -12,22 +12,6 @@ export default defineConfig({
             '@': resolve(__dirname, '.', 'src')
         }
     },
-    css: {
-        postcss: {
-            plugins: [
-                {
-                    postcssPlugin: 'internal:charset-removal',
-                    AtRule: {
-                        charset: (atRule: any) => {
-                            if (atRule.name === 'charset') {
-                                atRule.remove();
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    },
     server: {
         port: 9528, // 服务端口
         proxy: { // 代理

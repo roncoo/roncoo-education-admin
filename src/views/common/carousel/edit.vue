@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="600" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="600" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-form-item label="图片" prop="carouselHead">
-        <upload-image :image-url="formModel.data.carouselImg" :height="100" :width="400" class="avatar" @success=" (val) => {   formModel.data.carouselImg = val.url;  }"/>
+        <upload-image :height="100" :image-url="formModel.data.carouselImg" :width="400" class="avatar" @success=" (val) => {   formModel.data.carouselImg = val.url;  }"/>
       </el-form-item>
       <el-form-item class="form-group" label="说明" prop="carouselTitle">
         <el-input v-model="formModel.data.carouselTitle" maxlength="255" show-word-limit></el-input>

@@ -1,20 +1,20 @@
 <template>
-  <el-dialog :title="title" :model-value="visible" width="600px" center :before-close="handleClose">
+  <el-dialog :before-close="handleClose" :model-value="visible" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="登录账号" prop="mobile">
         <el-input v-model="form.mobile" class="form-group" maxlength="11" show-word-limit/>
       </el-form-item>
       <el-form-item label="登录密码" prop="mobilePwd">
-        <el-input v-model="form.mobilePwd" type="password" class="form-group"/>
+        <el-input v-model="form.mobilePwd" class="form-group" type="password"/>
       </el-form-item>
       <el-form-item label="确认密码" prop="rePassword">
-        <el-input v-model="form.rePassword" type="password" class="form-group"/>
+        <el-input v-model="form.rePassword" class="form-group" type="password"/>
       </el-form-item>
       <el-form-item label="用户昵称" prop="realName">
         <el-input v-model="form.realName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="form.remark" type="textarea" class="form-group" maxlength="500" show-word-limit/>
+        <el-input v-model="form.remark" class="form-group" maxlength="500" show-word-limit type="textarea"/>
       </el-form-item>
     </el-form>
     <template #footer>

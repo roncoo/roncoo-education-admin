@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-      :title="title"
-      :model-value="visible"
-      width="600px"
-      center
       :before-close="handleClose"
+      :model-value="visible"
+      :title="title"
+      center
+      width="600px"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="角色名称" prop="roleName">
@@ -14,10 +14,10 @@
           <el-input v-model="form.roleValue" class="form-group" placeholder="创建后不允许编辑" maxlength="50" show-word-limit/>
       </el-form-item> -->
       <el-form-item label="备注">
-        <el-input v-model="form.remark" class="form-group" type="textarea" maxlength="500" show-word-limit/>
+        <el-input v-model="form.remark" class="form-group" maxlength="500" show-word-limit type="textarea"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="form.sort" controls-position="right" :min="0"/>
+        <el-input-number v-model="form.sort" :min="0" controls-position="right"/>
       </el-form-item>
     </el-form>
     <template #footer>

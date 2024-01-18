@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -12,12 +12,12 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="封面" prop="courseLogo" min-width="20">
+      <el-table-column label="封面" min-width="20" prop="courseLogo">
         <template #default="scope">
-          <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo"/>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" prop="courseName" min-width="20"/>
+      <el-table-column label="课程名称" min-width="20" prop="courseName"/>
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
           <el-progress
@@ -27,8 +27,8 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="开始学习时间" prop="gmtCreate" min-width="30"/>
-      <el-table-column width="100" label="操作">
+      <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate"/>
+      <el-table-column label="操作" width="100">
         <template #default="scope">
           <el-button plain type="primary" @click="studyRecord(scope.row)">明细</el-button>
         </template>

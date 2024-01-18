@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" v-loading="dialogLoading" :before-close="handleClose" :title="title" center width="600px">
+  <el-dialog v-loading="dialogLoading" :before-close="handleClose" :model-value="visible" :title="title" center width="600px">
     <el-form class="filter-container" inline label-width="80px">
       <el-form-item class="filter-item" label="角色名称">
         <el-input v-model="map.roleName"/>
@@ -7,7 +7,7 @@
       <el-form-item class="filter-item">
         <el-button class="filter-item" type="primary" @click="listForQuery">查询</el-button>
         <el-button class="filter-item" @click="handleReset">重置</el-button>
-        <el-button type="success" plain @click="handleRoleSett()" size="mini">设置</el-button>
+        <el-button plain size="mini" type="success" @click="handleRoleSett()">设置</el-button>
       </el-form-item>
     </el-form>
     <el-table ref="availableRoleTable" v-loading="loading" :data="list" border element-loading-text="Loading" fit highlight-current-row @selection-change="selectionChange">

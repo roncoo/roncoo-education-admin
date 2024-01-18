@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="800px" @close="cloneDialog">
-    <el-table :data="info" row-key="id" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all>
+  <el-dialog :append-to-body="true" :model-value="visible" :title="title" width="800px" @close="cloneDialog">
+    <el-table :data="info" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all row-key="id">
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>

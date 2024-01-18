@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '章修改' : '章添加'" :width="500" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '章修改' : '章添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="章名称" prop="chapterName">
         <el-input v-model="formModel.data.chapterName" maxlength="100" show-word-limit></el-input>

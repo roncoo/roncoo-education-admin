@@ -13,15 +13,15 @@
   </div>
   <span v-else>
     <el-upload
-      ref="local"
-      multiple
-      class="upload-btn"
-      action="#"
-      :show-file-list="false"
-      :accept="accept"
-      :on-change="handleChange"
-      :before-upload="handleBeforeUpload"
-      :http-request="upload"
+        ref="local"
+        multiple
+        class="upload-btn"
+        action="#"
+        :show-file-list="false"
+        :accept="accept"
+        :on-change="handleChange"
+        :before-upload="handleBeforeUpload"
+        :http-request="upload"
     > <el-button :icon="icon" :type="btnType" :plain="plain" :class="btnClass">
       {{ btnText }}
       <slot name="btn-content"/>
@@ -31,14 +31,12 @@
 </template>
 
 <script>
-import uploadVideo from '@/utils/mixin/uploadVideo';
-import uploadFiles from '@/utils/mixin/UploadFiles';
 import {uploadApi} from '@/api/upload';
 import {ElMessage} from 'element-plus';
 
 export default {
   name: 'UploaderBtn',
-  mixins: [uploadVideo, uploadFiles],
+  //mixins: [uploadVideo, uploadFiles],
   props: {
     refId: { // 关联ID
       type: [String, Number],

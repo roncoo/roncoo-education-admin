@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="modelValue" :append-to-body="true" :title="formModel.id ? '修改' : '添加'" :width="500" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="modelValue" :title="formModel.id ? '修改' : '添加'" :width="500" center @close="cloneDialog">
     <el-form :model="formModel" label-width="80px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
@@ -15,7 +15,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-course v-if="course.visible" :visible="course.visible" :info="course.info" @close="courseCallback"/>
+    <select-course v-if="course.visible" :info="course.info" :visible="course.visible" @close="courseCallback"/>
   </el-dialog>
 </template>
 

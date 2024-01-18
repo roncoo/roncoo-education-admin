@@ -1,15 +1,15 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="900" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="900" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">
           <el-form-item label="" prop="courseLogo">
-            <upload-image :image-url="formModel.data.courseLogo" :height="180" :width="360" class="avatar" @success=" (val) => {   formModel.data.courseLogo = val.url;  }"/>
+            <upload-image :height="180" :image-url="formModel.data.courseLogo" :width="360" class="avatar" @success=" (val) => {   formModel.data.courseLogo = val.url;  }"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="分类" prop="categoryName">
-            <el-cascader v-model="formModel.data['categoryId']" :options="formModel.categoryList" :props="{value: 'id',label: 'categoryName',children: 'childrenList',checkStrictly: true,emitPath: false}" filterable clearable placeholder="请选择" :show-all-levels="false"/>
+            <el-cascader v-model="formModel.data['categoryId']" :options="formModel.categoryList" :props="{value: 'id',label: 'categoryName',children: 'childrenList',checkStrictly: true,emitPath: false}" :show-all-levels="false" clearable filterable placeholder="请选择"/>
           </el-form-item>
           <el-form-item label="讲师" prop="lecturerName">
             <el-input v-model="formModel.data.lecturerName" disabled style="width: 230px; margin-right: 20px"></el-input>
@@ -58,7 +58,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-lecturer v-if="lecturer.visible" :visible="lecturer.visible" :info="lecturer.info" @close="lecturerCallback"/>
+    <select-lecturer v-if="lecturer.visible" :info="lecturer.info" :visible="lecturer.visible" @close="lecturerCallback"/>
   </el-dialog>
 </template>
 

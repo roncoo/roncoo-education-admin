@@ -1,11 +1,11 @@
 <template>
-  <el-dialog :model-value="visible" :before-close="handleClose" :title="title" center width="600px">
+  <el-dialog :before-close="handleClose" :model-value="visible" :title="title" center width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item label="权限名称" class="form-group" prop="menuName">
+      <el-form-item class="form-group" label="权限名称" prop="menuName">
         <el-input v-model="form.menuName" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="权限标识" class="form-group" prop="authValue">
-        <el-input v-model="form.authValue" type="textarea" maxlength="500" show-word-limit/>
+      <el-form-item class="form-group" label="权限标识" prop="authValue">
+        <el-input v-model="form.authValue" maxlength="500" show-word-limit type="textarea"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="form.sort" :min="0" controls-position="right"/>

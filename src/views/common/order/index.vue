@@ -10,7 +10,7 @@
             <el-input v-model="seekForm.mobile" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -18,7 +18,7 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="订单号" :width="180">
+      <el-table-column :width="180" label="订单号">
         <template #default="scope">
           {{ scope.row.orderNo }}
         </template>
@@ -28,8 +28,8 @@
           {{ scope.row.courseViewVO.courseName }}
         </template>
       </el-table-column>
-      <el-table-column label="手机号码" prop="mobile" :width="150"/>
-      <el-table-column label="支付方式/时间" :width="160">
+      <el-table-column :width="150" label="手机号码" prop="mobile"/>
+      <el-table-column :width="160" label="支付方式/时间">
         <template #default="scope">
           <span>{{ payTypeEnumEnums[scope.row.payType] }}</span>
           <br>
@@ -37,12 +37,12 @@
           <span v-else>{{ scope.row.gmtCreate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="订单状态" :width="100">
+      <el-table-column :width="100" label="订单状态">
         <template #default="scope">
           <span>{{ orderStatusEnums[scope.row.orderStatus] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="价格" :width="100">
+      <el-table-column :width="100" label="价格">
         <template #default="scope">
           <span v-if="scope.row.coursePrice == 0">免费</span>
           <span v-else>
@@ -50,7 +50,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="客户/备注" prop="remarkCus" :width="100">
+      <el-table-column :width="100" label="客户/备注" prop="remarkCus">
         <template #default="scope">
           {{ scope.row.remarkCus }}<br>
           {{ scope.row.remark }}

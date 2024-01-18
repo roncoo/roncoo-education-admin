@@ -9,11 +9,11 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border row-key="id" :tree-props="{ children: 'periodViewRespList' }" default-expand-all>
+    <el-table v-loading="tableData.loading" :data="tableData.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="封面" :width="100">
+      <el-table-column :width="100" label="封面">
         <template #default="scope">
-          <img :src="scope.row.courseViewResp.courseLogo" :alt="scope.row.courseViewResp.courseName"/>
+          <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo"/>
         </template>
       </el-table-column>
       <el-table-column label="名称" prop="courseName">
@@ -21,7 +21,7 @@
           <span>{{ scope.row.courseViewResp.courseName }}</span><br>
         </template>
       </el-table-column>
-      <el-table-column label="价格" :width="100">
+      <el-table-column :width="100" label="价格">
         <template #default="scope">
           <span v-if="scope.row.courseViewResp.isFree == 1">免费</span>
           <span v-if="scope.row.courseViewResp.isFree == 0">
@@ -29,13 +29,13 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="售卖" :width="100">
+      <el-table-column :width="100" label="售卖">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ putawayEnums[scope.row.courseViewResp.isPutaway] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>

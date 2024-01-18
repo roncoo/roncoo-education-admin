@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="'添加'" :width="500" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-form-item v-if="formModel.data.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.data.parentCategoryName" maxlength="100" disabled></el-input>
+        <el-input v-model="formModel.data.parentCategoryName" disabled maxlength="100"></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="名称" prop="categoryName">
         <el-input v-model="formModel.data.categoryName" maxlength="100" show-word-limit></el-input>

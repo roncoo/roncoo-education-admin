@@ -4,7 +4,7 @@ import {useUserStore} from '@/store/modules/user';
 import {getToken} from "@/utils/cookie";
 
 // 静态路由
-const constantRoutes = () => [
+const constantRoutes = [
     {
         path: '/login',
         component: () => import('@/views/login.vue')
@@ -35,14 +35,14 @@ const constantRoutes = () => [
 
 const createRouters = (routerList: any) => createRouter({
     history: createWebHashHistory(),
-    //scrollBehavior: () => ({y: 0}),
+    scrollBehavior: () => ({y: 0}),
     routes: routerList
 })
 
 const router = createRouters(constantRoutes)
 
 // 路由加载前
-router.beforeEach(async (to, next) => {
+router.beforeEach(async (to, from, next) => {
     if (to.path === '/login' || to.path === '/404' || to.path === '403') {
         next();
         return;

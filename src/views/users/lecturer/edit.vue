@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">
@@ -18,7 +18,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload-image :image-url="formModel.data.lecturerHead" :height="120" :width="120" class="avatar" @success=" (val) => {   formModel.data.lecturerHead = val.url;  }"/>
+            <upload-image :height="120" :image-url="formModel.data.lecturerHead" :width="120" class="avatar" @success=" (val) => {   formModel.data.lecturerHead = val.url;  }"/>
           </el-form-item>
         </el-col>
       </el-row>

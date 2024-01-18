@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.commentText" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -15,10 +15,10 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="用户手机" prop="mobile" min-width="20"/>
-      <el-table-column label="用户昵称" prop="nickname" min-width="20"/>
+      <el-table-column label="用户手机" min-width="20" prop="mobile"/>
+      <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
       <el-table-column label="内容" prop="commentText"/>
-      <el-table-column width="100" label="操作">
+      <el-table-column label="操作" width="100">
         <template #default="scope">
           <el-button plain type="primary" @click="tableDelete(scope.row)">删除</el-button>
         </template>
@@ -54,6 +54,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 
 </style>

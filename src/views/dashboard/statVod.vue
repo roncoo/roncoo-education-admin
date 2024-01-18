@@ -3,8 +3,8 @@
     <span class="title">视频云使用情况</span>
   </div>
   <div class="cache_pie">
-    <div class="axis" id="cachePieTwo"></div>
-    <div class="axis" id="cachePieOne"></div>
+    <div id="cachePieTwo" class="axis"></div>
+    <div id="cachePieOne" class="axis"></div>
   </div>
 </template>
 

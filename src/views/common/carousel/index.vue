@@ -11,7 +11,7 @@
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="图片">
         <template #default="scope">
-          <img :src="scope.row.carouselImg" :alt="scope.row.carouselTitle" style="height:50px;"/>
+          <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height:50px;"/>
         </template>
       </el-table-column>
       <el-table-column label="地址" prop="carouselUrl">
@@ -19,13 +19,13 @@
           <a :href="scope.row.carouselUrl" target="_blank">{{ scope.row.carouselUrl }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="跳转方式" :width="120">
+      <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
           <span>{{ targetEnums[scope.row.carouselTarget] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>

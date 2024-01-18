@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.zoneName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
@@ -26,8 +26,8 @@
           <span>{{ scope.row.zoneDesc }}</span><br>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
@@ -56,7 +56,7 @@
       </el-table-column>
     </el-table>
     <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :modelValue="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <edit v-model="editModel.visible" :form="editModel.form" :modelValue="editModel.visible" @updateTable="closeEditDialog"/>
   </div>
 </template>
 <script>

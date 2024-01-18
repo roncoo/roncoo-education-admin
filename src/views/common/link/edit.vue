@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.id ? '修改' : '添加'" :width="600" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="600" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-form-item label="友情名称" prop="linkName">
         <el-input v-model="formModel.data.linkName" maxlength="255" show-word-limit></el-input>

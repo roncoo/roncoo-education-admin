@@ -6,7 +6,7 @@
           <div class="search_bar clearfix">
             <el-form :model="seekForm" inline label-width="80px">
               <el-form-item>
-                <el-button @click="seek()" type="primary"> 查询</el-button>
+                <el-button type="primary" @click="seek()"> 查询</el-button>
                 <el-button @click="resetSeek()">重置</el-button>
               </el-form-item>
             </el-form>
@@ -14,8 +14,8 @@
         </div>
         <el-table v-loading="tableData.loading" :data="tableData.list" border>
           <el-table-column align="center" label="序号" type="index" width="60"/>
-          <el-table-column label="手机号码" prop="mobile" min-width="20"/>
-          <el-table-column label="用户昵称" prop="nickname" min-width="20"/>
+          <el-table-column label="手机号码" min-width="20" prop="mobile"/>
+          <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
           <el-table-column label="学习进度" prop="courseProgress">
             <template #default="scope">
               <el-progress
@@ -25,8 +25,8 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="开始学习时间" prop="gmtCreate" min-width="30"/>
-          <el-table-column width="100" label="操作">
+          <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate"/>
+          <el-table-column label="操作" width="100">
             <template #default="scope">
               <el-button plain type="primary" @click="studyRecord(scope.row)">明细</el-button>
             </template>

@@ -20,7 +20,7 @@
       <el-table-column label="路由地址 / 权限标识" min-width="250" prop="menuUrl">
         <template #default="scope">
           {{ scope.row.menuUrl }}
-          <div v-html="scope.row.authValue" style="white-space:pre-line"></div>
+          <div style="white-space:pre-line" v-html="scope.row.authValue"></div>
         </template>
       </el-table-column>
       <el-table-column label="状态" prop="statusId">

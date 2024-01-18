@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.lecturerName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
@@ -18,7 +18,7 @@
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="讲师头像">
         <template #default="scope">
-          <img :src="scope.row.lecturerHead" :alt="scope.row.lecturerName" style="height:50px;"/>
+          <img :alt="scope.row.lecturerName" :src="scope.row.lecturerHead" style="height:50px;"/>
         </template>
       </el-table-column>
       <el-table-column label="讲师名称" prop="lecturerName"/>

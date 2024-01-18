@@ -2,10 +2,10 @@
   <div class="wscn-http404-container">
     <div class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/images/common/403.png" alt="403">
-        <img class="pic-404__child left" src="@/assets/images/common/404.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/images/common/404.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/images/common/404.png" alt="404">
+        <img alt="403" class="pic-404__parent" src="@/assets/images/common/403.png">
+        <img alt="404" class="pic-404__child left" src="@/assets/images/common/404.png">
+        <img alt="404" class="pic-404__child mid" src="@/assets/images/common/404.png">
+        <img alt="404" class="pic-404__child right" src="@/assets/images/common/404.png">
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
@@ -17,10 +17,10 @@
         <div class="bullshit__info">
           对不起，您没有权限访问，请您联系管理员。
         </div>
-        <router-link to="/dashboard" replace class="bullshit__return-home mgr10">
+        <router-link class="bullshit__return-home mgr10" replace to="/dashboard">
           返回首页
         </router-link>
-        <el-button @click="$router.go(-2)" class="bullshit__return-home">
+        <el-button class="bullshit__return-home" @click="$router.go(-2)">
           返回上一页
         </el-button>
       </div>

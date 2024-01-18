@@ -12,7 +12,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border row-key="id" :tree-props="{ children: 'periodViewRespList' }" default-expand-all>
+    <el-table v-loading="tableData.loading" :data="tableData.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
@@ -25,8 +25,8 @@
         </template>
       </el-table-column>
       <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="收费" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="收费">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.isFree === 0 }">{{ freeEnums[scope.row.isFree] }}</span>
         </template>

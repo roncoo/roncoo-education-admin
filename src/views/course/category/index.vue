@@ -7,22 +7,22 @@
             <el-input v-model="seekForm.categoryName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openAddDialog(initData)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border row-key="id" :tree-props="{ children: 'childrenList' }">
+    <el-table v-loading="tableData.loading" :data="tableData.list" :tree-props="{ children: 'childrenList' }" border row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="名称" prop="categoryName">
         <template #default="scope">
           <span>{{ scope.row.categoryName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>

@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.navTitle" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
@@ -16,15 +16,15 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="导航名称" prop="navTitle" :width="200"/>
+      <el-table-column :width="200" label="导航名称" prop="navTitle"/>
       <el-table-column label="导航地址" prop="navUrl"/>
-      <el-table-column label="跳转方式" :width="120">
+      <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
           <span>{{ targetEnums[scope.row.target] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>

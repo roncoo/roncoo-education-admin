@@ -14,9 +14,9 @@
             <el-input v-model="loginForm.mobile" auto-complete="on" class="form-input" name="mobile" placeholder="用户名" tabindex="1" type="text" @keyup.enter="handleLogin"/>
           </el-form-item>
           <el-form-item class="form-group" prop="mobilePwd">
-            <el-input v-model="loginForm.mobilePwd" type="password" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" @keyup.enter="handleLogin"/>
+            <el-input v-model="loginForm.mobilePwd" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" type="password" @keyup.enter="handleLogin"/>
           </el-form-item>
-          <el-button class="login-button" v-loading="loading" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
+          <el-button v-loading="loading" class="login-button" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
           <div class="tip">账号：18800000000/123456（需要本地部署）</div>
         </el-form>
       </div>
@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {loginApi} from '@/api/login';
 import {onMounted, reactive, ref} from 'vue';
 import {setToken} from '@/utils/cookie';

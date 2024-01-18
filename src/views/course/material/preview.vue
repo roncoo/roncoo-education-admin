@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="modelValue" top="5vh" custom-class="preview_dialog" title="预览" :before-close="cloneDialog" :width="700" :append-to-body="true">
+  <el-dialog v-model="modelValue" :append-to-body="true" :before-close="cloneDialog" :width="700" custom-class="preview_dialog" title="预览" top="5vh">
     <div class="video_body_content">
       <div class="video_content clearfix">
         <div class="win_box">

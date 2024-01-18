@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import {systemApi, sysUserView} from '@/api/system';
+import {systemApi} from '@/api/system';
 import AddSysUser from '@/views/system/sysUser/add/index.vue';
 import EditSysUser from '@/views/system/sysUser/edit/index.vue';
 import ResetPasswordSysUser from '@/views/system/sysUser/reset/index.vue';
@@ -158,7 +158,7 @@ export default {
       this.addCtr.visible = false;
     },
     handleUpdateRow(id) {
-      sysUserView(id).then((res) => {
+      systemApi.sysUserView(id).then((res) => {
         this.editCtr.info = res;
         this.editCtr.visible = true;
       });

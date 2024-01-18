@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.mobile" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -18,7 +18,7 @@
       <el-table-column label="手机号码" prop="mobile"/>
       <el-table-column label="用户头像">
         <template #default="scope">
-          <img :src="scope.row.userHead" :alt="scope.row.nickname" style="height:50px;"/>
+          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height:50px;"/>
         </template>
       </el-table-column>
       <el-table-column label="用户昵称" prop="nickname"/>
@@ -29,7 +29,7 @@
         </template>
       </el-table-column>
       <el-table-column label="备注" prop="remark"/>
-      <el-table-column label="注册时间" prop="gmtCreate" :min-width="120"/>
+      <el-table-column :min-width="120" label="注册时间" prop="gmtCreate"/>
       <el-table-column label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>

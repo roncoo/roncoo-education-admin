@@ -7,11 +7,11 @@
             <el-input v-model="seekForm.resourceName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <!-- <el-button plain type="success" @click="localUpload">上传</el-button>
             <input id="file" type="file" style="display: none" @change="addUpload"> -->
-            <uploader-btn icon="" :plain="false" btn-text="上传" mode="async" class="mgl10"/>
+            <uploader-btn :plain="false" btn-text="上传" class="mgl10" icon="" mode="async"/>
           </el-form-item>
         </el-form>
       </div>
@@ -23,30 +23,30 @@
           <span>{{ scope.row.resourceName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="资源大小" prop="resourceSize" :width="200">
+      <el-table-column :width="200" label="资源大小" prop="resourceSize">
         <template #default="scope">{{ getSize(scope.row.resourceSize) }}</template>
       </el-table-column>
-      <el-table-column label="资源类型" prop="resourceType" :width="200">
+      <el-table-column :width="200" label="资源类型" prop="resourceType">
         <template #default="scope">
           <span>{{ resourceTypeEnums[scope.row.resourceType] }}</span><br>
           <span v-if="scope.row.resourceType<3">{{ formatDuring(scope.row.videoLength * 1000) }}</span>
           <span v-else>{{ scope.row.docPage }} 页</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="videoStatus" :width="100">
+      <el-table-column :width="100" label="状态" prop="videoStatus">
         <template #default="scope">
           <span v-if="scope.row.resourceType<3">{{ videoStatusEnums[scope.row.videoStatus] }}</span>
           <span v-else>成功</span>
         </template>
       </el-table-column>
-      <el-table-column label="平台" prop="vodPlatform" :width="100">
+      <el-table-column :width="100" label="平台" prop="vodPlatform">
         <template #default="scope">
           <span v-if="scope.row.resourceType<3">{{ vodPlatformEnums[scope.row.vodPlatform] }}</span>
           <span v-else>{{ storagePlatformEnums[scope.row.storagePlatform] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" :width="100"/>
-      <el-table-column label="状态" :width="100">
+      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>

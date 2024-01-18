@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>

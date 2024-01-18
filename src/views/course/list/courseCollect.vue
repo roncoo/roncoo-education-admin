@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="seekForm" inline label-width="80px">
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -12,9 +12,9 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="用户手机" prop="mobile" min-width="20"/>
-      <el-table-column label="用户昵称" prop="nickname" min-width="20"/>
-      <el-table-column label="收藏时间" prop="gmtCreate" min-width="30"/>
+      <el-table-column label="用户手机" min-width="20" prop="mobile"/>
+      <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
+      <el-table-column label="收藏时间" min-width="30" prop="gmtCreate"/>
     </el-table>
     <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
   </div>
@@ -46,5 +46,5 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 </style>

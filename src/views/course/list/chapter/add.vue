@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="formModel.data.chapterId ? '节修改' : '节添加'" :width="500" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.chapterId ? '节修改' : '节添加'" :width="500" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.data.periodName" maxlength="100" show-word-limit></el-input>
@@ -25,7 +25,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-resource v-if="resource.visible" :visible="resource.visible" :info="resource.info" @close="resourceCallback"/>
+    <select-resource v-if="resource.visible" :info="resource.info" :visible="resource.visible" @close="resourceCallback"/>
   </el-dialog>
 </template>
 

@@ -7,7 +7,7 @@
             <el-input v-model="seekForm.courseName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="seek()" type="primary"> 查询</el-button>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
             <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
           </el-form-item>
@@ -16,9 +16,9 @@
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="封面" :width="120">
+      <el-table-column :width="120" label="封面">
         <template #default="scope">
-          <img :src="scope.row.courseLogo" :alt="scope.row.courseName"/>
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo"/>
         </template>
       </el-table-column>
       <el-table-column label="名称/分类-讲师" prop="courseName">
@@ -27,7 +27,7 @@
           <span>{{ scope.row.categoryName }} - 【{{ scope.row.lecturerName }}】</span>
         </template>
       </el-table-column>
-      <el-table-column label="价格" :width="100">
+      <el-table-column :width="100" label="价格">
         <template #default="scope">
           <span v-if="scope.row.isFree == 1">免费</span>
           <span v-if="scope.row.isFree == 0">
@@ -35,18 +35,18 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="购买/学习" prop="countBuy" :width="100">
+      <el-table-column :width="100" label="购买/学习" prop="countBuy">
         <template #default="scope">
           <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="courseSort" :width="80"/>
-      <el-table-column label="售卖" :width="80">
+      <el-table-column :width="80" label="排序" prop="courseSort"/>
+      <el-table-column :width="80" label="售卖">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" :width="80">
+      <el-table-column :width="80" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
@@ -76,7 +76,7 @@
       </el-table-column>
     </el-table>
     <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :modelValue="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <edit v-model="editModel.visible" :form="editModel.form" :modelValue="editModel.visible" @updateTable="closeEditDialog"/>
   </div>
 </template>
 <script>
