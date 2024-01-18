@@ -47,7 +47,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysMenuSave} from '@/api/system';
+import {systemApi} from '@/api/system';
 
 export default {
   name: 'AddSysMenu',
@@ -133,15 +133,15 @@ export default {
     onSubmit() {
 
       // 新增
-      sysMenuSave(this.form)
-        .then((res) => {
+      systemApi.sysMenuSave(this.form)
+          .then((res) => {
 
-          this.$message.success(res, 'success');
-          this.$emit('closes', this.form);
-        })
-        .catch(() => {
+            this.$message.success(res, 'success');
+            this.$emit('closes', this.form);
+          })
+          .catch(() => {
 
-        });
+          });
     }
   }
 };

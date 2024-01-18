@@ -28,7 +28,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {usersEdit} from '@/api/user';
+import {usersApi} from '@/api/user';
 
 import {getEnum} from '@/utils/utils';
 
@@ -108,9 +108,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await usersEdit(data);
+            d = await usersApi.usersEdit(data);
           } else {
-            d = await save(data);
+            d = await usersApi.save(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

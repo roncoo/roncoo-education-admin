@@ -18,7 +18,7 @@
 <script>
 import {computed, onMounted, onUnmounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {resourceLibraryPreview} from '@/api/course';
+import {courseApi} from '@/api/course';
 import {useUserStore} from '@/store/modules/user';
 
 export default {
@@ -48,8 +48,8 @@ export default {
     })
     const map = reactive({
       player: null,
-      userInfo: computed(() => {
-        return useUserStore().getUserInfo
+      realName: computed(() => {
+        return useUserStore().realName
       })
     })
     const ctrl = reactive({
@@ -60,7 +60,7 @@ export default {
       emit('update:modelValue', false)
     }
     const getView = () => {
-      resourceLibraryPreview({id: videoInfo.value['id']}).then(res => {
+      courseApi.resourceLibraryPreview({id: videoInfo.value['id']}).then(res => {
         opts.video = res
         if (res.vodPlatform === 1 || res.vodPlatform === 4 || res.vodPlatform === 10) {
           play(res)
@@ -91,8 +91,8 @@ export default {
         showCurrentTimeDisplay: true,
         showDurationDisplay: true,
         disableSeek: 0, // 是否禁止拖拽， 0：可以， 1：禁止
-        user_name: _that.userInfo.userName, // 用户名， 主要用于数据统计
-        user_number: _that.userInfo.userNo, // 用户id， 主要用于数据统计
+        // user_name: realName, // 用户名， 主要用于数据统计
+        // user_number: _that.userInfo.userNo, // 用户id， 主要用于数据统计
         onended: function() {
           console.log('onplayend event')
           // 视频播放结束清空保存记录定时器任务

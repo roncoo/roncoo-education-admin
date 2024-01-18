@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import {sysPermissionSave} from '@/api/system';
+import {systemApi} from '@/api/system';
 
 export default {
   name: 'SysPermissionAdd',
@@ -130,15 +130,15 @@ export default {
       // 新增
       d.menuType = 3
       d.outLink = 0
-      sysPermissionSave(d)
-        .then((res) => {
+      systemApi.sysPermissionSave(d)
+          .then((res) => {
 
-          this.$message.success(res, 'success');
-          this.$emit('closes', this.form);
-        })
-        .catch(() => {
+            this.$message.success(res, 'success');
+            this.$emit('closes', this.form);
+          })
+          .catch(() => {
 
-        });
+          });
     }
   }
 };

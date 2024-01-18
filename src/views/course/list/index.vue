@@ -84,7 +84,7 @@ import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {courseDelete, courseEdit, coursePage} from '@/api/course'
+import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -100,9 +100,9 @@ export default defineComponent({
       courseSort: 1
     })
     const apis = reactive({
-      getList: coursePage,
-      delete: courseDelete,
-      updateStatus: courseEdit
+      getList: courseApi.coursePage,
+      delete: courseApi.courseDelete,
+      updateStatus: courseApi.courseEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

@@ -40,7 +40,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 import UploadImage from '@/components/Upload/image.vue';
 import editor from '@/components/Wangeditor/index.vue';
-import {lecturerEdit, lecturerSave} from '@/api/user';
+import {usersApi} from '@/api/user';
 
 export default defineComponent({
   components: {
@@ -114,9 +114,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await lecturerEdit(data);
+            d = await usersApi.lecturerEdit(data);
           } else {
-            d = await lecturerSave(data);
+            d = await usersApi.lecturerSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

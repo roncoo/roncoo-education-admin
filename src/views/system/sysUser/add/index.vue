@@ -26,7 +26,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysUserSave} from '@/api/system'
+import {systemApi} from '@/api/system'
 
 export default {
   name: 'AddSysUser',
@@ -87,7 +87,7 @@ export default {
     },
     onSubmit() {
       // 新增
-      sysUserSave(this.form).then(res => {
+      systemApi.sysUserSave(this.form).then(res => {
         this.$message.success(res, 'success');
         this.$emit('closes', 'success')
       }).catch(() => {

@@ -33,7 +33,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {courseChapterPeriodEdit, courseChapterPeriodSave} from '@/api/course';
+import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
 import SelectResource from '@/components/Selects/SelectResource.vue';
@@ -120,12 +120,12 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.chapterId) {
-            d = await courseChapterPeriodEdit(data);
+            d = await courseApi.courseChapterPeriodEdit(data);
           } else {
             data.chapterId = data.id
             data.id = ''
             data.periodViewRespList = {}
-            d = await courseChapterPeriodSave(data);
+            d = await courseApi.courseChapterPeriodSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

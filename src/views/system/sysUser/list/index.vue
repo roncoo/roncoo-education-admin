@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import {sysUserDelete, sysUserPage, sysUserStatusId, sysUserView} from '@/api/system';
+import {systemApi, sysUserView} from '@/api/system';
 import AddSysUser from '@/views/system/sysUser/add/index.vue';
 import EditSysUser from '@/views/system/sysUser/edit/index.vue';
 import ResetPasswordSysUser from '@/views/system/sysUser/reset/index.vue';
@@ -126,7 +126,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
 
-          sysUserDelete(row.id).then((res) => {
+          systemApi.sysUserDelete(row.id).then((res) => {
             this.$message.success(res);
             this.listForPage();
           });
@@ -198,11 +198,11 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
 
-          sysUserStatusId({id: row.id, statusId}).then(
-            (res) => {
-              this.$message.success(res);
-              this.listForPage();
-            }
+          systemApi.sysUserStatusId({id: row.id, statusId}).then(
+              (res) => {
+                this.$message.success(res);
+                this.listForPage();
+              }
           );
         });
       }
@@ -237,13 +237,13 @@ export default {
     },
     listForPage() {
 
-      sysUserPage(this.map, this.page.pageCurrent, this.page.pageSize).then(
-        (res) => {
-          this.list = res.list;
-          this.page.pageCurrent = res.pageCurrent;
-          this.page.totalCount = res.totalCount;
-          this.page.pageSize = res.pageSize;
-        }
+      systemApi.sysUserPage(this.map, this.page.pageCurrent, this.page.pageSize).then(
+          (res) => {
+            this.list = res.list;
+            this.page.pageCurrent = res.pageCurrent;
+            this.page.totalCount = res.totalCount;
+            this.page.pageSize = res.pageSize;
+          }
       );
     }
   }

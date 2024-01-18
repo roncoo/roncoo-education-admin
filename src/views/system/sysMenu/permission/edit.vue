@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {sysMenuEdit, sysMenuView} from '@/api/system';
+import {systemApi} from '@/api/system';
 
 export default {
   name: 'SysPermissionEdit',
@@ -61,7 +61,7 @@ export default {
   mounted() {
     this.form = Object.assign(this.info)
     if (this.form.id) {
-      sysMenuView(this.form.id).then(res => {
+      systemApi.sysMenuView(this.form.id).then(res => {
         this.form = {...res}
         this.list = res.authValueList
       })
@@ -100,7 +100,7 @@ export default {
     onSubmit() {
 
       // 新增
-      sysMenuEdit(this.form).then(res => {
+      systemApi.sysMenuEdit(this.form).then(res => {
 
         this.$message.success(res, 'success');
         this.$emit('closes', this.form)

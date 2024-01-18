@@ -35,7 +35,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysConfigEdit} from '@/api/system';
+import {systemApi} from '@/api/system';
 import Wangeditor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import {getEnum} from '@/utils/utils';
@@ -97,7 +97,7 @@ export default {
     onSubmit() {
 
       // 编辑
-      sysConfigEdit(this.newFormData
+      systemApi.sysConfigEdit(this.newFormData
       ).then((res) => {
 
         this.$message.success(res);

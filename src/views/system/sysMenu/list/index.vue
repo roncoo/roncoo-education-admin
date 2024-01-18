@@ -40,38 +40,38 @@
       </el-table-column>
     </el-table>
     <add-sys-menu
-      v-if="addMenuCtr.visible"
-      :info="addMenuCtr.info"
-      :title="addMenuCtr.title"
-      :visible="addMenuCtr.visible"
-      @closes="closeAddMenu"
+        v-if="addMenuCtr.visible"
+        :info="addMenuCtr.info"
+        :title="addMenuCtr.title"
+        :visible="addMenuCtr.visible"
+        @closes="closeAddMenu"
     />
     <add-sys-permission
-      v-if="addPermissionCtr.visible"
-      :info="addPermissionCtr.info"
-      :title="addPermissionCtr.title"
-      :visible="addPermissionCtr.visible"
-      @closes="closeAddPermission"
+        v-if="addPermissionCtr.visible"
+        :info="addPermissionCtr.info"
+        :title="addPermissionCtr.title"
+        :visible="addPermissionCtr.visible"
+        @closes="closeAddPermission"
     />
     <edit-sys-menu
-      v-if="editMenuCtr.visible"
-      :info="editMenuCtr.info"
-      :title="editMenuCtr.title"
-      :visible="editMenuCtr.visible"
-      @closes="closeEditMenu"
+        v-if="editMenuCtr.visible"
+        :info="editMenuCtr.info"
+        :title="editMenuCtr.title"
+        :visible="editMenuCtr.visible"
+        @closes="closeEditMenu"
     />
     <edit-sys-permission
-      v-if="editPermissionCtr.visible"
-      :info="editPermissionCtr.info"
-      :title="editPermissionCtr.title"
-      :visible="editPermissionCtr.visible"
-      @closes="closeEditPermission"
+        v-if="editPermissionCtr.visible"
+        :info="editPermissionCtr.info"
+        :title="editPermissionCtr.title"
+        :visible="editPermissionCtr.visible"
+        @closes="closeEditPermission"
     />
   </div>
 </template>
 
 <script>
-import {sysMenuDelete, sysMenuEdit, sysMenuList, sysMenuView} from '@/api/system';
+import {systemApi} from '@/api/system';
 import AddSysMenu from '@/views/system/sysMenu/add/index.vue';
 import AddSysPermission from '@/views/system/sysMenu/permission/add.vue';
 import EditSysMenu from '@/views/system/sysMenu/edit/index.vue';
@@ -126,23 +126,23 @@ export default {
       }
     },
     handleEditPermission(row) {
-      sysMenuView(row.id).then((res) => {
+      systemApi.sysMenuView(row.id).then((res) => {
         this.editPermissionCtr.info = res;
         this.editPermissionCtr.visible = true;
       });
     },
     loadTree(tree, treeNode, resolve) {
-      sysMenuList(tree.id)
-        .then((res) => {
-          this.loadNodeMap.set(tree.id, {tree, treeNode, resolve});
-          resolve(res);
-        })
-        .catch(() => {
-          resolve([]);
-        });
+      systemApi.sysMenuList(tree.id)
+          .then((res) => {
+            this.loadNodeMap.set(tree.id, {tree, treeNode, resolve});
+            resolve(res);
+          })
+          .catch(() => {
+            resolve([]);
+          });
     },
     handleEditMenu(row) {
-      sysMenuView(row.id).then((res) => {
+      systemApi.sysMenuView(row.id).then((res) => {
         this.editMenuCtr.info = res;
         this.editMenuCtr.visible = true;
       });
@@ -176,16 +176,16 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(() => {
+          .then(() => {
 
-          sysMenuDelete(row.id).then((res) => {
-            this.$message.success(res);
-            this.loadTreePage(row.parentId || row.menuId);
+            systemApi.sysMenuDelete(row.id).then((res) => {
+              this.$message.success(res);
+              this.loadTreePage(row.parentId || row.menuId);
+            });
+          })
+          .catch(() => {
+
           });
-        })
-        .catch(() => {
-
-        });
     },
     handleDeletePermission(row) {
       const body = '确定要删除权限【' + row.menuName + '】？';
@@ -193,16 +193,16 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       })
-        .then(() => {
+          .then(() => {
 
-          sysMenuDelete(row.id).then((res) => {
-            this.$message.success(res);
-            this.loadTreePage(row.parentId || row.menuId);
+            systemApi.sysMenuDelete(row.id).then((res) => {
+              this.$message.success(res);
+              this.loadTreePage(row.parentId || row.menuId);
+            });
+          })
+          .catch(() => {
+
           });
-        })
-        .catch(() => {
-
-        });
     },
     handleAddOneMenu() {
       this.addMenuCtr.info = {
@@ -234,27 +234,27 @@ export default {
     },
     handleUpdateMenuStatus(row) {
       let body =
-        '确定禁用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
+          '确定禁用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
       let statusId = 0;
       if (row.statusId === 0) {
         statusId = 1;
         body =
-          '确定启用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
+            '确定启用' + this.menuTypeEnums[row.menuType] + '【' + row.menuName + '】？';
       }
       this.$confirm(body, '编辑确认', {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       })
-        .then(() => {
+          .then(() => {
 
-          sysMenuEdit({id: row.id, statusId}).then((res) => {
-            this.$message.success(res);
-            this.loadTreePage(row.parentId || row.menuId);
+            systemApi.sysMenuEdit({id: row.id, statusId}).then((res) => {
+              this.$message.success(res);
+              this.loadTreePage(row.parentId || row.menuId);
+            });
+          })
+          .catch(() => {
+
           });
-        })
-        .catch(() => {
-
-        });
     },
     handleUpdatePermissionStatus(row) {
       let body = '确定禁用权限【' + row.menuName + '】？';
@@ -267,15 +267,15 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       })
-        .then(() => {
+          .then(() => {
 
-          sysMenuEdit({id: row.id, statusId}).then((res) => {
-            this.$message.success(res);
-            this.loadTreePage(row.parentId || row.menuId);
+            systemApi.sysMenuEdit({id: row.id, statusId}).then((res) => {
+              this.$message.success(res);
+              this.loadTreePage(row.parentId || row.menuId);
+            });
+          })
+          .catch(() => {
           });
-        })
-        .catch(() => {
-        });
     },
     closeAddMenu(data) {
       this.addMenuCtr.visible = false;
@@ -293,7 +293,7 @@ export default {
       this.listMenuPermission();
     },
     listMenuPermission() {
-      sysMenuList().then((res) => {
+      systemApi.sysMenuList().then((res) => {
         this.list = res;
       });
     }

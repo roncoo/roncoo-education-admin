@@ -22,7 +22,7 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {resourceEdit, resourceSave} from '@/api/course';
+import {courseApi} from '@/api/course';
 
 export default defineComponent({
   components: {
@@ -94,9 +94,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await resourceEdit(data);
+            d = await courseApi.resourceEdit(data);
           } else {
-            d = await resourceSave(data);
+            d = await courseApi.resourceSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

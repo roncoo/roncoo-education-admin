@@ -34,14 +34,14 @@
 <script>
 import UseTable from '@/composables/UseTable';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {logLoginPage} from '@/api/user'
+import {usersApi} from '@/api/user'
 import {getEnum} from '@/utils/utils';
 
 export default defineComponent({
   components: {},
   setup() {
     const apis = reactive({
-      getList: logLoginPage
+      getList: usersApi.logLoginPage
     })
     const state = reactive({
       ...UseTable(apis, {}),

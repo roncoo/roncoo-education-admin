@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    :title="title"
-    :model-value="visible"
-    width="600px"
-    center
-    :before-close="handleClose"
+      :title="title"
+      :model-value="visible"
+      width="600px"
+      center
+      :before-close="handleClose"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="登录账号">
@@ -29,7 +29,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysUserEdit} from '@/api/system'
+import {systemApi} from '@/api/system'
 
 export default {
   name: 'EditSysUser',
@@ -82,7 +82,7 @@ export default {
     onSubmit() {
 
       // 编辑
-      sysUserEdit(this.form).then(res => {
+      systemApi.sysUserEdit(this.form).then(res => {
 
         this.$message.success(res, 'success')
         this.$emit('closes', 'success')

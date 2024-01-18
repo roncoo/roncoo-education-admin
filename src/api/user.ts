@@ -1,57 +1,60 @@
-import request from '@/utils/request'
-import {string} from "fast-glob/out/utils";
+import request, {putRequest} from '@/utils/request'
+
+export const usersApi = {
 
 // 订单分页
-export function orderInfoPage(params: any, pageCurrent = 1, pageSize = 20) {
-    return request({url: '/user/admin/order/info/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    orderInfoPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/user/admin/order/info/page', data)
+    },
 
 // 订单修改
-export function orderInfoEdit(data: any) {
-    return request.put('/user/admin/order/info/edit', data)
-}
+    orderInfoEdit: (data: any) => {
+        return putRequest('/user/admin/order/info/edit', data)
+    },
 
 // 讲师分页
-export function lecturerPage(params: any, pageCurrent = 1, pageSize = 20) {
-    return request({url: '/user/admin/lecturer/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    lecturerPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/user/admin/lecturer/page', data)
+    },
 
 // 讲师修改
-export function lecturerEdit(data: any) {
-    return request.put('/user/admin/lecturer/edit', data)
-}
+    lecturerEdit: (data: any) => {
+        return putRequest('/user/admin/lecturer/edit', data)
+    },
 
 // 讲师保存
-export function lecturerSave(data: any) {
-    return request.post('/user/admin/lecturer/save', data)
-}
+    lecturerSave: (data: any) => {
+        return postRequest('/user/admin/lecturer/save', data)
+    },
 
 // 讲师删除
-export function lecturerDelete(data = {id: string}) {
-    return request.delete('/user/admin/lecturer/delete?id=' + data.id)
-}
+    lecturerDelete: (data: any) => {
+        return request.delete('/user/admin/lecturer/delete?id=' + data.id)
+    },
 
 // 用户分页
-export function usersPage(params: any, pageCurrent = 1, pageSize = 20) {
-    return request({url: '/user/admin/users/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    usersPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/user/admin/users/page', data)
+    },
 
 // 用户修改
-export function usersEdit(data: any) {
-    return request.put('/user/admin/users/edit', data)
-}
+    usersEdit: (data: any) => {
+        return putRequest('/user/admin/users/edit', data)
+    },
 
 // 用户修改
-export function usersDelete(data: any) {
-    return request.delete('/user/admin/users/delete?id=' + data.id, data)
-}
+    usersDelete: (data: any) => {
+        return request.delete('/user/admin/users/delete?id=' + data.id, data)
+    },
 
 // 登录日志
-export function logLoginPage(params: any, pageCurrent = 1, pageSize = 20) {
-    return request({url: '/user/admin/log/login/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
-}
+    logLoginPage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return request('/user/admin/log/login/page', data)
+    },
 
 // 分页
-export function userCoursePage(params: any, pageCurrent = 1, pageSize = 20) {
-    return request({url: '/course/admin/user/course/page', method: 'post', data: {pageCurrent: pageCurrent, pageSize: pageSize, ...params}})
+    userCoursePage: (params: any, pageCurrent: 1, pageSize: 20) => {
+        return postRequest('/course/admin/user/course/page', data)
+    }
+
 }

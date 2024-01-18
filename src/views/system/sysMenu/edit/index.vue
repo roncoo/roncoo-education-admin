@@ -46,7 +46,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysMenuEdit} from '@/api/system'
+import {systemApi} from '@/api/system'
 
 export default {
   name: 'EditSysMenu',
@@ -123,7 +123,7 @@ export default {
     onSubmit() {
 
       // 编辑
-      sysMenuEdit(this.form).then(res => {
+      systemApi.sysMenuEdit(this.form).then(res => {
 
         this.$message.success(res, 'success');
         this.$emit('closes', this.form);

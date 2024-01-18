@@ -66,7 +66,7 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {categoryList, courseEdit, courseSave} from '@/api/course';
+import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
@@ -112,7 +112,7 @@ export default defineComponent({
     // 获取分类列表
     const listCategory = () => {
       return new Promise((resolve, reject) => {
-        categoryList({categoryType: 1}).then(res => {
+        courseApi.categoryList({categoryType: 1}).then(res => {
           formModel.categoryList = res
           resolve()
         }).then(() => {
@@ -168,9 +168,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await courseEdit(data);
+            d = await courseApi.courseEdit(data);
           } else {
-            d = await courseSave(data);
+            d = await courseApi.courseSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

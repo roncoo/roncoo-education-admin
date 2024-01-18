@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import {sysConfigList, videoInit} from '@/api/system';
+import {systemApi} from '@/api/system';
 import List from './list.vue';
 
 export default {
@@ -49,7 +49,7 @@ export default {
       this.listForList();
     },
     listForList() {
-      sysConfigList(this.map).then((res) => {
+      systemApi.sysConfigList(this.map).then((res) => {
         this.list = res;
       });
     },
@@ -62,7 +62,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       }).then(() => {
-        videoInit().then((res) => {
+        systemApi.videoInit().then((res) => {
           this.$message.success(res);
         });
       });

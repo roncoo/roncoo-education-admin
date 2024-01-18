@@ -95,8 +95,8 @@ import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
 
-import {resourceDelete, resourceEdit, resourcePage} from '@/api/course'
-import {getSize, formatDuring, getEnum} from '@/utils/utils'
+import {courseApi} from '@/api/course'
+import {formatDuring, getEnum, getSize} from '@/utils/utils'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 
@@ -107,9 +107,9 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: resourcePage,
-      delete: resourceDelete,
-      updateStatus: resourceEdit
+      getList: courseApi.resourcePage,
+      delete: courseApi.resourceDelete,
+      updateStatus: courseApi.resourceEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

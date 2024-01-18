@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {sysRolePage, sysRoleUserList, sysRoleUserSave} from '@/api/system';
+import {systemApi} from '@/api/system';
 import {getEnum} from '@/utils/utils';
 
 export default {
@@ -71,7 +71,7 @@ export default {
   emits: ['closes'],
   mounted() {
     // 获取已选中角色
-    sysRoleUserList(this.id).then(res => {
+    systemApi.sysRoleUserList(this.id).then(res => {
       this.selectRoleIdList = res;
       // 获取角色分页数据
       this.map = {
@@ -114,7 +114,7 @@ export default {
     },
     listForPage() {
 
-      sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
+      systemApi.sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount
@@ -150,7 +150,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
           this.dialogLoading = true
-          sysRoleUserSave({userId: this.id, roleIdList: this.currentSelectRoleIdList}).then(res => {
+          systemApi.sysRoleUserSave({userId: this.id, roleIdList: this.currentSelectRoleIdList}).then(res => {
             this.dialogLoading = false;
             this.$message.success(res, 'success')
             this.$emit('closes', 'success')

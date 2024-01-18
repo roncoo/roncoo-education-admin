@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    :title="title"
-    :model-value="visible"
-    width="600px"
-    center
-    :before-close="handleClose"
+      :title="title"
+      :model-value="visible"
+      width="600px"
+      center
+      :before-close="handleClose"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="登录密码" prop="mobilePwd">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {sysUserPassword} from '@/api/system';
+import {systemApi} from '@/api/system';
 
 export default {
   name: 'ResetPasswordSysUser',
@@ -88,7 +88,7 @@ export default {
     onSubmit() {
 
       // 新增
-      sysUserPassword(this.form).then(res => {
+      systemApi.sysUserPassword(this.form).then(res => {
 
         this.$message.success(res, 'success')
         this.$emit('closes', 'success')

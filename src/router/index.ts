@@ -1,11 +1,10 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-/* Layout */
 import Layout from '@/layout/index.vue'
 import {useUserStore} from '@/store/modules/user';
-import {getToken, removeToken} from "@/utils/cookie";
+import {getToken} from "@/utils/cookie";
 
 // 静态路由
-const constantRoutes = [
+const constantRoutes = () => [
     {
         path: '/login',
         component: () => import('@/views/login.vue')
@@ -34,16 +33,16 @@ const constantRoutes = [
     }
 ]
 
-const createRouters = (routerList = '') => createRouter({
+const createRouters = (routerList: any) => createRouter({
     history: createWebHashHistory(),
-    scrollBehavior: () => ({y: 0}),
+    //scrollBehavior: () => ({y: 0}),
     routes: routerList
 })
 
 const router = createRouters(constantRoutes)
 
 // 路由加载前
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, next) => {
     if (to.path === '/login' || to.path === '/404' || to.path === '403') {
         next();
         return;
@@ -55,7 +54,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // 获取路由
-    let toRouterInfo = routerMap.get(to.name);
+    //let toRouterInfo = routerMap.get(to.name);
     next();
 })
 
@@ -65,9 +64,9 @@ export default router
 const routerMap = new Map();
 
 // 创建路由
-export function createNewRouter(data) {
-    data = data ? data : useUserStore().getRouterList || []
-    const menuList = data.filter((e) => e.path);
+export function createNewRouter(data: any) {
+    data = data ? data : useUserStore().routerList || []
+    const menuList = data.filter((e: any) => e.path);
     const routerList = [];
     const modules = import.meta.glob('../views/**/**.vue');
     for (const e of menuList) {
@@ -83,7 +82,8 @@ export function createNewRouter(data) {
                 title: e.menuName,
                 // 菜单图标展示
                 icon: e.menuIcon
-            }
+            },
+            component: {}
         }
         route.component = modules[`../views${e.component}`];
         routerList.push(route);

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {sysConfigEdit} from '@/api/system';
+import {systemApi} from '@/api/system';
 import SysConfigEdit from './edit.vue';
 import SysConfigValue from './value.vue';
 import {getEnum} from '@/utils/utils';
@@ -88,21 +88,20 @@ export default {
         return;
       }
       //
-      sysConfigEdit({
+      systemApi.sysConfigEdit({
         ...row,
         id: row.id,
         configKey: row.configKey,
         configValue: row.configValue
+      }).then((res) => {
+        if (res) {
+          this.$message.success(res);
+          this.$emit('reset', 'success');
+        }
       })
-        .then((res) => {
-          if (res) {
-            this.$message.success(res);
-            this.$emit('reset', 'success');
-          }
-        })
-        .finally(() => {
-          //
-        });
+          .finally(() => {
+            //
+          });
     },
     openRow(row) {
       this.sysConfigValueCtr.title = row.configName;

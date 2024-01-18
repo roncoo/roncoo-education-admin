@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    :title="title"
-    :model-value="visible"
-    width="600px"
-    center
-    :before-close="handleClose"
+      :title="title"
+      :model-value="visible"
+      width="600px"
+      center
+      :before-close="handleClose"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
       <el-form-item label="角色名称" prop="roleName">
@@ -26,7 +26,7 @@
   </el-dialog>
 </template>
 <script>
-import {sysRoleEdit} from '@/api/system'
+import {systemApi} from '@/api/system'
 
 export default {
   name: 'EditSysRole',
@@ -79,7 +79,7 @@ export default {
     onSubmit() {
 
       // 编辑
-      sysRoleEdit(this.form).then(res => {
+      systemApi.sysRoleEdit(this.form).then(res => {
 
         this.$message.success(res, 'success');
         this.$emit('closes', 'success')

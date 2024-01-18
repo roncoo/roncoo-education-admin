@@ -64,7 +64,7 @@ import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {usersDelete, usersEdit, usersPage} from '@/api/user'
+import {usersApi} from '@/api/user'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
 
@@ -74,9 +74,9 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: usersPage,
-      delete: usersDelete,
-      updateStatus: usersEdit
+      getList: usersApi.usersPage,
+      delete: usersApi.usersDelete,
+      updateStatus: usersApi.usersEdit
     })
     const state = reactive({
       ...UseTable(apis, {}),

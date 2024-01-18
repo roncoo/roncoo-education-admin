@@ -23,10 +23,9 @@
 <script>
 
 import UseTable from '@/composables/UseTable';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
+import {defineComponent, reactive, toRefs} from 'vue';
 
-import {userCourseCollect} from '@/api/course'
+import {courseApi} from '@/api/course'
 import {useRoute} from 'vue-router/dist/vue-router';
 
 export default defineComponent({
@@ -34,7 +33,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const apis = reactive({
-      getList: userCourseCollect
+      getList: courseApi.userCourseCollect
     })
     const state = reactive({
       ...UseTable(apis, {courseId: route.query.courseId})

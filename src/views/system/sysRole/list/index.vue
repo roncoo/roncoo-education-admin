@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {sysRoleDelete, sysRolePage, sysRoleStatusId, sysRoleView} from '@/api/system'
+import {systemApi} from '@/api/system'
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';
@@ -90,7 +90,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
 
-          sysRoleDelete(row.id).then(res => {
+          systemApi.sysRoleDelete(row.id).then(res => {
             this.$message.success(res);
 
             this.listForPage();
@@ -125,7 +125,7 @@ export default {
       this.addCtr.visible = false;
     },
     handleUpdateRow(id) {
-      sysRoleView(id).then(res => {
+      systemApi.sysRoleView(id).then(res => {
         this.editCtr.info = res;
         this.editCtr.visible = true;
       })
@@ -161,7 +161,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
 
-          sysRoleStatusId(row.id, statusId).then(res => {
+          systemApi.sysRoleStatusId(row.id, statusId).then(res => {
             this.$message.success(res);
             this.listForPage();
           })
@@ -177,7 +177,7 @@ export default {
     listForPage() {
       // this.listLoading = true
 
-      sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
+      systemApi.sysRolePage(this.map, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.list = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount

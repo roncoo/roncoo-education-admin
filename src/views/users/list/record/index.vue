@@ -21,9 +21,9 @@
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
           <el-progress
-            :percentage="scope.row.courseProgress"
-            :stroke-width="25"
-            :text-inside="true"
+              :percentage="scope.row.courseProgress"
+              :stroke-width="25"
+              :text-inside="true"
           />
         </template>
       </el-table-column>
@@ -40,11 +40,10 @@
 </template>
 <script>
 import UseTable from '@/composables/UseTable';
-import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {userStudyePage} from '@/api/course'
-import {userCoursePage} from '@/api/user'
+import {courseApi} from '@/api/course'
+import {usersApi} from '@/api/user'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
 import {getEnum} from '@/utils/utils';
@@ -54,7 +53,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const apis = reactive({
-      getList: userCoursePage
+      getList: usersApi.userCoursePage
     })
     const state = reactive({
       ...UseTable(apis, {userId: route.query.userId}),
@@ -70,7 +69,7 @@ export default defineComponent({
       info: {}
     })
     const studyRecord = (row) => {
-      userStudyePage({courseId: row.courseId, userId: route.query.userId}).then((res) => {
+      courseApi.userStudyePage({courseId: row.courseId, userId: route.query.userId}).then((res) => {
         study.info = res.list
         study.visible = true
       });

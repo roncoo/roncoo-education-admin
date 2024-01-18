@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {getToken, removeToken} from '@/utils/cookie'
+import {removeToken} from '@/utils/cookie'
 
 export const useUserStore = defineStore({
     id: 'user',
@@ -12,10 +12,7 @@ export const useUserStore = defineStore({
     }),
     getters: {
         getToken(state) {
-            if (!state.token) {
-                state.token = getToken()
-            }
-            return this.token
+            return state.token
         },
         getMobile(state) {
             return state.mobile
