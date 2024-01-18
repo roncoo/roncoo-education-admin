@@ -36,12 +36,12 @@
 </template>
 
 <script setup lang="ts">
-import {loginApi} from '@/api/login.js';
-import {ref, reactive, onMounted} from 'vue';
-import {setToken} from '@/utils/cookie.js';
+import {loginApi} from '@/api/login';
+import {onMounted, reactive, ref} from 'vue';
+import {setToken} from '@/utils/cookie';
 import {useRouter} from 'vue-router';
-import {useUserStore} from '@/store/modules/user.js';
-import {createNewRouter} from '@/router/index.js';
+import {useUserStore} from '@/store/modules/user';
+import {createNewRouter} from '@/router/index';
 
 const router = useRouter();
 const loading = ref(false)

@@ -73,7 +73,7 @@ import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
-import * as userApi from '@/api/user.js';
+import * as userApi from '@/api/user';
 
 export default defineComponent({
   components: {

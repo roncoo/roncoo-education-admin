@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import {resourcePage} from '@/api/course';
-import {getSize, formatDuring} from '@/utils/utils'
+import {courseApi} from '@/api/course';
+import {formatDuring} from '@/utils/utils'
 
 export default {
   name: 'SelectResource',
@@ -82,7 +82,7 @@ export default {
     },
     listForPage() {
 
-      resourcePage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
+      courseApi.resourcePage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount

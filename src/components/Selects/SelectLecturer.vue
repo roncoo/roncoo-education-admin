@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {lecturerPage} from '@/api/user';
+import {usersApi} from '@/api/user';
 
 export default {
   name: 'SelectLecturer',
@@ -65,7 +65,7 @@ export default {
   methods: {
     listForPage() {
 
-      lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
+      usersApi.lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
         this.page.dataList = res.list
         this.page.pageCurrent = res.pageCurrent
         this.page.totalCount = res.totalCount

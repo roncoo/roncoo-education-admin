@@ -24,7 +24,7 @@
 
 <script setup>
 import {onMounted, reactive, ref} from 'vue';
-import {coursePage} from '@/api/course';
+import {courseApi} from '@/api/course';
 
 const props = defineProps({
   info: {
@@ -62,7 +62,7 @@ let putawayEnums = reactive({})
 
 function listForPage() {
   loading.value = true
-  coursePage(queryParams, page.pageCurrent, page.pageSize).then(res => {
+  courseApi.coursePage(queryParams, page.pageCurrent, page.pageSize).then(res => {
     page.dataList = res.list
     page.pageCurrent = res.pageCurrent
     page.totalCount = res.totalCount
