@@ -1,10 +1,10 @@
-import request, {putRequest} from '@/utils/request'
+import {deleteRequest, postRequest, putRequest} from '@/utils/request'
 
 export const usersApi = {
 
 // 订单分页
     orderInfoPage: (params: any, pageCurrent: 1, pageSize: 20) => {
-        return postRequest('/user/admin/order/info/page', data)
+        return postRequest('/user/admin/order/info/page', {pageCurrent, pageSize, ...params})
     },
 
 // 订单修改
@@ -14,7 +14,7 @@ export const usersApi = {
 
 // 讲师分页
     lecturerPage: (params: any, pageCurrent: 1, pageSize: 20) => {
-        return postRequest('/user/admin/lecturer/page', data)
+        return postRequest('/user/admin/lecturer/page', {pageCurrent, pageSize, ...params})
     },
 
 // 讲师修改
@@ -29,12 +29,12 @@ export const usersApi = {
 
 // 讲师删除
     lecturerDelete: (data: any) => {
-        return request.delete('/user/admin/lecturer/delete?id=' + data.id)
+        return deleteRequest('/user/admin/lecturer/delete?id=' + data.id)
     },
 
 // 用户分页
     usersPage: (params: any, pageCurrent: 1, pageSize: 20) => {
-        return postRequest('/user/admin/users/page', data)
+        return postRequest('/user/admin/users/page', {pageCurrent, pageSize, ...params})
     },
 
 // 用户修改
@@ -49,12 +49,12 @@ export const usersApi = {
 
 // 登录日志
     logLoginPage: (params: any, pageCurrent: 1, pageSize: 20) => {
-        return request('/user/admin/log/login/page', data)
+        return postRequest('/user/admin/log/login/page', {pageCurrent, pageSize, ...params})
     },
 
 // 分页
     userCoursePage: (params: any, pageCurrent: 1, pageSize: 20) => {
-        return postRequest('/course/admin/user/course/page', data)
+        return postRequest('/course/admin/user/course/page', {pageCurrent, pageSize, ...params})
     }
 
 }
