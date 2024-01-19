@@ -18,25 +18,13 @@ const constantRoutes = [
         path: '/403',
         component: () => import('@/views/403.vue'),
         meta: {title: '403'}
-    },
-    {
-        path: '/',
-        redirect: '/dashboard',
-        component: Layout,
-        children: [
-            {
-                path: '/dashboard',
-                meta: {title: '首页'},
-                component: () => import('@/views/dashboard/index.vue')
-            }
-        ]
     }
 ]
 
 const createRouters = (routerList: any) => createRouter({
     history: createWebHashHistory(),
-    scrollBehavior: () => ({y: 0}),
-    routes: routerList
+    routes: routerList,
+    strict: true
 })
 
 const router = createRouters(constantRoutes)
@@ -52,7 +40,7 @@ router.beforeEach(async (to, from, next) => {
         next({path: '/login'});
         return;
     }
-
+    //console.log(from)
     // 获取路由
     //let toRouterInfo = routerMap.get(to.name);
     next();

@@ -1,5 +1,5 @@
 <template>
-  <el-aside class="sidebar-container" @mouseleave="restoreSubMenu">
+  <el-aside class="has_sub" @mouseleave="restoreSubMenu">
     <div class="menu-main">
       <el-menu
           mode="vertical"
@@ -29,14 +29,12 @@
   </el-aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useUserStore} from '@/store/modules/user';
-import Mains from '@/layout/components/Mains.vue';
 
-// 当前子菜单
+
 const subMenu = ref([])
-
 const menuList = computed(() => useUserStore().getMenuList)
 
 // 显示子菜单
@@ -57,32 +55,46 @@ function openMenu(menu) {
 </script>
 
 <style lang="less" scoped>
-.sidebar-container {
-  overflow: auto;
-  padding-top: 54px;
+.el-aside {
+  position: fixed;
+  width: 200px;
+  z-index: 2000;
+}
 
-  .menu-main {
-    width: 90px;
-    float: left;
-    min-height: calc(100vh - 50px);
-    background-color: #15213e;
-    padding-left: 10px;
+.has_sub {
+  width: 200px;
+}
 
-    .menu-main-item {
+.menu-main {
+  width: 90px;
+  float: left;
+  min-height: calc(100vh - 50px);
+  background-color: #15213e;
+  padding-left: 10px;
 
-      .el-menu-item {
-        background-color: #fff;
-        width: 90px;
-        height: 50px;
-        margin: 10px 0;
-        border-radius: 10px 0 0 10px;
-      }
+  .menu-main-item {
+    .el-menu-item {
+      width: 90px;
+      height: 50px;
+      margin: 10px 0;
+      color: white;
+      border-radius: 10px 0 0 10px;
+    }
+
+    :hover {
+      background-color: #fff;
+      color: black;
     }
   }
+}
 
-  .menu-sub {
-    width: 100px;
-    float: left;
-  }
+.menu-sub {
+  width: 100px;
+  float: left;
+}
+
+.menu-main .el-menu {
+  background-color: #15213e;
+  border: 0;
 }
 </style>

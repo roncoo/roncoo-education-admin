@@ -55,7 +55,7 @@ request.interceptors.response.use(
         removePending({url: response.config.url ? response.config.url.replace(BaseURL, '') : '', method: response.config.method}, false);
         const res = response.data
         // console.log(res)
-        if (response.status !== 200 || res.code && res.code !== 200) {
+        if (res.code && res.code !== 200) {
             if (res.code === 99 || res.code === 301) {
                 removeToken()
                 router.push('/login')
@@ -84,9 +84,8 @@ request.interceptors.response.use(
         return Promise.resolve(res.data)
     },
     error => {
-        console.error('err', error)
-        if (error.message) {
-            ElMessage({message: error.message, type: 'error', duration: 5 * 1000})
+        if (error.response.status === 500) {
+            ElMessage({message: error.response.data.msg, type: 'error', duration: 5 * 1000})
         }
         return Promise.reject(error)
     }

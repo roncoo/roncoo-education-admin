@@ -2,12 +2,13 @@ import {defineStore} from 'pinia'
 
 export const useSidebarStore = defineStore('sidebar', {
     state: () => ({
-        collapse: false
+        // 折叠
+        collapse: true
     }),
-    getters: {
-        handleCollapse(state) {
-            return state.collapse
+    getters: {},
+    actions: {
+        handleCollapse(data) {
+            this.collapse = data
         }
-    },
-    actions: {}
+    }
 })
