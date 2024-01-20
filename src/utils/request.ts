@@ -87,6 +87,11 @@ request.interceptors.response.use(
         if (error.response.status === 500) {
             ElMessage({message: error.response.data.msg, type: 'error', duration: 5 * 1000})
         }
+        if (error.response.data && error.response.data.code === 301) {
+            removeToken()
+            router.push('/login')
+            return Promise.reject(error.response)
+        }
         return Promise.reject(error)
     }
 )

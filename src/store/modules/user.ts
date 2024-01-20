@@ -73,13 +73,13 @@ function recursiveMap(menuList: any, parentList: any, breadcrumbMaps: any) {
             parentList = [];
         }
         let menuIdStr = e.id.toString();
-        let cloneParentMenuList = cloneDeep(parentList);
+        let cloneParentList = cloneDeep(parentList);
         if (!isEmpty(e.children) && e.menuName) {
             // 递归
-            cloneParentMenuList.push({name: menuIdStr, title: e.menuName});
-            recursiveMap(e.children, cloneParentMenuList, breadcrumbMaps);
+            cloneParentList.push({name: menuIdStr, title: e.menuName});
+            recursiveMap(e.children, cloneParentList, breadcrumbMaps);
         } else {
-            breadcrumbMaps.set(menuIdStr, cloneParentMenuList);
+            breadcrumbMaps.set(menuIdStr, cloneParentList);
         }
     }
 }

@@ -2,13 +2,13 @@
   <el-header>
     <logo/>
     <breadcrumb/>
-    <links/>
+    <item/>
   </el-header>
 </template>
 <script setup lang="ts">
 import Logo from './Logo.vue'
 import Breadcrumb from './Breadcrumb.vue'
-import Links from './Links.vue'
+import Item from './Item.vue'
 </script>
 
 <style lang="less" scoped>
