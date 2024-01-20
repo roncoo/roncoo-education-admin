@@ -76,7 +76,7 @@ function recursiveMap(menuList: any, parentList: any, breadcrumbMaps: any) {
         let cloneParentList = cloneDeep(parentList);
         if (!isEmpty(e.children) && e.menuName) {
             // 递归
-            cloneParentList.push({name: menuIdStr, title: e.menuName});
+            cloneParentList.push({id: menuIdStr, title: e.menuName});
             recursiveMap(e.children, cloneParentList, breadcrumbMaps);
         } else {
             breadcrumbMaps.set(menuIdStr, cloneParentList);
