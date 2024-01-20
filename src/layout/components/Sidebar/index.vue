@@ -2,7 +2,7 @@
   <el-aside @mouseleave="restoreSubMenu">
     <div class="menu-main">
       <el-menu mode="vertical" v-for="item in menuList">
-        <div class="menu-main-item" @mouseenter="showSubMenu(item.children)">
+        <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
           <el-menu-item :class="[showMenuId === item.id ? 'store':'']" :key="item.id" :index="item.path">
             <span v-if="item.menuType === 1">{{ item.menuName }}</span>
             <app-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</app-link>
@@ -45,6 +45,7 @@ const subMenuList = ref([])
 const showMenuList = ref([])
 const showMenuId = ref()
 const showSubMenuId = ref()
+const hoverMenuId = ref(false)
 
 watchEffect(() => {
   showSubMenuId.value = currentRoute.name
@@ -54,31 +55,32 @@ watchEffect(() => {
   } else {
     showMenuId.value = currentRoute.name
   }
-
-
 })
 
 onMounted(() => {
   const menu = menuList.value.filter((e: any) => e.id === showMenuId.value)
   subMenuList.value = menu[0].children
+  showMenuList.value = subMenuList.value
 })
 
-// 查看子菜单
-function showSubMenu(menuList: any) {
+// 鼠标移入
+function showSubMenu(menuList: any, menu: any) {
   subMenuList.value = menuList
+  hoverMenuId.value = menu.id
 }
 
-// 隐藏子菜单
+// 鼠标移出
 function restoreSubMenu() {
-  // 恢复原子菜单
   subMenuList.value = showMenuList.value
+  hoverMenuId.value = ''
 }
 
-// 显示选中子菜单
+// 点击菜单
 function showChildrenMenu(menuList: any, menu: any) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
   showMenuId.value = menu.id
+  hoverMenuId.value = ''
 }
 
 </script>
@@ -152,6 +154,11 @@ function showChildrenMenu(menuList: any, menu: any) {
 
 }
 
+.hover {
+  background-color: #3b455d;
+  color: #fff;
+  border-radius: 10px 0 0 10px;
+}
 
 .is-active {
   color: black;
