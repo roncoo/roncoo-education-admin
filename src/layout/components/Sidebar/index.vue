@@ -45,7 +45,7 @@ const subMenuList = ref([])
 const showMenuList = ref([])
 const showMenuId = ref()
 const showSubMenuId = ref()
-const hoverMenuId = ref(false)
+const hoverMenuId = ref()
 
 watchEffect(() => {
   showSubMenuId.value = currentRoute.name
@@ -88,8 +88,6 @@ function showChildrenMenu(menuList: any, menu: any) {
 <style lang="less" scoped>
 .el-aside {
   position: fixed;
-  width: 200px;
-  z-index: 2000;
 }
 
 .menu-main {
@@ -100,7 +98,7 @@ function showChildrenMenu(menuList: any, menu: any) {
 
   width: 90px;
   float: left;
-  min-height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
   background-color: #15213e;
   padding-left: 10px;
 
@@ -132,13 +130,19 @@ function showChildrenMenu(menuList: any, menu: any) {
 }
 
 .menu-sub {
+  .el-menu {
+    border: none;
+  }
+
   width: 100px;
   float: left;
   margin-top: 10px;
+  transition: all 0.5s ease-in-out;
 
   .menu-sub-item {
     .el-menu-item {
       height: 45px;
+
 
       &:hover {
         background-color: #f0f1ff;
@@ -150,8 +154,6 @@ function showChildrenMenu(menuList: any, menu: any) {
       background-color: #f0f1ff;
     }
   }
-
-
 }
 
 .hover {
