@@ -33,7 +33,7 @@ import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {

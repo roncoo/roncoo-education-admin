@@ -38,7 +38,7 @@
 import {systemApi} from '@/api/system';
 import Wangeditor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default {
   name: 'EditSysConfig',

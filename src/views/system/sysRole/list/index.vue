@@ -42,7 +42,7 @@ import {systemApi} from '@/api/system'
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default {
   name: 'SysRole',

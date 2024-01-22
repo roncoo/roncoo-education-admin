@@ -33,7 +33,7 @@
 
 <script>
 import {courseApi} from '@/api/course';
-import {formatDuring} from '@/utils/utils'
+import {formatDuring} from '@/utils/base.ts'
 
 export default {
   name: 'SelectResource',

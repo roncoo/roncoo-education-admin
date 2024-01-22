@@ -76,7 +76,7 @@ import AddSysMenu from '@/views/system/sysMenu/add/index.vue';
 import AddSysPermission from '@/views/system/sysMenu/permission/add.vue';
 import EditSysMenu from '@/views/system/sysMenu/edit/index.vue';
 import EditSysPermission from '@/views/system/sysMenu/permission/edit.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default {
   name: 'SysMenu',

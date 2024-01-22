@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {defineComponent, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
@@ -62,7 +62,7 @@ export default defineComponent({
       getList: courseApi.userCourseRecord
     })
     const state = reactive({
-      ...UseTable(apis, {courseId: route.query.courseId}),
+      ...Table(apis, {courseId: route.query.courseId}),
       activeName: 'course'
     });
 

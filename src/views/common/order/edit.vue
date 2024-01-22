@@ -17,7 +17,7 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import * as userApi from '@/api/user';
+import * as userApi from '@/api/users.js';
 
 export default defineComponent({
   components: {},

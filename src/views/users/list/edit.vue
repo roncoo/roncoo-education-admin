@@ -28,9 +28,9 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {usersApi} from '@/api/user';
+import {usersApi} from '@/api/users.js';
 
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {},

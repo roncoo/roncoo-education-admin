@@ -71,7 +71,7 @@ import AddSysUser from '@/views/system/sysUser/add/index.vue';
 import EditSysUser from '@/views/system/sysUser/edit/index.vue';
 import ResetPasswordSysUser from '@/views/system/sysUser/reset/index.vue';
 import AllocationSysRole from '@/views/system/sysUser/allocation/index.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 import Pagination from '@/components/Pagination/index.vue';
 
 export default {

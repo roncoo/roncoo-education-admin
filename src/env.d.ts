@@ -1,7 +1,7 @@
 declare module '*.vue' {
-  import {DefineComponent} from 'vue'
-  const component: DefineComponent<{}, {}, any>
+    import {DefineComponent} from 'vue'
+    const component: DefineComponent<{}, {}, any>
     export default component
 }
 
-declare module 'sortablejs'
+declare module 'js-cookie'

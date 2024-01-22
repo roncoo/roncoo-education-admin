@@ -1,7 +1,7 @@
 /**
  * 存储localStorage
  */
-export const setStore = (name: string, content: string) => {
+export function setStore(name: string, content: string) {
     if (!name) return
     if (typeof content !== 'string') {
         content = JSON.stringify(content)
@@ -12,23 +12,15 @@ export const setStore = (name: string, content: string) => {
 /**
  * 获取localStorage
  */
-export const getStore = (name: string) => {
+export function getStore(name: string) {
     if (!name) return
     return window.localStorage.getItem(name)
 }
 
 /**
- * 删除localStorage
- */
-export const removeStore = (name: string) => {
-    if (!name) return
-    window.localStorage.removeItem(name)
-}
-
-/**
  * 存储sessionStorage
  */
-export const setSession = (name: string, content: string) => {
+export function setSessionStorage(name: string, content: string) {
     if (!name) return
     if (typeof content !== 'string') {
         content = JSON.stringify(content)
@@ -39,7 +31,7 @@ export const setSession = (name: string, content: string) => {
 /**
  * 获取sessionStorage
  */
-export const getSession = (name: string) => {
+export function getSessionStorage(name: string) {
     if (!name) return
     const data = window.sessionStorage.getItem(name)
     if (data) {
@@ -48,11 +40,4 @@ export const getSession = (name: string) => {
     return null
 }
 
-/**
- * 删除sessionStorage
- */
-export const removeSession = (name: string) => {
-    if (!name) return
-    window.sessionStorage.removeItem(name)
-}
 

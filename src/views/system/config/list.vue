@@ -38,7 +38,7 @@
 import {systemApi} from '@/api/system';
 import SysConfigEdit from './edit.vue';
 import SysConfigValue from './value.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default {
   components: {SysConfigEdit, SysConfigValue},

@@ -91,12 +91,12 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
-import {formatDuring, getEnum, getSize} from '@/utils/utils'
+import {formatDuring, getEnum, getSize} from '@/utils/base.ts'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 
@@ -112,7 +112,7 @@ export default defineComponent({
       updateStatus: courseApi.resourceEdit
     })
     const state = reactive({
-      ...UseTable(apis, {}),
+      ...Table(apis, {}),
       statusIdEnums: {},
       resourceTypeEnums: {},
       vodPlatformEnums: {},

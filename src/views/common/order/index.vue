@@ -10,7 +10,7 @@
             <el-input v-model="seekForm.mobile" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="seek()"> 查询</el-button>
+            <el-button type="primary" @click="seek()">查询</el-button>
             <el-button @click="resetSeek()">重置</el-button>
           </el-form-item>
         </el-form>
@@ -67,13 +67,13 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/utils';
-import * as userApi from '@/api/user';
+import {getEnum} from '@/utils/base.ts';
+import {usersApi} from '@/api/users.js';
 
 export default defineComponent({
   components: {
@@ -81,10 +81,10 @@ export default defineComponent({
   },
   setup() {
     const apis = reactive({
-      getList: userApi.orderInfoPage
+      getList: usersApi.orderInfoPage
     })
     const state = reactive({
-      ...UseTable(apis, {}),
+      ...Table(apis, {}),
       payTypeEnumEnums: {},
       orderStatusEnums: {}
     });

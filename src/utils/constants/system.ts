@@ -11,3 +11,4 @@ export const PATH_LOGIN = '/login';
 export const PATH_404 = '/404';
 export const PATH_403 = '/403';
 export const PATH_HOME = '/dashboard';
+export const TOKEN_KEY = 'EDU_OS_TOKEN'

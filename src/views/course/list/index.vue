@@ -80,13 +80,13 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -105,7 +105,7 @@ export default defineComponent({
       updateStatus: courseApi.courseEdit
     })
     const state = reactive({
-      ...UseTable(apis, {}),
+      ...Table(apis, {}),
       statusIdEnums: {},
       putawayEnums: {}
     });

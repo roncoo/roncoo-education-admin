@@ -32,10 +32,10 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {usersApi} from '@/api/user'
-import {getEnum} from '@/utils/utils';
+import {usersApi} from '@/api/users.js'
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {},
@@ -44,7 +44,7 @@ export default defineComponent({
       getList: usersApi.logLoginPage
     })
     const state = reactive({
-      ...UseTable(apis, {}),
+      ...Table(apis, {}),
       loginStatusEnums: {}
     });
     onMounted(() => {

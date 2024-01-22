@@ -59,7 +59,9 @@ watchEffect(() => {
 
 onMounted(() => {
   const menu = menuList.value.filter((e: any) => e.id === showMenuId.value)
-  subMenuList.value = menu[0].children
+  if (menu && menu.length > 0) {
+    subMenuList.value = menu[0].children
+  }
   showMenuList.value = subMenuList.value
 })
 

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {usersApi} from '@/api/user';
+import {usersApi} from '@/api/users.js';
 
 export default {
   name: 'SelectLecturer',

@@ -70,7 +70,7 @@ import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import UploadImage from '@/components/Upload/image.vue';
 import SelectLecturer from '@/components/Selects/SelectLecturer.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {

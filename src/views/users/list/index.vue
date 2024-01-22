@@ -60,13 +60,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table';
 import {ElMessage} from 'element-plus';
 import {onMounted, reactive} from 'vue';
 
-import {usersApi} from '@/api/user'
+import {usersApi} from '@/api/users'
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base';
 import {useRouter} from "vue-router";
 
 const apis = reactive({
@@ -75,7 +75,7 @@ const apis = reactive({
   updateStatus: usersApi.usersEdit
 })
 const state = reactive({
-  ...UseTable(apis, {}),
+  ...Table(apis, {}),
   statusIdEnums: {},
   userSexEnums: {}
 });

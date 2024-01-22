@@ -32,7 +32,7 @@
 
 <script>
 import {systemApi} from '@/api/system';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base.ts';
 
 export default {
   name: 'AllocationSysRole',

@@ -2,9 +2,12 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
-        <br>
-        <br>
+        <el-form :model="seekForm" inline label-width="80px">
+          <el-form-item>
+            <el-button type="primary" @click="seek()"> 查询</el-button>
+            <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
     <el-table v-loading="tableData.loading" :data="tableData.list" border>
@@ -42,7 +45,7 @@
                   <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="tableDelete(scope.row, '')">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -50,61 +53,59 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="apis.getList"/>
+    <!--    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+       -->
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
   </div>
 </template>
-<script>
-import UseTable from '@/composables/UseTable';
+<script setup lang="ts">
+import Table from '@/utils/table';
 import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
+import {onMounted, reactive, toRefs} from 'vue';
 import {systemApi} from '@/api/system'
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/utils';
+import {getEnum} from '@/utils/base';
+import Pagination from "@/components/Pagination/index.vue";
 
-export default defineComponent({
-  components: {
-    Edit
-  },
-  setup() {
-    const initData = reactive({
-      carouselTarget: '_blank',
-      sort: 1
-    })
-    const apis = reactive({
-      getList: systemApi.carouselPage,
-      delete: systemApi.carouselDelete,
-      updateStatus: systemApi.carouselEdit
-    })
-    const state = reactive({
-      ...UseTable(apis, {}),
-      statusIdEnums: {},
-      targetEnums: {}
-    });
 
-    onMounted(() => {
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.targetEnums = getEnum('TargetEnum', 'obj');
-    });
-    const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.tableData.loading = false;
-      });
-    };
-    return {
-      ...toRefs(state),
-      initData,
-      handleUpdateStatus
-    };
-  }
+const initData = reactive({
+  carouselTarget: '_blank',
+  sort: 1
+})
+const apis = reactive({
+  getList: systemApi.carouselPage,
+  delete: systemApi.carouselDelete,
+  updateStatus: systemApi.carouselEdit
+})
+const state = reactive({
+  //...UseTable(apis, {}),
+  statusIdEnums: {},
+  targetEnums: {}
 });
+
+const {tableData, openEditDialog, closeEditDialog, page, seek, seekForm, editModel, getTableData, closeAddDialog, openAddDialog, addModel, PageParam, resetSeek, tableDelete, handleSizeChange, handleCurrentChange} = reactive({
+  ...Table(apis, {})
+})
+
+const handleUpdateStatus = function (row: any) {
+  tableData.loading = true;
+  row.statusId = row.statusId ? 0 : 1
+  apis.updateStatus({id: row.id, statusId: row.statusId}).then((res: any) => {
+    if (res) {
+      ElMessage({type: 'success', message: res});
+      getTableData();
+    }
+    tableData.loading = false;
+  });
+}
+
+onMounted(() => {
+  state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+  state.targetEnums = getEnum('TargetEnum', 'obj');
+})
+
+const {statusIdEnums, targetEnums} = toRefs(state)
+
+
 </script>

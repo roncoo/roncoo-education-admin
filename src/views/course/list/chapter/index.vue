@@ -59,13 +59,13 @@
   </div>
 </template>
 <script>
-import UseTable from '@/composables/UseTable';
+import Table from '@/utils/table.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course'
-import {formatDuring, getEnum} from '@/utils/utils'
+import {formatDuring, getEnum} from '@/utils/base.ts'
 import Edit from './edit.vue';
 import Add from './add.vue';
 
@@ -82,7 +82,7 @@ export default defineComponent({
       updateStatus: courseApi.courseChapterEdit
     })
     const state = reactive({
-      ...UseTable(apis, {courseId: route.query.courseId}),
+      ...Table(apis, {courseId: route.query.courseId}),
       freeEnums: {},
       statusIdEnums: {},
       userSexEnums: {},
