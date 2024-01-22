@@ -41,15 +41,10 @@ router.beforeEach(async (to, from, next) => {
         return;
     }
     //console.info(from)
-    // 获取路由
-    //let toRouterInfo = routerMap.get(to.name);
     next();
 })
 
 export default router
-
-// 路由对象
-const routerMap = new Map();
 
 // 创建路由
 export function createNewRouter(data: any) {
@@ -62,20 +57,19 @@ export function createNewRouter(data: any) {
             path: e.path,
             name: e.id.toString(),
             meta: {
-                // 数据库菜单(页面)id
+                // id
                 id: e.id.toString(),
                 // 组件名称
                 componentName: e.id.toString(),
-                // 菜单展示
+                // 组件标题
                 title: e.menuName,
-                // 菜单图标展示
+                // 组件图标
                 icon: e.menuIcon
             },
             component: {}
         }
         route.component = modules[`../views${e.component}`];
         routerList.push(route);
-        routerMap.set(e.id.toString(), route);
     }
 
     router.addRoute({

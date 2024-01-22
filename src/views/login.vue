@@ -64,7 +64,7 @@ onMounted(() => {
 })
 
 function getWebsite() {
-  loginApi.getWebsite().then((res) => {
+  loginApi.getWebsite().then((res: any) => {
     service.value = res;
   })
 }

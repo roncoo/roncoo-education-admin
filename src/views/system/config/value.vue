@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :before-close="handleClose" :model-value="visible" :title="title" width="800px">
+  <el-dialog :before-close="handleClose" :model-value="props.visible" :title="props.title" width="800px">
     <div class="dialog-content">
-      <div class="" v-html="value"/>
+      <div v-html="props.value"/>
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -10,28 +10,26 @@
     </template>
   </el-dialog>
 </template>
-<script>
-export default {
-  name: 'SysConfigValue',
-  props: {
-    title: {
-      type: String,
-      default: null
-    },
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    value: {
-      type: String,
-      default: null
+<script setup lang="ts">
+const props = defineProps({
+      title: {
+        type: String,
+        default: null
+      },
+      value: {
+        type: String,
+        default: null
+      },
+      visible: {
+        type: Boolean,
+        default: false
+      }
     }
-  },
-  emits: ['close-callback'],
-  methods: {
-    handleClose() {
-      this.$emit('close-callback');
-    }
-  }
-};
+)
+
+const emit = defineEmits(['close-callback'])
+
+function handleClose() {
+  emit('close-callback');
+}
 </script>

@@ -54,7 +54,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="listForPage"/>
+
+    <!--    <el-pagination :current-page="page.pageCurrent" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+       -->
     <add-sys-user v-if="addCtr.visible" :title="addCtr.title" :visible="addCtr.visible" @closes="closeAdd"/>
     <edit-sys-user v-if="editCtr.visible" :info="editCtr.info" :title="editCtr.title" :visible="editCtr.visible" @closes="closeEdit"/>
     <reset-password-sys-user v-if="resetPasswordCtr.visible" :info="resetPasswordCtr.info" :title="resetPasswordCtr.title" :visible="resetPasswordCtr.visible" @closes="closeUpdatePassword"/>
@@ -69,10 +72,12 @@ import EditSysUser from '@/views/system/sysUser/edit/index.vue';
 import ResetPasswordSysUser from '@/views/system/sysUser/reset/index.vue';
 import AllocationSysRole from '@/views/system/sysUser/allocation/index.vue';
 import {getEnum} from '@/utils/utils';
+import Pagination from '@/components/Pagination/index.vue';
 
 export default {
   name: 'SysUser',
   components: {
+    Pagination,
     AllocationSysRole,
     ResetPasswordSysUser,
     EditSysUser,

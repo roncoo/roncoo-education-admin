@@ -91,7 +91,7 @@ export default {
               {value: surplusFlow, name: `剩余：`, itemStyle: {color: '#00bf8f'}}
             ],
             label: {
-              normal: {
+              itemStyle: {
                 show: true,
                 position: 'top',
                 formatter: '{d}%'
@@ -105,10 +105,8 @@ export default {
               }
             },
             itemStyle: {
-              normal: {
-                borderWidth: 0.5,
-                borderColor: '#fff'
-              }
+              borderWidth: 0.5,
+              borderColor: '#fff'
             }
           }
         ]
@@ -156,7 +154,7 @@ export default {
               {value: surplusSpace, name: `剩余：`, itemStyle: {color: '#00bf8f'}}
             ],
             label: {
-              normal: {
+              itemtype: {
                 show: true,
                 // position: 'inner',
                 // 自定义显示格式(b:name, c:value, d:百分比)
@@ -171,10 +169,8 @@ export default {
               }
             },
             itemStyle: {
-              normal: {
-                borderWidth: 0.5,
-                borderColor: '#fff'
-              }
+              borderWidth: 0.5,
+              borderColor: '#fff'
             }
           }
         ]

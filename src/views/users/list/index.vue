@@ -59,60 +59,46 @@
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import UseTable from '@/composables/UseTable';
 import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
+import {onMounted, reactive} from 'vue';
 
 import {usersApi} from '@/api/user'
 import Edit from './edit.vue';
 import {getEnum} from '@/utils/utils';
+import {useRouter} from "vue-router";
 
-export default defineComponent({
-  components: {
-    Edit
-  },
-  setup() {
-    const apis = reactive({
-      getList: usersApi.usersPage,
-      delete: usersApi.usersDelete,
-      updateStatus: usersApi.usersEdit
-    })
-    const state = reactive({
-      ...UseTable(apis, {}),
-      statusIdEnums: {},
-      userSexEnums: {}
-    });
-
-    onMounted(() => {
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.userSexEnums = getEnum('UserSexEnum', 'obj');
-    });
-    const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.tableData.loading = false;
-      });
-    };
-
-    //数据
-    const userRecord = function(row) {
-      this.$router.push({path: '/users/record', query: {userId: row.id}});
-    }
-
-    return {
-      ...toRefs(state),
-      handleUpdateStatus,
-      userRecord
-    };
-  }
+const apis = reactive({
+  getList: usersApi.usersPage,
+  delete: usersApi.usersDelete,
+  updateStatus: usersApi.usersEdit
+})
+const state = reactive({
+  ...UseTable(apis, {}),
+  statusIdEnums: {},
+  userSexEnums: {}
 });
+
+onMounted(() => {
+  state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
+  state.userSexEnums = getEnum('UserSexEnum', 'obj');
+});
+
+function handleUpdateStatus(row: any) {
+  state.tableData.loading = true;
+  row.statusId = row.statusId ? 0 : 1
+  apis.updateStatus({id: row.id, statusId: row.statusId}).then((res: any) => {
+    if (res) {
+      ElMessage({message: res, type: 'success'});
+      state.getTableData();
+    }
+    state.tableData.loading = false;
+  });
+};
+
+//数据
+const userRecord = function (row: any) {
+  useRouter().push({path: '/users/record', query: {userId: row.id}});
+}
 </script>

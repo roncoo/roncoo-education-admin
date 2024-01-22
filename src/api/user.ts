@@ -7,10 +7,6 @@ export const usersApi = {
         return postRequest('/user/admin/order/info/page', {pageCurrent, pageSize, ...params})
     },
 
-// 订单修改
-    orderInfoEdit: (data: any) => {
-        return putRequest('/user/admin/order/info/edit', data)
-    },
 
 // 讲师分页
     lecturerPage: (params: any, pageCurrent: 1, pageSize: 20) => {
@@ -44,7 +40,7 @@ export const usersApi = {
 
 // 用户修改
     usersDelete: (data: any) => {
-        return request.delete('/user/admin/users/delete?id=' + data.id, data)
+        return deleteRequest('/user/admin/users/delete?id=' + data.id)
     },
 
 // 登录日志

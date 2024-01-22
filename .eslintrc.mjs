@@ -2,17 +2,19 @@ module.exports = {
     root: true,
     env: {
         browser: true,
-        node: true,
-        es6: true
+        es2021: true,
+        node: true
     },
-    plugins: ['vue'],
     parser: 'vue-eslint-parser',
     parserOptions: {
-        parser: '@typescript-eslint/parser',
-        sourceType: 'module'
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        parser: '@typescript-eslint/parser'
     },
     extends: [
-        'eslint:recommended'
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended'
     ],
+    plugins: ['vue', '@typescript-eslint'],
     rules: {}
 }
