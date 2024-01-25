@@ -59,6 +59,7 @@ import {onMounted, reactive, ref} from 'vue';
 import {usersApi} from '@/api/users'
 import FormModal from './formModal.vue';
 import {getEnumObj} from '@/utils/base';
+import Pagination from "@/components/Pagination/index.vue";
 
 // 添加/修改
 const formRef = ref();
@@ -68,9 +69,9 @@ const openFormModal = (item?: any) => {
 
 const statusIdEnums = ref();
 const targetEnums = ref();
-onMounted(() => {
-  statusIdEnums.value = getEnumObj('StatusIdEnum');
-  targetEnums.value = getEnumObj('TargetEnum');
+onMounted(async () => {
+  statusIdEnums.value = await getEnumObj('StatusIdEnum');
+  targetEnums.value = await getEnumObj('TargetEnum');
 });
 
 // 基础功能

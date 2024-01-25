@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="modelVisible" :append-to-body="true" :width="600" center @close="onClose">
-    <el-form :model="formModel" :rules="rules" :label-width="80" ref="formRef" @submit.prevent>
+    <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="图片" prop="carouselImg">
         <upload-image :height="100" :image-url="formModel.carouselImg" :width="400" class="avatar" @success=" (val) => {   formModel.carouselImg = val.url;  }"/>
       </el-form-item>
