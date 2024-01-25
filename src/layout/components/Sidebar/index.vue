@@ -4,7 +4,7 @@
       <el-menu mode="vertical" v-for="item in menuList">
         <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
           <el-menu-item :class="[showMenuId === item.id ? 'store':'']" :key="item.id" :index="item.path">
-            <span v-if="item.menuType === 1">{{ item.menuName }}</span>
+            <span v-if="item.menuType === 1" @click="toPage(item)">{{ item.menuName }}</span>
             <app-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</app-link>
           </el-menu-item>
         </div>
@@ -31,6 +31,7 @@ import {computed, onMounted, ref, watchEffect} from 'vue'
 import {useUserStore} from '@/store/modules/user';
 import AppLink from './AppLink.vue'
 import {useRoute} from "vue-router/dist/vue-router";
+import router from "@/router";
 
 // 加载用户菜单
 const menuList = computed(() => useUserStore().getMenuList)
@@ -77,10 +78,20 @@ function restoreSubMenu() {
   hoverMenuId.value = ''
 }
 
-// 点击菜单
+// 鼠标点击子菜单
 function showChildrenMenu(menuList: any, menu: any) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
+  showMenuId.value = menu.id
+  hoverMenuId.value = ''
+}
+
+// 鼠标点击主菜单
+function toPage(menu: any) {
+  if (menu.children) {
+    router.push({path: menu.children[0].path});
+  }
+  showMenuList.value = menu.children
   showMenuId.value = menu.id
   hoverMenuId.value = ''
 }
