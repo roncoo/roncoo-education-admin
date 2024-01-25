@@ -1,21 +1,18 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="modelVisible" :append-to-body="true" :width="600" center @close="onClose">
-    <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
-      <el-form-item label="图片" prop="carouselImg">
-        <upload-image :height="100" :image-url="formModel.carouselImg" :width="400" class="avatar" @success=" (val) => {   formModel.carouselImg = val.url;  }"/>
+  <el-dialog :append-to-body="true" :model-value="modelVisible" :title="formModel.id ? '修改' : '添加'" :width="600" center @close="onClose">
+    <el-form ref="ruleForm" :model="formModel" :rules="rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
+      <el-form-item label="友情名称" prop="linkName">
+        <el-input v-model="formModel.linkName" maxlength="255" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="描述" prop="carouselTitle">
-        <el-input v-model="formModel.carouselTitle" maxlength="255" show-word-limit></el-input>
+      <el-form-item label="友情地址" prop="linkUrl">
+        <el-input v-model="formModel.linkUrl" maxlength="255" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="地址" prop="carouselUrl">
-        <el-input v-model="formModel.carouselUrl" maxlength="255" show-word-limit></el-input>
-      </el-form-item>
-      <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
-        <el-radio-group v-model="formModel.carouselTarget">
+      <el-form-item label="跳转方式" prop="linkTarget">
+        <el-radio-group v-model="formModel.linkTarget">
           <el-radio v-for="item in targetEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item class="form-group" label="排序" prop="sort">
+      <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"></el-input-number>
       </el-form-item>
     </el-form>
@@ -31,9 +28,8 @@
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {onMounted, ref} from 'vue';
-import UploadImage from '@/components/Upload/Image/index.vue';
 import {systemApi} from '@/api/system';
-import {getEnum} from '@/utils/base';
+import {getEnum} from '@/utils/base.ts';
 
 // 打开和关闭
 const onOpen = (item: any) => {
@@ -51,7 +47,6 @@ const onClose = () => {
 // 表单
 const formDefault = {
   id: undefined,
-  carouselTarget: '_blank',
   sort: 1
 }
 const formModel = ref({...formDefault})
@@ -68,10 +63,10 @@ const onSubmit = async () => {
   loading.value = true;
   try {
     if (formModel.value.id) {
-      await systemApi.carouselEdit(formModel.value);
+      await systemApi.linkEdit(formModel.value);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await systemApi.carouselSave(formModel.value);
+      await systemApi.linkSave(formModel.value);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('onReload')
@@ -84,8 +79,9 @@ const onSubmit = async () => {
 // 规则
 const formRef = ref()
 const rules = {
-  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
-  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+  linkName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  linkUrl: [{required: true, message: '不能为空', trigger: 'blur'}],
+  linkTarget: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 枚举
@@ -98,5 +94,3 @@ const emit = defineEmits(['onReload'])
 const modelVisible = ref(false);
 const loading = ref(false);
 </script>
-
-

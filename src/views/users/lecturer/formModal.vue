@@ -54,14 +54,16 @@ const onOpen = (item: any) => {
 }
 defineExpose({onOpen})
 const onClose = () => {
+  Object.assign(formModel.value, formDefault);
   modelVisible.value = false;
 }
 
 // 表单
-const formModel = ref({
+const formDefault = {
   id: undefined,
   sort: 1
-})
+}
+const formModel = ref({...formDefault})
 const onSubmit = async () => {
   // 校验
   const valid = await formRef.value.validate()
