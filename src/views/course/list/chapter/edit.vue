@@ -31,7 +31,7 @@ import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -62,7 +62,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      state.freeEnums = getEnum('FreeEnum', 'obj')
+      state.freeEnums = getEnumObj('FreeEnum')
     });
 
     let formModel = reactive({

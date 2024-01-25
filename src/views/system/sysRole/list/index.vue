@@ -42,7 +42,7 @@ import {systemApi} from '@/api/system'
 import AddSysRole from '@/views/system/sysRole/add/index.vue';
 import EditSysRole from '@/views/system/sysRole/edit/index.vue';
 import SettSysRole from '@/views/system/sysRole/sett/index.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default {
   name: 'SysRole',
@@ -79,7 +79,7 @@ export default {
     this.listForPage()
   },
   mounted() {
-    this.statusIdEnums = getEnum('StatusIdEnum', 'obj')
+    this.statusIdEnums = getEnumObj('StatusIdEnum')
   },
   methods: {
     handleDeleteRow(row) {

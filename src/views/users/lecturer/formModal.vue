@@ -1,19 +1,29 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="500" center @close="cloneDialog">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.data.id ? '修改' : '添加'" :width="800" center @close="cloneDialog">
     <el-form ref="ruleForm" :model="formModel.data" :rules="formModel.rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="用户昵称" prop="nickname">
-        <el-input v-model="formModel.data.nickname" maxlength="100" show-word-limit></el-input>
-      </el-form-item>
-      <el-form-item label="用户性别" prop="userSex">
-        <el-radio-group v-model="formModel.data.userSex">
-          <el-radio v-for="item in userSexEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item class="form-group" label="用户年龄" prop="userAge">
-        <el-input-number v-model="formModel.data.userAge" maxlength="500"></el-input-number>
-      </el-form-item>
-      <el-form-item class="form-group" label="备注" prop="remark">
-        <el-input v-model="formModel.data.remark" maxlength="100" show-word-limit></el-input>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item class="form-group" label="名称" prop="lecturerName">
+            <el-input v-model="formModel.data.lecturerName" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item class="form-group" label="职位" prop="lecturerPosition">
+            <el-input v-model="formModel.data.lecturerPosition" maxlength="100" show-word-limit></el-input>
+          </el-form-item>
+          <!--          <el-form-item class="form-group" label="手机" prop="lecturerMobile">
+                      <el-input v-model="formModel.data.lecturerMobile" maxlength="100" show-word-limit></el-input>
+                    </el-form-item>-->
+          <el-form-item label="排序" prop="sort">
+            <el-input-number v-model="formModel.data.sort"></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item class="form-group" label="" prop="lecturerHead">
+            <upload-image :height="120" :image-url="formModel.data.lecturerHead" :width="120" class="avatar" @success=" (val) => {   formModel.data.lecturerHead = val.url;  }"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-form-item label="简介" prop="introduce">
+        <editor ref="editor" :value="formModel.data.introduce" @input="handleChangeIntro"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -27,13 +37,15 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-import {usersApi} from '@/api/users.js';
-
-import {getEnum} from '@/utils/base.ts';
+import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import UploadImage from '@/components/Upload/image.vue';
+import editor from '@/components/Wangeditor/index.vue';
+import {usersApi} from '@/api/users';
 
 export default defineComponent({
-  components: {},
+  components: {
+    editor, UploadImage
+  },
   props: {
     modelValue: {
       type: Boolean,
@@ -57,7 +69,9 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
+        lecturerName: [{required: true, message: '不能为空', trigger: 'blur'}],
+        lecturerPosition: [{required: true, message: '不能为空', trigger: 'blur'}],
+        introduce: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -65,14 +79,6 @@ export default defineComponent({
     if (modelValue.value) {
       visible.value = modelValue.value;
     }
-
-    const state = ref({
-      userSexEnums: {}
-    });
-
-    onMounted(() => {
-      state.userSexEnums = getEnum('UserSexEnum');
-    });
 
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
@@ -108,9 +114,9 @@ export default defineComponent({
             ...formModel.data
           };
           if (data.id) {
-            d = await usersApi.usersEdit(data);
+            d = await usersApi.lecturerEdit(data);
           } else {
-            d = await usersApi.save(data);
+            d = await usersApi.lecturerSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
@@ -121,15 +127,18 @@ export default defineComponent({
         loading.value = false;
       });
     };
-
+// 富文本改变
+    const handleChangeIntro = (value) => {
+      formModel.data.introduce = value
+    }
     return {
-      ...toRefs(state),
       visible,
       loading,
       formModel,
       ruleForm,
       cloneDialog,
-      onSubmit
+      onSubmit,
+      handleChangeIntro
     };
   }
 });

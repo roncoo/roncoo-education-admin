@@ -83,20 +83,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize"
-                   :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange"
-                   @current-change="handleCurrentChange"
-    />
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
-import {formatDuring, getEnum, getSize} from '@/utils/base.ts'
+import {formatDuring, getEnumObj, getSize} from '@/utils/base.ts'
 import Edit from './edit.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 
@@ -139,11 +136,11 @@ export default defineComponent({
       myfile.click();
     }
     onMounted(() => {
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.resourceTypeEnums = getEnum('ResourceTypeEnum', 'obj');
-      state.vodPlatformEnums = getEnum('VodPlatformEnum', 'obj');
-      state.storagePlatformEnums = getEnum('StoragePlatformEnum', 'obj');
-      state.videoStatusEnums = getEnum('VideoStatusEnum', 'obj');
+      state.statusIdEnums = getEnumObj('StatusIdEnum');
+      state.resourceTypeEnums = getEnumObj('ResourceTypeEnum');
+      state.vodPlatformEnums = getEnumObj('VodPlatformEnum');
+      state.storagePlatformEnums = getEnumObj('StoragePlatformEnum');
+      state.videoStatusEnums = getEnumObj('VideoStatusEnum');
     });
     onUnmounted(() => {
     });

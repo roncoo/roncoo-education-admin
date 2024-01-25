@@ -32,7 +32,7 @@
 
 <script>
 import {systemApi} from '@/api/system';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default {
   name: 'AllocationSysRole',
@@ -82,7 +82,7 @@ export default {
       this.listForPage();
     });
     // 获取状态枚举
-    this.statusIdEnums = getEnum('StatusIdEnum', 'obj')
+    this.statusIdEnums = getEnumObj('StatusIdEnum')
   },
   methods: {
     // 选中角色

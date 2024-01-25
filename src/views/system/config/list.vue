@@ -38,7 +38,7 @@
 import {systemApi} from '@/api/system';
 import SysConfigEdit from './edit.vue';
 import SysConfigValue from './value.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default {
   components: {SysConfigEdit, SysConfigValue},
@@ -78,9 +78,9 @@ export default {
     };
   },
   mounted() {
-    this.storagePlatformEnum = getEnum('StoragePlatformEnum', 'obj');
-    this.vodPlatformEnum = getEnum('VodPlatformEnum', 'obj');
-    this.smsPlatformEnum = getEnum('SmsPlatformEnum', 'obj');
+    this.storagePlatformEnum = getEnumObj('StoragePlatformEnum');
+    this.vodPlatformEnum = getEnumObj('VodPlatformEnum');
+    this.smsPlatformEnum = getEnumObj('SmsPlatformEnum');
   },
   methods: {
     changBooleanValue(row) {

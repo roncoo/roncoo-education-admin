@@ -59,13 +59,13 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course'
-import {formatDuring, getEnum} from '@/utils/base.ts'
+import {formatDuring} from '@/utils/base.ts'
 import Edit from './edit.vue';
 import Add from './add.vue';
 
@@ -94,10 +94,10 @@ export default defineComponent({
     onMounted(() => {
       // 章添加修改
       editForm.courseId = route.query.courseId;
-      state.freeEnums = getEnum('FreeEnum', 'obj');
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.userSexEnums = getEnum('UserSexEnum', 'obj');
-      state.resourceTypeEnums = getEnum('ResourceTypeEnum', 'obj');
+      state.freeEnums = getEnumObj('FreeEnum');
+      state.statusIdEnums = getEnumObj('StatusIdEnum');
+      state.userSexEnums = getEnumObj('UserSexEnum');
+      state.resourceTypeEnums = getEnumObj('ResourceTypeEnum');
     });
 
     const handleUpdateStatus = function(row) {

@@ -67,13 +67,13 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/base.ts';
-import {usersApi} from '@/api/users.js';
+import {getEnumObj} from '@/utils/base.ts';
+import {usersApi} from '@/api/users';
 
 export default defineComponent({
   components: {
@@ -90,8 +90,8 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      state.payTypeEnumEnums = getEnum('PayTypeEnum', 'obj');
-      state.orderStatusEnums = getEnum('OrderStatusEnum', 'obj');
+      state.payTypeEnumEnums = getEnumObj('PayTypeEnum');
+      state.orderStatusEnums = getEnumObj('OrderStatusEnum');
     });
 
     const handleUpdateStatus = function(row) {

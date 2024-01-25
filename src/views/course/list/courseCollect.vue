@@ -16,20 +16,21 @@
       <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
       <el-table-column label="收藏时间" min-width="30" prop="gmtCreate"/>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
   </div>
 </template>
 
 <script>
 
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {defineComponent, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
 import {useRoute} from 'vue-router/dist/vue-router';
+import Pagination from '@/components/Pagination/index.vue';
 
 export default defineComponent({
-  components: {},
+  components: {Pagination},
   setup() {
     const route = useRoute()
     const apis = reactive({

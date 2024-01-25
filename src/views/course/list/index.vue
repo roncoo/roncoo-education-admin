@@ -75,21 +75,23 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
     <edit v-model="editModel.visible" :form="editModel.form" :modelValue="editModel.visible" @updateTable="closeEditDialog"/>
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
+import Pagination from '@/components/Pagination/index.vue';
 
 export default defineComponent({
   components: {
+    Pagination,
     Edit
   },
   setup() {
@@ -111,8 +113,8 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.putawayEnums = getEnum('PutawayEnum', 'obj');
+      state.statusIdEnums = getEnumObj('StatusIdEnum');
+      state.putawayEnums = getEnumObj('PutawayEnum');
     });
 
     const handleUpdateStatus = function(row) {

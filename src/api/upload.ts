@@ -1,11 +1,11 @@
 import {getRequest, postRequest, upload} from '@/utils/request'
 
 export const uploadApi = {
-    pic: (data: any, cb: any) => {
-        return upload(data, cb, 'picFile')
+    pic: (data: any) => {
+        return upload('/system/admin/upload/pic', data, 'picFile')
     },
-    doc: (data: any, cb: any) => {
-        return upload(data, cb, 'docFile')
+    doc: (data: any) => {
+        return upload('/system/admin/upload/doc', data, 'docFile')
     },
     getVodConfig: () => {
         return getRequest('/course/admin/resource/vod/config')

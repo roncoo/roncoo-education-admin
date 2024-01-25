@@ -76,7 +76,7 @@ import AddSysMenu from '@/views/system/sysMenu/add/index.vue';
 import AddSysPermission from '@/views/system/sysMenu/permission/add.vue';
 import EditSysMenu from '@/views/system/sysMenu/edit/index.vue';
 import EditSysPermission from '@/views/system/sysMenu/permission/edit.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default {
   name: 'SysMenu',
@@ -114,8 +114,8 @@ export default {
     this.listMenuPermission();
   },
   mounted() {
-    this.menuTypeEnums = getEnum('MenuTypeEnum', 'obj')
-    this.statusIdEnums = getEnum('StatusIdEnum', 'obj')
+    this.menuTypeEnums = getEnumObj('MenuTypeEnum')
+    this.statusIdEnums = getEnumObj('StatusIdEnum')
   },
   methods: {
     handleEditRow(row) {

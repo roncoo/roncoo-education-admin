@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
@@ -61,7 +61,7 @@ import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
 import Add from './add.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -92,8 +92,8 @@ export default defineComponent({
     onMounted(() => {
       addForm.courseId = route.query.courseId;
       editForm.courseId = route.query.courseId;
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.UserSexEnum = getEnum('UserSexEnum', 'obj');
+      state.statusIdEnums = getEnumObj('StatusIdEnum');
+      state.UserSexEnum = getEnumObj('UserSexEnum');
     });
 
     const handleUpdateStatus = function(row) {

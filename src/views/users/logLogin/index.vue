@@ -2,15 +2,15 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-button type="primary" @click="seek()"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="手机号码" prop="moblie"/>
       <el-table-column label="登录IP" prop="loginIp"/>
@@ -28,32 +28,26 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/table.ts';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-import {usersApi} from '@/api/users.js'
-import {getEnum} from '@/utils/base.ts';
+<script setup lang="ts">
+import {onMounted, reactive, ref} from 'vue';
+import {usersApi} from '@/api/users'
+import {getEnumObj} from '@/utils/base';
+import useTable from "@/utils/table";
+import Pagination from "@/components/Pagination/index.vue";
 
-export default defineComponent({
-  components: {},
-  setup() {
-    const apis = reactive({
-      getList: usersApi.logLoginPage
-    })
-    const state = reactive({
-      ...Table(apis, {}),
-      loginStatusEnums: {}
-    });
-    onMounted(() => {
-      state.loginStatusEnums = getEnum('LoginStatusEnum', 'obj');
-    });
-
-    return {
-      ...toRefs(state)
-    };
-  }
+const loginStatusEnums = ref();
+onMounted(() => {
+  loginStatusEnums.value = getEnumObj('LoginStatusEnum');
 });
+
+// 基础功能
+const apis = reactive({
+  page: usersApi.logLoginPage,
+})
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+  ...useTable(apis)
+})
 </script>

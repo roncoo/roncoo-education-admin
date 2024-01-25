@@ -6,7 +6,7 @@
       v-model:page-size="pageSize"
       :total="props.total"
       :background="true"
-      :page-sizes="[10, 20, 50, 100, 200]"
+      :page-sizes="[20, 50, 100, 200]"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"

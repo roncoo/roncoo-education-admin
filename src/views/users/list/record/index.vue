@@ -39,14 +39,14 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
-import {usersApi} from '@/api/users.js'
+import {usersApi} from '@/api/users'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './study.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {Study},
@@ -61,7 +61,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      state.loginStatusEnums = getEnum('LoginStatusEnum', 'obj');
+      state.loginStatusEnums = getEnumObj('LoginStatusEnum');
     });
 
     let study = reactive({

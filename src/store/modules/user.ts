@@ -5,7 +5,6 @@ import {removeToken} from '@/utils/cookie'
 export const useUserStore = defineStore({
     id: 'user',
     state: () => ({
-        token: '',
         mobile: '',
         realName: '',
         routerList: [],
@@ -13,9 +12,6 @@ export const useUserStore = defineStore({
         breadcrumbMap: new Map()
     }),
     getters: {
-        getToken(state) {
-            return state.token
-        },
         getMobile(state) {
             return state.mobile
         },
@@ -33,11 +29,6 @@ export const useUserStore = defineStore({
         }
     },
     actions: {
-        // set token
-        setToken(token: any) {
-            this.token = token
-        },
-
         // 登录操作
         login(data: any) {
             this.mobile = data.mobile
@@ -49,9 +40,9 @@ export const useUserStore = defineStore({
 
         // logout
         logout() {
-            this.token = ''
             this.routerList = []
             this.menuList = []
+            this.breadcrumbMap = new Map()
             removeToken()
         }
     }

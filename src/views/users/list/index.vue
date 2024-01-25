@@ -2,18 +2,18 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item label="手机号码">
-            <el-input v-model="seekForm.mobile" clearable/>
+            <el-input v-model="query.mobile" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="seek()"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="手机号码" prop="mobile"/>
       <el-table-column label="用户头像">
@@ -35,19 +35,23 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="200" fixed="right" label="操作" prop="address">
+      <el-table-column :width="220" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="userRecord(scope.row)">数据</el-button>
           <el-dropdown>
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button>更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+                  <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-if=" scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if=" scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="warning" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -55,50 +59,46 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-modal ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
 <script setup lang="ts">
-import Table from '@/utils/table';
-import {ElMessage} from 'element-plus';
-import {onMounted, reactive} from 'vue';
+import useTable from '@/utils/table';
+import {onMounted, reactive, ref} from 'vue';
 
 import {usersApi} from '@/api/users'
-import Edit from './edit.vue';
-import {getEnum} from '@/utils/base';
+import {getEnumObj} from '@/utils/base';
 import {useRouter} from "vue-router";
+import Pagination from "@/components/Pagination/index.vue";
+import FormModal from "./formModal.vue";
 
-const apis = reactive({
-  getList: usersApi.usersPage,
-  delete: usersApi.usersDelete,
-  updateStatus: usersApi.usersEdit
-})
-const state = reactive({
-  ...Table(apis, {}),
-  statusIdEnums: {},
-  userSexEnums: {}
-});
-
-onMounted(() => {
-  state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-  state.userSexEnums = getEnum('UserSexEnum', 'obj');
-});
-
-function handleUpdateStatus(row: any) {
-  state.tableData.loading = true;
-  row.statusId = row.statusId ? 0 : 1
-  apis.updateStatus({id: row.id, statusId: row.statusId}).then((res: any) => {
-    if (res) {
-      ElMessage({message: res, type: 'success'});
-      state.getTableData();
-    }
-    state.tableData.loading = false;
-  });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
 };
 
-//数据
+// 查看数据
 const userRecord = function (row: any) {
   useRouter().push({path: '/users/record', query: {userId: row.id}});
 }
+
+// 枚举
+const statusIdEnums = ref([]);
+const userSexEnums = ref([]);
+onMounted(() => {
+  statusIdEnums.value = getEnumObj('StatusIdEnum');
+  userSexEnums.value = getEnumObj('UserSexEnum');
+});
+
+// 基础功能
+const apis = reactive({
+  page: usersApi.usersPage,
+  delete: usersApi.usersDelete,
+  status: usersApi.usersEdit
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

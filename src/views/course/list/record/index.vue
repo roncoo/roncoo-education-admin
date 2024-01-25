@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {defineComponent, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'

@@ -58,6 +58,7 @@ request.interceptors.response.use(
         if (res.code && res.code !== 200) {
             if (res.code === 99 || res.code === 301) {
                 removeToken()
+                useUserStore().logout()
                 router.push('/login')
                 return Promise.reject(response)
             }
@@ -65,6 +66,7 @@ request.interceptors.response.use(
             if (res.code === 304) {
                 // 异地登录
                 ElMessageBox.confirm('异地登录', '确定登出', {confirmButtonText: '重新登录', showCancelButton: false, type: 'warning'}).then(() => {
+                    removeToken()
                     useUserStore().logout()
                     location.reload() // 重新实例化vue-router对象
                 })
@@ -89,6 +91,7 @@ request.interceptors.response.use(
         }
         if (error.response && error.response.data && error.response.data.code === 301) {
             removeToken()
+            useUserStore().logout()
             router.push('/login')
             return Promise.reject(error.response)
         }
@@ -126,17 +129,8 @@ export const deleteRequest = (url: string) => {
     return request({url: url, method: 'delete'});
 }
 
-export const upload = (data: any, cb: any, fileName: string) => {
+export const upload = (url: string, data: any, fileName: string) => {
     const formData = new FormData()
     formData.append(fileName, data.file)
-    const config = {
-        onUploadProgress: (progressEvent: any) => {
-            const videoUploadPercent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
-            // 计算上传进度
-            if (cb) {
-                cb(videoUploadPercent)
-            }
-        }
-    }
-    return request.post('/system/admin/upload/doc', formData, config)
+    return request.post(url, formData)
 }

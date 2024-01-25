@@ -54,14 +54,14 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/table.ts';
+import Table from '@/utils/useTable.ts';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course'
 import Edit from './edit.vue';
-import {getEnum} from '@/utils/base.ts';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -88,10 +88,10 @@ export default defineComponent({
     onMounted(() => {
       // 章添加修改
       editForm.zoneId = route.query.zoneId;
-      state.freeEnums = getEnum('FreeEnum', 'obj');
-      state.statusIdEnums = getEnum('StatusIdEnum', 'obj');
-      state.userSexEnums = getEnum('UserSexEnum', 'obj');
-      state.putawayEnums = getEnum('PutawayEnum', 'obj');
+      state.freeEnums = getEnumObj('FreeEnum');
+      state.statusIdEnums = getEnumObj('StatusIdEnum');
+      state.userSexEnums = getEnumObj('UserSexEnum');
+      state.putawayEnums = getEnumObj('PutawayEnum');
     });
 
     const handleUpdateStatus = function(row) {

@@ -4,130 +4,95 @@
 import {onMounted, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
 
-export default function Table(apis: any, PageParam = {}) {
-    // 列表搜索项目对象
-    const seekForm: any = reactive({})
-    const tableData = reactive({
-        loading: true,
-        list: []
-    })
-
-    // 列表数据
-    const getTableData = async () => {
-        tableData.loading = true;
-        const res = await apis.getList({
-            pageCurrent: page.pageCurrent,
-            pageSize: page.pageSize,
-            ...PageParam,
-            ...seekForm
-        });
-        tableData.loading = false;
-        tableData.list = res.list || []
-        page.totalCount = res.totalCount || 0;
-    }
-
-    // 搜索函数
-    const seek = () => {
-        page.pageCurrent = 1;
-        getTableData();
-    };
-
-    // 重置
-    const resetSeek = () => {
-        for (let i in seekForm) {
-            seekForm[i] = '';
-        }
-        seek()
-    };
-
+export default function useTable(apis: any) {
     // 分页对象
     const page = reactive({
         pageCurrent: 1,
         pageSize: 20,
         totalCount: 0,
-        layout: 'total, sizes, prev, pager, next, jumper',
-        pageSizes: [20, 50, 100, 200]
+        list: [],
+        loading: true
     });
-    // 分页函数
-    const handleSizeChange = (size: number) => {
-        page.pageSize = size;
-        getTableData();
+
+    // 分页查询
+    const handlePage = async () => {
+        if (apis.page) {
+            page.loading = true;
+            try {
+                const res = await apis.page({
+                    pageCurrent: page.pageCurrent,
+                    pageSize: page.pageSize,
+                    ...query
+                });
+                page.list = res.list || []
+                page.totalCount = res.totalCount || 0;
+            } finally {
+                page.loading = false;
+            }
+        }
+    }
+
+    // 查询对象
+    const query: any = reactive({})
+
+    // 查询
+    const handleQuery = () => {
+        page.pageCurrent = 1;
+        handlePage();
     };
 
-    // 分页函数
-    const handleCurrentChange = (pageCurrent: number) => {
-        page.pageCurrent = pageCurrent;
-        getTableData();
+    // 重置
+    const resetQuery = () => {
+        for (let i in query) {
+            query[i] = '';
+        }
+        handleQuery()
     };
 
-    // 列表删除项目
-    const tableDelete = (data: any, tip: string) => {
+    //删除功能
+    const handleDelete = (data: any, tip?: string) => {
         if (apis.delete) {
-            ElMessageBox.confirm(tip || '确认删除当前数据?', '提示', {
+            ElMessageBox.confirm(tip || '确认删除当前数据?', '删除提示', {
                 type: 'warning',
                 cancelButtonText: '取消',
                 confirmButtonText: '确认'
             }).then(async () => {
-                const res = await apis.delete({id: data.id});
-                ElMessage({type: 'success', message: res.msg});
-                await getTableData();
+                page.loading = true
+                try {
+                    const res = await apis.delete({id: data.id});
+                    ElMessage({type: 'success', message: res.msg ? res.msg : '删除成功'});
+                    await handlePage();
+                } finally {
+                    page.loading = false;
+                }
             });
         }
     };
 
-    // 添加弹窗显示 数据交互对象
-    const addModel = reactive({
-        visible: false,
-        form: {}
-    });
-    // 打开添加弹窗
-    const openAddDialog = (item: any) => {
-        addModel.form = item || {};
-        addModel.visible = true;
-    };
-    // 关闭添加弹窗 并刷新列表
-    const closeAddDialog = () => {
-        addModel.visible = false;
-        page.pageCurrent = 1;
-        getTableData();
-    };
-
-    // 编辑弹窗显示 数据交互对象
-    const editModel = reactive({
-        visible: false,
-        form: {}
-    });
-    // 打开编辑弹窗
-    const openEditDialog = (item: any) => {
-        editModel.form = item || {};
-        editModel.visible = true;
-    };
-    // 关闭编辑弹窗 并刷新列表
-    const closeEditDialog = () => {
-        editModel.visible = false;
-        getTableData();
-    };
-
+    // 状态修改
+    const handleStatus = async (row: any) => {
+        page.loading = true
+        try {
+            if (apis.status) {
+                row.statusId = row.statusId ? 0 : 1
+                const res = await apis.status({id: row.id, statusId: row.statusId})
+                ElMessage({type: 'success', message: res.msg ? res.msg : '操作成功'})
+            }
+        } finally {
+            page.loading = false;
+        }
+    }
 
     // 获取数据
-    onMounted(getTableData);
+    onMounted(handlePage);
 
     return {
-        PageParam,
-        tableData,
-        seekForm,
         page,
-        addModel,
-        editModel,
-        seek,
-        resetSeek,
-        getTableData,
-        tableDelete,
-        handleCurrentChange,
-        handleSizeChange,
-        openAddDialog,
-        closeAddDialog,
-        openEditDialog,
-        closeEditDialog
-    };
+        handlePage,
+        query,
+        handleQuery,
+        resetQuery,
+        handleDelete,
+        handleStatus
+    }
 }

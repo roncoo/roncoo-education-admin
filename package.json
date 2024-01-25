@@ -10,16 +10,17 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.5",
     "echarts": "^5.4.3",
-    "element-plus": "2.5.1",
+    "element-plus": "^2.5.3",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "sortablejs": "^1.15.2",
-    "vue": "^3.4.*",
-    "vue-router": "^4.*",
-    "wangeditor": "^4.*"
+    "vue": "^3.4.15",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",
@@ -27,6 +28,6 @@
     "eslint-plugin-vue": "^9.20.1",
     "less": "^4.2.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11"
+    "vite": "^5.0.12"
   }
 }

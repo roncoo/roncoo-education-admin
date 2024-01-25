@@ -39,23 +39,31 @@ export function getSize(limit: number) {
 
 /**
  * 获取枚举
- * @param enumName，枚举名称，大写开头
- * @param type，attr:属性；obj:实体
  */
-export async function getEnum(enumName: string, type = 'attr') {
+export function getEnum(enumName: string) {
     const enumAttr = getSessionStorage(enumName)
     if (enumAttr) {
-        if (type === 'obj') {
-            return toObj(enumAttr)
-        }
         return enumAttr
     } else {
-        const res: any = await systemApi.getEnum({enumName});
-        setSessionStorage(enumName, res)
-        if (type === 'obj') {
+        systemApi.getEnum({enumName}).then((res: any) => {
+            setSessionStorage(enumName, res)
+            return res
+        })
+    }
+}
+
+/**
+ * 获取枚举
+ */
+export function getEnumObj(enumName: string) {
+    const enumAttr = getSessionStorage(enumName)
+    if (enumAttr) {
+        return toObj(enumAttr)
+    } else {
+        systemApi.getEnum({enumName}).then((res: any) => {
+            setSessionStorage(enumName, res)
             return toObj(res)
-        }
-        return res
+        })
     }
 }
 

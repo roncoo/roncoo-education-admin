@@ -38,7 +38,7 @@ export const usersApi = {
         return putRequest('/user/admin/users/edit', data)
     },
 
-// 用户修改
+// 用户删除
     usersDelete: (data: any) => {
         return deleteRequest('/user/admin/users/delete?id=' + data.id)
     },
