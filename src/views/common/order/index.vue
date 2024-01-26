@@ -2,21 +2,21 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item label="订单号">
-            <el-input v-model="seekForm.orderNo" clearable/>
+            <el-input v-model="query.orderNo" clearable/>
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input v-model="seekForm.mobile" clearable/>
+            <el-input v-model="query.mobile" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="seek()">查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
+            <el-button type="primary" @click="handleQuery()">查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column :width="180" label="订单号">
         <template #default="scope">
@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column :width="100" label="订单状态">
         <template #default="scope">
-          <span>{{ orderStatusEnums[scope.row.orderStatus] }}</span>
+          <span>{{ orderStatusEnums()[scope.row.orderStatus] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="价格">
@@ -58,59 +58,33 @@
       </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">备注</el-button>
+          <el-button plain type="primary" @click="openFormModal(scope.row)">备注</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-modal ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-
-import Edit from './edit.vue';
-import {getEnumObj} from '@/utils/base.ts';
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive, ref} from 'vue';
 import {usersApi} from '@/api/users';
+import Pagination from "@/components/Pagination/index.vue";
+import FormModal from "./formModal.vue";
 
-export default defineComponent({
-  components: {
-    Edit
-  },
-  setup() {
-    const apis = reactive({
-      getList: usersApi.orderInfoPage
-    })
-    const state = reactive({
-      ...Table(apis, {}),
-      payTypeEnumEnums: {},
-      orderStatusEnums: {}
-    });
 
-    onMounted(() => {
-      state.payTypeEnumEnums = getEnumObj('PayTypeEnum');
-      state.orderStatusEnums = getEnumObj('OrderStatusEnum');
-    });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+}
 
-    const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
-      apis.updateStatus({id: row.id}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.tableData.loading = false;
-      });
-    };
-    return {
-      ...toRefs(state),
-      handleUpdateStatus
-    };
-  }
-});
+// 基础功能
+const apis = reactive({
+  page: usersApi.orderInfoPage
+})
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+  ...useTable(apis)
+})
 </script>

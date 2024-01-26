@@ -76,7 +76,7 @@ async function handleLogin() {
     // 存入cookie
     setToken(res.token)
     // 更新store
-    await useUserStore().login(res)
+    useUserStore().login(res)
     // 初始化路由
     createNewRouter(res.routerList)
     await router.push(PATH.URL_DASHBOARD)

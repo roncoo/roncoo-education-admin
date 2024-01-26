@@ -26,7 +26,7 @@
       <el-table-column label="排序" prop="sort"/>
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
@@ -55,10 +55,10 @@
 </template>
 <script setup lang="ts">
 import useTable from '@/utils/table';
-import {onMounted, reactive, ref} from 'vue';
+import {reactive, ref} from 'vue';
 import {usersApi} from '@/api/users'
 import FormModal from './formModal.vue';
-import {getEnumObj} from '@/utils/base';
+import {statusIdEnums} from '@/utils/enum';
 import Pagination from "@/components/Pagination/index.vue";
 
 // 添加/修改
@@ -66,13 +66,6 @@ const formRef = ref();
 const openFormModal = (item?: any) => {
   formRef.value.onOpen(item)
 }
-
-const statusIdEnums = ref();
-const targetEnums = ref();
-onMounted(async () => {
-  statusIdEnums.value = await getEnumObj('StatusIdEnum');
-  targetEnums.value = await getEnumObj('TargetEnum');
-});
 
 // 基础功能
 const apis = reactive({

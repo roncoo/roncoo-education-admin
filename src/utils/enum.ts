@@ -7,3 +7,7 @@ export const statusIdEnums = () => {
 export const targetEnums = () => {
     return getEnumObj('TargetEnum');
 }
+
+export const userSexEnums = () => {
+    return getEnumObj('UserSexEnum');
+}

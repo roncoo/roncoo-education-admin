@@ -15,12 +15,12 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload-image :height="120" :image-url="formModel.lecturerHead" :width="120" class="avatar" @success=" (val) => {   formModel.lecturerHead = val.url;  }"/>
+            <upload-image v-model="formModel.lecturerHead" :width="120" :height="120"/>
           </el-form-item>
         </el-col>
       </el-row>
       <el-form-item label="简介" prop="introduce">
-        <editor ref="editor" :value="formModel.introduce" @input="handleChange"/>
+        <editor v-model="formModel.introduce"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -34,36 +34,31 @@
 
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
-import {onMounted, ref,} from 'vue';
+import {reactive, ref,} from 'vue';
 import UploadImage from '@/components/Upload/Image/index.vue';
-import Editor from '@/components/Wangeditor/index.vue';
+import Editor from '@/components/Editor/index.vue';
 import {usersApi} from '@/api/users';
-import {getEnum} from '@/utils/base.js';
 
-// 编辑器
-const handleChange = (value: string) => {
-  formModel.value.introduce = value
-}
-
-// 打开和关闭
-const onOpen = (item: any) => {
-  if (item) {
-    Object.assign(formModel.value, item);
-  }
-  modelVisible.value = true
-}
-defineExpose({onOpen})
-const onClose = () => {
-  Object.assign(formModel.value, formDefault);
-  modelVisible.value = false;
+// 规则
+const formRef = ref()
+const rules = {
+  lecturerName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  lecturerPosition: [{required: true, message: '不能为空', trigger: 'blur'}],
+  introduce: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
+const emit = defineEmits(['onReload'])
+const loading = ref(false);
 const formDefault = {
   id: undefined,
+  lecturerName: undefined,
+  lecturerPosition: undefined,
+  lecturerHead: undefined,
+  introduce: undefined,
   sort: 1
 }
-const formModel = ref({...formDefault})
+const formModel = reactive({...formDefault})
 const onSubmit = async () => {
   // 校验
   const valid = await formRef.value.validate()
@@ -75,11 +70,11 @@ const onSubmit = async () => {
 
   loading.value = true;
   try {
-    if (formModel.value.id) {
-      await usersApi.lecturerEdit(formModel.value);
+    if (formModel.id) {
+      await usersApi.lecturerEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await usersApi.lecturerSave(formModel.value);
+      await usersApi.lecturerSave(formModel);
       ElMessage({type: 'warning', message: '添加成功'});
     }
     emit('onReload')
@@ -89,22 +84,19 @@ const onSubmit = async () => {
   }
 };
 
-// 规则
-const formRef = ref()
-const rules = {
-  lecturerName: [{required: true, message: '不能为空', trigger: 'blur'}],
-  lecturerPosition: [{required: true, message: '不能为空', trigger: 'blur'}],
-  introduce: [{required: true, message: '不能为空', trigger: 'blur'}]
-}
-
-const userSexEnums = ref();
-onMounted(() => {
-  userSexEnums.value = getEnum('UserSexEnum');
-});
-
-const emit = defineEmits(['onReload'])
+// 打开和关闭
 const modelVisible = ref(false);
-const loading = ref(false);
+const onOpen = (item: any) => {
+  if (item) {
+    Object.assign(formModel, item);
+  }
+  modelVisible.value = true
+}
+defineExpose({onOpen})
+const onClose = () => {
+  Object.assign(formModel, formDefault);
+  modelVisible.value = false;
+}
 </script>
 
 
