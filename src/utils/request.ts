@@ -2,9 +2,8 @@ import axios from 'axios'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {getToken, removeToken} from '@/utils/cookie'
 import router from '@/router/index'
-import {useUserStore} from '@/store/modules/user'
+import {PATH} from "@/utils/constants/system";
 
-const BaseURL = '/gateway'
 const pending: any[] = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 const CancelToken = axios.CancelToken;
 
@@ -24,7 +23,7 @@ const removePending = (config: any, isCancel: boolean) => {
 
 // create an axios instance
 const request = axios.create({
-    baseURL: BaseURL, // url = request url + base url
+    baseURL: PATH.URL_GATEWAY, // url = request url + base url
     timeout: 60000 // request timeout
 })
 
@@ -52,14 +51,13 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         // 在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
-        removePending({url: response.config.url ? response.config.url.replace(BaseURL, '') : '', method: response.config.method}, false);
+        removePending({url: response.config.url ? response.config.url.replace(PATH.URL_GATEWAY, '') : '', method: response.config.method}, false);
         const res = response.data
         // console.log(res)
         if (res.code && res.code !== 200) {
             if (res.code === 99 || res.code === 301) {
                 removeToken()
-                useUserStore().logout()
-                router.push('/login')
+                router.push(PATH.URL_LOGIN)
                 return Promise.reject(response)
             }
 
@@ -67,14 +65,13 @@ request.interceptors.response.use(
                 // 异地登录
                 ElMessageBox.confirm('异地登录', '确定登出', {confirmButtonText: '重新登录', showCancelButton: false, type: 'warning'}).then(() => {
                     removeToken()
-                    useUserStore().logout()
                     location.reload() // 重新实例化vue-router对象
                 })
                 return Promise.reject(response)
             }
 
             if (res.code === 306) {
-                router.push({path: '/403'})
+                router.push({path: PATH.URL_403})
                 ElMessage.warning('权限不足，请联系管理员')
                 return Promise.reject(response)
             }
@@ -91,8 +88,7 @@ request.interceptors.response.use(
         }
         if (error.response && error.response.data && error.response.data.code === 301) {
             removeToken()
-            useUserStore().logout()
-            router.push('/login')
+            router.push(PATH.URL_LOGIN)
             return Promise.reject(error.response)
         }
         return Promise.reject(error)

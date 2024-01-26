@@ -24,7 +24,7 @@
 
 <script setup>
 import {onMounted, reactive, ref} from 'vue';
-import {courseApi} from '@/api/course';
+import {courseApi} from '@/api/course.ts';
 
 const props = defineProps({
   info: {

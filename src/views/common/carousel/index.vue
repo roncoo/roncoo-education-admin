@@ -25,13 +25,13 @@
       </el-table-column>
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ targetEnums[scope.row.carouselTarget] }}</span>
+          <span>{{ targetEnums()[scope.row.carouselTarget] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
@@ -60,25 +60,17 @@
 </template>
 <script setup lang="ts">
 import useTable from '@/utils/table';
-import {onMounted, reactive, ref} from 'vue';
+import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system'
 import FormModal from './formModal.vue';
-import {getEnumObj} from '@/utils/base';
 import Pagination from "@/components/Pagination/index.vue";
+import {statusIdEnums, targetEnums} from '@/utils/enum'
 
 // 添加/修改
 const formRef = ref();
 const openFormModal = (item?: any) => {
   formRef.value.onOpen(item)
 }
-
-// 枚举
-const statusIdEnums = ref([]);
-const targetEnums = ref([]);
-onMounted(() => {
-  statusIdEnums.value = getEnumObj('StatusIdEnum');
-  targetEnums.value = getEnumObj('TargetEnum');
-})
 
 // 基础功能
 const apis = reactive({

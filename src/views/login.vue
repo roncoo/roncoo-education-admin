@@ -42,7 +42,7 @@ import {setToken} from '@/utils/cookie';
 import {useRouter} from 'vue-router';
 import {useUserStore} from '@/store/modules/user';
 import {createNewRouter} from '@/router/index';
-import {PATH_HOME} from "@/utils/constants/system";
+import {PATH} from "@/utils/constants/system";
 
 const router = useRouter();
 const loading = ref(false)
@@ -79,7 +79,7 @@ async function handleLogin() {
     await useUserStore().login(res)
     // 初始化路由
     createNewRouter(res.routerList)
-    await router.push(PATH_HOME)
+    await router.push(PATH.URL_DASHBOARD)
   } catch (error) {
     console.error(error)
   } finally {

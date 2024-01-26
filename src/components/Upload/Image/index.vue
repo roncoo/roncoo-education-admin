@@ -1,37 +1,36 @@
 <template>
-  <el-upload
-      class="avatar-uploader"
-      :http-request="onUpload"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar"/>
-    <el-icon v-else class="avatar-uploader-icon">
+  <el-upload :before-upload="beforeAvatarUpload" :http-request="onUpload" :on-success="handleAvatarSuccess" :show-file-list="false" :style="'width:' + width + 'px;height:' + height + 'px;'" class="image-upload">
+    <img v-if="imageUrl" :src="imageUrl"/>
+    <el-icon v-else class="image-upload-icon">
       <Plus/>
     </el-icon>
   </el-upload>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {ref} from 'vue'
 import type {UploadProps} from 'element-plus'
 import {ElMessage} from 'element-plus'
-import {Plus} from '@element-plus/icons-vue'
-import {uploadApi} from "@/api/upload";
+import {uploadApi} from "@/api/upload"
 
-const emit = defineEmits(['success'])
 const imageType = "image/jpeg,image/png,image/gif,image/x-icon"
-const imageUrl = ref('')
+const emit = defineEmits(['update:modelValue'])
+
+const props = defineProps({
+  modelValue: String,
+  width: {type: Number, default: 100},
+  height: {type: Number, default: 100},
+});
+
+// 图片
+const imageUrl = ref(props.modelValue)
 
 /**
  * 上传
  * @param file
  */
-const onUpload = (file: any) => {
-  uploadApi.pic(file).then((res: any) => {
-    emit("success", res)
-  })
+const onUpload = async (file: any) => {
+  return await uploadApi.pic(file)
 }
 
 /**
@@ -39,8 +38,9 @@ const onUpload = (file: any) => {
  * @param response
  * @param uploadFile
  */
-const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
+  imageUrl.value = response
+  emit("update:modelValue", response)
 }
 
 /**
@@ -59,33 +59,90 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 </script>
 
-<style scoped>
-.avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-</style>
-
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
+<style lang="less">
+.image-upload {
   position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
 
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
+  .el-upload, .upload-progress {
+    width: 100%;
+    height: 100%;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
+    &:hover {
+      border-color: #409eff;
+    }
+  }
+
+  .avatar-uploader-icon {
+    width: 100%;
+    font-size: 28px;
+    line-height: 0;
+    color: #8c939d;
+    text-align: center;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+  }
+
+  .avatar {
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .el-progress-circle {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+
+    svg {
+      padding: 10px;
+      max-width: 100%;
+      max-height: 100%;
+      vertical-align: middle;
+    }
+  }
+
+  .close-dialog {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+
+    .avatar-uploader-icon {
+      color: #fff;
+      font-size: 42px;
+    }
+
+    .reset-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -14px;
+      margin-left: -40px;
+    }
+  }
+
+  &:hover {
+    .close-dialog {
+      display: block;
+    }
+  }
 }
 </style>
+

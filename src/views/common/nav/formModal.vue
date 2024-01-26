@@ -1,14 +1,14 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="modelVisible" :title="formModel.id ? '修改' : '添加'" :width="600" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="modelVisible" :title="formModel.id ? '修改' : '添加'" :width="600" center @close="onClose()">
     <el-form ref="formRef" :model="formModel" :rules="rules" class="demo-ruleForm" label-width="80px" @submit.prevent>
-      <el-form-item label="友情名称" prop="linkName">
-        <el-input v-model="formModel.linkName" maxlength="255" show-word-limit></el-input>
+      <el-form-item label="导航名称" prop="navTitle">
+        <el-input v-model="formModel.navTitle" maxlength="255" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item label="友情地址" prop="linkUrl">
-        <el-input v-model="formModel.linkUrl" maxlength="255" show-word-limit></el-input>
+      <el-form-item label="导航地址" prop="navUrl">
+        <el-input v-model="formModel.navUrl" maxlength="255" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item label="跳转方式" prop="linkTarget">
-        <enum-radio v-model="formModel.linkTarget" :enum-name="'TargetEnum'"></enum-radio>
+      <el-form-item label="跳转方式" prop="target">
+        <enum-radio v-model="formModel.target" :enum-name="'TargetEnum'"></enum-radio>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"></el-input-number>
@@ -29,26 +29,24 @@ import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system';
 import EnumRadio from "@/components/Enums/Radio/index.vue";
 
-// 规则
+// 校验规则
 const formRef = ref()
 const rules = {
-  linkName: [{required: true, message: '不能为空', trigger: 'blur'}],
-  linkUrl: [{required: true, message: '不能为空', trigger: 'blur'}],
-  linkTarget: [{required: true, message: '不能为空', trigger: 'blur'}]
+  navTitle: [{required: true, message: '不能为空', trigger: 'blur'}],
+  navUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
+const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['onReload'])
-const loading = ref(false);
 const formDefault = {
   id: undefined,
-  linkName: undefined,
-  linkUrl: undefined,
-  linkTarget: '_blank',
+  navTitle: undefined,
+  navUrl: undefined,
+  target: '_blank',
   sort: 1
 }
 const formModel = reactive({...formDefault})
-// 提交
 const onSubmit = async () => {
   // 校验
   const valid = await formRef.value.validate()
@@ -61,10 +59,10 @@ const onSubmit = async () => {
   loading.value = true;
   try {
     if (formModel.id) {
-      await systemApi.linkEdit(formModel);
+      await systemApi.navEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await systemApi.linkSave(formModel);
+      await systemApi.navSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('onReload')
@@ -74,18 +72,17 @@ const onSubmit = async () => {
   }
 }
 
-
 // 打开和关闭
-const modelVisible = ref(false);
+const modelVisible = ref(false);// 弹窗显示状态
 const onOpen = (item: any) => {
   if (item) {
     Object.assign(formModel, item);
   }
   modelVisible.value = true
 }
+defineExpose({onOpen})
 const onClose = () => {
   modelVisible.value = false;
   Object.assign(formModel, formDefault);
 }
-defineExpose({onOpen})
 </script>

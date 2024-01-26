@@ -2,46 +2,46 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item label="导航名称">
-            <el-input v-model="seekForm.navTitle" clearable/>
+            <el-input v-model="query.navTitle" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="seek()"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
-            <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
+            <el-button plain type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column :width="200" label="导航名称" prop="navTitle"/>
       <el-table-column label="导航地址" prop="navUrl"/>
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ targetEnums[scope.row.target] }}</span>
+          <span>{{ targetEnums()[scope.row.target] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">编辑</el-button>
+          <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -49,65 +49,33 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
-    <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-modal ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive, ref} from 'vue';
 
 import {systemApi} from '@/api/system'
-import Edit from './edit.vue';
-import {getEnumObj} from '@/utils/base.ts';
 import Pagination from '@/components/Pagination/index.vue';
+import FormModal from "./formModal.vue";
+import {statusIdEnums, targetEnums} from '@/utils/enum'
 
-export default defineComponent({
-  components: {
-    Pagination,
-    Edit
-  },
-  setup() {
-    const initData = reactive({
-      target: '_blank',
-      sort: 1
-    })
-    const apis = reactive({
-      getList: systemApi.navPage,
-      delete: systemApi.navDelete,
-      updateStatus: systemApi.navEdit
-    })
-    const state = reactive({
-      ...Table(apis, {}),
-      statusIdEnums: {},
-      targetEnums: {}
-    });
 
-    onMounted(() => {
-      state.statusIdEnums = getEnumObj('StatusIdEnum');
-      state.targetEnums = getEnumObj('TargetEnum');
-    });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+}
 
-    const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.tableData.loading = false;
-      });
-    };
-    return {
-      ...toRefs(state),
-      initData,
-      handleUpdateStatus
-    };
-  }
-});
+// 基础功能
+const apis = reactive({
+  page: systemApi.navPage,
+  delete: systemApi.navDelete,
+  status: systemApi.navEdit
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

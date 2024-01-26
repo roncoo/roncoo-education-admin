@@ -2,7 +2,7 @@ import {deleteRequest, postRequest, putRequest} from '@/utils/request'
 
 export const courseApi = {
     // 专区课程分页
-    zoneCoursePage: (data: any) => {
+    zoneCoursePage: (data: object) => {
         return postRequest('/course/admin/zone/course/page', data)
     },
 

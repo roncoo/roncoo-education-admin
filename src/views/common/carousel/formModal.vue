@@ -1,19 +1,17 @@
 <template>
   <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="modelVisible" :append-to-body="true" :width="600" center @close="onClose">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
-      <el-form-item label="图片" prop="carouselImg">
-        <upload-image :height="100" :image-url="formModel.carouselImg" :width="400" class="avatar" @success=" (val) => {   formModel.carouselImg = val.url;  }"/>
+      <el-form-item label="轮播广告" prop="carouselImg">
+        <upload-image v-model="formModel.carouselImg" :width="500" :height="90"/>
+      </el-form-item>
+      <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
+        <enum-radio v-model="formModel.carouselTarget" :enum-name="'TargetEnum'"></enum-radio>
+      </el-form-item>
+      <el-form-item class="form-group" label="跳转地址" prop="carouselUrl">
+        <el-input v-model="formModel.carouselUrl" maxlength="255" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="描述" prop="carouselTitle">
         <el-input v-model="formModel.carouselTitle" maxlength="255" show-word-limit></el-input>
-      </el-form-item>
-      <el-form-item class="form-group" label="地址" prop="carouselUrl">
-        <el-input v-model="formModel.carouselUrl" maxlength="255" show-word-limit></el-input>
-      </el-form-item>
-      <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
-        <el-radio-group v-model="formModel.carouselTarget">
-          <el-radio v-for="item in targetEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
-        </el-radio-group>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"></el-input-number>
@@ -30,32 +28,30 @@
 
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
-import {onMounted, ref} from 'vue';
+import {reactive, ref} from 'vue';
 import UploadImage from '@/components/Upload/Image/index.vue';
 import {systemApi} from '@/api/system';
-import {getEnum} from '@/utils/base';
+import EnumRadio from '@/components/Enums/Radio/index.vue'
 
-// 打开和关闭
-const onOpen = (item: any) => {
-  if (item) {
-    Object.assign(formModel.value, item);
-  }
-  modelVisible.value = true
-}
-defineExpose({onOpen})
-const onClose = () => {
-  Object.assign(formModel.value, formDefault);
-  modelVisible.value = false;
+// 校验规则
+const formRef = ref()
+const rules = {
+  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
+  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
+const loading = ref(false);// 加载进度状态
+const emit = defineEmits(['onReload'])
 const formDefault = {
   id: undefined,
+  carouselImg: undefined,
+  carouselTitle: undefined,
+  carouselUrl: undefined,
   carouselTarget: '_blank',
   sort: 1
 }
-const formModel = ref({...formDefault})
-// 提交
+const formModel = reactive({...formDefault})
 const onSubmit = async () => {
   // 校验
   const valid = await formRef.value.validate()
@@ -67,11 +63,11 @@ const onSubmit = async () => {
   }
   loading.value = true;
   try {
-    if (formModel.value.id) {
-      await systemApi.carouselEdit(formModel.value);
+    if (formModel.id) {
+      await systemApi.carouselEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await systemApi.carouselSave(formModel.value);
+      await systemApi.carouselSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('onReload')
@@ -81,22 +77,19 @@ const onSubmit = async () => {
   }
 }
 
-// 规则
-const formRef = ref()
-const rules = {
-  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
-  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+// 打开和关闭
+const modelVisible = ref(false);// 弹窗显示状态
+const onOpen = (item: any) => {
+  if (item) {
+    Object.assign(formModel, item);
+  }
+  modelVisible.value = true
 }
-
-// 枚举
-const targetEnums = ref();
-onMounted(() => {
-  targetEnums.value = getEnum('TargetEnum');
-});
-
-const emit = defineEmits(['onReload'])
-const modelVisible = ref(false);
-const loading = ref(false);
+defineExpose({onOpen})
+const onClose = () => {
+  modelVisible.value = false;
+  Object.assign(formModel, formDefault);
+}
 </script>
 
 
