@@ -9,10 +9,10 @@ import {onMounted, ref} from 'vue';
 import {getEnum} from "@/utils/base";
 
 const props = defineProps({
-  enumName: String,
+  enumName: {type: String, default: ''}
 });
 
-const enums = ref()
+const enums = ref([])
 onMounted(() => {
   enums.value = getEnum(props.enumName)
 })
