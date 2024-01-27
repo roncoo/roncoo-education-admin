@@ -36,11 +36,20 @@ const router = createRouters(constantRoutes)
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-    if (to.path === PATH.URL_LOGIN || to.path === PATH.URL_404 || to.path === PATH.URL_403) {
+    if (to.path === PATH.URL_404 || to.path === PATH.URL_403) {
         next();
         return;
     }
-    if (!getToken()) {
+    const token = getToken();
+    if (to.path === PATH.URL_LOGIN) {
+        if (token) {
+            next({path: PATH.URL_DASHBOARD})
+            return;
+        }
+        next();
+        return;
+    }
+    if (!token) {
         next({path: PATH.URL_LOGIN});
         console.error(from)
         return;

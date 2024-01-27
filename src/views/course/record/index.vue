@@ -51,8 +51,8 @@ import {defineComponent, reactive, toRefs} from 'vue';
 import {courseApi} from '@/api/course.js'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Study from './Study.vue';
-import CourseComment from '../list/CourseComment.vue';
-import CourseCollect from '../list/CourseCollect.vue';
+import CourseComment from '../list/Comment.vue';
+import CourseCollect from '../list/Collect.vue';
 
 export default defineComponent({
   components: {Study, CourseComment, CourseCollect},

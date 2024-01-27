@@ -1,6 +1,6 @@
 <template>
   <el-dialog :before-close="handleClose" :model-value="visible" :title="title" center width="600px">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item class="form-group" label="权限名称" prop="menuName">
         <el-input v-model="form.menuName" maxlength="50" show-word-limit/>
       </el-form-item>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {systemApi} from '@/api/system';
+import {systemApi} from '@/api/system.js';
 
 export default {
   name: 'SysPermissionEdit',

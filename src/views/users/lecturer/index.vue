@@ -33,7 +33,11 @@
         <template #default="scope">
           <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-dropdown>
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button> 更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>

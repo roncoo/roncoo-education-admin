@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
+            <el-button plain type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -43,7 +43,7 @@
       <el-table-column :width="80" label="排序" prop="courseSort"/>
       <el-table-column :width="80" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums[scope.row.isPutaway] }}</span>
+          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums()[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="80" label="状态">
@@ -56,7 +56,11 @@
           <el-button plain type="success" @click="courseRecord(scope.row)">数据</el-button>
           <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
           <el-dropdown>
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button> 更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
@@ -67,7 +71,7 @@
                   <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -75,79 +79,32 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
-    <edit v-model="editModel.visible" :form="editModel.form" :modelValue="editModel.visible" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-model ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
-import {courseApi} from '@/api/course.ts'
-import Edit from './FormModel.vue';
-import {getEnumObj} from '@/utils/base.ts';
-import Pagination from '@/components/Pagination/index.vue';
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive, ref} from 'vue';
+import FormModel from './FormModel.vue';
+import Pagination from "@/components/Pagination/index.vue";
+import {putawayEnums, statusIdEnums} from '@/utils/enum'
+import {courseApi} from "@/api/course";
 
-export default defineComponent({
-  components: {
-    Pagination,
-    Edit
-  },
-  setup() {
-    const initData = reactive({
-      coursePrice: 0.00,
-      rulingPrice: 0.00,
-      isPutaway: 1,
-      courseSort: 1
-    })
-    const apis = reactive({
-      getList: courseApi.coursePage,
-      delete: courseApi.courseDelete,
-      updateStatus: courseApi.courseEdit
-    })
-    const state = reactive({
-      ...Table(apis, {}),
-      statusIdEnums: {},
-      putawayEnums: {}
-    });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+}
 
-    onMounted(() => {
-      state.statusIdEnums = getEnumObj('StatusIdEnum');
-      state.putawayEnums = getEnumObj('PutawayEnum');
-    });
-
-    const handleUpdateStatus = function(row) {
-      state.page.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.page.loading = false;
-      });
-    };
-
-    //章节
-    const courseChapter = function(row) {
-      this.$router.push({path: '/course/chapter', query: {courseId: row.id}});
-    }
-
-    //数据
-    const courseRecord = function(row) {
-      this.$router.push({path: '/course/record', query: {courseId: row.id}});
-    }
-
-    return {
-      ...toRefs(state), initData,
-      handleUpdateStatus,
-      courseChapter,
-      courseRecord
-    };
-  }
-});
+// 基础功能
+const apis = reactive({
+  page: courseApi.coursePage,
+  delete: courseApi.courseDelete,
+  status: courseApi.courseEdit
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

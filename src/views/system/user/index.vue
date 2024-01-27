@@ -1,17 +1,21 @@
 <template>
   <div class="app-container">
-    <el-form :model="query" class="filter-container" inline label-width="80px">
-      <el-form-item class="filter-item" label="登录账号">
-        <el-input v-model="query.mobile" clearable/>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="handleQuery">查询</el-button>
-        <el-button @click="resetQuery">刷新</el-button>
-        <el-button plain type="success" @click="openFormModal()">新增</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="page_head">
+      <div class="search_bar clearfix">
+        <el-form :model="query" inline label-width="80px">
+          <el-form-item label="登录账号">
+            <el-input v-model="query.mobile" clearable/>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
+            <el-button plain type="success" @click="openFormModal()">添加</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
     <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60"/>
+      <el-table-column align="center" label="序号" type="index" :width="60"/>
       <el-table-column label="登录账号" prop="mobile"/>
       <el-table-column label="用户昵称" prop="realName"/>
       <el-table-column label="所属角色">
@@ -26,18 +30,20 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort"/>
-      <el-table-column label="操作" width="240">
+      <el-table-column label="操作" :width="310">
         <template #default="scope">
-          <el-button plain type="warning" @click="handleAllocation(scope.row.id)">角色分配</el-button>
+          <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button plain type="warning" @click="openRoleModal(scope.row)">角色分配</el-button>
           <el-dropdown style="margin-left: 10px">
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button> 更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button plain type="warning" @click="handleUpdatePassword(scope.row.id)">密码</el-button>
+                  <el-button plain type="warning" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-if="scope.row.statusId === 0 " plain type="success" @click="handleStatus(scope.row)">启用</el-button>
@@ -54,6 +60,9 @@
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
     <form-modal ref="formRef" @onReload="handlePage"/>
+    <password ref="passwordRef" @onReload="handlePage"/>
+    <role ref="roleRef" @onReload="handlePage"/>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -62,8 +71,21 @@ import Pagination from '@/components/Pagination/index.vue';
 import {reactive, ref} from "vue";
 import useTable from "@/utils/table";
 import FormModal from "./FormModel.vue";
+import Password from "./Password.vue";
+import Role from "./Role.vue";
 import {statusIdEnums} from "@/utils/enum";
 
+// 密码重置
+const roleRef = ref();
+const openRoleModal = (item?: any) => {
+  roleRef.value.onOpen(item)
+}
+
+// 密码重置
+const passwordRef = ref();
+const openPasswordModal = (item?: any) => {
+  passwordRef.value.onOpen(item)
+}
 
 // 添加/修改
 const formRef = ref();
@@ -73,9 +95,9 @@ const openFormModal = (item?: any) => {
 
 // 基础功能
 const apis = reactive({
-  page: systemApi.carouselPage,
-  delete: systemApi.carouselDelete,
-  status: systemApi.carouselEdit
+  page: systemApi.sysUserPage,
+  delete: systemApi.sysUserDelete,
+  status: systemApi.sysUserEdit
 })
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
   ...useTable(apis)

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {systemApi} from '@/api/system';
+import {systemApi} from '@/api/system.js';
 
 export default {
   name: 'SysRoleSett',
@@ -63,7 +63,7 @@ export default {
     // 获取可用菜单
     systemApi.sysMenuList().then(res => {
       for (const index in res) {
-        const info = res[index];
+        const info = res[Seting];
         const treeInfo = {id: info.id, label: info.menuName};
         info.childrenList = info.childrenList || [];
         if (info.childrenList.length > 0) {
@@ -95,7 +95,7 @@ export default {
     recursiveTreeInfo(parentId, infoList) {
       const resultList = [];
       for (const index in infoList) {
-        const info = infoList[index];
+        const info = infoList[Seting];
         if (info.parentId !== parentId) {
           continue;
         }
@@ -114,7 +114,7 @@ export default {
       let menuIdList = [];
       const checkedNodes = this.$refs.tree.getCheckedNodes()
       for (const index in checkedNodes) {
-        menuIdList.push(checkedNodes[index].id)
+        menuIdList.push(checkedNodes[Seting].id)
       }
       const halfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
       menuIdList = menuIdList.concat(halfCheckedKeys)

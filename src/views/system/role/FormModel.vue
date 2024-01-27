@@ -1,92 +1,82 @@
 <template>
-  <el-dialog
-      :before-close="handleClose"
-      :model-value="visible"
-      :title="title"
-      center
-      width="600px"
-  >
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" width="600px" center @close="onClose()">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
       <el-form-item label="角色名称" prop="roleName">
-        <el-input v-model="form.roleName" class="form-group" maxlength="50" show-word-limit/>
+        <el-input v-model="formModel.roleName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="form.remark" class="form-group" maxlength="500" show-word-limit type="textarea"/>
+        <el-input v-model="formModel.remark" class="form-group" maxlength="500" show-word-limit type="textarea"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="form.sort" :min="0" controls-position="right"/>
+        <el-input-number v-model="formModel.sort" :min="0" controls-position="right"/>
       </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+        <el-button @click="onClose()">取 消</el-button>
+        <el-button type="primary" @click="onSubmit()">确 定</el-button>
       </div>
     </template>
   </el-dialog>
 </template>
-<script>
+<script setup lang="ts">
 import {systemApi} from '@/api/system.js'
+import {reactive, ref} from 'vue';
+import {ElMessage} from 'element-plus';
 
-export default {
-  name: 'EditSysRole',
-  props: {
-    title: {
-      type: String,
-      default: null
-    },
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    info: {
-      type: Object,
-      default: () => {
-      }
-    }
-  },
-  data() {
-    return {
-      form: {},
-      rules: {
-        roleName: [
-          {required: true, message: '请输入角色名称', trigger: 'blur'}
-        ],
-        sort: [
-          {required: false, message: '请输入排序值', trigger: 'blur'}
-        ]
-      }
-    }
-  },
-  emits: ['closes'],
-  mounted() {
-    this.form = this.info
-  },
-  methods: {
-    handleClose() {
-      this.form = {};
-      this.$emit('closes');
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.onSubmit()
-        } else {
-          return false;
-        }
-      })
-    },
-    onSubmit() {
+// 校验规则
+const formRef = ref()
+const rules = {
+  roleName: [{required: true, message: '不能为空', trigger: 'blur'}]
+}
 
-      // 编辑
-      systemApi.sysRoleEdit(this.form).then(res => {
+// 表单
+const loading = ref(false);// 加载进度状态
+const emit = defineEmits(['onReload'])
+const formDefault = {
+  id: undefined,
+  roleName: undefined,
+  remark: undefined,
+  sort: 1
+}
+const formModel = reactive({...formDefault})
+const onSubmit = async () => {
+  // 校验
+  const valid = await formRef.value.validate()
+  if (!valid) return
 
-        this.$message.success(res, 'success');
-        this.$emit('closes', 'success')
-      }).catch(() => {
-
-      })
-    }
+  if (loading.value === true) {
+    ElMessage({type: 'warning', message: '正在处理···'});
+    return;
   }
+  loading.value = true;
+  try {
+    if (formModel.id) {
+      await systemApi.sysRoleEdit(formModel);
+      ElMessage({type: 'success', message: '修改成功'});
+    } else {
+      await systemApi.sysRoleSave(formModel);
+      ElMessage({type: 'success', message: '添加成功'});
+    }
+    emit('onReload')
+    onClose()
+  } finally {
+    loading.value = false;
+  }
+}
+
+
+// 打开和关闭
+const visible = ref(false);// 弹窗显示状态
+const onOpen = (item: any) => {
+  if (item) {
+    Object.assign(formModel, item);
+  }
+  visible.value = true
+}
+defineExpose({onOpen})
+const onClose = () => {
+  visible.value = false;
+  Object.assign(formModel, formDefault);
 }
 </script>

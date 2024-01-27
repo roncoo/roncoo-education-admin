@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="login">
+  <div class="login-container">
+    <div class="login-content">
       <div class="login-info">
         <p class="title">欢迎登录 领课教育系统（开源版）</p>
         <p class="info">
@@ -89,12 +89,12 @@ async function handleLogin() {
 </script>
 
 <style lang="less" scoped>
-.container {
+.login-container {
   height: 100vh;
   background: #2873f0;
 }
 
-.login {
+.login-content {
   position: absolute;
   top: calc((100vh - 520px) / 2);
   left: 0;

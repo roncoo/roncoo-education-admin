@@ -34,9 +34,13 @@
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="toZoneCourse(scope.row.id)">课程</el-button>
+          <el-button plain type="success" @click="toCourse(scope.row.id)">课程</el-button>
           <el-dropdown>
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button> 更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
@@ -70,7 +74,7 @@ import {useRouter} from "vue-router";
 
 // 进入专区课程列表
 const router = useRouter();
-const toZoneCourse = (zoneId: string) => {
+const toCourse = (zoneId: string) => {
   router.push({path: '/common/zone/course', query: {zoneId}})
 }
 

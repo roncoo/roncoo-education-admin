@@ -11,6 +11,30 @@ export const targetEnums = () => {
 export const userSexEnums = () => {
     return getEnumObj('UserSexEnum');
 }
+
 export const putawayEnums = () => {
     return getEnumObj('PutawayEnum');
+}
+
+export const payTypeEnums = () => {
+    return getEnumObj('PayTypeEnum');
+}
+
+export const orderStatusEnums = () => {
+    return getEnumObj('OrderStatusEnum');
+}
+
+export const storagePlatformEnums = () => {
+    return getEnumObj('StoragePlatformEnum');
+}
+
+export const resourceTypeEnums = () => {
+    return getEnumObj('ResourceTypeEnum');
+}
+
+export const videoStatusEnums = () => {
+    return getEnumObj('VideoStatusEnum');
+}
+export const vodPlatformEnums = () => {
+    return getEnumObj('VodPlatformEnum');
 }

@@ -1,6 +1,6 @@
 <template>
   <el-dialog :before-close="handleClose" :model-value="visible" :title="title" center width="600px">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="菜单类型" prop="menuType">
         <el-radio-group v-model="form.menuType" disabled>
           <template v-for="item in menuTypeEnumList">

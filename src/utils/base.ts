@@ -5,36 +5,34 @@ import {getSessionStorage, setSessionStorage} from '@/utils/storage';
  * 格式化时长
  * @param mss
  */
-export function formatDuring(mss: number) {
-    const hours = (mss % 86400000) / 3600000
-    const minutes = (mss % 3600000) / 60000
-    const seconds = (mss % 60000) / 1000
-    return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
+export function formatTime(time: number) {
+    let a: number | string = ~~(time / 3600);
+    let b: number | string = ~~(time / 60) - a * 60;
+    let c: number | string = time % 60;
+    a = String(a).padStart(2, "0");
+    b = String(b).padStart(2, "0");
+    c = String(c).padStart(2, "0");
+    if (a === '00') {
+        return `${b}:${c}`;
+    } else {
+        return `${a}:${b}:${c}`;
+    }
 }
 
 // 获取文件大小
-export function getSize(limit: number) {
-    let sizeStr = '';
-    if (limit && limit !== 0) {
-        if (limit < 102.4) { // 小于0.1KB，则转化成B
-            sizeStr = limit.toFixed(2) + 'B'
-        } else if (limit < 104857.6) { // 小于0.1MB，则转化成KB
-            sizeStr = (limit / 1024).toFixed(2) + 'KB'
-        } else if (limit < 0.1 * 1024 * 1024 * 1024) { // 小于0.1GB，则转化成MB
-            sizeStr = (limit / (1024 * 1024)).toFixed(2) + 'MB'
-        } else if (limit < 107374182.4) { // 小于0.1TB，则转化成GB
-            sizeStr = (limit / 1073741824).toFixed(2) + 'GB'
-        } else { // 其他转化成GB
-            sizeStr = (limit / 1099511627776).toFixed(2) + 'TB'
-        }
-    }
-    const index = sizeStr.indexOf('.'); // 获取小数点处的索引
-    const dou = sizeStr.substring(index + 1, index + 3) // 获取小数点后两位的值
-    if (dou === '00') {
-        // 判断后两位是否为00，如果是则删除00
-        return sizeStr.substring(0, index)
-    }
-    return sizeStr;
+export function formatSize(size: number) {
+    if (!size)
+        return "";
+    var num = 1024.00
+    if (size < num)
+        return size + "B";
+    if (size < Math.pow(num, 2))
+        return (size / num).toFixed(2) + "K"; //kb
+    if (size < Math.pow(num, 3))
+        return (size / Math.pow(num, 2)).toFixed(2) + "M"; //M
+    if (size < Math.pow(num, 4))
+        return (size / Math.pow(num, 3)).toFixed(2) + "G"; //G
+    return (size / Math.pow(num, 4)).toFixed(2) + "T"; //T
 }
 
 /**

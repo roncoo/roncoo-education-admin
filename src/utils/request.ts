@@ -91,6 +91,9 @@ request.interceptors.response.use(
             router.push(PATH.URL_LOGIN)
             return Promise.reject(error.response)
         }
+        if (error.response && error.response.data && error.response.data.message) {
+            ElMessage({message: error.response.data.message, type: 'error', duration: 5 * 1000})
+        }
         return Promise.reject(error)
     }
 )

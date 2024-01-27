@@ -24,8 +24,10 @@ export default function useTable(apis: any) {
                     pageSize: page.pageSize,
                     ...query
                 });
-                page.list = res.list || []
-                page.totalCount = res.totalCount || 0;
+                if (res) {
+                    page.list = res.list || res || []
+                    page.totalCount = res.totalCount || 0;
+                }
             } finally {
                 page.loading = false;
             }

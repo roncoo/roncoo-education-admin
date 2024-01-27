@@ -1,8 +1,8 @@
 <template>
   <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" width="600px" center @close="onClose()">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="100px">
-      <el-form-item label="登录账号">
-        <el-input v-model="formModel.mobile" class="form-group" disabled/>
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
+      <el-form-item v-if="!formModel.id" label="登录账号" prop="mobile">
+        <el-input v-model="formModel.mobile" class="form-group"/>
       </el-form-item>
       <el-form-item label="用户昵称" prop="realName">
         <el-input v-model="formModel.realName" class="form-group" maxlength="50" show-word-limit/>
@@ -30,8 +30,8 @@ import {ElMessage} from 'element-plus';
 // 校验规则
 const formRef = ref()
 const rules = {
-  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
-  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+  mobile: [{required: true, message: '不能为空', trigger: 'blur'}],
+  realName: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
@@ -39,10 +39,9 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['onReload'])
 const formDefault = {
   id: undefined,
-  carouselImg: undefined,
-  carouselTitle: undefined,
-  carouselUrl: undefined,
-  carouselTarget: '_blank',
+  mobile: undefined,
+  realName: undefined,
+  remark: undefined,
   sort: 1
 }
 const formModel = reactive({...formDefault})
@@ -57,11 +56,11 @@ const onSubmit = async () => {
   }
   loading.value = true;
   try {
-    if (FormModel.id) {
-      await systemApi.sysUserEdit(FormModel);
+    if (formModel.id) {
+      await systemApi.sysUserEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await systemApi.carouselSave(FormModel);
+      await systemApi.carouselSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('onReload')
@@ -75,14 +74,14 @@ const onSubmit = async () => {
 const visible = ref(false);// 弹窗显示状态
 const onOpen = (item: any) => {
   if (item) {
-    Object.assign(FormModel, item);
+    Object.assign(formModel, item);
   }
   visible.value = true
 }
 defineExpose({onOpen})
 const onClose = () => {
   visible.value = false;
-  Object.assign(FormModel, formDefault);
+  Object.assign(formModel, formDefault);
 }
 </script>
 

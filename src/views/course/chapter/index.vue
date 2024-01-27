@@ -37,7 +37,11 @@
           <el-button v-if="scope.row.chapterName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(scope.row)">节添加</el-button>
           <el-dropdown>
-            <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
+            <el-button> 更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
@@ -66,8 +70,8 @@ import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course.js'
 import {formatDuring} from '@/utils/base.ts'
-import Edit from './formModel.vue';
-import Add from './add.vue';
+import Edit from './FormModel.vue';
+import Add from './Period.vue';
 
 export default defineComponent({
   components: {

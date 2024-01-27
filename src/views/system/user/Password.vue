@@ -1,31 +1,32 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="500px" center @close="onClose">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="资源名称" prop="resourceName">
-        <el-input v-model="formModel.resourceName" maxlength="100" show-word-limit></el-input>
+  <el-dialog title="密码重置" :model-value="visible" width="600px" center @close="onClose()">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
+      <el-form-item label="登录密码" prop="mobilePwd">
+        <el-input v-model="formModel.mobilePwd" class="form-group" type="password"/>
       </el-form-item>
-      <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"/>
+      <el-form-item label="确认密码" prop="confirmPassword">
+        <el-input v-model="formModel.confirmPassword" class="form-group" type="password"/>
       </el-form-item>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="onClose()">取消</el-button>
-        <el-button type="primary" @click="onSubmit()">确定</el-button>
-      </span>
+      <div class="dialog-footer">
+        <el-button @click="onClose">取 消</el-button>
+        <el-button type="primary" @click="onSubmit()">确 定</el-button>
+      </div>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import {ElMessage} from 'element-plus';
+import {systemApi} from '@/api/system'
 import {reactive, ref} from 'vue';
-import {courseApi} from "@/api/course";
+import {ElMessage} from 'element-plus';
 
 // 校验规则
 const formRef = ref()
 const rules = {
-  resourceName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  mobilePwd: [{required: true, message: '不能为空', trigger: 'blur'}],
+  confirmPassword: [{required: true, message: '不能为空', trigger: 'blur'}],
 }
 
 // 表单
@@ -33,8 +34,8 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['onReload'])
 const formDefault = {
   id: undefined,
-  resourceName: undefined,
-  sort: 1
+  mobilePwd: undefined,
+  confirmPassword: undefined,
 }
 const formModel = reactive({...formDefault})
 const onSubmit = async () => {
@@ -49,11 +50,8 @@ const onSubmit = async () => {
   loading.value = true;
   try {
     if (formModel.id) {
-      await courseApi.resourceEdit(formModel);
+      await systemApi.sysUserPassword(formModel);
       ElMessage({type: 'success', message: '修改成功'});
-    } else {
-      await courseApi.resourceSave(formModel);
-      ElMessage({type: 'success', message: '添加成功'});
     }
     emit('onReload')
     onClose()
@@ -76,5 +74,3 @@ const onClose = () => {
   Object.assign(formModel, formDefault);
 }
 </script>
-
-
