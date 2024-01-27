@@ -59,7 +59,7 @@ import {reactive, ref} from 'vue';
 
 import {systemApi} from '@/api/system'
 import Pagination from '@/components/Pagination/index.vue';
-import FormModal from "./formModal.vue";
+import FormModal from "./FormModel.vue";
 import {statusIdEnums, targetEnums} from '@/utils/enum'
 
 

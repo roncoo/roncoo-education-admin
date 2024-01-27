@@ -26,7 +26,7 @@
 </template>
 <script>
 import {systemApi} from '@/api/system';
-import List from './list.vue';
+import List from './List.vue';
 
 export default {
   name: 'SysConfig',

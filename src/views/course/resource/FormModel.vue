@@ -1,15 +1,9 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" :width="500" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>
+      <el-form-item class="form-group" label="资源名称" prop="resourceName">
+        <el-input v-model="formModel.resourceName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="名称" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
-      </el-form-item>
-      <!--      <el-form-item class="form-group" label="备注" prop="remark">
-              <el-input v-model="formModel.remark" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"/>
       </el-form-item>
@@ -26,9 +20,9 @@
 <script>
 import {ElMessage} from 'element-plus';
 import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import {courseApi} from '@/api/course';
 
 export default defineComponent({
   components: {
@@ -57,7 +51,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
+        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
       }
     });
 
@@ -73,9 +67,7 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel = {
-        parentId: val.id,
-        sort: 1,
-        parentCategoryName: val.categoryName
+        ...val
       };
     });
 
@@ -102,9 +94,9 @@ export default defineComponent({
             ...formModel
           };
           if (data.id) {
-            d = await courseApi.categoryEdit(data);
+            d = await courseApi.resourceEdit(data);
           } else {
-            d = await courseApi.categorySave(data);
+            d = await courseApi.resourceSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});

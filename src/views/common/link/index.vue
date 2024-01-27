@@ -57,7 +57,7 @@
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system'
-import FormModal from './formModal.vue';
+import FormModal from './FormModel.vue';
 import Pagination from '@/components/Pagination/index.vue';
 import {statusIdEnums, targetEnums} from '@/utils/enum'
 

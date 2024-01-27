@@ -12,8 +12,8 @@
 </template>
 <script>
 import {statApi} from '@/api/dashboard';
-import Vod from './statVod.vue'
-import Login from './statLogin.vue'
+import Vod from './StatVod.vue'
+import Login from './StatLogin.vue'
 
 export default {
   name: 'Dashboard',

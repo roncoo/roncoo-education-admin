@@ -32,7 +32,7 @@
       <el-table-column :min-width="120" label="注册时间" prop="gmtCreate"/>
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="220" fixed="right" label="操作" prop="address">
@@ -71,7 +71,7 @@ import {usersApi} from '@/api/users'
 import {getEnumObj} from '@/utils/base';
 import {useRouter} from "vue-router";
 import Pagination from "@/components/Pagination/index.vue";
-import FormModal from "./formModal.vue";
+import FormModal from "./FormModel.vue";
 
 // 添加/修改
 const formRef = ref();

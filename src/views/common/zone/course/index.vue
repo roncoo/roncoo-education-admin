@@ -2,14 +2,14 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item>
             <el-button plain type="success" @click="openEditDialog(editForm)">课程添加</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
+    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column :width="100" label="封面">
         <template #default="scope">
@@ -37,14 +37,14 @@
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openEditDialog(scope.row)">排序</el-button>
-          <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleUpdateStatus(scope.row)">启用</el-button>
-          <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleUpdateStatus(scope.row)">禁用</el-button>
+          <el-button plain type="primary" @click="openFormModal(scope.row)">排序</el-button>
+          <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+          <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
           <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -60,7 +60,7 @@ import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
 import {courseApi} from '@/api/course'
-import Edit from './edit.vue';
+import Edit from './FormModel.vue';
 import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
@@ -95,7 +95,7 @@ export default defineComponent({
     });
 
     const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
+      state.page.loading = true;
       row.statusId = row.statusId ? 0 : 1
       apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
         if (res) {
@@ -105,7 +105,7 @@ export default defineComponent({
           });
           state.getTableData();
         }
-        state.tableData.loading = false;
+        state.page.loading = false;
       });
     };
     return {

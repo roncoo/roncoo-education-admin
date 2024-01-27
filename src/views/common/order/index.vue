@@ -71,7 +71,7 @@ import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {usersApi} from '@/api/users';
 import Pagination from "@/components/Pagination/index.vue";
-import FormModal from "./formModal.vue";
+import FormModal from "./FormModel.vue";
 
 
 // 添加/修改

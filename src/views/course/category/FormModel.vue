@@ -1,9 +1,6 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" :width="500" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>
-      </el-form-item>
       <el-form-item class="form-group" label="名称" prop="categoryName">
         <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
@@ -57,7 +54,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
+        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]
       }
     });
 
@@ -73,9 +70,7 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel = {
-        parentId: val.id,
-        sort: 1,
-        parentCategoryName: val.categoryName
+        ...val
       };
     });
 

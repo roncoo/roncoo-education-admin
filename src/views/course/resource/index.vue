@@ -2,13 +2,13 @@
   <div class="app-container">
     <div class="page_head">
       <div class="search_bar clearfix">
-        <el-form :model="seekForm" inline label-width="80px">
+        <el-form :model="query" inline label-width="80px">
           <el-form-item label="资源名称">
-            <el-input v-model="seekForm.resourceName" clearable/>
+            <el-input v-model="query.resourceName" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="seek()"> 查询</el-button>
-            <el-button @click="resetSeek()">重置</el-button>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
             <!-- <el-button plain type="success" @click="localUpload">上传</el-button>
             <input id="file" type="file" style="display: none" @change="addUpload"> -->
             <uploader-btn :plain="false" btn-text="上传" class="mgl10" icon="" mode="async"/>
@@ -16,7 +16,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="tableData.loading" :data="tableData.list" border>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="资源名称" prop="resourceName">
         <template #default="scope">
@@ -48,13 +48,13 @@
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="primary"
-                     @click="openEditDialog(scope.row)"
+                     @click="openFormModal(scope.row)"
           >编辑
           </el-button>
           <el-dropdown>
@@ -63,11 +63,11 @@
               <el-dropdown-menu>
                 <el-dropdown-item>
                   <el-button v-if="scope.row.statusId == 0" plain
-                             type="success" @click="handleUpdateStatus(scope.row)"
+                             type="success" @click="handleStatus(scope.row)"
                   >启用
                   </el-button>
                   <el-button v-if="scope.row.statusId == 1" plain
-                             type="danger" @click="handleUpdateStatus(scope.row)"
+                             type="danger" @click="handleStatus(scope.row)"
                   >禁用
                   </el-button>
                 </el-dropdown-item>
@@ -94,7 +94,7 @@ import {defineComponent, onMounted, onUnmounted, reactive, toRefs} from 'vue';
 
 import {courseApi} from '@/api/course'
 import {formatDuring, getEnumObj, getSize} from '@/utils/base.ts'
-import Edit from './edit.vue';
+import Edit from './FormModel.vue';
 import UploaderBtn from '@/components/Upload/UploaderBtn.vue';
 
 export default defineComponent({
@@ -118,7 +118,7 @@ export default defineComponent({
     });
 
     const handleUpdateStatus = function(row) {
-      state.tableData.loading = true;
+      state.page.loading = true;
       row.statusId = row.statusId ? 0 : 1
       apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
         if (res) {
@@ -128,7 +128,7 @@ export default defineComponent({
           });
           state.getTableData();
         }
-        state.tableData.loading = false;
+        state.page.loading = false;
       });
     };
     const localUpload = () => {

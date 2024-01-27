@@ -1,17 +1,18 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '章修改' : '章添加'" :width="500" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>
+      <el-form-item class="form-group" label="章名称" prop="chapterName">
+        <el-input v-model="formModel.chapterName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="名称" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
+      <el-form-item class="form-group" label="收费" prop="isFree">
+        <el-radio-group v-model="formModel.isFree">
+          <template v-for="item in freeEnums" :key="item.code">
+            <el-radio :label="item.code">{{ item.desc }}</el-radio>
+          </template>
+        </el-radio-group>
       </el-form-item>
-      <!--      <el-form-item class="form-group" label="备注" prop="remark">
-              <el-input v-model="formModel.remark" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"/>
+        <el-input-number v-model="formModel.sort" min="1"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -25,10 +26,12 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {courseApi} from '@/api/course';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
+
+import {courseApi} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -54,10 +57,21 @@ export default defineComponent({
     const formRef = ref(null);
     const loading = ref(false);
 
+    const state = reactive({
+      freeEnums: {}
+    });
+
+    onMounted(() => {
+      state.freeEnums = getEnumObj('FreeEnum')
+    });
+
     let formModel = reactive({
-      data: {},
+      data: {
+        isFree: 1,
+        sort: 1
+      },
       rules: {
-        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
+        chapterName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -73,9 +87,7 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel = {
-        parentId: val.id,
-        sort: 1,
-        parentCategoryName: val.categoryName
+        ...val
       };
     });
 
@@ -102,9 +114,9 @@ export default defineComponent({
             ...formModel
           };
           if (data.id) {
-            d = await courseApi.categoryEdit(data);
+            d = await courseApi.courseChapterEdit(data);
           } else {
-            d = await courseApi.categorySave(data);
+            d = await courseApi.courseChapterSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
@@ -117,6 +129,7 @@ export default defineComponent({
     };
 
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,

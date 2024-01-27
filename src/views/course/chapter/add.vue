@@ -1,15 +1,20 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.chapterId ? '节修改' : '节添加'" :width="500" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>
+      <el-form-item class="form-group" label="节名称" prop="periodName">
+        <el-input v-model="formModel.periodName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="名称" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
+      <el-form-item class="form-group" label="资源" prop="resourceName">
+        <el-input v-model="formModel.resourceName" disabled style="width: 210px; margin-right: 20px"></el-input>
+        <el-button plain type="primary" @click="resourceSelect">选择资源</el-button>
       </el-form-item>
-      <!--      <el-form-item class="form-group" label="备注" prop="remark">
-              <el-input v-model="formModel.remark" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
+      <el-form-item class="form-group" label="收费" prop="isFree">
+        <el-radio-group v-model="formModel.isFree">
+          <template v-for="item in freeEnums" :key="item.code">
+            <el-radio :label="item.code">{{ item.desc }}</el-radio>
+          </template>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"/>
       </el-form-item>
@@ -20,19 +25,23 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
+    <select-resource v-if="resource.visible" :info="resource.info" :visible="resource.visible" @close="resourceCallback"/>
   </el-dialog>
 </template>
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
-import {courseApi} from '@/api/course';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
+
+import {courseApi} from '@/api/course.js';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import SelectResource from '@/components/Selects/SelectResource.vue';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
-    editor, upload
+    editor, upload, SelectResource
   },
   props: {
     modelValue: {
@@ -53,11 +62,22 @@ export default defineComponent({
     const visible = ref(false);
     const formRef = ref(null);
     const loading = ref(false);
+    const state = reactive({
+      freeEnums: {}
+    });
+
+    onMounted(() => {
+      state.freeEnums = getEnum('FreeEnum')
+    });
+    let resource = reactive({
+      visible: false,
+      info: {}
+    })
 
     let formModel = reactive({
       data: {},
       rules: {
-        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
+        periodName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -73,9 +93,7 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel = {
-        parentId: val.id,
-        sort: 1,
-        parentCategoryName: val.categoryName
+        ...val
       };
     });
 
@@ -101,10 +119,13 @@ export default defineComponent({
           const data = {
             ...formModel
           };
-          if (data.id) {
-            d = await courseApi.categoryEdit(data);
+          if (data.chapterId) {
+            d = await courseApi.courseChapterPeriodEdit(data);
           } else {
-            d = await courseApi.categorySave(data);
+            data.chapterId = data.id
+            data.id = ''
+            data.periodViewRespList = {}
+            d = await courseApi.courseChapterPeriodSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
@@ -116,13 +137,30 @@ export default defineComponent({
       });
     };
 
+    const resourceSelect = () => {
+      resource.visible = true;
+    }
+
+    const resourceCallback = (info) => {
+      resource.visible = false
+      console.log(info)
+      if (info != null) {
+        formModel.resourceName = info.resourceName;
+        formModel.resourceId = info.resourceId;
+      }
+    }
+
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,
       formRef,
       onClose,
-      onSubmit
+      onSubmit,
+      resource,
+      resourceSelect,
+      resourceCallback
     };
   }
 });

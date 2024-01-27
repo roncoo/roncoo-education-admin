@@ -15,77 +15,77 @@ export const systemApi = {
         return putRequest('/system/admin/website/nav/edit', data)
     },
 
-// 头部导航保存
+    // 头部导航保存
     navSave: (data: any) => {
         return postRequest('/system/admin/website/nav/save', data)
     },
 
-// 头部导航删除
+    // 头部导航删除
     navDelete: (data: any) => {
         return deleteRequest('/system/admin/website/nav/delete?id=' + data.id)
     },
 
-// 轮播分页
+    // 轮播分页
     carouselPage: (params: any, pageCurrent: 1, pageSize: 20) => {
         return postRequest('/system/admin/website/carousel/page', {pageCurrent, pageSize, ...params})
     },
 
-// 轮播修改
+    // 轮播修改
     carouselEdit: (data: any) => {
         return putRequest('/system/admin/website/carousel/edit', data)
     },
 
-// 轮播保存
+    // 轮播保存
     carouselSave: (data: any) => {
         return postRequest('/system/admin/website/carousel/save', data)
     },
 
-// 轮播删除
+    // 轮播删除
     carouselDelete: (data: any) => {
         return deleteRequest('/system/admin/website/carousel/delete?id=' + data.id)
     },
 
-// 文章分页
+    // 文章分页
     articlePage: (params: any, pageCurrent: 1, pageSize: 20) => {
         return postRequest('/system/admin/website/article/page', {pageCurrent, pageSize, ...params})
     },
 
-// 文章修改
+    // 文章修改
     articleEdit: (data: any) => {
         return putRequest('/system/admin/website/article/edit', data)
     },
 
-// 文章保存
+    // 文章保存
     articleSave: (data: any) => {
         return postRequest('/system/admin/website/article/save', data)
     },
 
-// 文章删除
+    // 文章删除
     articleDelete: (data: any) => {
         return deleteRequest('/system/admin/website/article/delete?id=' + data.id)
     },
 
-// 友情链接分页
+    // 友情链接分页
     linkPage: (params: any, pageCurrent: 1, pageSize: 20) => {
         return postRequest('/system/admin/website/link/page', {pageCurrent, pageSize, ...params})
     },
 
-// 友情链接修改
+    // 友情链接修改
     linkEdit: (data: any) => {
         return putRequest('/system/admin/website/link/edit', data)
     },
 
-// 友情链接保存
+    // 友情链接保存
     linkSave: (data: any) => {
         return postRequest('/system/admin/website/link/save', data)
     },
 
-// 友情链接删除
+    // 友情链接删除
     linkDelete: (data: any) => {
         return deleteRequest('/system/admin/website/link/delete?id=' + data.id)
     },
 
-// 视频云初始化
+    // 视频云初始化
     videoInit: () => {
         return getRequest('/system/admin/sys/config/video/init')
     },

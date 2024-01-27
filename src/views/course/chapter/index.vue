@@ -3,34 +3,39 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="分类名称">
-            <el-input v-model="query.categoryName" clearable/>
-          </el-form-item>
+          <!--  <el-form-item label="章名称">
+                      <el-input v-model="query.chapterName" clearable/>
+                    </el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
-            <el-button @click="resetQuery()">重置</el-button>
-            <el-button plain type="success" @click="openFormModal()">添加</el-button>
+            <el-button plain type="success" @click="openEditDialog(editForm)">章添加</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'childrenList' }" border row-key="id">
+    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="名称" prop="categoryName">
+      <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
-          <span>{{ scope.row.categoryName }}</span>
+          <span>{{ scope.row.chapterName }}</span>
+          <span>{{ scope.row.periodName }}</span>
+          <span v-if="scope.row.resourceViewResp"> 【{{ resourceTypeEnums[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }} |
+            <span v-if="scope.row.resourceViewResp.resourceType<3">{{ formatDuring(scope.row.resourceViewResp.videoLength * 1000) }}</span>
+            <span v-else>{{ scope.row.resourceViewResp.docPage }} 页</span> 】
+          </span>
         </template>
       </el-table-column>
+      <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
       <el-table-column :width="100" label="排序" prop="sort"/>
-      <el-table-column :width="100" label="状态">
+      <el-table-column :width="100" label="收费">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.isFree === 0 }">{{ freeEnums[scope.row.isFree] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="openAddDialog(scope.row)">添加</el-button>
-          <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.periodName" plain type="primary" @click="openAddDialog(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openAddDialog(scope.row)">节添加</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -48,6 +53,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
     <add v-model="addModel.visible" :form="addModel.form" @updateTable="closeAddDialog"/>
   </div>
@@ -58,42 +64,40 @@ import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
-import {courseApi} from '@/api/course'
-import Edit from './FormModel.vue';
+import {courseApi} from '@/api/course.js'
+import {formatDuring} from '@/utils/base.ts'
+import Edit from './formModel.vue';
 import Add from './add.vue';
-import {getEnumObj} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
     Edit, Add
   },
   setup() {
-    const initData = reactive({
-      sort: 1
-    })
 
     const route = useRoute()
     const apis = reactive({
-      getList: courseApi.categoryList,
-      delete: courseApi.categoryDelete,
-      updateStatus: courseApi.categoryEdit
+      getList: courseApi.courseChapterPage,
+      delete: courseApi.courseChapterDelete,
+      updateStatus: courseApi.courseChapterEdit
     })
     const state = reactive({
-      ...Table(apis, {}),
+      ...Table(apis, {courseId: route.query.courseId}),
+      freeEnums: {},
       statusIdEnums: {},
-      userSexEnums: {}
+      userSexEnums: {},
+      resourceTypeEnums: {}
     });
-    const addForm = reactive({
-      courseId: ''
-    })
     const editForm = reactive({
       courseId: ''
     })
     onMounted(() => {
-      addForm.courseId = route.query.courseId;
+      // 章添加修改
       editForm.courseId = route.query.courseId;
+      state.freeEnums = getEnumObj('FreeEnum');
       state.statusIdEnums = getEnumObj('StatusIdEnum');
-      state.UserSexEnum = getEnumObj('UserSexEnum');
+      state.userSexEnums = getEnumObj('UserSexEnum');
+      state.resourceTypeEnums = getEnumObj('ResourceTypeEnum');
     });
 
     const handleUpdateStatus = function(row) {
@@ -112,10 +116,9 @@ export default defineComponent({
     };
     return {
       ...toRefs(state),
-      initData,
-      addForm,
       editForm,
-      handleUpdateStatus
+      handleUpdateStatus,
+      formatDuring
     };
   }
 });

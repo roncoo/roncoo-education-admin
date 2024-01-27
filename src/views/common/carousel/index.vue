@@ -55,14 +55,14 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
-    <form-modal ref="formRef" @onReload="handlePage"/>
+    <form-model ref="formRef" @onReload="handlePage"></form-model>
   </div>
 </template>
 <script setup lang="ts">
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system'
-import FormModal from './formModal.vue';
+import FormModel from './FormModel.vue';
 import Pagination from "@/components/Pagination/index.vue";
 import {statusIdEnums, targetEnums} from '@/utils/enum'
 
@@ -71,6 +71,7 @@ const formRef = ref();
 const openFormModal = (item?: any) => {
   formRef.value.onOpen(item)
 }
+
 
 // 基础功能
 const apis = reactive({
@@ -81,4 +82,6 @@ const apis = reactive({
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
   ...useTable(apis)
 })
+
+console.log(page)
 </script>

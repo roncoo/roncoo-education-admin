@@ -1,17 +1,21 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" :width="500" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
-        <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>
+      <el-form-item class="form-group" label="名称" prop="zoneName">
+        <el-input v-model="formModel.zoneName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="名称" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
+      <el-form-item class="form-group" label="描述" prop="zoneDesc">
+        <el-input v-model="formModel.zoneDesc" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <!--      <el-form-item class="form-group" label="备注" prop="remark">
-              <el-input v-model="formModel.remark" maxlength="100" show-word-limit></el-input>
-            </el-form-item>-->
+      <el-form-item label="状态" prop="statusId">
+        <el-radio-group v-model="formModel.statusId">
+          <template v-for="item in statusIdEnums" :key="item.code">
+            <el-radio :label="item.code">{{ item.desc }}</el-radio>
+          </template>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"/>
+        <el-input-number v-model="formModel.sort"></el-input-number>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -25,10 +29,11 @@
 
 <script>
 import {ElMessage} from 'element-plus';
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 import {courseApi} from '@/api/course';
 import editor from '@/components/Wangeditor/index.vue';
 import upload from '@/components/Upload/image.vue';
+import {getEnum} from '@/utils/base.ts';
 
 export default defineComponent({
   components: {
@@ -57,7 +62,7 @@ export default defineComponent({
     let formModel = reactive({
       data: {},
       rules: {
-        categoryName: [{required: true, message: '不能为空', trigger: 'blur'}]
+        zoneName: [{required: true, message: '不能为空', trigger: 'blur'}]
       }
     });
 
@@ -65,7 +70,13 @@ export default defineComponent({
     if (modelValue.value) {
       visible.value = modelValue.value;
     }
+    const state = reactive({
+      statusIdEnums: {}
+    });
 
+    onMounted(() => {
+      state.statusIdEnums = getEnum('StatusIdEnum');
+    });
     // 弹窗是否要打开监控
     watch(modelValue, async(val) => {
       visible.value = val;
@@ -73,9 +84,7 @@ export default defineComponent({
     // form 数据监控
     watch(form, async(val) => {
       formModel = {
-        parentId: val.id,
-        sort: 1,
-        parentCategoryName: val.categoryName
+        ...val
       };
     });
 
@@ -102,9 +111,9 @@ export default defineComponent({
             ...formModel
           };
           if (data.id) {
-            d = await courseApi.categoryEdit(data);
+            d = await courseApi.zoneEdit(data);
           } else {
-            d = await courseApi.categorySave(data);
+            d = await courseApi.zoneSave(data);
           }
           if (d) {
             ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
@@ -117,6 +126,7 @@ export default defineComponent({
     };
 
     return {
+      ...toRefs(state),
       visible,
       loading,
       formModel,

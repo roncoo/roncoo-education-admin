@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {ref, toRefs, watch} from 'vue'
 import type {UploadProps} from 'element-plus'
 import {ElMessage} from 'element-plus'
 import {uploadApi} from "@/api/upload"
@@ -17,13 +17,22 @@ const imageType = "image/jpeg,image/png,image/gif,image/x-icon"
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-  modelValue: String,
+  modelValue: {type: String, default: ''},
   width: {type: Number, default: 100},
   height: {type: Number, default: 100},
 });
 
 // 图片
-const imageUrl = ref(props.modelValue)
+const imageUrl = ref()
+const {modelValue} = toRefs(props)
+watch(modelValue,
+    (newValue: string) => {
+      imageUrl.value = newValue
+    },
+    {
+      immediate: true,
+    }
+)
 
 /**
  * 上传

@@ -8,11 +8,11 @@ import {PATH} from "@/utils/constants/system";
 const constantRoutes = [
     {
         path: '/',
-        component: () => import('@/views/login.vue')
+        component: () => import('@/views/dashboard/index.vue')
     },
     {
         path: PATH.URL_LOGIN,
-        component: () => import('@/views/login.vue')
+        component: () => import('@/views/login/index.vue')
     },
     {
         path: PATH.URL_404,
