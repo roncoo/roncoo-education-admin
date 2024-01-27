@@ -55,7 +55,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
-    <form-model ref="formRef" @onReload="handlePage"></form-model>
+    <form-model ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -82,6 +82,4 @@ const apis = reactive({
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
   ...useTable(apis)
 })
-
-console.log(page)
 </script>

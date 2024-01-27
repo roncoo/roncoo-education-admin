@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" :append-to-body="true" :width="600" center @close="onClose">
+  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" :append-to-body="true" width="600px" center @close="onClose">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
         <upload-image v-model="formModel.carouselImg" :width="500" :height="90"/>

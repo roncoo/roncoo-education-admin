@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'添加'" width="500px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item v-if="formModel.parentId" class="form-group" label="上级分类" prop="categoryName">
         <el-input v-model="formModel.parentCategoryName" disabled maxlength="100"></el-input>

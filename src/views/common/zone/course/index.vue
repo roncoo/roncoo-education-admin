@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-button plain type="success" @click="openEditDialog(editForm)">课程添加</el-button>
+            <el-button plain type="success" @click="openFormModal()">课程添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -31,7 +31,7 @@
       </el-table-column>
       <el-table-column :width="100" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ putawayEnums[scope.row.courseViewResp.isPutaway] }}</span>
+          <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ putawayEnums()[scope.row.courseViewResp.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>
@@ -49,70 +49,30 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-model ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-
-import {useRoute} from 'vue-router';
+<script setup lang="ts">
+import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
-import Edit from './FormModel.vue';
-import {getEnumObj} from '@/utils/base.ts';
+import useTable from '@/utils/table.js';
+import {putawayEnums, statusIdEnums} from "../../../../utils/enum";
 
-export default defineComponent({
-  components: {
-    Edit
-  },
-  setup() {
 
-    const route = useRoute()
-    const apis = reactive({
-      getList: courseApi.zoneCoursePage,
-      delete: courseApi.zoneCourseDelete,
-      updateStatus: courseApi.zoneCourseEdit
-    })
-    const state = reactive({
-      ...Table(apis, {zoneId: route.query.zoneId}),
-      freeEnums: {},
-      statusIdEnums: {},
-      userSexEnums: {},
-      putawayEnums: {}
-    });
-    const editForm = reactive({
-      zoneId: ''
-    })
-    onMounted(() => {
-      // 章添加修改
-      editForm.zoneId = route.query.zoneId;
-      state.freeEnums = getEnumObj('FreeEnum');
-      state.statusIdEnums = getEnumObj('StatusIdEnum');
-      state.userSexEnums = getEnumObj('UserSexEnum');
-      state.putawayEnums = getEnumObj('PutawayEnum');
-    });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+}
 
-    const handleUpdateStatus = function(row) {
-      state.page.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.page.loading = false;
-      });
-    };
-    return {
-      ...toRefs(state),
-      editForm,
-      handleUpdateStatus
-    };
-  }
-});
+// 基础功能
+const apis = reactive({
+  page: courseApi.zoneCoursePage,
+  delete: courseApi.zoneCourseDelete,
+  status: courseApi.zoneCourseEdit
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

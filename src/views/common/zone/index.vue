@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button plain type="success" @click="openEditDialog(initData)">添加</el-button>
+            <el-button plain type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column :width="200" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="zoneCourse(scope.row)">课程</el-button>
+          <el-button plain type="success" @click="toZoneCourse(scope.row.id)">课程</el-button>
           <el-dropdown>
             <el-button> 更多操作<i class="el-icon-arrow-down"/></el-button>
             <template #dropdown>
@@ -47,7 +47,7 @@
                   <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+                  <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -55,70 +55,38 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
-    <edit v-model="editModel.visible" :form="editModel.form" :modelValue="editModel.visible" @updateTable="closeEditDialog"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <form-model ref="formRef" @onReload="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
-
+<script setup lang="ts">
+import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
-import Edit from './FormModel.vue';
-import {getEnumObj} from '@/utils/base.ts';
 import Pagination from '@/components/Pagination/index.vue';
+import useTable from "@/utils/table";
+import {statusIdEnums} from "@/utils/enum";
+import FormModel from "./FormModel.vue";
+import {useRouter} from "vue-router";
 
-export default defineComponent({
-  components: {
-    Pagination,
-    Edit
-  },
-  setup() {
-    const apis = reactive({
-      getList: courseApi.zonePage,
-      delete: courseApi.zoneDelete
-    })
-    const state = reactive({
-      ...Table(apis, {}),
-      statusIdEnums: {},
-      putawayEnums: {}
-    });
-    const initData = reactive({
-      statusId: 1,
-      sort: 1
-    })
+// 进入专区课程列表
+const router = useRouter();
+const toZoneCourse = (zoneId: string) => {
+  router.push({path: '/common/zone/course', query: {zoneId}})
+}
 
-    onMounted(() => {
-      state.statusIdEnums = getEnumObj('StatusIdEnum');
-    });
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+}
 
-    const handleUpdateStatus = function(row) {
-      state.page.loading = true;
-      row.statusId = row.statusId ? 0 : 1
-      apis.updateStatus({id: row.id, statusId: row.statusId}).then((res) => {
-        if (res) {
-          ElMessage({
-            type: 'success',
-            message: res
-          });
-          state.getTableData();
-        }
-        state.page.loading = false;
-      });
-    };
-
-    //
-    const zoneCourse = function(row) {
-      this.$router.push({path: '/common/course', query: {zoneId: row.id}});
-    }
-
-    return {
-      ...toRefs(state),
-      initData,
-      handleUpdateStatus,
-      zoneCourse
-    };
-  }
-});
+// 基础功能
+const apis = reactive({
+  page: courseApi.zonePage,
+  delete: courseApi.zoneDelete,
+  status: courseApi.zoneEdit
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

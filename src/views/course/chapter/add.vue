@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.chapterId ? '节修改' : '节添加'" :width="500" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.chapterId ? '节修改' : '节添加'" width="500px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit></el-input>

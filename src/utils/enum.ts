@@ -11,3 +11,6 @@ export const targetEnums = () => {
 export const userSexEnums = () => {
     return getEnumObj('UserSexEnum');
 }
+export const putawayEnums = () => {
+    return getEnumObj('PutawayEnum');
+}

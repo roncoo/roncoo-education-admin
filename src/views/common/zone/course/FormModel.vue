@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="modelValue" :title="formModel.id ? '修改' : '添加'" :width="500" center @close="onClose">
-    <el-form :model="formModel" label-width="80px" @submit.prevent>
+  <el-dialog :title="formModel.id ? '修改' : '添加'" :append-to-body="true" :model-value="modelValue" width="500px" center @close="onClose">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
         <el-button plain type="primary" @click="courseSelect">选择课程</el-button>
@@ -19,72 +19,64 @@
   </el-dialog>
 </template>
 
-<script setup>
-import {reactive, ref, watch} from 'vue';
+<script setup lang="ts">
+import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
 import {courseApi} from '@/api/course';
 import SelectCourse from '@/components/Selects/Course/index.vue';
 
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
-  form: {
-    type: Object,
-    default: {}
+// 校验规则
+const formRef = ref()
+const rules = {
+  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
+  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+}
+
+// 表单
+const loading = ref(false);// 加载进度状态
+const emit = defineEmits(['onReload'])
+const formDefault = {
+  id: undefined,
+  courseName: undefined,
+  sort: 1
+}
+const formModel = reactive({...formDefault})
+const onSubmit = async () => {
+  // 校验
+  const valid = await formRef.value.validate()
+  if (!valid) return
+
+  if (loading.value === true) {
+    ElMessage({type: 'warning', message: '正在处理···'});
+    return;
   }
-})
-
-const modelValue = ref(props.modelValue)
-watch(() => props.modelValue, async(val) => {
-  modelValue.value = val
-})
-
-const emit = defineEmits(['update:modelValue', 'updateTable'])
-
-const formModel = reactive({})
-watch(() => props.form, async(val) => {
-  formModel.id = val.id
-  formModel.sort = val.sort == undefined ? 1 : val.sort
-})
-
-const onSubmit = () => {
-  const data = {
-    ...formModel
-  }
-  let d = null;
-  if (data.id) {
-    d = courseApi.zoneCourseEdit(data)
-  } else {
-    d = courseApi.zoneCourseSave(data)
-  }
-  if (d) {
-    ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'})
-    emit('updateTable', d)
+  loading.value = true;
+  try {
+    if (formModel.id) {
+      await courseApi.zoneCourseEdit(formModel);
+      ElMessage({type: 'success', message: '修改成功'});
+    } else {
+      await courseApi.zoneCourseEdit(formModel);
+      ElMessage({type: 'success', message: '添加成功'});
+    }
+    emit('onReload')
     onClose()
-  }
-};
-
-const course = reactive({
-  visible: false,
-  info: {}
-})
-
-const courseSelect = () => {
-  course.visible = true;
-}
-
-const courseCallback = (info) => {
-  course.visible = false
-  if (info != null) {
-    formModel.courseName = info.courseName;
-    formModel.courseId = info.courseId;
+  } finally {
+    loading.value = false;
   }
 }
 
+// 打开和关闭
+const visible = ref(false);// 弹窗显示状态
+const onOpen = (item: any) => {
+  if (item) {
+    Object.assign(formModel, item);
+  }
+  visible.value = true
+}
+defineExpose({onOpen})
 const onClose = () => {
-  modelValue.value = false;
-  emit('update:modelValue', false);
-};
+  visible.value = false;
+  Object.assign(formModel, formDefault);
+}
 </script>
