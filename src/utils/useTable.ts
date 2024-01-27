@@ -22,7 +22,7 @@ export default function useTable(apis: any, PageParam = {}) {
             ...seekForm
         });
         tableData.loading = false;
-        tableData.list = res.List || []
+        tableData.list = res.list || []
         page.totalCount = res.totalCount || 0;
     }
 
