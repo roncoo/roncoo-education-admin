@@ -8,7 +8,7 @@ import {PATH} from "@/utils/constants/system";
 const constantRoutes = [
     {
         path: '/',
-        component: () => import('@/views/dashboard/index.vue')
+        redirect: PATH.URL_DASHBOARD
     },
     {
         path: PATH.URL_LOGIN,

@@ -1,81 +1,54 @@
 <template>
   <div class="app-container">
-    <el-form class="filter-container" inline label-width="100px">
-      <el-form-item>
-        <el-button plain type="primary" @click="videoInitHandle">视频云初始化</el-button>
-      </el-form-item>
-    </el-form>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="站点设置" name="1">
-        <List :list="list" @reset="handleReset"></List>
-      </el-tab-pane>
-      <el-tab-pane label="视频设置" name="3">
-        <List :list="list" @reset="handleReset"></List>
-      </el-tab-pane>
-      <el-tab-pane label="存储设置" name="4">
-        <List :list="list" @reset="handleReset"></List>
-      </el-tab-pane>
-      <el-tab-pane label="短信设置" name="5">
-        <List :list="list" @reset="handleReset"></List>
-      </el-tab-pane>
-      <el-tab-pane label="支付设置" name="6">
-        <List :list="list" @reset="handleReset"></List>
+      <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType">
+        <list :list="page.list"></list>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
-<script>
-import {systemApi} from '@/api/system';
-import List from './List.vue';
+<script setup lang="ts">
+import {reactive, ref} from "vue";
+import List from './List.vue'
+import {systemApi} from "@/api/system";
+import useTable from "@/utils/table";
+import {TabsPaneContext} from "element-plus";
 
-export default {
-  name: 'SysConfig',
-  components: {List},
-  data() {
-    return {
-      activeName: '1',
-      list: [],
-      map: {
-        configType: 1
-      }
-    };
+const activeName = ref('1')
+
+const handleClick = (tab: TabsPaneContext) => {
+  query.configType = tab.props.name
+  handlePage()
+}
+
+// 基础功能
+const apis = reactive({
+  page: systemApi.sysConfigList
+})
+const {page, handlePage, query} = reactive({
+  ...useTable(apis, {'configType': activeName.value})
+})
+
+const tabPanes = [
+  {
+    label: '站点设置',
+    configType: '1'
   },
-  mounted() {
-    this.listForList();
+  {
+    label: '视频设置',
+    configType: '3'
   },
-  methods: {
-    handleClick(tab, event) {
-      this.map.configType = this.activeName;
-      this.listForList();
-    },
-    listForList() {
-      systemApi.sysConfigList(this.map).then((res) => {
-        this.list = res;
-      });
-    },
-    handleReset() {
-      this.map.configType = this.activeName;
-      this.listForList();
-    },
-    videoInitHandle() {
-      this.$confirm('请先完成视频设置，再进行视频云初始化', '视频云初始化', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
-      }).then(() => {
-        systemApi.videoInit().then((res) => {
-          this.$message.success(res);
-        });
-      });
-    }
+  {
+    label: '存储设置',
+    configType: '4'
+  },
+  {
+    label: '短信设置',
+    configType: '5'
+  },
+  {
+    label: '支付设置',
+    configType: '6'
   }
-};
+]
 </script>
-<style scoped>
-img {
-  height: 50px;
-}
-
-.config {
-  border-bottom: 1px solid #eee;
-}
-</style>

@@ -5,9 +5,7 @@
         <el-input v-model="formModel.nickname" maxlength="100" show-word-limit></el-input>
       </el-form-item>
       <el-form-item label="用户性别" prop="userSex">
-        <el-radio-group v-model="formModel.userSex">
-          <el-radio v-for="item in userSexEnums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
-        </el-radio-group>
+        <enum-radio v-model="formModel.userSex" :enum-name="'UserSexEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="用户年龄" prop="userAge">
         <el-input-number v-model="formModel.userAge" maxlength="500"></el-input-number>
@@ -27,9 +25,9 @@
 
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
-import {onMounted, ref} from 'vue';
+import {ref} from 'vue';
 import {usersApi} from '@/api/users';
-import {getEnum} from '@/utils/base';
+import EnumRadio from '@/components/Enums/Radio/index.vue'
 
 // 打开和关闭
 const onOpen = (item: any) => {
@@ -77,11 +75,6 @@ const formRef = ref()
 const rules = {
   nickname: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
-
-const userSexEnums = ref();
-onMounted(() => {
-  userSexEnums.value = getEnum('UserSexEnum');
-});
 
 const emit = defineEmits(['onReload'])
 const visible = ref(false);

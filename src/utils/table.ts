@@ -4,7 +4,7 @@
 import {onMounted, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
 
-export default function useTable(apis: any) {
+export default function useTable(apis: any, paras?: any) {
     // 分页对象
     const page = reactive({
         pageCurrent: 1,
@@ -22,6 +22,7 @@ export default function useTable(apis: any) {
                 const res = await apis.page({
                     pageCurrent: page.pageCurrent,
                     pageSize: page.pageSize,
+                    ...paras,
                     ...query
                 });
                 if (res) {

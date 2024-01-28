@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {getEnum} from "@/utils/base";
+import {getEnumList} from "@/utils/base";
 
 const props = defineProps({
   enumName: {type: String, default: ''}
@@ -14,7 +14,7 @@ const props = defineProps({
 
 const enums = ref([])
 onMounted(() => {
-  enums.value = getEnum(props.enumName)
+  enums.value = getEnumList(props.enumName)
 })
 
 </script>

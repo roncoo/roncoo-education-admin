@@ -38,7 +38,7 @@ export function formatSize(size: number) {
 /**
  * 获取枚举
  */
-export function getEnum(enumName: string) {
+export function getEnumList(enumName: string) {
     const enumAttr = getSessionStorage(enumName)
     if (enumAttr) {
         return enumAttr
@@ -50,19 +50,8 @@ export function getEnum(enumName: string) {
     }
 }
 
-/**
- * 获取枚举
- */
 export function getEnumObj(enumName: string) {
-    const enumAttr = getSessionStorage(enumName)
-    if (enumAttr) {
-        return toObj(enumAttr)
-    } else {
-        systemApi.getEnum({enumName}).then((res: any) => {
-            setSessionStorage(enumName, res)
-            return toObj(res)
-        })
-    }
+    return toObj(getEnumList(enumName))
 }
 
 function toObj(attr: any) {

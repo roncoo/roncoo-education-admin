@@ -5,7 +5,7 @@
         <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
           <el-menu-item :class="[showMenuId === item.id ? 'store':'']" :key="item.id" :index="item.path">
             <span v-if="item.menuType === 1" @click="toPage(item)">{{ item.menuName }}</span>
-            <app-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</app-link>
+            <router-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</router-link>
           </el-menu-item>
         </div>
       </el-menu>
@@ -15,11 +15,11 @@
     <div class="menu-sub" v-if="subMenuList">
       <el-menu mode="vertical" v-for="sub in subMenuList">
         <div class="menu-sub-item">
-          <app-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
+          <router-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
             <el-menu-item :class="[sub.id === showSubMenuId ? 'store':'']" :key="sub.id" :index="sub.path">
               {{ sub.menuName }}
             </el-menu-item>
-          </app-link>
+          </router-link>
         </div>
       </el-menu>
     </div>
@@ -29,7 +29,6 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watchEffect} from 'vue'
 import {useUserStore} from '@/store/modules/user';
-import AppLink from './AppLink.vue'
 import {useRoute} from "vue-router/dist/vue-router";
 import router from "@/router";
 

@@ -25,14 +25,14 @@
       <el-table-column label="用户年龄" prop="userAge"/>
       <el-table-column label="用户性别">
         <template #default="scope">
-          <span>{{ userSexEnums[scope.row.userSex] }}</span>
+          <span>{{ getEnumObj('UserSexEnum')[scope.row.userSex] }}</span>
         </template>
       </el-table-column>
       <el-table-column label="备注" prop="remark"/>
       <el-table-column :min-width="120" label="注册时间" prop="gmtCreate"/>
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="220" fixed="right" label="操作" prop="address">
@@ -65,7 +65,7 @@
 </template>
 <script setup lang="ts">
 import useTable from '@/utils/table';
-import {onMounted, reactive, ref} from 'vue';
+import {reactive, ref} from 'vue';
 
 import {usersApi} from '@/api/users'
 import {getEnumObj} from '@/utils/base';
@@ -83,14 +83,6 @@ const openFormModal = (item?: any) => {
 const userRecord = function (row: any) {
   useRouter().push({path: '/users/record', query: {userId: row.id}});
 }
-
-// 枚举
-const statusIdEnums = ref([]);
-const userSexEnums = ref([]);
-onMounted(() => {
-  statusIdEnums.value = getEnumObj('StatusIdEnum');
-  userSexEnums.value = getEnumObj('UserSexEnum');
-});
 
 // 基础功能
 const apis = reactive({
