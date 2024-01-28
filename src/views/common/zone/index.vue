@@ -32,7 +32,7 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="200" fixed="right" label="操作" prop="address">
+      <el-table-column :width="210" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="toCourse(scope.row.id)">课程</el-button>
           <el-dropdown>
