@@ -28,7 +28,7 @@
       <el-table-column label="操作" width="360">
         <template #default="scope">
           <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button plain type="warning" @click="handleSettRow(scope.row)">分配菜单</el-button>
+          <el-button plain type="warning" @click="handSetMenu(scope.row)">分配菜单</el-button>
           <el-button v-if="scope.row.statusId ===1 " plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
           <el-button v-if="scope.row.statusId ===0 " plain type="success" @click="handleStatus(scope.row)">启用</el-button>
           <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -37,6 +37,7 @@
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
     <form-modal ref="formRef" @onReload="handlePage"/>
+    <set-menu ref="menuRef"></set-menu>
   </div>
 </template>
 
@@ -46,7 +47,14 @@ import {reactive, ref} from 'vue';
 import useTable from '@/utils/table.js';
 import {statusIdEnums} from "@/utils/enum";
 import FormModal from "./FormModel.vue";
+import SetMenu from "./SetMenu.vue";
 import Pagination from "@/components/Pagination/index.vue";
+
+// 设置菜单
+const menuRef = ref()
+const handSetMenu = (item?: any) => {
+  menuRef.value.onOpen(item)
+}
 
 // 添加/修改
 const formRef = ref();

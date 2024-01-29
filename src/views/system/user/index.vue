@@ -61,24 +61,32 @@
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
     <form-modal ref="formRef" @onReload="handlePage"/>
     <password ref="passwordRef" @onReload="handlePage"/>
-    <role ref="roleRef" @onReload="handlePage"/>
+    <role-set ref="roleRef" v-if="roleVisible" @onReload="handleRole"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import {systemApi} from '@/api/system';
 import Pagination from '@/components/Pagination/index.vue';
-import {reactive, ref} from "vue";
+import {nextTick, reactive, ref} from "vue";
 import useTable from "@/utils/table";
 import FormModal from "./FormModel.vue";
 import Password from "./Password.vue";
-import Role from "./Role.vue";
+import RoleSet from "./RoleSet.vue";
 import {statusIdEnums} from "@/utils/enum";
 
-// 密码重置
+// 角色分配
 const roleRef = ref();
+const roleVisible = ref(false);
 const openRoleModal = (item?: any) => {
-  roleRef.value.onOpen(item)
+  roleVisible.value = true
+  nextTick(() => {
+    roleRef.value.onOpen(item)
+  })
+}
+const handleRole = () => {
+  roleVisible.value = false
+  handlePage()
 }
 
 // 密码重置

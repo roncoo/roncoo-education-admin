@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType">
-        <list :list="page.list"></list>
+        <list :list="page.list" @on-reload="handlePage"></list>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -14,13 +14,13 @@ import {systemApi} from "@/api/system";
 import useTable from "@/utils/table";
 import {TabsPaneContext} from "element-plus";
 
-const activeName = ref('1')
-
+// 切换tab
 const handleClick = (tab: TabsPaneContext) => {
   query.configType = tab.props.name
   handlePage()
 }
 
+const activeName = ref('1')
 // 基础功能
 const apis = reactive({
   page: systemApi.sysConfigList

@@ -142,19 +142,17 @@ function toPage(menu: any) {
 }
 
 .menu-sub {
+  width: 100px;
+  float: left;
+  margin-top: 10px;
+
   .el-menu {
     border: none;
   }
 
-  width: 100px;
-  float: left;
-  margin-top: 10px;
-  transition: all 0.5s ease-in-out;
-
   .menu-sub-item {
     .el-menu-item {
       height: 45px;
-
 
       &:hover {
         background-color: #f0f1ff;

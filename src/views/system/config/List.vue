@@ -27,15 +27,19 @@
       </template>
     </el-table-column>
   </el-table>
+
+  <form-model ref="formRef" @on-reload="handleList"></form-model>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue';
 import {getEnumObj} from "@/utils/base";
+import FormModel from "@/views/system/config/FormModel.vue";
 
-const props = defineProps({
-  list: {type: Array, default: []}
-})
+const emit = defineEmits(['onReload'])
+const handleList = () => {
+  emit('onReload')
+}
 
 // 添加/修改
 const formRef = ref();
@@ -43,6 +47,9 @@ const openFormModal = (item?: any, parentId?: string) => {
   formRef.value.onOpen(item, parentId)
 }
 
+const props = defineProps({
+  list: {type: Array, default: []}
+})
 </script>
 <style lang="less">
 img {
