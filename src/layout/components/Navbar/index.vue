@@ -2,13 +2,13 @@
   <el-header>
     <logo/>
     <breadcrumb/>
-    <item/>
+    <logout/>
   </el-header>
 </template>
 <script setup lang="ts">
 import Logo from './Logo.vue'
 import Breadcrumb from './Breadcrumb.vue'
-import Item from './Item.vue'
+import Logout from './Logout.vue'
 </script>
 
 <style lang="less" scoped>
