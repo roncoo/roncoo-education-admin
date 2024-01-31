@@ -2,12 +2,14 @@
   <el-dialog title="菜单设置" :model-value="visible" width="600px" center @close="onClose()">
     <div style="min-height: 10vh">
       <el-tree
-          :data="page.list"
-          ref="tree"
+          ref="treeRef"
+          :data="treeList"
+          :props="defaultProps"
+          node-key="id"
           accordion
           highlight-current
-          node-key="id"
           show-checkbox
+          @check-change="checkChange"
       />
     </div>
 
@@ -22,30 +24,69 @@
 
 <script setup lang="ts">
 import {systemApi} from '@/api/system'
-import {reactive, ref} from 'vue';
-import useTable from '@/utils/table';
+import {ref} from 'vue';
 
-const onSubmit = () => {
-  console.log(11)
+const treeRef = ref()
+const treeList: any = ref([])
+
+// 提交
+const emit = defineEmits(['refresh'])
+const onSubmit = async () => {
+  const menus = treeRef.value.getCheckedNodes().concat(treeRef.value.getHalfCheckedNodes())
+  if (menus.length > 0) {
+    menuIds.value = []
+    menus.forEach((item: any) => {
+      menuIds.value.push(item.id);
+    })
+  }
+  console.log(menuIds.value)
+  await systemApi.sysMenuRoleSave({'roleId': roleId.value, 'menuIdList': menuIds.value})
+  emit('refresh')
+  onClose()
+}
+
+// 子节点全部取消，父节点也可以半选中
+const checkChange = (a: any, b: any, c: any) => {
+  const anode: any = treeRef.value.getNode(a)
+  if (!anode.checked) {
+    const fnode = treeRef.value.getNode(anode.parent)
+    if (!fnode.isLeaf) {
+      fnode.indeterminate = true
+    }
+  }
 }
 
 // 打开和关闭
+const roleId = ref() // 角色ID
+const menuIds = ref([]) // 用户菜单集合
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
+const onOpen = async (item: any) => {
+  roleId.value = item.id
+  treeList.value = await systemApi.sysMenuList()
+  systemApi.sysMenuRoleList({'roleId': roleId.value}).then((res: any) => {
+    menuIds.value = []
+    menuIds.value = res
+    res.forEach((item: any) => {
+      const node = treeRef.value.getNode(item);
+      if (node != null && node.isLeaf) {
+        treeRef.value.setChecked(node, true);
+      }
+      if (node != null && !node.checked) {
+        node.indeterminate = true
+      }
+    })
+  })
   visible.value = true
 }
-defineExpose({onOpen})
 const onClose = () => {
   visible.value = false;
+  emit('refresh')
 }
+defineExpose({onOpen})
 
-// 基础功能
-const apis = reactive({
-  page: systemApi.sysMenuList,
-})
-const {page, handlePage} = reactive({
-  ...useTable(apis)
-})
-
-console.log(page)
+// defaultProps
+const defaultProps = {
+  label: 'menuName',
+  children: 'childrenList',
+}
 </script>

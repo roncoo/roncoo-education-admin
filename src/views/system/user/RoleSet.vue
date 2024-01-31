@@ -36,7 +36,7 @@ import Pagination from "@/components/Pagination/index.vue"
 import {ElMessage} from "element-plus";
 
 const tableRef = ref()
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const onSubmit = async () => {
   const roles = tableRef.value.getSelectionRows()
   if (roles.length > 0) {
@@ -47,7 +47,7 @@ const onSubmit = async () => {
     await systemApi.sysRoleUserSave({'userId': userId.value, 'roleIdList': roleIds.value})
     ElMessage({type: 'success', message: '设置成功'});
   }
-  emit('onReload')
+  emit('refresh')
   onClose()
 }
 
@@ -59,10 +59,16 @@ const visible = ref(false);// 弹窗显示状态
 const onOpen = (item: any) => {
   if (item) {
     userId.value = item.id
-    systemApi.sysRoleUserList({'userId': userId.value}).then((res: any) => {
+    systemApi.sysRoleUserList({'userId': item.id}).then((res: any) => {
       roleIds.value = res
-
-      // todo 选中处理
+      // 选中状态处理
+      res.forEach((item: any) => {
+        for (let i = 0; i < page.list.length; i++) {
+          if (item == page.list[i].id) {
+            tableRef.value.toggleRowSelection(page.list[i], true)
+          }
+        }
+      })
     })
   }
   visible.value = true

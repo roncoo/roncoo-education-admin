@@ -74,6 +74,10 @@ request.interceptors.response.use(
                 ElMessage.warning('权限不足，请联系管理员')
                 return Promise.reject(response)
             }
+            if (res.code === 999) {
+                ElMessage.warning('系统繁忙，请重试')
+                return Promise.reject(response)
+            }
 
             // 其他异常
             ElMessage({message: res.msg, type: 'error', duration: 5 * 1000})
@@ -103,8 +107,8 @@ export default request
 /**
  * post请求
  */
-export const postRequest = (url: string, data = {}) => {
-    return request({url: url, data: data, method: 'post'});
+export const postRequest = (url: string, data?: {}) => {
+    return request({url: url, data: data ? data : {}, method: 'post'});
 }
 
 /**
@@ -117,8 +121,8 @@ export const getRequest = (url: string) => {
 /**
  * put请求
  */
-export const putRequest = (url: string, data = {}) => {
-    return request({url: url, data: data, method: 'put'});
+export const putRequest = (url: string, data?: {}) => {
+    return request({url: url, data: data ? data : {}, method: 'put'});
 }
 
 /**

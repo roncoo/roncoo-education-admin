@@ -59,9 +59,9 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
-    <form-modal ref="formRef" @onReload="handlePage"/>
-    <password ref="passwordRef" @onReload="handlePage"/>
-    <role-set ref="roleRef" v-if="roleVisible" @onReload="handleRole"/>
+    <form-modal ref="formRef" @refresh="handlePage"/>
+    <password ref="passwordRef" @refresh="handlePage"/>
+    <role-set ref="roleRef" v-if="roleVisible" @refresh="handleRole"/>
   </div>
 </template>
 

@@ -31,7 +31,7 @@ const rules = {
 
 // 表单
 const loading = ref(false);// 加载进度状态
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
   mobilePwd: undefined,
@@ -53,7 +53,7 @@ const onSubmit = async () => {
       await systemApi.sysUserPassword(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     }
-    emit('onReload')
+    emit('refresh')
     onClose()
   } finally {
     loading.value = false;

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType">
-        <list :list="page.list" @on-reload="handlePage"></list>
+        <list :list="page.list" @refresh="handlePage"></list>
       </el-tab-pane>
     </el-tabs>
   </div>

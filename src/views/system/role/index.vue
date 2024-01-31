@@ -36,14 +36,14 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
-    <form-modal ref="formRef" @onReload="handlePage"/>
-    <set-menu ref="menuRef"></set-menu>
+    <form-modal ref="formRef" @refresh="handlePage"/>
+    <set-menu ref="menuRef" v-if="menuVisible" @refresh="handleMenu"></set-menu>
   </div>
 </template>
 
 <script setup lang="ts">
 import {systemApi} from '@/api/system.js'
-import {reactive, ref} from 'vue';
+import {nextTick, reactive, ref} from 'vue';
 import useTable from '@/utils/table.js';
 import {statusIdEnums} from "@/utils/enum";
 import FormModal from "./FormModel.vue";
@@ -52,10 +52,16 @@ import Pagination from "@/components/Pagination/index.vue";
 
 // 设置菜单
 const menuRef = ref()
+const menuVisible = ref(false);
 const handSetMenu = (item?: any) => {
-  menuRef.value.onOpen(item)
+  menuVisible.value = true
+  nextTick(() => {
+    menuRef.value.onOpen(item)
+  })
 }
-
+const handleMenu = () => {
+  menuVisible.value = false
+}
 // 添加/修改
 const formRef = ref();
 const openFormModal = (item?: any) => {

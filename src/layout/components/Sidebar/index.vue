@@ -1,9 +1,9 @@
 <template>
   <el-aside @mouseleave="restoreSubMenu">
     <div class="menu-main">
-      <el-menu mode="vertical" v-for="item in menuList">
+      <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
         <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
-          <el-menu-item :class="[showMenuId === item.id ? 'store':'']" :key="item.id" :index="item.path">
+          <el-menu-item :class="[item.id === showMenuId? 'is-active':'']" :key="item.id" :index="item.path">
             <span v-if="item.menuType === 1" @click="toPage(item)">{{ item.menuName }}</span>
             <router-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</router-link>
           </el-menu-item>
@@ -13,10 +13,10 @@
 
     <!-- 子菜单 -->
     <div class="menu-sub" v-if="subMenuList">
-      <el-menu mode="vertical" v-for="sub in subMenuList">
+      <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList">
         <div class="menu-sub-item">
           <router-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
-            <el-menu-item :class="[sub.id === showSubMenuId ? 'store':'']" :key="sub.id" :index="sub.path">
+            <el-menu-item :class="[sub.id === showSubMenuId ? 'is-active':'']" :key="sub.id" :index="sub.path">
               {{ sub.menuName }}
             </el-menu-item>
           </router-link>
@@ -77,22 +77,22 @@ function restoreSubMenu() {
   hoverMenuId.value = ''
 }
 
-// 鼠标点击子菜单
-function showChildrenMenu(menuList: any, menu: any) {
+// 点击子菜单
+function showChildrenMenu(menuList: any, menu?: any) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
-  showMenuId.value = menu.id
-  hoverMenuId.value = ''
+  //showMenuId.value = menu.id
+  hoverMenuId.value = showMenuId.value
 }
 
-// 鼠标点击主菜单
+// 点击主菜单
 function toPage(menu: any) {
   if (menu.children) {
     router.push({path: menu.children[0].path});
   }
   showMenuList.value = menu.children
   showMenuId.value = menu.id
-  hoverMenuId.value = ''
+  hoverMenuId.value = showMenuId.value
 }
 
 </script>
@@ -128,16 +128,22 @@ function toPage(menu: any) {
         color: #fff;
       }
 
-      &.store {
+      &.is-active {
         background-color: #fff;
         color: black;
       }
     }
 
-    .store {
+    .is-active {
       background-color: #fff;
       color: black;
     }
+  }
+
+  .hover {
+    background-color: #3b455d;
+    color: #fff;
+    border-radius: 10px 0 0 10px;
   }
 }
 
@@ -152,24 +158,25 @@ function toPage(menu: any) {
 
   .menu-sub-item {
     .el-menu-item {
-      height: 45px;
+      height: 40px;
 
       &:hover {
         background-color: #f0f1ff;
         border-radius: 5px;
+        justify-content: center;
+        width: 80px;
+        margin: 5px auto;
       }
     }
 
-    .store {
+    .is-active {
       background-color: #f0f1ff;
+      border-radius: 5px;
+      justify-content: center;
+      width: 80px;
+      margin: 0 auto;
     }
   }
-}
-
-.hover {
-  background-color: #3b455d;
-  color: #fff;
-  border-radius: 10px 0 0 10px;
 }
 
 .is-active {

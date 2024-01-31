@@ -1,31 +1,27 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" width="500px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item label="菜单类型" prop="menuType">
+      <el-form-item v-if="!formModel.id" label="类型" prop="menuType">
         <enum-radio v-model="formModel.menuType" :enum-name="'MenuTypeEnum'"></enum-radio>
       </el-form-item>
-      <el-form-item label="菜单名称" prop="menuName">
+      <el-form-item label="名称" prop="menuName">
         <el-input v-model="formModel.menuName" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="路由地址" prop="menuUrl">
-        <el-input v-model="formModel.menuUrl" class="form-group" maxlength="50" show-word-limit/>
+      <el-form-item v-if="formModel.menuType === 2" label="路径" prop="path">
+        <el-input v-model="formModel.path" class="form-group" maxlength="50" show-word-limit/>
       </el-form-item>
-      <el-form-item label="图标">
-        <el-row>
-          <el-col :span="12">
-            <el-select v-model="formModel.menuIcon" clearable filterable placeholder="请选择">
-              <el-option v-for="item in svgIconList" :key="item.icon" :label="item.label" :value="item.icon">
-                <span style="margin-right:5px;float: left">{{ item.label }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">
-                  <svg-icon :icon-class="item.icon || ''"/>
-                </span>
-              </el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="12" style="text-align: left">
-            <svg-icon :icon-class="formModel.menuIcon || ''" class-name="icon"/>
-          </el-col>
-        </el-row>
+      <el-form-item v-if="formModel.menuType === 2" label="组件" prop="path">
+        <el-input v-model="formModel.component" class="form-group" maxlength="50" show-word-limit/>
+      </el-form-item>
+      <el-form-item v-if="formModel.menuType != 1" label="前端权限" prop="path">
+        <el-input v-model="formModel.permission" class="form-group" maxlength="50" show-word-limit/>
+      </el-form-item>
+      <el-form-item v-if="formModel.menuType != 1" label="后端接口" prop="path">
+        <el-input v-model="formModel.apis" class="form-group" type="textarea" maxlength="1000" show-word-limit/>
+      </el-form-item>
+      <el-form-item v-if="formModel.menuType === 2" label="属性" prop="isShow">
+        <el-switch v-model="formModel.isShow" inline-prompt active-text="菜单" inactive-text="路由"/>
+        <span class="tip-info">当为菜单时，也有路由功能</span>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formModel.sort" :min="0" controls-position="right"/>
@@ -55,13 +51,14 @@ const rules = {
 
 // 表单
 const loading = ref(false);// 加载进度状态
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  menuType: '',
+  menuType: 1,
   menuName: undefined,
   menuUrl: undefined,
   menuIcon: undefined,
+  isShow: true,
   sort: 1
 }
 const formModel = reactive({...formDefault})
@@ -83,7 +80,7 @@ const onSubmit = async () => {
       await systemApi.sysMenuSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
-    emit('onReload')
+    emit('refresh')
     onClose()
   } finally {
     loading.value = false;

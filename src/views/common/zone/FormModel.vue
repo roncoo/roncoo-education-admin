@@ -38,7 +38,7 @@ const rules = {
 
 // 表单
 const loading = ref(false);// 加载进度状态
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
   zoneName: undefined,
@@ -65,7 +65,7 @@ const onSubmit = async () => {
       await courseApi.zoneSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
-    emit('onReload')
+    emit('refresh')
     onClose()
   } finally {
     loading.value = false;

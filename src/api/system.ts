@@ -101,7 +101,7 @@ export const systemApi = {
     },
 
 // 系统菜单--列出
-    sysMenuList: (data: any) => {
+    sysMenuList: (data?: any) => {
         return postRequest('/system/admin/sys/menu/list', data)
     },
 
@@ -115,9 +115,9 @@ export const systemApi = {
         return postRequest('/system/admin/sys/menu/view', data)
     },
 
-// 系统菜单--删除
+    // 系统菜单--删除
     sysMenuDelete: (data: any) => {
-        return deleteRequest('/system/admin/sys/menu/delete' + data.id)
+        return putRequest('/system/admin/sys/menu/delete', data)
     },
 
 // 系统菜单--编辑
@@ -136,7 +136,7 @@ export const systemApi = {
     },
 
 // 分配菜单
-    sysRoleAllocationMenuAndPermission: (data: any) => {
+    sysMenuRoleSave: (data: any) => {
         return postRequest('/system/admin/sys/menu/role/save', data);
     },
 

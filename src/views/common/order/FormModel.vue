@@ -26,7 +26,7 @@ const rules = {
 }
 
 // 表单
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const loading = ref(false);
 const formDefault = {
   id: undefined,
@@ -52,7 +52,7 @@ const onSubmit = async () => {
       await systemApi.linkSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
-    emit('onReload')
+    emit('refresh')
     onClose()
   } finally {
     loading.value = false;

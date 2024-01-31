@@ -52,7 +52,7 @@
       </el-table-column>
     </el-table>
 
-    <form-model ref="formRef" @onReload="handlePage"/>
+    <form-model ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
 <script setup lang="ts">

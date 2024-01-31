@@ -28,7 +28,7 @@
     </el-table-column>
   </el-table>
 
-  <form-model ref="formRef" @on-reload="handleList"></form-model>
+  <form-model ref="formRef" @refresh="handleList"></form-model>
 </template>
 
 <script setup lang="ts">
@@ -36,9 +36,9 @@ import {ref} from 'vue';
 import {getEnumObj} from "@/utils/base";
 import FormModel from "@/views/system/config/FormModel.vue";
 
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const handleList = () => {
-  emit('onReload')
+  emit('refresh')
 }
 
 // 添加/修改

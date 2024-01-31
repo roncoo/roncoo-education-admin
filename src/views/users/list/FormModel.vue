@@ -63,7 +63,7 @@ const onSubmit = async () => {
     } else {
       ElMessage({type: 'warning', message: '不支持后台添加，请在门户注册'});
     }
-    emit('onReload')
+    emit('refresh')
     onClose()
   } finally {
     loading.value = false;
@@ -76,7 +76,7 @@ const rules = {
   nickname: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
-const emit = defineEmits(['onReload'])
+const emit = defineEmits(['refresh'])
 const visible = ref(false);
 const loading = ref(false);
 </script>
