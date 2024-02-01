@@ -65,8 +65,10 @@
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
-import UploadImage from '@/components/Upload/Image/index.vue';
 import {courseApi} from "@/api/course";
+import UploadImage from '@/components/Upload/Image/index.vue';
+import Editor from '@/components/Editor/index.vue'
+
 
 // 校验规则
 const formRef = ref()

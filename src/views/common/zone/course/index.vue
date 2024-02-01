@@ -31,13 +31,13 @@
       </el-table-column>
       <el-table-column :width="100" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ putawayEnums()[scope.row.courseViewResp.isPutaway] }}</span>
+          <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.courseViewResp.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
@@ -57,8 +57,7 @@
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
 import useTable from '@/utils/table.js';
-import {putawayEnums, statusIdEnums} from "../../../../utils/enum";
-
+import {getEnumObj} from "@/utils/base";
 
 // 添加/修改
 const formRef = ref();

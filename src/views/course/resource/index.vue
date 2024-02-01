@@ -30,25 +30,25 @@
       </el-table-column>
       <el-table-column :width="120" label="资源类型" prop="resourceType">
         <template #default="scope">
-          <span>{{ resourceTypeEnums()[scope.row.resourceType] }}</span>
+          <span>{{ getEnumObj('ResourceTypeEnum')[scope.row.resourceType] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="资源状态" prop="videoStatus">
         <template #default="scope">
-          <span v-if="scope.row.resourceType<3">{{ videoStatusEnums()[scope.row.videoStatus] }}</span>
+          <span v-if="scope.row.resourceType<3">{{ getEnumObj('VideoStatusEnum')[scope.row.videoStatus] }}</span>
           <span v-else>成功</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="平台" prop="vodPlatform">
         <template #default="scope">
-          <span v-if="scope.row.resourceType<3">{{ vodPlatformEnums()[scope.row.vodPlatform] }}</span>
-          <span v-else>{{ storagePlatformEnums()[scope.row.storagePlatform] }}</span>
+          <span v-if="scope.row.resourceType<3">{{ getEnumObj('VodPlatformEnum')[scope.row.vodPlatform] }}</span>
+          <span v-else>{{ getEnumObj('StoragePlatformEnum')[scope.row.storagePlatform] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="80" label="排序" prop="sort"/>
       <el-table-column :width="80" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
@@ -86,9 +86,8 @@ import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import FormModel from './FormModel.vue';
 import Pagination from "@/components/Pagination/index.vue";
-import {resourceTypeEnums, statusIdEnums, storagePlatformEnums, videoStatusEnums, vodPlatformEnums} from '@/utils/enum'
 import {courseApi} from "@/api/course";
-import {formatSize, formatTime} from "@/utils/base";
+import {formatSize, formatTime, getEnumObj} from "@/utils/base";
 
 // 添加/修改
 const formRef = ref();

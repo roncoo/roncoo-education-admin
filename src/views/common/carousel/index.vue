@@ -25,13 +25,13 @@
       </el-table-column>
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ targetEnums()[scope.row.carouselTarget] }}</span>
+          <span>{{ getEnumObj('TargetEnums')[scope.row.carouselTarget] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
@@ -68,7 +68,7 @@ import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system'
 import FormModel from './FormModel.vue';
 import Pagination from "@/components/Pagination/index.vue";
-import {statusIdEnums, targetEnums} from '@/utils/enum'
+import {getEnumObj} from "@/utils/base";
 
 // 添加/修改
 const formRef = ref();

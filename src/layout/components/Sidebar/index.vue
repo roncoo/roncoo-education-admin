@@ -34,7 +34,7 @@ import router from "@/router";
 const menuList = computed(() => useUserStore().getMenuList)
 
 // 当前路由
-const currentRoute = useRoute()
+const route = useRoute()
 
 // 子菜单集合
 const subMenuList = ref([])
@@ -46,12 +46,15 @@ const showSubMenuId = ref()
 const hoverMenuId = ref()
 
 watchEffect(() => {
-  showSubMenuId.value = currentRoute.name
+  showSubMenuId.value = route.name
   const mapList = useUserStore().getBreadcrumbMap.get(showSubMenuId.value)
   if (mapList && mapList.length > 0) {
     showMenuId.value = mapList[0].id
+    if (mapList.length > 2) {
+      showSubMenuId.value = mapList[1].id
+    }
   } else {
-    showMenuId.value = currentRoute.name
+    showMenuId.value = route.name
   }
 })
 

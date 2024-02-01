@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column :width="220" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="userRecord(scope.row)">数据</el-button>
+          <el-button plain type="success" @click="toUserRecord(scope.row)">数据</el-button>
           <el-dropdown>
             <el-button>更多操作
               <el-icon class="el-icon--right">
@@ -81,7 +81,7 @@ const openFormModal = (item?: any) => {
 
 // 查看数据
 const router = useRouter()
-const userRecord = function (row: any) {
+const toUserRecord = function (row: any) {
   router.push({path: '/users/record', query: {userId: row.id}});
 }
 

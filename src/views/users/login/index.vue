@@ -24,7 +24,7 @@
       <el-table-column label="登录时间" prop="gmtCreate"/>
       <el-table-column label="登录状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.loginStatus === 0 }">{{ loginStatusEnums[scope.row.loginStatus] }}</span>
+          <span :class="{ 'c-danger': scope.row.loginStatus === 0 }">{{ getEnumObj('LoginStatusEnum')[scope.row.loginStatus] }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -32,16 +32,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import {onMounted, reactive, ref} from 'vue';
+import {reactive} from 'vue';
 import {usersApi} from '@/api/users'
 import {getEnumObj} from '@/utils/base';
 import useTable from "@/utils/table";
 import Pagination from "@/components/Pagination/index.vue";
-
-const loginStatusEnums = ref();
-onMounted(() => {
-  loginStatusEnums.value = getEnumObj('LoginStatusEnum');
-});
 
 // 基础功能
 const apis = reactive({

@@ -23,7 +23,7 @@
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
@@ -58,9 +58,9 @@
 <script setup lang="ts">
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
-import {statusIdEnums} from '@/utils/enum'
 import {courseApi} from "@/api/course";
 import FormModel from "./FormModel.vue";
+import {getEnumObj} from "@/utils/base";
 
 // 添加/修改
 const formRef = ref();

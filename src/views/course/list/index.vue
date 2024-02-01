@@ -43,18 +43,18 @@
       <el-table-column :width="80" label="排序" prop="courseSort"/>
       <el-table-column :width="80" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ putawayEnums()[scope.row.isPutaway] }}</span>
+          <span :class="{ 'c-danger': scope.row.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="80" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="280" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="success" @click="courseRecord(scope.row)">数据</el-button>
-          <el-button plain type="success" @click="courseChapter(scope.row)">章节</el-button>
+          <el-button plain type="success" @click="toCourseRecord(scope.row)">数据</el-button>
+          <el-button plain type="success" @click="toCourseChapter(scope.row)">章节</el-button>
           <el-dropdown>
             <el-button> 更多操作
               <el-icon class="el-icon--right">
@@ -89,8 +89,21 @@ import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import FormModel from './FormModel.vue';
 import Pagination from "@/components/Pagination/index.vue";
-import {putawayEnums, statusIdEnums} from '@/utils/enum'
 import {courseApi} from "@/api/course";
+import {getEnumObj} from "@/utils/base";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+// 章节管理
+const toCourseChapter = function (row: any) {
+  router.push({path: '/course/chapter', query: {userId: row.id}});
+}
+
+// 课程数据
+const toCourseRecord = function (row: any) {
+  router.push({path: '/course/record', query: {userId: row.id}});
+}
 
 // 添加/修改
 const formRef = ref();

@@ -21,7 +21,7 @@
       <el-table-column label="备注" prop="remark"/>
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{'c-danger': scope.row.statusId === 0}">{{ statusIdEnums()[scope.row.statusId] }}</span>
+          <span :class="{'c-danger': scope.row.statusId === 0}">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort"/>
@@ -45,10 +45,10 @@
 import {systemApi} from '@/api/system.js'
 import {nextTick, reactive, ref} from 'vue';
 import useTable from '@/utils/table.js';
-import {statusIdEnums} from "@/utils/enum";
 import FormModal from "./FormModel.vue";
 import SetMenu from "./SetMenu.vue";
 import Pagination from "@/components/Pagination/index.vue";
+import {getEnumObj} from "@/utils/base";
 
 // 设置菜单
 const menuRef = ref()
