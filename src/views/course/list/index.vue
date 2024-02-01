@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button plain type="success" @click="openFormModal()">添加</el-button>
+            <el-button plain type="success" @click="toCourseAdd()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -64,7 +64,7 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                  <el-button plain type="primary" @click="toCourseUpdate(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
@@ -80,14 +80,12 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
-    <form-model ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import useTable from '@/utils/table';
-import {reactive, ref} from 'vue';
-import FormModel from './FormModel.vue';
+import {reactive} from 'vue';
 import Pagination from "@/components/Pagination/index.vue";
 import {courseApi} from "@/api/course";
 import {getEnumObj} from "@/utils/base";
@@ -105,10 +103,13 @@ const toCourseRecord = function (row: any) {
   router.push({path: '/course/record', query: {userId: row.id}});
 }
 
-// 添加/修改
-const formRef = ref();
-const openFormModal = (item?: any) => {
-  formRef.value.onOpen(item)
+// 添加
+const toCourseAdd = () => {
+  router.push({path: '/course/add'})
+}
+// 修改
+const toCourseUpdate = (item: any) => {
+  router.push({path: '/course/update', query: {courseId: item.id}})
 }
 
 // 基础功能

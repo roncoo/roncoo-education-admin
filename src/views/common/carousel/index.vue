@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ getEnumObj('TargetEnums')[scope.row.carouselTarget] }}</span>
+          <span>{{ getEnumObj('TargetEnum')[scope.row.carouselTarget] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>

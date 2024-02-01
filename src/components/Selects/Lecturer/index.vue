@@ -1,104 +1,66 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="title" width="600px" @close="handleClose">
-    <el-form class="filter-container" inline label-width="100px" size="mini">
-      <el-form-item label="讲师名称">
-        <el-input v-model="queryParams.lecturerName"/>
-      </el-form-item>
-      <el-form-item>
-        <el-button class="filter-item" type="primary" @click="handleQuery">查询</el-button>
-        <el-button class="filter-item" @click="handleReset">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-table v-loading="loading" :data="page.dataList" border element-loading-text="Loading" fit highlight-current-row size="mini">
+  <el-dialog :model-value="visible" :append-to-body="true" :title="props.title" width="800px" @close="handleClose">
+    <div class="search_bar clearfix">
+      <el-form :model="query" inline label-width="80px">
+        <el-form-item label="讲师名称">
+          <el-input v-model="query.lecturerName"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+          <el-button @click="resetQuery()">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60"/>
       <el-table-column label="讲师名称" prop="lecturerName"/>
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button plain size="min" type="primary" @click="infoSelect(scope.row)">选择</el-button>
+          <el-button plain type="primary" @click="selectLecturer(scope.row)">选择</el-button>
         </template>
       </el-table-column>
     </el-table>
-
-    <el-pagination :current-page="page.pageCurrent" :page-size="page.pageSize" :total="page.totalCount" background layout="total, prev, pager, next, jumper" @current-change="handleCurrentChange"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
   </el-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import {usersApi} from '@/api/users';
+import useTable from '@/utils/table';
+import Pagination from "@/components/Pagination/index.vue";
+import {reactive, ref} from "vue";
 
-export default {
-  name: 'SelectLecturer',
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: String,
-      default: '请选择讲师'
-    },
-    info: {
-      type: Object,
-      default: () => {
-      }
-    }
+const props = defineProps({
+  title: {
+    type: String,
+    default: '请选择讲师'
   },
-  data() {
-    return {
-      queryParams: {
-        statusId: 1
-      },
-      page: {
-        pageCurrent: 1,
-        pageSize: 10,
-        totalCount: 0,
-        totalPage: 0,
-        dataList: []
-      },
-      loading: false
-    };
-  },
-  created() {
-    this.listForPage();
-  },
-  methods: {
-    listForPage() {
-
-      usersApi.lecturerPage(this.queryParams, this.page.pageCurrent, this.page.pageSize).then(res => {
-        this.page.dataList = res.list
-        this.page.pageCurrent = res.pageCurrent
-        this.page.totalCount = res.totalCount
-        this.page.pageSize = res.pageSize
-      }).finally(() => {
-
-      })
-    },
-    handleQuery() {
-      this.page.pageCurrent = 1;
-      this.listForPage();
-    },
-    handleReset() {
-      this.page.pageCurrent = 1;
-      this.listForPage();
-    },
-    handleSizeChange(size) {
-      this.page.pageSize = size
-      this.page.pageCurrent = 1
-      this.listForPage();
-    },
-    handleCurrentChange(current) {
-      this.page.pageCurrent = current
-      this.listForPage();
-    },
-    handleClose() {
-      this.$emit('close');
-    },
-    infoSelect(info) {
-      this.$emit('close', {lecturerName: info.lecturerName, lecturerId: info.id});
-    }
+  visible: {
+    type: Boolean,
+    default: false
   }
+})
+
+const visible = ref(props.visible)
+
+const emit = defineEmits(['close']);
+// 选择老师
+const selectLecturer = (info: any) => {
+  emit('close', {lecturerName: info.lecturerName, lecturerId: info.id});
 }
+// 关闭
+const handleClose = () => {
+  visible.value = false
+  emit('close')
+}
+
+// 基础功能
+const apis = reactive({
+  page: usersApi.lecturerPage,
+})
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+  ...useTable(apis)
+})
 </script>
 
 <style scoped>

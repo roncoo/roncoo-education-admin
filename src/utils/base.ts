@@ -51,7 +51,12 @@ export function getEnumList(enumName: string) {
 }
 
 export function getEnumObj(enumName: string) {
-    return toObj(getEnumList(enumName))
+    const enumList = getEnumList(enumName);
+    if (!enumList) {
+        console.error(enumName)
+        return {}
+    }
+    return toObj(enumList)
 }
 
 function toObj(attr: any) {
