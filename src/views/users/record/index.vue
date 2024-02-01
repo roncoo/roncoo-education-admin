@@ -34,56 +34,77 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-    <study v-model="study.visible" :info="study.info" @close="studyCallback"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {defineComponent, onMounted, reactive, toRefs} from 'vue';
+<!--<script>-->
+<!--import Table from '@/utils/useTable.ts';-->
+<!--import {defineComponent, onMounted, reactive, toRefs} from 'vue';-->
 
-import {courseApi} from '@/api/course.js'
-import {usersApi} from '@/api/users.js'
-import {useRoute} from 'vue-router/dist/vue-router';
-import Study from './Study.vue';
-import {getEnumObj} from '@/utils/base.ts';
+<!--import {courseApi} from '@/api/course.js'-->
+<!--import {usersApi} from '@/api/users.js'-->
+<!--import {useRoute} from 'vue-router/dist/vue-router';-->
+<!--import Study from './Study.vue';-->
+<!--import {getEnumObj} from '@/utils/base.ts';-->
 
-export default defineComponent({
-  components: {Study},
-  setup() {
-    const route = useRoute()
-    const apis = reactive({
-      getList: usersApi.userCoursePage
-    })
-    const state = reactive({
-      ...Table(apis, {userId: route.query.userId}),
-      loginStatusEnums: {}
-    });
+<!--export default defineComponent({-->
+<!--  components: {Study},-->
+<!--  setup() {-->
+<!--    const route = useRoute()-->
+<!--    const apis = reactive({-->
+<!--      getList: usersApi.userCoursePage-->
+<!--    })-->
+<!--    const state = reactive({-->
+<!--      ...Table(apis, {userId: route.query.userId}),-->
+<!--      loginStatusEnums: {}-->
+<!--    });-->
 
-    onMounted(() => {
-      state.loginStatusEnums = getEnumObj('LoginStatusEnum');
-    });
+<!--    onMounted(() => {-->
+<!--      state.loginStatusEnums = getEnumObj('LoginStatusEnum');-->
+<!--    });-->
 
-    let study = reactive({
-      visible: false,
-      info: {}
-    })
-    const studyRecord = (row) => {
-      courseApi.userStudyePage({courseId: row.courseId, userId: route.query.userId}).then((res) => {
-        study.info = res.list
-        study.visible = true
-      });
-    }
-    const studyCallback = () => {
-      study.visible = false
-    }
+<!--    let study = reactive({-->
+<!--      visible: false,-->
+<!--      info: {}-->
+<!--    })-->
+<!--    const studyRecord = (row) => {-->
+<!--      courseApi.userStudyePage({courseId: row.courseId, userId: route.query.userId}).then((res) => {-->
+<!--        study.info = res.list-->
+<!--        study.visible = true-->
+<!--      });-->
+<!--    }-->
+<!--    const studyCallback = () => {-->
+<!--      study.visible = false-->
+<!--    }-->
 
-    return {
-      ...toRefs(state),
-      study,
-      studyRecord,
-      studyCallback
-    };
-  }
-});
+<!--    return {-->
+<!--      ...toRefs(state),-->
+<!--      study,-->
+<!--      studyRecord,-->
+<!--      studyCallback-->
+<!--    };-->
+<!--  }-->
+<!--});-->
+<!--</script>-->
+
+
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive, ref} from 'vue';
+
+import {usersApi} from '@/api/users'
+import Pagination from "@/components/Pagination/index.vue";
+
+// 添加/修改
+const formRef = ref();
+const openFormModal = (item?: any) => {
+  formRef.value.onOpen(item)
+};
+// 基础功能
+const apis = reactive({
+  page: usersApi.userCoursePage,
+})
+const {page, handlePage, query, handleQuery, resetQuery, handleStatus} = reactive({
+  ...useTable(apis)
+})
 </script>

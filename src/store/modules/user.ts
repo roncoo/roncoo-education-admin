@@ -48,9 +48,8 @@ export const useUserStore = defineStore({
     }
 })
 
-
 /**
- * 构建菜单父级集合
+ * 构建菜单父级集合，面包屑导航
  */
 function buildBreadcrumbMap(menuTree: any) {
     let breadcrumbMaps = new Map();
@@ -65,12 +64,11 @@ function recursiveMap(menuList: any, parentList: any, breadcrumbMaps: any) {
         }
         let menuIdStr = e.id.toString();
         let cloneParentList = cloneDeep(parentList);
-        if (!isEmpty(e.children) && e.menuName) {
+        cloneParentList.push({id: menuIdStr, title: e.menuName});
+        breadcrumbMaps.set(menuIdStr, cloneParentList);
+        if (!isEmpty(e.children)) {
             // 递归
-            cloneParentList.push({id: menuIdStr, title: e.menuName});
             recursiveMap(e.children, cloneParentList, breadcrumbMaps);
-        } else {
-            breadcrumbMaps.set(menuIdStr, cloneParentList);
         }
     }
 }

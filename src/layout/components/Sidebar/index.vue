@@ -10,7 +10,6 @@
         </div>
       </el-menu>
     </div>
-
     <!-- 子菜单 -->
     <div class="menu-sub" v-if="subMenuList">
       <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList">
@@ -25,7 +24,6 @@
     </div>
   </el-aside>
 </template>
-
 <script setup lang="ts">
 import {computed, onMounted, ref, watchEffect} from 'vue'
 import {useUserStore} from '@/store/modules/user';
@@ -100,6 +98,8 @@ function toPage(menu: any) {
 <style lang="less" scoped>
 .el-aside {
   position: fixed;
+  overflow: hidden;
+  width: var(--el-aside-width, 200px);
 }
 
 .menu-main {

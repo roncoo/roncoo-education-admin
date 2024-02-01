@@ -1,7 +1,6 @@
 <template>
   <el-breadcrumb :separator-icon="ArrowRight">
     <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">{{ item.title }}</el-breadcrumb-item>
-    <el-breadcrumb-item>{{ currentRoute.meta.title }}</el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
@@ -11,14 +10,14 @@ import {computed} from 'vue'
 import {useRoute} from 'vue-router'
 import {useUserStore} from "@/store/modules/user";
 
-let currentRoute = useRoute();
+let route = useRoute();
 
 const breadcrumbList = computed(() => {
-  let currentName = currentRoute.name;
-  if (!currentName || typeof currentName !== 'string') {
+  let menuId = route.name;
+  if (!menuId) {
     return [];
   }
-  return useUserStore().getBreadcrumbMap.get(currentName)
+  return useUserStore().getBreadcrumbMap.get(menuId)
 })
 
 </script>

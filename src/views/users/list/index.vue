@@ -80,8 +80,9 @@ const openFormModal = (item?: any) => {
 };
 
 // 查看数据
+const router = useRouter()
 const userRecord = function (row: any) {
-  useRouter().push({path: '/users/record', query: {userId: row.id}});
+  router.push({path: '/users/record', query: {userId: row.id}});
 }
 
 // 基础功能
