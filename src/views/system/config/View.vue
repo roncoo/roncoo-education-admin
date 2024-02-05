@@ -1,35 +1,33 @@
 <template>
-  <el-dialog :before-close="handleClose" :model-value="props.visible" :title="props.title" width="800px">
+  <el-dialog :before-close="onClose" :model-value="visible" :title="config.configName" center width="800px">
     <div class="dialog-content">
-      <div v-html="props.value"/>
+      <div v-html="config.configValue"/>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
+        <el-button @click="onClose">取 消</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
-<script setup lang="ts">
-const props = defineProps({
-      title: {
-        type: String,
-        default: null
-      },
-      value: {
-        type: String,
-        default: null
-      },
-      visible: {
-        type: Boolean,
-        default: false
-      }
-    }
-)
+<script setup lang="ts">// 打开和关闭
+import {reactive, ref} from "vue";
 
-const emit = defineEmits(['close-callback'])
+const config = reactive({
+  configValue: undefined,
+  configName: undefined
+});
 
-function handleClose() {
-  emit('close-callback');
+const visible = ref(false);// 弹窗显示状态
+const onOpen = (item?: any) => {
+  if (item) {
+    Object.assign(config, item)
+  }
+  visible.value = true
+}
+defineExpose({onOpen})
+const onClose = () => {
+  visible.value = false;
+  Object.assign(config, {})
 }
 </script>

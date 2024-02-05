@@ -51,7 +51,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <form-model ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
@@ -69,12 +68,11 @@ const openFormModal = (item?: any, parentId?: string) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: courseApi.categoryList,
-  delete: courseApi.categoryDelete,
-  status: courseApi.categoryEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: courseApi.categoryList,
+    delete: courseApi.categoryDelete,
+    status: courseApi.categoryEdit
+  })
 })
 </script>

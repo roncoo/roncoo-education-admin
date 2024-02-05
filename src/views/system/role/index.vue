@@ -42,9 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import {systemApi} from '@/api/system.js'
+import {systemApi} from '@/api/system'
 import {nextTick, reactive, ref} from 'vue';
-import useTable from '@/utils/table.js';
+import useTable from '@/utils/table';
 import FormModal from "./FormModel.vue";
 import SetMenu from "./SetMenu.vue";
 import Pagination from "@/components/Pagination/index.vue";
@@ -69,12 +69,11 @@ const openFormModal = (item?: any) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: systemApi.sysRolePage,
-  delete: systemApi.sysRoleDelete,
-  status: systemApi.sysRoleEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: systemApi.sysRolePage,
+    delete: systemApi.sysRoleDelete,
+    status: systemApi.sysRoleEdit
+  })
 })
 </script>

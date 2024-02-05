@@ -1,33 +1,28 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" width="600px" center @close="onClose()">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
-      <el-form-item label="角色名称" prop="roleName">
-        <el-input v-model="formModel.roleName" class="form-group" maxlength="50" show-word-limit/>
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formModel.remark" class="form-group" maxlength="500" show-word-limit type="textarea"/>
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort" :min="0" controls-position="right"/>
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="500px" center @close="onClose">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
+      <el-form-item class="form-group" label="文件夹名" prop="categoryName">
+        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="onClose()">取 消</el-button>
-        <el-button type="primary" @click="onSubmit()">确 定</el-button>
-      </div>
+      <span class="dialog-footer">
+        <el-button @click="onClose()">取消</el-button>
+        <el-button type="primary" @click="onSubmit()">确定</el-button>
+      </span>
     </template>
   </el-dialog>
 </template>
+
 <script setup lang="ts">
-import {systemApi} from '@/api/system'
-import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
+import {reactive, ref} from 'vue';
+import {courseApi} from "@/api/course";
 
 // 校验规则
 const formRef = ref()
 const rules = {
-  roleName: [{required: true, message: '不能为空', trigger: 'blur'}]
+  categoryName: [{required: true, message: '不能为空', trigger: 'blur'}],
 }
 
 // 表单
@@ -35,8 +30,9 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  roleName: undefined,
-  remark: undefined,
+  parentId: 0,
+  categoryType: 2,
+  categoryName: undefined,
   sort: 1
 }
 const formModel = reactive({...formDefault})
@@ -52,10 +48,10 @@ const onSubmit = async () => {
   loading.value = true;
   try {
     if (formModel.id) {
-      await systemApi.sysRoleEdit(formModel);
+      await courseApi.categoryEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await systemApi.sysRoleSave(formModel);
+      await courseApi.categorySave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('refresh')
@@ -64,7 +60,6 @@ const onSubmit = async () => {
     loading.value = false;
   }
 }
-
 
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
@@ -80,3 +75,5 @@ const onClose = () => {
   Object.assign(formModel, formDefault);
 }
 </script>
+
+

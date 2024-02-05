@@ -72,12 +72,11 @@ const openFormModal = (item?: any) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: usersApi.lecturerPage,
-  delete: usersApi.lecturerDelete,
-  status: usersApi.lecturerEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: usersApi.lecturerPage,
+    delete: usersApi.lecturerDelete,
+    status: usersApi.lecturerEdit
+  })
 })
 </script>

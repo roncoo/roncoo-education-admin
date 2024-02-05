@@ -95,12 +95,12 @@ const router = useRouter()
 
 // 章节管理
 const toCourseChapter = function (row: any) {
-  router.push({path: '/course/chapter', query: {userId: row.id}});
+  router.push({path: '/course/chapter', query: {courseId: row.id}});
 }
 
 // 课程数据
 const toCourseRecord = function (row: any) {
-  router.push({path: '/course/record', query: {userId: row.id}});
+  router.push({path: '/course/record', query: {courseId: row.id}});
 }
 
 // 添加
@@ -113,12 +113,11 @@ const toCourseUpdate = (item: any) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: courseApi.coursePage,
-  delete: courseApi.courseDelete,
-  status: courseApi.courseEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: courseApi.coursePage,
+    delete: courseApi.courseDelete,
+    status: courseApi.courseEdit
+  })
 })
 </script>

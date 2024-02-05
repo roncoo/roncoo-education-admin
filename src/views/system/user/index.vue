@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort"/>
-      <el-table-column label="操作" :width="310">
+      <el-table-column label="操作" :width="320">
         <template #default="scope">
           <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-button plain type="warning" @click="openRoleModal(scope.row)">角色分配</el-button>
@@ -102,12 +102,11 @@ const openFormModal = (item?: any) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: systemApi.sysUserPage,
-  delete: systemApi.sysUserDelete,
-  status: systemApi.sysUserEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: systemApi.sysUserPage,
+    delete: systemApi.sysUserDelete,
+    status: systemApi.sysUserEdit
+  })
 })
 </script>

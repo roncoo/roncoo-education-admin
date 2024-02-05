@@ -39,10 +39,9 @@ import useTable from "@/utils/table";
 import Pagination from "@/components/Pagination/index.vue";
 
 // 基础功能
-const apis = reactive({
-  page: usersApi.logLoginPage,
-})
 const {page, handlePage, query, handleQuery, resetQuery} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: usersApi.logLoginPage,
+  })
 })
 </script>

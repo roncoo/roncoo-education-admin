@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {systemApi} from '@/api/system.js';
+import {systemApi} from '@/api/system';
 
 export default {
   name: 'SysPermissionEdit',

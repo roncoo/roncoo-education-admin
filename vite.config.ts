@@ -4,16 +4,9 @@ import {resolve} from 'path';
 
 export default defineConfig({
     base: './',
-    plugins: [
-        vue()
-    ],
-    resolve: {
-        alias: {
-            '@': resolve(__dirname, '.', 'src')
-        }
-    },
     server: {
-        port: 9528, // 服务端口
+        port: 9528, // 服务启动端口号
+        open: true, // 服务启动时是否自动打开浏览器
         proxy: { // 代理
             '/gateway': {
                 target: 'https://dev-os.roncoos.com/gateway/',
@@ -21,5 +14,13 @@ export default defineConfig({
                 rewrite: (path: string) => path.replace(/^\/gateway/, '')
             }
         }
-    }
+    },
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, '.', 'src')
+        }
+    },
+    plugins: [
+        vue()
+    ]
 })

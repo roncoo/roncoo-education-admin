@@ -11,10 +11,7 @@ module.exports = {
         sourceType: 'module',
         parser: '@typescript-eslint/parser'
     },
-    extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended'
-    ],
     plugins: ['vue', '@typescript-eslint'],
+    extends: [],
     rules: {}
 }

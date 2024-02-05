@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
-import useTable from '@/utils/table.js';
+import useTable from '@/utils/table';
 import {getEnumObj} from "@/utils/base";
 
 // 添加/修改
@@ -66,12 +66,11 @@ const openFormModal = (item?: any) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: courseApi.zoneCoursePage,
-  delete: courseApi.zoneCourseDelete,
-  status: courseApi.zoneCourseEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: courseApi.zoneCoursePage,
+    delete: courseApi.zoneCourseDelete,
+    status: courseApi.zoneCourseEdit
+  })
 })
 </script>

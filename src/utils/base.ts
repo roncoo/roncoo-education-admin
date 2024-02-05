@@ -19,20 +19,23 @@ export function formatTime(time: number) {
     }
 }
 
-// 获取文件大小
-export function formatSize(size: number) {
-    if (!size)
-        return "";
-    var num = 1024.00
-    if (size < num)
-        return size + "B";
-    if (size < Math.pow(num, 2))
-        return (size / num).toFixed(2) + "K"; //kb
-    if (size < Math.pow(num, 3))
-        return (size / Math.pow(num, 2)).toFixed(2) + "M"; //M
-    if (size < Math.pow(num, 4))
-        return (size / Math.pow(num, 3)).toFixed(2) + "G"; //G
-    return (size / Math.pow(num, 4)).toFixed(2) + "T"; //T
+// 文件大小转换
+export function transformSize(bytes: string) {// 文件大小转换
+    const bt = parseInt(bytes);
+    let result;
+    if (bt === 0) {
+        result = '0B';
+    } else {
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bt) / Math.log(k));
+        if (typeof i !== 'number') {
+            result = '-';
+        } else {
+            result = (bt / Math.pow(k, i)).toFixed(2) + sizes[i];
+        }
+    }
+    return result;
 }
 
 /**

@@ -23,7 +23,7 @@
   </el-dialog>
 </template>
 <script setup lang="ts">
-import {systemApi} from '@/api/system.js'
+import {systemApi} from '@/api/system'
 import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
 

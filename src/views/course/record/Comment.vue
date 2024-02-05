@@ -20,39 +20,30 @@
       <el-table-column label="内容" prop="commentText"/>
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button plain type="primary" @click="tableDelete(scope.row)">删除</el-button>
+          <el-button plain type="primary" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
 
-<script>
-import Table from '@/utils/useTable.ts';
-import {defineComponent, reactive, toRefs} from 'vue';
+<script setup lang="ts">
+import {reactive} from 'vue';
 
-import {courseApi} from '@/api/course.ts'
+import {courseApi} from '@/api/course'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Pagination from '@/components/Pagination/index.vue';
+import useTable from "@/utils/table";
 
-export default defineComponent({
-  components: {Pagination},
-  setup() {
-    const route = useRoute()
-    const apis = reactive({
-      getList: courseApi.userCourseComment,
-      delete: courseApi.courseCommentDelete
-    })
-    const state = reactive({
-      ...Table(apis, {courseId: route.query.courseId})
-    });
-
-    return {
-      ...toRefs(state)
-    };
-  }
-});
+const route = useRoute()
+// 基础功能
+const {page, handlePage, query, handleQuery, resetQuery, handleDelete} = reactive({
+  ...useTable({
+    page: courseApi.userCourseComment,
+    delete: courseApi.courseCommentDelete
+  }, {courseId: route.query.courseId})
+})
 </script>
 
 <style lang="less" scoped>

@@ -28,12 +28,12 @@
           <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate"/>
           <el-table-column label="操作" width="100">
             <template #default="scope">
-              <el-button plain type="primary" @click="studyRecord(scope.row)">明细</el-button>
+              <el-button plain type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
-        <study v-model="study.visible" :info="study.info" @close="studyCallback"/>
+        <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+        <study ref="formRef"/>
       </el-tab-pane>
       <el-tab-pane label="课程评论" name="comment">
         <course-comment v-if="activeName === 'comment'"/>
@@ -44,54 +44,79 @@
     </el-tabs>
   </div>
 </template>
-<script>
-import Table from '@/utils/useTable.ts';
-import {defineComponent, reactive, toRefs} from 'vue';
-
-import {courseApi} from '@/api/course.js'
-import {useRoute} from 'vue-router/dist/vue-router';
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive, ref} from 'vue';
+import {courseApi} from '@/api/course'
 import Study from './Study.vue';
-import CourseComment from '../list/Comment.vue';
-import CourseCollect from '../list/Collect.vue';
+import CourseComment from './Comment.vue';
+import CourseCollect from './Collect.vue';
+import Pagination from "@/components/Pagination/index.vue";
+import {useRoute} from "vue-router";
 
-export default defineComponent({
-  components: {Study, CourseComment, CourseCollect},
-  setup() {
-    const route = useRoute()
-    const apis = reactive({
-      getList: courseApi.userCourseRecord
-    })
-    const state = reactive({
-      ...Table(apis, {courseId: route.query.courseId}),
-      activeName: 'course'
-    });
+const route = useRoute()
 
-    let study = reactive({
-      visible: false,
-      info: {}
-    })
-    const studyRecord = (row) => {
-      courseApi.userStudyePage({userId: row.userId, courseId: route.query.courseId}).then((res) => {
-        study.info = res.list
-        study.visible = true
-      });
-    }
-    const studyCallback = () => {
-      study.visible = false
-    }
-    const handleClick = (target, action) => {
-      if (target.props.name === 'course') {
-        state.getTableData()
-      }
-    }
+const activeName = ref('course')
 
-    return {
-      ...toRefs(state),
-      study,
-      studyRecord,
-      studyCallback,
-      handleClick
-    };
+// 明显
+const formRef = ref()
+const openStudyRecord = (item: any) => {
+  formRef.value.onOpen(item)
+}
+
+// 切换
+const handleClick = (target: any, action?: string) => {
+  if (target.props.name === 'course') {
+    query.courseId = route.query.courseId
+    handlePage
   }
-});
+}
+
+// 基础功能
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+  ...useTable({
+    page: courseApi.userCourseRecord,
+  }, {courseId: route.query.courseId})
+})
+//
+// export default defineComponent({
+//   components: {Study, CourseComment, CourseCollect},
+//   setup() {
+//     const route = useRoute()
+//     const apis = reactive({
+//       getList: courseApi.userCourseRecord
+//     })
+//     const state = reactive({
+//       ...Table(apis, {courseId: route.query.courseId}),
+//       activeName: 'course'
+//     });
+//
+//     let study = reactive({
+//       visible: false,
+//       info: {}
+//     })
+//     const studyRecord = (row) => {
+//       courseApi.userStudyePage({userId: row.userId, courseId: route.query.courseId}).then((res) => {
+//         study.info = res.list
+//         study.visible = true
+//       });
+//     }
+//     const studyCallback = () => {
+//       study.visible = false
+//     }
+//     const handleClick = (target, action) => {
+//       if (target.props.name === 'course') {
+//         state.getTableData()
+//       }
+//     }
+//
+//     return {
+//       ...toRefs(state),
+//       study,
+//       studyRecord,
+//       studyCallback,
+//       handleClick
+//     };
+//   }
+// });
 </script>

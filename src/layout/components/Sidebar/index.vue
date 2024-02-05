@@ -3,10 +3,9 @@
     <div class="menu-main">
       <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
         <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
-          <el-menu-item :class="[item.id === showMenuId? 'is-active':'']" :key="item.id" :index="item.path">
-            <span v-if="item.menuType === 1" @click="toPage(item)">{{ item.menuName }}</span>
-            <router-link v-if="item.menuType === 2" :to="item.path" @click="showChildrenMenu(item.children, item)">{{ item.menuName }}</router-link>
-          </el-menu-item>
+          <router-link :to="item.path" @click="handleMenu(item)">
+            <el-menu-item :class="[item.id === showMenuId? 'is-active':'']" :key="item.id" :index="item.path">{{ item.menuName }}</el-menu-item>
+          </router-link>
         </div>
       </el-menu>
     </div>
@@ -82,12 +81,11 @@ function restoreSubMenu() {
 function showChildrenMenu(menuList: any, menu?: any) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
-  //showMenuId.value = menu.id
   hoverMenuId.value = showMenuId.value
 }
 
 // 点击主菜单
-function toPage(menu: any) {
+function handleMenu(menu: any) {
   if (menu.children) {
     router.push({path: menu.children[0].path});
   }
@@ -95,7 +93,6 @@ function toPage(menu: any) {
   showMenuId.value = menu.id
   hoverMenuId.value = showMenuId.value
 }
-
 </script>
 
 <style lang="less" scoped>

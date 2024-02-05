@@ -18,8 +18,8 @@
 <script>
 import {computed, onMounted, onUnmounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {courseApi} from '@/api/course.js';
-import {useUserStore} from '@/store/modules/user.js';
+import {courseApi} from '@/api/course';
+import {useUserStore} from '@/store/modules/user';
 
 export default {
   name: 'Preview',

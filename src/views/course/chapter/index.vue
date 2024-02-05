@@ -63,13 +63,12 @@
   </div>
 </template>
 <script>
-import Table from '@/utils/useTable.ts';
+import Table from '@/utils/table';
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, toRefs} from 'vue';
 
 import {useRoute} from 'vue-router';
-import {courseApi} from '@/api/course.js'
-import {formatDuring} from '@/utils/base.ts'
+import {courseApi} from '@/api/course'
 import Edit from './FormModel.vue';
 import Add from './Period.vue';
 

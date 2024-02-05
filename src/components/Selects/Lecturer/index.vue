@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="visible" :append-to-body="true" :title="props.title" width="800px" @close="handleClose">
+  <el-dialog :model-value="true" :append-to-body="true" :title="props.title" width="800px" @close="handleClose">
     <div class="search_bar clearfix">
       <el-form :model="query" inline label-width="80px">
         <el-form-item label="讲师名称">
@@ -28,20 +28,14 @@
 import {usersApi} from '@/api/users';
 import useTable from '@/utils/table';
 import Pagination from "@/components/Pagination/index.vue";
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
 
 const props = defineProps({
   title: {
     type: String,
     default: '请选择讲师'
-  },
-  visible: {
-    type: Boolean,
-    default: false
   }
 })
-
-const visible = ref(props.visible)
 
 const emit = defineEmits(['close']);
 // 选择老师
@@ -50,7 +44,6 @@ const selectLecturer = (info: any) => {
 }
 // 关闭
 const handleClose = () => {
-  visible.value = false
   emit('close')
 }
 

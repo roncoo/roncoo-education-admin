@@ -1,29 +1,17 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" width="500px" center @close="onClose">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center @close="onClose">
+    <el-form ref="formRef" :model="formModel" :rules="rules" @submit.prevent>
       <el-form-item prop="configValue">
         <!-- 文本类型 -->
         <el-input v-if="formModel.contentType === 1" v-model="formModel.configValue" :rows="6" placeholder="请输入内容" type="textarea"/>
         <!-- 富文本类型 -->
-        <wangeditor v-if="formModel.contentType === 2" v-model="formModel.configValue" :value="formModel.configValue" @input="(val) => { formModel.configValue = val; }"/>
+        <editor v-if="formModel.contentType === 2" v-model="formModel.configValue"/>
         <!-- 图片类型 -->
-        <upload-image v-if="formModel.contentType === 3" :image-url="formModel.configValue" class="avatar" @success=" (val) => {   formModel.configValue = val.url;  }"/>
+        <upload-image v-if="formModel.contentType === 3" v-model="formModel.configValue" :width="800"/>
         <!-- 枚举类型 -->
-        <el-radio-group v-if="formModel.contentType === 5 && formModel.configKey === 'storagePlatform'" v-model="newFormData.configValue">
-          <template v-for="(item,index) in storagePlatformEnum" :key="item.code">
-            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
-          </template>
-        </el-radio-group>
-        <el-radio-group v-if="formModel.contentType === 5 && formModel.configKey === 'smsPlatform'" v-model="formModel.configValue">
-          <template v-for="(item,index) in smsPlatformEnum" :key="item.code">
-            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
-          </template>
-        </el-radio-group>
-        <el-radio-group v-if="formModel.contentType === 5 && formModel.configKey === 'vodPlatform'" v-model="formModel.configValue">
-          <template v-for="(item,index) in vodPlatformEnum" :key="item.code">
-            <el-radio :label="'' + item.code">{{ item.desc }}</el-radio>
-          </template>
-        </el-radio-group>
+        <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
+        <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
+        <enum-radio v-if="formModel.configKey === 'vodPlatform'" v-model="formModel.configValue" :enum-name="'VodPlatformEnum'"></enum-radio>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -39,11 +27,14 @@
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {systemApi} from "@/api/system";
+import Editor from "@/components/Editor/index.vue";
+import UploadImage from "@/components/Upload/Image/index.vue";
+import EnumRadio from "@/components/Enums/Radio/index.vue";
 
 // 校验规则
 const formRef = ref()
 const rules = {
-  categoryName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  configValue: [{required: true, message: '不能为空', trigger: 'blur'}],
 }
 
 // 表单

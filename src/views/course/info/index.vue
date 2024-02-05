@@ -4,18 +4,18 @@
       <div class="form-main">
         <div class="form-main-title">基础信息</div>
         <div class="form-main-content">
-          <el-form-item label="分类" prop="categoryName">
-            <el-cascader v-model="formModel['categoryId']" :options="formModel.categoryList" :props="{value: 'id',label: 'categoryName',children: 'childrenList',checkStrictly: true,emitPath: false}" :show-all-levels="false" clearable filterable placeholder="请选择"/>
+          <el-form-item label="分类" prop="categoryId">
+            <cascader-course v-model="formModel.categoryId"></cascader-course>
           </el-form-item>
           <el-form-item label="名称" prop="courseName">
             <el-input v-model="formModel.courseName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
-          <el-form-item label="讲师" prop="lecturerName">
-            <el-input v-model="formModel.lecturerName" disabled style="width: 230px; margin-right: 20px"></el-input>
+          <el-form-item label="讲师" prop="lecturerId">
+            <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>
             <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item label="封面" prop="courseLogo">
-            <upload-image :width="260" :height="130" :image-url="formModel.courseLogo" class="avatar" @success=" (val) => {   formModel.courseLogo = val.url;  }"/>
+            <upload-image v-model="formModel.courseLogo" :width="260" :height="130"/>
           </el-form-item>
           <el-form-item label="简介" prop="introduce">
             <editor v-model="formModel.introduce"/>
@@ -25,14 +25,11 @@
       <div class="form-main">
         <div class="form-main-title">课程设置</div>
         <div class="form-main-content">
-          <el-form-item label="售价" prop="coursePrice">
+          <el-form-item label="销售价" prop="coursePrice">
             <el-input-number v-model="formModel.coursePrice" :min="0" :precision="2" show-word-limit></el-input-number>
           </el-form-item>
           <el-form-item label="划线价" prop="rulingPrice">
             <el-input-number v-model="formModel.rulingPrice" :min="0" :precision="2" show-word-limit></el-input-number>
-          </el-form-item>
-          <el-form-item label="排序" prop="courseSort">
-            <el-input-number v-model="formModel.courseSort"/>
           </el-form-item>
           <el-form-item label="售卖" prop="isPutaway">
             <enum-radio v-model="formModel.isPutaway" :enum-name="'PutawayEnum'"></enum-radio>
@@ -45,22 +42,24 @@
       <el-button type="primary" @click="onSubmit()">确定</el-button>
     </div>
   </div>
-
-  <select-lecturer v-if="lecturer.visible" :visible="lecturer.visible" @close="handleLecturer"/>
+  <select-lecturer v-if="lecturer.visible" @close="handleLecturer"/>
 </template>
 
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
-import {reactive, ref} from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
 import UploadImage from '@/components/Upload/Image/index.vue';
 import Editor from '@/components/Editor/index.vue'
 import SelectLecturer from '@/components/Selects/Lecturer/index.vue'
+import CascaderCourse from '@/components/Cascader/Course/index.vue'
 import EnumRadio from '@/components/Enums/Radio/index.vue'
 import {useRouter} from "vue-router";
+import {useRoute} from "vue-router/dist/vue-router";
 
 const router = useRouter()
-// 讲师选择
+
+// 讲师选择功能
 const lecturer = reactive({
   visible: false
 })
@@ -69,13 +68,19 @@ const lecturerSelect = () => {
 }
 const handleLecturer = (item?: any) => {
   lecturer.visible = false
+  if (item) {
+    formModel.lecturerName = item.lecturerName
+    formModel.lecturerId = item.lecturerId
+  }
 }
 
 // 校验规则
 const formRef = ref()
 const rules = {
-  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
-  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+  categoryId: [{required: true, message: '不能为空', trigger: 'blur'}],
+  courseName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  lecturerId: [{required: true, message: '不能为空', trigger: 'blur'}],
+  courseLogo: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
@@ -83,11 +88,16 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  carouselImg: undefined,
-  carouselTitle: undefined,
-  carouselUrl: undefined,
-  carouselTarget: '_blank',
-  sort: 1
+  categoryId: undefined,
+  courseName: undefined,
+  lecturerName: undefined,
+  lecturerId: undefined,
+  courseLogo: undefined,
+  introduce: undefined,
+  coursePrice: 0,
+  rulingPrice: 0,
+  courseSort: 1,
+  isPutaway: 1
 }
 const formModel = reactive({...formDefault})
 const onSubmit = async () => {
@@ -108,32 +118,27 @@ const onSubmit = async () => {
       await courseApi.courseSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
+    handleClose()
     emit('refresh')
-    onClose()
   } finally {
     loading.value = false;
   }
 }
-
+// 初始化
+const route = useRoute()
+onMounted(() => {
+  if (route.query.courseId) {
+    courseApi.courseView({id: route.query.courseId}).then((res: any) => {
+      Object.assign(formModel, res)
+    })
+  } else {
+    Object.assign(formModel, formDefault)
+  }
+})
 const handleClose = () => {
   router.go(-1)
 }
-
-// 打开和关闭
-const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
-  if (item) {
-    Object.assign(formModel, item);
-  }
-  visible.value = true
-}
-defineExpose({onOpen})
-const onClose = () => {
-  visible.value = false;
-  Object.assign(formModel, formDefault);
-}
 </script>
-
 <style lang="less">
 .form-main-title {
   width: 120px;
@@ -159,5 +164,6 @@ const onClose = () => {
   border-top: 1px solid #EBEEF5;
   border-bottom: 10px solid #f2f3f5;
   margin-left: -20px;
+  z-index: 1;
 }
 </style>

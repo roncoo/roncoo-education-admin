@@ -87,12 +87,11 @@ const openFormModal = (item?: any, parentId?: string) => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: systemApi.sysMenuList,
-  delete: systemApi.sysMenuDelete,
-  status: systemApi.sysMenuEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: systemApi.sysMenuList,
+    delete: systemApi.sysMenuDelete,
+    status: systemApi.sysMenuEdit
+  })
 })
 </script>

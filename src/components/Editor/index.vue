@@ -1,22 +1,23 @@
 <template>
-  <div style="border: 1px solid #ccc; margin-top: 10px">
+  <div style="border: 1px solid #ccc; margin-top: 10px; width: 100%">
     <toolbar
         :editor="editorRef"
-        :defaultConfig="toolbarConfig"
+        :default-config="toolbarConfig"
+        mode="default"
         style="border-bottom: 1px solid #ccc"
     />
     <editor
-        :defaultConfig="editorConfig"
+        :default-config="editorConfig"
         :model-value="props.modelValue"
         @onChange="handleChange"
-        class="editors"
+        @onCreated="handleCreated"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import '@wangeditor/editor/dist/css/style.css';
-import {onBeforeUnmount, shallowRef} from 'vue';
+import {onBeforeUnmount, ref, shallowRef} from 'vue';
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue';
 
 const props = defineProps({
@@ -40,13 +41,16 @@ onBeforeUnmount(() => {
 
 // 编辑器实例
 const editorRef = shallowRef();
-const toolbarConfig = {};
-const editorConfig = {};
+const handleCreated = (editor: any) => {
+  editorRef.value = editor
+}
+const toolbarConfig = {
+  excludeKeys: ["emotion", "group-image", "group-video", "fullScreen"],
+}
+const editorConfig = ref({});
 </script>
 <style lang="less">
 .w-e-text-container {
-  width: 500px;
   height: 300px;
-  overflow-y: hidden
 }
 </style>

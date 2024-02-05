@@ -35,7 +35,7 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="220" fixed="right" label="操作" prop="address">
+      <el-table-column :width="250" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="toUserRecord(scope.row)">数据</el-button>
           <el-dropdown>
@@ -86,12 +86,11 @@ const toUserRecord = function (row: any) {
 }
 
 // 基础功能
-const apis = reactive({
-  page: usersApi.usersPage,
-  delete: usersApi.usersDelete,
-  status: usersApi.usersEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: usersApi.usersPage,
+    delete: usersApi.usersDelete,
+    status: usersApi.usersEdit
+  })
 })
 </script>

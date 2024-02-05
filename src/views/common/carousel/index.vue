@@ -78,12 +78,11 @@ const openFormModal = (item?: any) => {
 
 
 // 基础功能
-const apis = reactive({
-  page: systemApi.carouselPage,
-  delete: systemApi.carouselDelete,
-  status: systemApi.carouselEdit
-})
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: systemApi.carouselPage,
+    delete: systemApi.carouselDelete,
+    status: systemApi.carouselEdit
+  })
 })
 </script>

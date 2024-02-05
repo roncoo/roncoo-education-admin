@@ -1,4 +1,4 @@
-import {deleteRequest, postRequest, putRequest} from '@/utils/request'
+import {deleteRequest, getRequest, postRequest, putRequest} from '@/utils/request'
 
 export const courseApi = {
     // 专区课程分页
@@ -127,6 +127,10 @@ export const courseApi = {
     },
 
 // 课程修改
+    courseView: (data: any) => {
+        return getRequest('/course/admin/course/view?id=' + data.id)
+    },
+    // 课程修改
     courseEdit: (data: any) => {
         return putRequest('/course/admin/course/edit', data)
     },

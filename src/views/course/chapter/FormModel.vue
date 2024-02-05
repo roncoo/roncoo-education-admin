@@ -28,10 +28,9 @@
 import {ElMessage} from 'element-plus';
 import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
 
-import {courseApi} from '@/api/course.js';
-import editor from '@/components/Wangeditor/index.vue';
-import upload from '@/components/Upload/image.vue';
-import {getEnumObj} from '@/utils/base.ts';
+import {courseApi} from '@/api/course';
+import upload from '@/components/Upload/Image/index.vue';
+import {getEnumObj} from '@/utils/base';
 
 export default defineComponent({
   components: {

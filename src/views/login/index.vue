@@ -6,17 +6,21 @@
         <p class="info">
           领课教育系统（roncoo-education）是基于领课网络多年的在线教育平台开发和运营经验打造出来的产品，致力于打造一个各行业都适用的分布式在线教育系统。系统采用前后端分离模式，前台采用vue.js为核心框架，后台采用Spring Cloud为核心框架。系统目前主要功能有课程点播功能，支持多家视频云的接入，课程附件管理功能，支持多家存储云的接入，可以帮助个人或者企业快速搭建一个轻量级的在线教育平台。
         </p>
+        <p style="text-align: center; font-size: 10px">
+          <img src="@/assets/images/weixin.png" alt="作者微信二维码" style="width: 120px;">
+          <div style="text-align: center">作者微信</div>
+        </p>
       </div>
       <div class="login-panel">
-        <el-form ref="loginForm" :model="loginForm" auto-complete="on" label-position="left">
+        <el-form ref="loginForm" :model="loginForm" label-position="left">
           <h3 class="login-head">管理员登录</h3>
           <el-form-item class="form-group" prop="mobile">
-            <el-input v-model="loginForm.mobile" auto-complete="on" class="form-input" name="mobile" placeholder="用户名" tabindex="1" type="text" @keyup.enter="handleLogin"/>
+            <el-input v-model="loginForm.mobile" placeholder="用户名"/>
           </el-form-item>
           <el-form-item class="form-group" prop="mobilePwd">
-            <el-input v-model="loginForm.mobilePwd" auto-complete="on" class="form-input" name="mobilePwd" placeholder="密码" tabindex="2" type="password" @keyup.enter="handleLogin"/>
+            <el-input v-model="loginForm.mobilePwd" placeholder="密码" type="password"/>
           </el-form-item>
-          <el-button v-loading="loading" class="login-button" type="primary" @click.native.prevent="handleLogin">登 录</el-button>
+          <el-button v-loading="loading" class="login-button" type="primary" @click="handleLogin">登 录</el-button>
           <div class="tip">账号：18800000000/123456（需要本地部署）</div>
         </el-form>
       </div>
@@ -47,27 +51,11 @@ import {PATH} from "@/utils/constants/system";
 const router = useRouter();
 const loading = ref(false)
 
-const service = ref({
-  websiteLogo: '',
-  websiteCopyright: '',
-  websiteIcp: '',
-  prnNo: '',
-  websitePrn: ''
-})
+// 登录
 const loginForm = reactive({
   mobile: '18800000000',
   mobilePwd: '123456'
 })
-
-onMounted(() => {
-  getWebsite()
-})
-
-function getWebsite() {
-  loginApi.getWebsite().then((res: any) => {
-    service.value = res;
-  })
-}
 
 async function handleLogin() {
   loading.value = true
@@ -86,6 +74,14 @@ async function handleLogin() {
     loading.value = false;
   }
 }
+
+// 站点信息
+const service = ref({})
+onMounted(() => {
+  loginApi.getWebsite().then((res: any) => {
+    service.value = res;
+  })
+})
 </script>
 
 <style lang="less" scoped>
@@ -166,6 +162,7 @@ async function handleLogin() {
   text-align: center;
   padding-bottom: 20px;
   font-size: 13px;
+  line-height: 25px;
 
   a {
     text-decoration: none;

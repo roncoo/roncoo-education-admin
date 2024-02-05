@@ -58,7 +58,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
  */
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (imageType.indexOf(rawFile.type) === -1) {
-    ElMessage.error('图片格式不正确')
+    ElMessage.error('图片格式不支持：' + rawFile.type)
     return false
   } else if (rawFile.size / 1024 / 1024 > 10) {
     ElMessage.error('图片大小不能超过10MB')

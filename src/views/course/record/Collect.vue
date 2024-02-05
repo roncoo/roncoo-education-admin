@@ -16,35 +16,24 @@
       <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
       <el-table-column label="收藏时间" min-width="30" prop="gmtCreate"/>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="getTableData"/>
+    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
 
-<script>
-
-import Table from '@/utils/useTable.ts';
-import {defineComponent, reactive, toRefs} from 'vue';
-
+<script setup lang="ts">
+import useTable from '@/utils/table';
+import {reactive} from 'vue';
 import {courseApi} from '@/api/course.ts'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Pagination from '@/components/Pagination/index.vue';
 
-export default defineComponent({
-  components: {Pagination},
-  setup() {
-    const route = useRoute()
-    const apis = reactive({
-      getList: courseApi.userCourseCollect
-    })
-    const state = reactive({
-      ...Table(apis, {courseId: route.query.courseId})
-    });
-
-    return {
-      ...toRefs(state)
-    };
-  }
-});
+const route = useRoute()
+// 基础功能
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+  ...useTable({
+    page: courseApi.userCourseCollect,
+  }, {courseId: route.query.courseId})
+})
 </script>
 
 <style lang="less" scoped>
