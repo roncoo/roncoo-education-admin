@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
     <form-modal ref="formRef" @refresh="handlePage"/>
   </div>
 </template>

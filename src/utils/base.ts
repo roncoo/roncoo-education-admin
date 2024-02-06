@@ -54,18 +54,19 @@ export function getEnumList(enumName: string) {
 }
 
 export function getEnumObj(enumName: string) {
-    const enumList = getEnumList(enumName);
+    let enumList = getEnumList(enumName);
     if (!enumList) {
-        console.error(enumName)
-        return {}
+        enumList = getEnumList(enumName);
     }
     return toObj(enumList)
 }
 
 function toObj(attr: any) {
     const obj: any = {}
-    for (var i = 0; i < attr.length; i++) {
-        obj[attr[i].code] = attr[i].desc
+    if (attr) {
+        for (var i = 0; i < attr.length; i++) {
+            obj[attr[i].code] = attr[i].desc
+        }
     }
     return obj
 }

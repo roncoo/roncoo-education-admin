@@ -94,7 +94,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+        <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
       </div>
     </div>
     <form-model ref="formRef" @refresh="handlePage"/>
@@ -147,15 +147,19 @@ const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleSta
   })
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
+
+.table-container {
+  display: flex;
+}
 
 .table-catalog {
-  float: left;
   display: block;
   min-height: calc(100vh - 180px);
-  margin: 0 auto;
+  margin-bottom: 52px;
   width: 200px;
   border: 1px solid #EBEEF5;
+  border-right: none;
 
   .table-catalog-title {
     cursor: default;
@@ -168,7 +172,6 @@ const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleSta
 }
 
 .table-main {
-  float: left;
   width: calc(100% - 240px);
   min-height: 400px;
 }

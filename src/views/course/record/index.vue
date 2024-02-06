@@ -32,7 +32,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+        <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
         <study ref="formRef"/>
       </el-tab-pane>
       <el-tab-pane label="课程评论" name="comment">

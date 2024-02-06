@@ -16,7 +16,7 @@
       <el-table-column label="用户昵称" min-width="20" prop="nickname"/>
       <el-table-column label="收藏时间" min-width="30" prop="gmtCreate"/>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
 

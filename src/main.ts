@@ -31,4 +31,7 @@ function init() {
         app.component(key, component)
     }
     app.mount('#app')
+
+    // 全局配置Dialog遮罩层点击不关闭
+    app._context.components.ElDialog.props.closeOnClickModal.default = false
 }

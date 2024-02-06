@@ -21,6 +21,7 @@
     background: #fff;
     min-height: calc(100vh - 130px);
     padding: 20px;
+    overflow: hidden;
   }
 }
 </style>

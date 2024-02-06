@@ -57,7 +57,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page.pageCurrent" :layout="page.layout" :page-size="page.pageSize" :page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <el-pagination v-model:current-page="page.pageCurrent" :layout="page.layout" v-model:page-size="page.pageSize" v-model:page-sizes="[20, 50, 100, 200]" :total="page.totalCount" background @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     <edit v-model="editModel.visible" :form="editModel.form" @updateTable="closeEditDialog"/>
     <add v-model="addModel.visible" :form="addModel.form" @updateTable="closeAddDialog"/>
   </div>

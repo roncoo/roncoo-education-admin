@@ -39,7 +39,7 @@ watch(modelValue,
  * @param file
  */
 const onUpload = async (file: any) => {
-  return await uploadApi.pic(file)
+  return await uploadApi.pic(file.file)
 }
 
 /**

@@ -18,14 +18,19 @@ export function getStore(name: string) {
 }
 
 /**
- * 存储sessionStorage
+ *
+ * @param name
+ * @param content
+ * @param expireTime 单位：分
  */
-export function setSessionStorage(name: string, content: string) {
+export function setSessionStorage(name: string, content: string, expireTime?: number | null) {
     if (!name) return
-    if (typeof content !== 'string') {
-        content = JSON.stringify(content)
+    let params = JSON.stringify(content)
+    if (expireTime) {
+        expireTime = Date.now() + expireTime * 1000 * 60
+        params = JSON.stringify({content: content, expireTime: expireTime})
     }
-    window.sessionStorage.setItem(name, content)
+    window.sessionStorage.setItem(name, params)
 }
 
 /**
@@ -33,9 +38,20 @@ export function setSessionStorage(name: string, content: string) {
  */
 export function getSessionStorage(name: string) {
     if (!name) return
-    const data = window.sessionStorage.getItem(name)
+
+    let data: any = window.sessionStorage.getItem(name)
+    if (!data) return null
+
+    data = JSON.parse(data)
     if (data) {
-        return JSON.parse(data)
+        if (data.expireTime && data.expireTime > 0) {
+            if (data.expireTime > Date.now()) {
+                return data.content
+            }
+            window.sessionStorage.removeItem(name)
+            return null
+        }
+        return data
     }
     return null
 }

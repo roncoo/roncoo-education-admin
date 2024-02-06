@@ -1,10 +1,12 @@
 <template>
   <el-config-provider :locale="zhCn">
     <router-view/>
+    <upload-file-panel/>
   </el-config-provider>
 </template>
 
 <script setup lang="ts">
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import {ElConfigProvider} from 'element-plus'
+import UploadFilePanel from '@/components/Upload/File/Panel/index.vue'
 </script>

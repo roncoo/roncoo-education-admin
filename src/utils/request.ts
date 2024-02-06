@@ -36,7 +36,7 @@ request.interceptors.request.use(
             config.headers['token'] = token
         }
         config.cancelToken = new CancelToken((c) => {
-            // 这里的ajax标识用请求地址&请求方式拼接的字符串，也可以选择其他的一些方式
+            // 这里的ajax标识用：请求地址&请求方式拼接的字符串
             pending.push({u: config.url + '&' + config.method, f: c});
         });
         return config
@@ -75,7 +75,7 @@ request.interceptors.response.use(
                 return Promise.reject(response)
             }
             if (res.code === 999) {
-                ElMessage.warning('系统繁忙，请重试')
+                ElMessage.warning(response.data.msg)
                 return Promise.reject(response)
             }
 
@@ -132,8 +132,23 @@ export const deleteRequest = (url: string) => {
     return request({url: url, method: 'delete'});
 }
 
-export const upload = (url: string, data: any, fileName: string) => {
+export const upload = (url: string, file: any, fileName: string, cb?: any, cancelFun?: any) => {
     const formData = new FormData()
-    formData.append(fileName, data.file)
-    return request.post(url, formData)
+    formData.append(fileName, file)
+    const config: any = {
+        onUploadProgress: (progressEvent: any) => {
+            const percent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
+            // 计算上传进度
+            if (cb) {
+                cb(percent)
+            }
+        }
+    }
+    if (cancelFun) {
+        config.cancelToken = new axios.CancelToken(function excutor(c) {
+            cancelFun.cancel = c;
+        })
+    }
+
+    return request.post(url, formData, config)
 }

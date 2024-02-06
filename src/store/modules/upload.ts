@@ -3,11 +3,15 @@ import {defineStore} from 'pinia'
 export const useUploadStore = defineStore({
     id: 'upload',
     state: () => ({
-        fileList: []
+        fileList: [],
+        successFileList: []
     }),
     getters: {
         getFileList(state) {
             return state.fileList
+        },
+        getSuccessFileList(state) {
+            return state.successFileList
         }
     },
     actions: {
@@ -15,9 +19,15 @@ export const useUploadStore = defineStore({
         addFile(data: any) {
             this.fileList.push(data)
         },
+        addSuccessFile(data: any) {
+            this.successFileList.push(data)
+        },
         // 清空文件
         clearFile() {
-            this.fileList = []
+            this.fileList.splice(0, this.fileList.length)
+        },
+        clearSuccessFile() {
+            this.successFileList.splice(0, this.successFileList.length)
         }
     }
 })

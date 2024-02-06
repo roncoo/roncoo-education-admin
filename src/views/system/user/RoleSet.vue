@@ -18,7 +18,7 @@
       <el-table-column label="角色名称" prop="roleName"/>
       <el-table-column label="备注" prop="remark"/>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
     <template #footer>
       <span class="handle_bar">
         <el-button @click="onClose()">取消</el-button>
