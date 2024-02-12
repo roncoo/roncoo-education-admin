@@ -5,11 +5,7 @@
         <el-input v-model="formModel.chapterName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="收费" prop="isFree">
-        <el-radio-group v-model="formModel.isFree">
-          <template v-for="item in freeEnums" :key="item.code">
-            <el-radio :label="item.code">{{ item.desc }}</el-radio>
-          </template>
-        </el-radio-group>
+        <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort" min="1"/>
@@ -24,120 +20,69 @@
   </el-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import {ElMessage} from 'element-plus';
-import {defineComponent, onMounted, reactive, ref, toRefs, watch} from 'vue';
-
+import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course';
-import upload from '@/components/Upload/Image/index.vue';
-import {getEnumObj} from '@/utils/base';
+import EnumRadio from "@/components/Enums/Radio/index.vue";
 
-export default defineComponent({
-  components: {
-    editor, upload
-  },
-  props: {
-    modelValue: {
-      type: Boolean,
-      default: () => {
-        return false;
-      }
-    },
-    form: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    }
-  },
-  emits: ['update:modelValue', 'updateTable'],
-  setup(props, {emit}) {
-    const visible = ref(false);
-    const formRef = ref(null);
-    const loading = ref(false);
+// 校验规则
+const formRef = ref()
+const rules = {
+  carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
+  carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
+}
 
-    const state = reactive({
-      freeEnums: {}
-    });
+// 表单
+const loading = ref(false);// 加载进度状态
+const emit = defineEmits(['refresh'])
+const formDefault = {
+  id: undefined,
+  carouselImg: undefined,
+  carouselTitle: undefined,
+  carouselUrl: undefined,
+  carouselTarget: '_blank',
+  sort: 1
+}
+const formModel = reactive({...formDefault})
+const onSubmit = async () => {
+  // 校验
+  const valid = await formRef.value.validate()
+  if (!valid) return
 
-    onMounted(() => {
-      state.freeEnums = getEnumObj('FreeEnum')
-    });
-
-    let formModel = reactive({
-      data: {
-        isFree: 1,
-        sort: 1
-      },
-      rules: {
-        chapterName: [{required: true, message: '不能为空', trigger: 'blur'}]
-      }
-    });
-
-    let {modelValue, form} = toRefs(props);
-    if (modelValue.value) {
-      visible.value = modelValue.value;
-    }
-
-    // 弹窗是否要打开监控
-    watch(modelValue, async(val) => {
-      visible.value = val;
-    });
-    // form 数据监控
-    watch(form, async(val) => {
-      FormModel = {
-        ...val
-      };
-    });
-
-    const resetForm = () => {
-      formRef['value'].resetFields();
-      FormModel = {};
-    };
-
-    const onClose = () => {
-      visible.value = false;
-      emit('update:modelValue', false);
-    };
-
-    const onSubmit = () => {
-      if (loading.value === true) {
-        ElMessage({type: 'warning', message: '正在保存...'});
-        return;
-      }
-      formRef['value'].validate(async(valid) => {
-        if (valid) {
-          loading.value = true;
-          let d = null;
-          const data = {
-            ...FormModel
-          };
-          if (data.id) {
-            d = await courseApi.courseChapterEdit(data);
-          } else {
-            d = await courseApi.courseChapterSave(data);
-          }
-          if (d) {
-            ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});
-            emit('updateTable', d);
-            onClose();
-          }
-        }
-        loading.value = false;
-      });
-    };
-
-    return {
-      ...toRefs(state),
-      visible,
-      loading,
-      FormModel,
-      formRef,
-      onClose,
-      onSubmit
-    };
+  if (loading.value === true) {
+    ElMessage({type: 'warning', message: '正在处理···'});
+    return;
   }
-});
+  loading.value = true;
+  try {
+    if (formModel.id) {
+      await courseApi.courseChapterEdit(formModel);
+      ElMessage({type: 'success', message: '修改成功'});
+    } else {
+      await courseApi.courseChapterSave(formModel);
+      ElMessage({type: 'success', message: '添加成功'});
+    }
+    emit('refresh')
+    onClose()
+  } finally {
+    loading.value = false;
+  }
+}
+
+// 打开和关闭
+const visible = ref(false);// 弹窗显示状态
+const onOpen = (item: any) => {
+  if (item) {
+    Object.assign(formModel, item);
+  }
+  visible.value = true
+}
+defineExpose({onOpen})
+const onClose = () => {
+  visible.value = false;
+  Object.assign(formModel, formDefault);
+}
 </script>
 
 
