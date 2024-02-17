@@ -2,7 +2,7 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
-        <upload-image v-model="formModel.carouselImg" :width="500" :height="90"/>
+        <upload-image v-model="formModel.carouselImg" :width="260" :height="50"/>
       </el-form-item>
       <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
         <enum-radio v-model="formModel.carouselTarget" :enum-name="'TargetEnum'"></enum-radio>
@@ -33,6 +33,7 @@ import EnumRadio from '@/components/Enum/Radio/index.vue'
 const formRef = ref()
 const rules = {
   carouselImg: [{required: true, message: '不能为空', trigger: 'blur'}],
+  carouselTarget: [{required: true, message: '不能为空', trigger: 'blur'}],
   carouselUrl: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 

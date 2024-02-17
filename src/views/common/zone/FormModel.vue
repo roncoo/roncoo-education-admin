@@ -43,7 +43,7 @@ const formDefault = {
   id: undefined,
   zoneName: undefined,
   zoneDesc: undefined,
-  statusId: undefined,
+  statusId: 1,
   sort: 1
 }
 const formModel = reactive({...formDefault})

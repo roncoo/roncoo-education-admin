@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="modelValue" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
@@ -15,7 +15,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-course v-if="course.visible" :info="course.info" :visible="course.visible" @close="courseCallback"/>
+    <select-course v-if="course.visible" :visible="course.visible" @close="handleCourse"/>
   </el-dialog>
 </template>
 <script setup lang="ts">
@@ -23,6 +23,23 @@ import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
 import {courseApi} from '@/api/course';
 import SelectCourse from '@/components/Selector/Course/index.vue';
+
+// 课程设置
+const course = ref({
+  visible: false
+})
+
+const courseSelect = () => {
+  course.value.visible = true
+}
+
+const handleCourse = (item: any) => {
+  course.value.visible = false
+  if (item) {
+    formModel.courseName = item.courseName
+    formModel.courseId = item.courseId
+  }
+}
 
 // 校验规则
 const formRef = ref()
@@ -55,7 +72,7 @@ const onSubmit = async () => {
       await courseApi.zoneCourseEdit(formModel);
       ElMessage({type: 'success', message: '修改成功'});
     } else {
-      await courseApi.zoneCourseEdit(formModel);
+      await courseApi.zoneCourseSave(formModel);
       ElMessage({type: 'success', message: '添加成功'});
     }
     emit('refresh')

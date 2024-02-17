@@ -71,85 +71,26 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 <style lang="less" scoped>
 .image-upload {
   position: relative;
+  border-radius: 6px;
+  border: 1px dashed #d9d9d9;
 
-  .el-upload, .upload-progress {
+  .el-upload {
     width: 100%;
     height: 100%;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    display: flex;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    display: flex;
     align-items: center;
     justify-content: center;
-
-    &:hover {
-      border-color: #409eff;
-    }
-  }
-
-  .avatar-uploader-icon {
-    width: 100%;
-    font-size: 28px;
-    line-height: 0;
-    color: #8c939d;
-    text-align: center;
-    height: 0;
-    position: absolute;
-    top: 50%;
-    left: 0;
-  }
-
-  .avatar {
-    height: 100%;
-    display: block;
-    margin: 0 auto;
-    overflow: hidden;
   }
 
   .el-progress-circle {
-    width: 100% !important;
-    height: 100% !important;
-    display: flex;
-    justify-content: center;
-
     svg {
       padding: 10px;
       max-width: 100%;
       max-height: 100%;
       vertical-align: middle;
-    }
-  }
-
-  .close-dialog {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 6px;
-
-    .avatar-uploader-icon {
-      color: #fff;
-      font-size: 42px;
-    }
-
-    .reset-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -14px;
-      margin-left: -40px;
-    }
-  }
-
-  &:hover {
-    .close-dialog {
-      display: block;
     }
   }
 }

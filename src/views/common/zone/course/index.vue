@@ -3,7 +3,12 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
+          <el-form-item label="课程名称">
+            <el-input v-model="query.courseName" clearable/>
+          </el-form-item>
           <el-form-item>
+            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
+            <el-button @click="resetQuery()">重置</el-button>
             <el-button plain type="success" @click="openFormModal()">课程添加</el-button>
           </el-form-item>
         </el-form>
@@ -45,7 +50,7 @@
           <el-button plain type="primary" @click="openFormModal(scope.row)">排序</el-button>
           <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
           <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
-          <el-button plain type="danger" @click="tableDelete(scope.row)">删除</el-button>
+          <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +63,8 @@ import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
 import useTable from '@/utils/table';
 import {getEnumObj} from "@/utils/base";
+import Pagination from '@/components/Pagination/index.vue';
+import FormModel from "./FormModel.vue";
 
 // 添加/修改
 const formRef = ref();

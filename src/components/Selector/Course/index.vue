@@ -44,6 +44,11 @@ const selectCourse = (info: any) => {
   emit('close', {courseName: info.courseName, courseId: info.id});
 }
 
+// 关闭
+const handleClose = () => {
+  emit('close')
+}
+
 // 基础功能
 const apis = reactive({
   page: courseApi.coursePage,
