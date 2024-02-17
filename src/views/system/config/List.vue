@@ -2,7 +2,12 @@
   <el-table :data="props.list">
     <el-table-column label="配置名称" prop="configName" width="300">
       <template #default="scope">
-        <span>{{ scope.row.configName }}</span>
+        <span>{{ scope.row.configName }}&nbsp;</span>
+        <el-tooltip :content="scope.row.configKey" placement="right-start" effect="light">
+          <el-icon>
+            <InfoFilled/>
+          </el-icon>
+        </el-tooltip>
       </template>
     </el-table-column>
     <el-table-column label="参数">
@@ -55,7 +60,7 @@ const props = defineProps({
   list: {type: Array, default: []}
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 img {
   height: 50px;
 }

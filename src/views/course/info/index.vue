@@ -44,16 +44,15 @@
   </div>
   <select-lecturer v-if="lecturer.visible" @close="handleLecturer"/>
 </template>
-
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {onMounted, reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
 import UploadImage from '@/components/Upload/Image/index.vue';
 import Editor from '@/components/Editor/index.vue'
-import SelectLecturer from '@/components/Selects/Lecturer/index.vue'
+import SelectLecturer from '@/components/Selector/Lecturer/index.vue'
 import CascaderCourse from '@/components/Cascader/Course/index.vue'
-import EnumRadio from '@/components/Enums/Radio/index.vue'
+import EnumRadio from '@/components/Enum/Radio/index.vue'
 import {useRouter} from "vue-router";
 import {useRoute} from "vue-router/dist/vue-router";
 
@@ -139,7 +138,7 @@ const handleClose = () => {
   router.go(-1)
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .form-main-title {
   width: 120px;
 }

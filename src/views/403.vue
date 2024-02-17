@@ -9,10 +9,10 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
-          403错误!
+          403错误
         </div>
         <div class="bullshit__headline">
-          {{ message }}
+          找不到网页
         </div>
         <div class="bullshit__info">
           对不起，您没有权限访问，请您联系管理员。
@@ -27,19 +27,6 @@
     </div>
   </div>
 </template>
-
-<script>
-
-export default {
-  name: 'Page403',
-  computed: {
-    message() {
-      return '找不到网页！'
-    }
-  }
-}
-</script>
-
 <style lang="less" scoped>
 .wscn-http404-container {
   transform: translate(-50%, -50%);

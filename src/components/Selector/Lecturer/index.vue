@@ -56,6 +56,6 @@ const {page, handlePage, query, handleQuery, resetQuery} = reactive({
 })
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 </style>

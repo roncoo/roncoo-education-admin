@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '章修改' : '章添加'" width="500px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '章修改' : '章添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="章名称" prop="chapterName">
         <el-input v-model="formModel.chapterName" maxlength="100" show-word-limit></el-input>
@@ -24,7 +24,7 @@
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course';
-import EnumRadio from "@/components/Enums/Radio/index.vue";
+import EnumRadio from "@/components/Enum/Radio/index.vue";
 
 // 校验规则
 const formRef = ref()

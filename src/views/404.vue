@@ -12,7 +12,7 @@
         <div class="bullshit__info">All rights reserved
           <a href="https://wallstreetcn.com" style="color:#20a0ff" target="_blank">wallstreetcn</a>
         </div>
-        <div class="bullshit__headline">{{ message }}</div>
+        <div class="bullshit__headline">The webmaster said that you can not enter this page...</div>
         <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below
           to return to the homepage.
         </div>
@@ -21,17 +21,6 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'Page404',
-  computed: {
-    message() {
-      return 'The webmaster said that you can not enter this page...'
-    }
-  }
-}
-</script>
-
 <style lang="less" scoped>
 .wscn-http404-container {
   transform: translate(-50%, -50%);

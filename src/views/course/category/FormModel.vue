@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" width="500px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="名称" prop="categoryName">
         <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
@@ -16,111 +16,6 @@
     </template>
   </el-dialog>
 </template>
-
-<!--<script>-->
-<!--import {ElMessage} from 'element-plus';-->
-<!--import {defineComponent, reactive, ref, toRefs, watch} from 'vue';-->
-<!--import {courseApi} from '@/api/course';-->
-<!--import editor from '@/components/Wangeditor/index.vue';-->
-<!--import upload from '@/components/Upload/image.vue';-->
-
-<!--export default defineComponent({-->
-<!--  components: {-->
-<!--    editor, upload-->
-<!--  },-->
-<!--  props: {-->
-<!--    modelValue: {-->
-<!--      type: Boolean,-->
-<!--      default: () => {-->
-<!--        return false;-->
-<!--      }-->
-<!--    },-->
-<!--    form: {-->
-<!--      type: Object,-->
-<!--      default: () => {-->
-<!--        return {};-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  emits: ['update:modelValue', 'updateTable'],-->
-<!--  setup(props, {emit}) {-->
-<!--    const visible = ref(false);-->
-<!--    const formRef = ref(null);-->
-<!--    const loading = ref(false);-->
-
-<!--    let formModel = reactive({-->
-<!--      data: {},-->
-<!--      rules: {-->
-<!--        //nickname: [{required: true, message: '请输入用户昵称', trigger: 'blur'}]-->
-<!--      }-->
-<!--    });-->
-
-<!--    let {modelValue, form} = toRefs(props);-->
-<!--    if (modelValue.value) {-->
-<!--      visible.value = modelValue.value;-->
-<!--    }-->
-
-<!--    // 弹窗是否要打开监控-->
-<!--    watch(modelValue, async(val) => {-->
-<!--      visible.value = val;-->
-<!--    });-->
-<!--    // form 数据监控-->
-<!--    watch(form, async(val) => {-->
-<!--      formModel = {-->
-<!--        ...val-->
-<!--      };-->
-<!--    });-->
-
-<!--    const resetForm = () => {-->
-<!--      formRef['value'].resetFields();-->
-<!--      formModel = {};-->
-<!--    };-->
-
-<!--    const onClose = () => {-->
-<!--      visible.value = false;-->
-<!--      emit('update:modelValue', false);-->
-<!--    };-->
-
-<!--    const onSubmit = () => {-->
-<!--      if (loading.value === true) {-->
-<!--        ElMessage({type: 'warning', message: '正在保存...'});-->
-<!--        return;-->
-<!--      }-->
-<!--      formRef['value'].validate(async(valid) => {-->
-<!--        if (valid) {-->
-<!--          loading.value = true;-->
-<!--          let d = null;-->
-<!--          const data = {-->
-<!--            ...formModel-->
-<!--          };-->
-<!--          if (data.id) {-->
-<!--            d = await courseApi.categoryEdit(data);-->
-<!--          } else {-->
-<!--            d = await courseApi.categorySave(data);-->
-<!--          }-->
-<!--          if (d) {-->
-<!--            ElMessage({type: 'success', message: data.id ? '修改成功' : '保存成功'});-->
-<!--            emit('updateTable', d);-->
-<!--            onClose();-->
-<!--          }-->
-<!--        }-->
-<!--        loading.value = false;-->
-<!--      });-->
-<!--    };-->
-
-<!--    return {-->
-<!--      visible,-->
-<!--      loading,-->
-<!--      formModel,-->
-<!--      formRef,-->
-<!--      onClose,-->
-<!--      onSubmit-->
-<!--    };-->
-<!--  }-->
-<!--});-->
-<!--</script>-->
-
-
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';

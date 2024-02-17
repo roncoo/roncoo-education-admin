@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" width="600px" center @close="onClose()">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose()">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
       <el-form-item label="角色名称" prop="roleName">
         <el-input v-model="formModel.roleName" class="form-group" maxlength="50" show-word-limit/>

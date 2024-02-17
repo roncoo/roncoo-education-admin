@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :model-value="visible" :append-to-body="true" width="600px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
         <upload-image v-model="formModel.carouselImg" :width="500" :height="90"/>
@@ -22,13 +22,12 @@
     </template>
   </el-dialog>
 </template>
-
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import UploadImage from '@/components/Upload/Image/index.vue';
 import {systemApi} from '@/api/system';
-import EnumRadio from '@/components/Enums/Radio/index.vue'
+import EnumRadio from '@/components/Enum/Radio/index.vue'
 
 // 校验规则
 const formRef = ref()
@@ -88,5 +87,3 @@ const onClose = () => {
   Object.assign(formModel, formDefault);
 }
 </script>
-
-

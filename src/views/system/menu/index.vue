@@ -4,8 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
-            <el-button @click="resetQuery()">重置</el-button>
+            <el-button @click="resetQuery()">刷新</el-button>
             <el-button plain type="success" @click="openFormModal(null, '0')">添加</el-button>
           </el-form-item>
         </el-form>
@@ -87,7 +86,7 @@ const openFormModal = (item?: any, parentId?: string) => {
 }
 
 // 基础功能
-const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
+const {page, handlePage, query, resetQuery, handleDelete, handleStatus} = reactive({
   ...useTable({
     page: systemApi.sysMenuList,
     delete: systemApi.sysMenuDelete,

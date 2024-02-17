@@ -21,7 +21,6 @@
           </span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="章节描述" prop="chapterDesc"/>-->
       <el-table-column :width="100" label="排序" prop="sort"/>
       <el-table-column :width="100" label="收费">
         <template #default="scope">
@@ -30,9 +29,9 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="scope.row.periodName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.periodName" plain type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.chapterName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" plain type="success" @click="openFormModal(scope.row)">节添加</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openFormPeriodModal(scope.row)">节添加</el-button>
           <el-dropdown>
             <el-button> 更多操作
               <el-icon class="el-icon--right">
@@ -56,15 +55,23 @@
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
     <form-model ref="formRef" @refresh="handlePage"/>
+    <period ref="formPeriodRef" @refresh="handlePage"/>
   </div>
 </template>
 <script setup lang="ts">
 import {reactive, ref} from 'vue';
 import Pagination from "@/components/Pagination/index.vue";
-import FormModel from "./FormModel.vue";
 import useTable from "@/utils/table";
 import {courseApi} from "@/api/course";
-import {getEnumObj, transformSize} from "../../../utils/base";
+import {getEnumObj, transformSize} from "@/utils/base";
+import FormModel from "./FormModel.vue";
+import Period from "./Period.vue";
+
+// 节添加修改
+const formPeriodRef = ref();
+const openFormPeriodModal = (item?: any) => {
+  formPeriodRef.value.onOpen(item)
+}
 
 // 添加/修改
 const formRef = ref();

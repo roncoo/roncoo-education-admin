@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="菜单设置" :model-value="visible" width="600px" center @close="onClose()">
+  <el-dialog :append-to-body="true" :model-value="visible" title="菜单设置" width="600px" center @close="onClose()">
     <div style="min-height: 10vh">
       <el-tree
           ref="treeRef"

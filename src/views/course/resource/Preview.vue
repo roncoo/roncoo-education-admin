@@ -257,7 +257,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .video_body_content {
   position: relative;
   width: 100%;

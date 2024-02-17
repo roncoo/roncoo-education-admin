@@ -14,7 +14,7 @@ import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Mains from './components/Mains.vue'
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .el-scrollbar {
   width: 100%;
 }

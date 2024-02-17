@@ -182,7 +182,7 @@ export default {
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .cache_pie {
   display: flex;
   justify-content: center;

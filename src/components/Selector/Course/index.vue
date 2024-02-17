@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="props.visible" :append-to-body="true" :title="props.title" width="600px" @close="handleClose">
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="600px" center @close="handleClose">
     <el-form :model="query" class="filter-container" inline label-width="100px">
       <el-form-item label="课程名称">
         <el-input v-model="query.courseName"/>
@@ -53,7 +53,7 @@ const {page, handlePage, query, handleQuery, resetQuery} = reactive({
 })
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .example-showcase .el-loading-mask {
   z-index: 9;
 }

@@ -19,7 +19,7 @@ const handleChange = (item: any) => {
 
 const options = ref([])
 onMounted(() => {
-  courseApi.categoryList().then((res: any) => {
+  courseApi.categoryList({}).then((res: any) => {
     options.value = res
   })
 })

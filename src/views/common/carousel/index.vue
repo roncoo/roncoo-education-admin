@@ -76,7 +76,6 @@ const openFormModal = (item?: any) => {
   formRef.value.onOpen(item)
 }
 
-
 // 基础功能
 const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
   ...useTable({

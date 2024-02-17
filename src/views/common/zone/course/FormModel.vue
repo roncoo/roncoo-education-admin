@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="formModel.id ? '修改' : '添加'" :append-to-body="true" :model-value="modelValue" width="500px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="modelValue" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
@@ -18,12 +18,11 @@
     <select-course v-if="course.visible" :info="course.info" :visible="course.visible" @close="courseCallback"/>
   </el-dialog>
 </template>
-
 <script setup lang="ts">
 import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
 import {courseApi} from '@/api/course';
-import SelectCourse from '@/components/Selects/Course/index.vue';
+import SelectCourse from '@/components/Selector/Course/index.vue';
 
 // 校验规则
 const formRef = ref()

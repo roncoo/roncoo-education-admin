@@ -35,7 +35,7 @@
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="250" fixed="right" label="操作" prop="address">
+      <el-table-column :width="230" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="toUserRecord(scope.row)">数据</el-button>
           <el-dropdown>

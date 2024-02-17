@@ -22,7 +22,7 @@ const breadcrumbList = computed(() => {
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .el-breadcrumb {
   display: inline-block;
   vertical-align: top;

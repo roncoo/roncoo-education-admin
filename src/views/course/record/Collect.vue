@@ -19,11 +19,10 @@
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
-
 <script setup lang="ts">
 import useTable from '@/utils/table';
 import {reactive} from 'vue';
-import {courseApi} from '@/api/course.ts'
+import {courseApi} from '@/api/course'
 import {useRoute} from 'vue-router/dist/vue-router';
 import Pagination from '@/components/Pagination/index.vue';
 
@@ -35,6 +34,3 @@ const {page, handlePage, query, handleQuery, resetQuery} = reactive({
   }, {courseId: route.query.courseId})
 })
 </script>
-
-<style lang="less" scoped>
-</style>

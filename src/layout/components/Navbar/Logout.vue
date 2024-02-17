@@ -42,7 +42,7 @@ const onLogout = () => {
   });
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .user-info {
   align-items: center;
   float: right;

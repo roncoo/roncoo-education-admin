@@ -49,7 +49,7 @@ const toolbarConfig = {
 }
 const editorConfig = ref({});
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .w-e-text-container {
   height: 300px;
 }

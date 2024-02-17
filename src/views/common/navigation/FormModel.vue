@@ -22,12 +22,11 @@
     </template>
   </el-dialog>
 </template>
-
 <script setup lang="ts">
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {systemApi} from '@/api/system';
-import EnumRadio from "@/components/Enums/Radio/index.vue";
+import EnumRadio from "@/components/Enum/Radio/index.vue";
 
 // 校验规则
 const formRef = ref()

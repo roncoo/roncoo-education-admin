@@ -9,8 +9,6 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <!-- 上传组件 -->
-            <!--            <upload-vod :category-id="'0'" @refresh="handlePage"/>-->
             <upload-file @refresh="handlePage"/>
           </el-form-item>
         </el-form>
@@ -127,7 +125,7 @@ onMounted(() => {
   handleCatalog()
 })
 const handleCatalog = () => {
-  courseApi.categoryList({categoryType: 1}).then((res: any) => {
+  courseApi.categoryList({categoryType: 2}).then((res: any) => {
     treeData.value = res
   })
 }

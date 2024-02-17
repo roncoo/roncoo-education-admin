@@ -65,7 +65,6 @@ import Pagination from '@/components/Pagination/index.vue';
 import FormModal from "./FormModel.vue";
 import {getEnumObj} from "@/utils/base";
 
-
 // 添加/修改
 const formRef = ref();
 const openFormModal = (item?: any) => {

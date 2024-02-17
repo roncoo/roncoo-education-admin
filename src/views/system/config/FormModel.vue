@@ -29,7 +29,7 @@ import {reactive, ref} from 'vue';
 import {systemApi} from "@/api/system";
 import Editor from "@/components/Editor/index.vue";
 import UploadImage from "@/components/Upload/Image/index.vue";
-import EnumRadio from "@/components/Enums/Radio/index.vue";
+import EnumRadio from "@/components/Enum/Radio/index.vue";
 
 // 校验规则
 const formRef = ref()
@@ -88,3 +88,10 @@ const onClose = () => {
   Object.assign(formModel, formDefault);
 }
 </script>
+<style lang="less" scoped>
+.image-upload {
+  width: 700px !important;
+  text-align: center;
+  margin: 0 auto;
+}
+</style>

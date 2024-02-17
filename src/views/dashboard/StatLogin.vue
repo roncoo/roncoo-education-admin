@@ -5,77 +5,78 @@
   <div id="axis" class="axis"/>
 </template>
 
-<script>
-import * as echarts from 'echarts';
+<script setup lang="ts">
 
-export default {
-  name: 'StatLogin',
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return []
+const parseOption = () => {
+  const option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { // 坐标轴指示器，坐标轴触发有效
+        type: 'line' // 默认为直线，可选为：'line' | 'shadow'
       }
-    }
-  },
-  data() {
-    this.myChart = {}
-    return {}
-  },
-  watch: {
-    data() {
-      this.parseOption()
-    }
-  },
-  mounted() {
-    this.myChart = echarts.init(document.getElementById('axis'), 'light');
-    this.parseOption()
-  },
-  methods: {
-    parseOption() {
-      const option = {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        legend: {
-          data: ['登录人数', '注册人数']
-        },
-        xAxis: {
-          type: 'category',
-          axisTick: {show: false},
-          data: this.data.dateList
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: '登录人数',
-            type: 'line',
-            data: this.data.loginList,
-            label: {
-              show: false,
-              position: 'center'
-            }
-          },
-          {
-            name: '注册人数',
-            type: 'line',
-            data: this.data.registerList
-          }
+    },
+    legend: {
+      data: ['登录人数', '注册人数']
+    },
+    xAxis: {
+      type: 'category',
+      axisTick: {show: false},
+      data: this.data.dateList
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '登录人数',
+        type: 'line',
+        data: this.data.loginList,
+        label: {
+          show: false,
+          position: 'center'
+        }
+      },
+      {
+        name: '注册人数',
+        type: 'line',
+        data: this.data.registerList
+      }
 
-        ]
-      };
-      this.myChart.setOption(option)
-    }
-  }
+    ]
+  };
+  this.myChart.setOption(option)
 }
-</script>
 
-<style scoped>
+//
+// export default {
+//   name: 'StatLogin',
+//   props: {
+//     data: {
+//       type: Object,
+//       default: () => {
+//         return []
+//       }
+//     }
+//   },
+//   data() {
+//     this.myChart = {}
+//     return {}
+//   },
+//   watch: {
+//     data() {
+//       this.parseOption()
+//     }
+//   },
+//   mounted() {
+//     this.myChart = echarts.init(document.getElementById('axis'), 'light');
+//     this.parseOption()
+//   },
+//   methods: {
+//
+//   }
+// }
+</script>
+<style lang="less" scoped>
 .axis {
   height: 400px;
 }

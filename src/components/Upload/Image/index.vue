@@ -68,7 +68,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .image-upload {
   position: relative;
 

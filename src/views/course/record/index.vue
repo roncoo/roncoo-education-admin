@@ -55,7 +55,6 @@ import Pagination from "@/components/Pagination/index.vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
-
 const activeName = ref('course')
 
 // 明显
@@ -78,45 +77,4 @@ const {page, handlePage, query, handleQuery, resetQuery} = reactive({
     page: courseApi.userCourseRecord,
   }, {courseId: route.query.courseId})
 })
-//
-// export default defineComponent({
-//   components: {Study, CourseComment, CourseCollect},
-//   setup() {
-//     const route = useRoute()
-//     const apis = reactive({
-//       getList: courseApi.userCourseRecord
-//     })
-//     const state = reactive({
-//       ...Table(apis, {courseId: route.query.courseId}),
-//       activeName: 'course'
-//     });
-//
-//     let study = reactive({
-//       visible: false,
-//       info: {}
-//     })
-//     const studyRecord = (row) => {
-//       courseApi.userStudyePage({userId: row.userId, courseId: route.query.courseId}).then((res) => {
-//         study.info = res.list
-//         study.visible = true
-//       });
-//     }
-//     const studyCallback = () => {
-//       study.visible = false
-//     }
-//     const handleClick = (target, action) => {
-//       if (target.props.name === 'course') {
-//         state.getTableData()
-//       }
-//     }
-//
-//     return {
-//       ...toRefs(state),
-//       study,
-//       studyRecord,
-//       studyCallback,
-//       handleClick
-//     };
-//   }
-// });
 </script>
