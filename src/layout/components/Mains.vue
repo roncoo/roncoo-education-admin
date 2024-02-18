@@ -13,7 +13,7 @@
 
 <style lang="less" scoped>
 .el-main {
-  margin-left: 200px;
+  // margin-left: 200px;
   background: #f2f3f5;
   --el-main-padding: 20px 10px 10px;
 

@@ -1,5 +1,8 @@
 <template>
-  <el-aside @mouseleave="restoreSubMenu">
+  <el-aside @mouseleave="restoreSubMenu"  :class="{'show-sub':subMenuList}">
+    <div class="menu-side">
+
+   
     <div class="menu-main">
       <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
         <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
@@ -21,6 +24,7 @@
         </div>
       </el-menu>
     </div>
+  </div>
   </el-aside>
 </template>
 <script setup lang="ts">
@@ -97,9 +101,17 @@ function handleMenu(menu: any) {
 
 <style lang="less" scoped>
 .el-aside {
-  position: fixed;
+  // position: fixed;
   overflow: hidden;
-  width: var(--el-aside-width, 200px);
+  // width: var(--el-aside-width, 200px);
+  width:100px;
+  &.show-sub {
+    width: 200px
+  }
+}
+.menu-side {
+  position: fixed;
+  top: 60px;
 }
 
 .menu-main {
