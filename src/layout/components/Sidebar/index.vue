@@ -1,15 +1,16 @@
 <template>
   <el-aside @mouseleave="restoreSubMenu" :class="{ 'show-sub': subMenuList }">
     <div class="menu-side">
-
-
       <div class="menu-main">
         <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
           <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)"
-            :class="[hoverMenuId === item.id ? 'hover' : '']">
+               :class="[hoverMenuId === item.id ? 'hover' : '']"
+          >
             <router-link :to="item.path" @click="handleMenu(item)">
               <el-menu-item :class="[item.id === showMenuId ? 'is-active' : '']" :key="item.id" :index="item.path">{{
-                item.menuName }}</el-menu-item>
+                  item.menuName
+                }}
+              </el-menu-item>
             </router-link>
           </div>
         </el-menu>
@@ -30,9 +31,9 @@
   </el-aside>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from 'vue'
-import { useUserStore } from '@/store/modules/user';
-import { useRoute } from "vue-router/dist/vue-router";
+import {computed, onMounted, ref, watchEffect} from 'vue'
+import {useUserStore} from '@/store/modules/user';
+import {useRoute} from "vue-router/dist/vue-router";
 import router from "@/router";
 
 // 加载用户菜单
@@ -93,7 +94,7 @@ function showChildrenMenu(menuList: any, menu?: any) {
 // 点击主菜单
 function handleMenu(menu: any) {
   if (menu.children) {
-    router.push({ path: menu.children[0].path });
+    router.push({path: menu.children[0].path});
   }
   showMenuList.value = menu.children
   showMenuId.value = menu.id
@@ -103,16 +104,14 @@ function handleMenu(menu: any) {
 
 <style lang="less" scoped>
 .el-aside {
-  // position: fixed;
   overflow: hidden;
-  // width: var(--el-aside-width, 200px);
   width: 100px;
 
   &.show-sub {
     width: 200px;
   }
 
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .menu-side {
@@ -186,19 +185,20 @@ function handleMenu(menu: any) {
       margin: 5px auto;
       justify-content: center;
       width: 80px;
+
       &:hover {
         background-color: #f0f1ff;
         border-radius: 5px;
-  
-        width: 80px;      
-      
+
+        width: 80px;
+
       }
     }
 
     .is-active {
       background-color: #f0f1ff;
       border-radius: 5px;
-    
+
       width: 80px;
     }
   }

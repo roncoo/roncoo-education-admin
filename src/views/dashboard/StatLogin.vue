@@ -6,8 +6,17 @@
 </template>
 
 <script setup lang="ts">
+import * as echarts from 'echarts';
+import {onMounted} from "vue";
+import {statApi} from "@/api/dashboard";
 
-const parseOption = () => {
+onMounted(() => {
+  init()
+})
+
+const init = async () => {
+  const myChart = echarts.init(document.getElementById('axis'), 'light');
+  const data = await statApi.login();
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -21,7 +30,7 @@ const parseOption = () => {
     xAxis: {
       type: 'category',
       axisTick: {show: false},
-      data: this.data.dateList
+      data: data.dateList
     },
     yAxis: {
       type: 'value'
@@ -30,7 +39,7 @@ const parseOption = () => {
       {
         name: '登录人数',
         type: 'line',
-        data: this.data.loginList,
+        data: data.loginList,
         label: {
           show: false,
           position: 'center'
@@ -39,42 +48,13 @@ const parseOption = () => {
       {
         name: '注册人数',
         type: 'line',
-        data: this.data.registerList
+        data: data.registerList
       }
 
     ]
   };
-  this.myChart.setOption(option)
+  myChart.setOption(option)
 }
-
-//
-// export default {
-//   name: 'StatLogin',
-//   props: {
-//     data: {
-//       type: Object,
-//       default: () => {
-//         return []
-//       }
-//     }
-//   },
-//   data() {
-//     this.myChart = {}
-//     return {}
-//   },
-//   watch: {
-//     data() {
-//       this.parseOption()
-//     }
-//   },
-//   mounted() {
-//     this.myChart = echarts.init(document.getElementById('axis'), 'light');
-//     this.parseOption()
-//   },
-//   methods: {
-//
-//   }
-// }
 </script>
 <style lang="less" scoped>
 .axis {
@@ -82,7 +62,7 @@ const parseOption = () => {
 }
 
 .title-info {
-  margin: 20px 25px;
+  margin: 20px 0;
   padding: 5px;
   background-color: #ecf8ff;
   border-left: 5px solid #50bfff;

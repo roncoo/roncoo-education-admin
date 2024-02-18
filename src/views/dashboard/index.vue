@@ -16,10 +16,9 @@ import Login from './StatLogin.vue'
 </script>
 <style lang="less" scoped>
 .info {
-  margin: 20px 25px;
-  padding: 5px;
+  padding: 15px;
   background-color: #f5f7fa;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 16px;
 }
 </style>
