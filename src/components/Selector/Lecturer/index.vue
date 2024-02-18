@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="true" :append-to-body="true" :title="props.title" width="800px" @close="handleClose">
+  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" @close="handleClose">
     <div class="search_bar clearfix">
       <el-form :model="query" inline label-width="80px">
         <el-form-item label="讲师名称">
@@ -20,7 +20,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" :current-page="page.pageCurrent" :page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
   </el-dialog>
 </template>
 

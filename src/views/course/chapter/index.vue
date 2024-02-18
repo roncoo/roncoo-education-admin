@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-button plain type="success" @click="openFormModal(editForm)">章添加</el-button>
+            <el-button plain type="success" @click="openFormModal()">章添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -16,7 +16,7 @@
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
           <span v-if="scope.row.resourceViewResp"> 【{{ getEnumObj('ResourceTypeEnum')[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }} |
-            <span v-if="scope.row.resourceViewResp.resourceType<3">{{ transformSize(scope.row.resourceViewResp.videoLength) }}</span>
+            <span v-if="scope.row.resourceViewResp.resourceType<3">{{ formatTime(scope.row.resourceViewResp.videoLength) }}</span>
             <span v-else>{{ scope.row.resourceViewResp.docPage }} 页</span> 】
           </span>
         </template>
@@ -63,7 +63,7 @@ import {reactive, ref} from 'vue';
 import Pagination from "@/components/Pagination/index.vue";
 import useTable from "@/utils/table";
 import {courseApi} from "@/api/course";
-import {getEnumObj, transformSize} from "@/utils/base";
+import {formatTime, getEnumObj} from "@/utils/base";
 import FormModel from "./FormModel.vue";
 import Period from "./Period.vue";
 

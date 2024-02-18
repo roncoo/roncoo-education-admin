@@ -2,10 +2,14 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '节修改' : '节添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="节名称" prop="periodName">
-        <el-input v-model="formModel.periodName" maxlength="100" show-word-limit></el-input>
+        <el-input v-model="formModel.periodName" maxlength="100" show-word-limit/>
+      </el-form-item>
+      <el-form-item class="form-group" label="资源" prop="resourceName">
+        <el-input v-model="formModel.resourceName" disabled style="width: 210px; margin-right: 20px"/>
+        <el-button plain type="primary" @click="resourceSelect">选择资源</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="设置" prop="isFree">
-        <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'"></enum-radio>
+        <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'"/>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"/>
@@ -17,6 +21,7 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
+    <select-resource v-if="resource.visible" :visible="resource.visible" @close="handleResource"/>
   </el-dialog>
 </template>
 
@@ -25,11 +30,31 @@ import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course';
 import EnumRadio from "@/components/Enum/Radio/index.vue";
+import SelectResource from '@/components/Selector/Resource/index.vue';
+
+// 资源设置
+const resource = ref({
+  visible: false
+})
+
+const resourceSelect = () => {
+  resource.value.visible = true
+}
+
+const handleResource = (item: any) => {
+  resource.value.visible = false
+  if (item) {
+    formModel.resourceName = item.resourceName
+    formModel.resourceId = item.resourceId
+  }
+}
+
 
 // 校验规则
 const formRef = ref()
 const rules = {
-  periodName: [{required: true, message: '不能为空', trigger: 'blur'}]
+  periodName: [{required: true, message: '不能为空', trigger: 'blur'}],
+  resourceName: [{required: true, message: '不能为空', trigger: 'blur'}]
 }
 
 // 表单
@@ -38,6 +63,7 @@ const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
   periodName: undefined,
+  resourceName: undefined,
   isFree: 1,
   sort: 1
 }
@@ -72,6 +98,7 @@ const visible = ref(false);// 弹窗显示状态
 const onOpen = (item: any, chapterId?: number) => {
   if (item) {
     Object.assign(formModel, item);
+    formModel.resourceName = item.resourceViewResp.resourceName
   }
   if (chapterId) {
     formModel.chapterId = chapterId

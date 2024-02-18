@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="modelValue" :append-to-body="true" :before-close="onClose" width="700px" custom-class="preview_dialog" title="预览" top="5vh">
+  <el-dialog :append-to-body="true" v-model="modelValue" :before-close="onClose" width="700px" custom-class="preview_dialog" title="预览" top="5vh">
     <div class="video_body_content">
       <div class="video_content clearfix">
         <div class="win_box">
@@ -12,6 +12,7 @@
         <el-button @click="onClose">关闭</el-button>
       </div>
     </template>
+
   </el-dialog>
 </template>
 
@@ -23,6 +24,7 @@ import {useUserStore} from '@/store/modules/user';
 
 export default {
   name: 'Preview',
+  components: {SelectCourse},
   props: {
     modelValue: {
       type: Boolean,
