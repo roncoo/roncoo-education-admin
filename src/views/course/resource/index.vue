@@ -9,32 +9,13 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <upload-file @refresh="handlePage"/>
+            <upload-file :category-id="query.categoryId" @refresh="handlePage"/>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div class="table-container">
-      <div class="table-catalog">
-        <div class="table-catalog-title">
-          <span>资源目录</span>
-          <el-button text link @click="openFormCatalog" style="margin-left: 70px">
-            <el-icon>
-              <CirclePlus/>
-            </el-icon>
-          </el-button>
-        </div>
-        <el-tree
-            :data="treeData"
-            :props="{ value: 'id',label: 'categoryName',  children: 'childrenList' }"
-            node-key="id"
-        >
-          <template #default="{ node, data }">
-            <span><el-icon><Folder/></el-icon></span>
-            <span class="table-catalog-name">{{ data.categoryName }}</span>
-          </template>
-        </el-tree>
-      </div>
+      <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage"/>
       <div class="table-main">
         <el-table v-loading="page.loading" :data="page.list" border>
           <el-table-column type="selection" :width="40"/>
@@ -96,39 +77,21 @@
       </div>
     </div>
     <form-model ref="formRef" @refresh="handlePage"/>
-    <form-catalog ref="catalogRef" @refresh="handleCatalog"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import useTable from '@/utils/table';
-import {onMounted, reactive, ref} from 'vue';
+import {reactive, ref} from 'vue';
 import FormModel from './FormModel.vue';
 import Pagination from "@/components/Pagination/index.vue";
 import {courseApi} from "@/api/course";
 import {formatTime, getEnumObj, transformSize} from "@/utils/base";
-import FormCatalog from "./FormCatalog.vue";
+import CascaderCategory from "@/components/Cascader/Category/index.vue";
 import UploadFile from '@/components/Upload/File/index.vue'
 
 // 上传回调，保存资源
 
-
-// 添加/修改文件夹
-const catalogRef = ref();
-const openFormCatalog = (item?: any) => {
-  catalogRef.value.onOpen(item)
-}
-
-// 列出文件夹
-const treeData = ref()
-onMounted(() => {
-  handleCatalog()
-})
-const handleCatalog = () => {
-  courseApi.categoryList({categoryType: 2}).then((res: any) => {
-    treeData.value = res
-  })
-}
 
 // 添加/修改
 const formRef = ref();
@@ -149,24 +112,6 @@ const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleSta
 
 .table-container {
   display: flex;
-}
-
-.table-catalog {
-  display: block;
-  min-height: calc(100vh - 180px);
-  margin-bottom: 52px;
-  width: 200px;
-  border: 1px solid #EBEEF5;
-  border-right: none;
-
-  .table-catalog-title {
-    cursor: default;
-    padding: 10px 20px;
-  }
-
-  .table-catalog-name {
-    margin-left: 5px;
-  }
 }
 
 .table-main {

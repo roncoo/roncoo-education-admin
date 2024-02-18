@@ -19,6 +19,7 @@ import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {courseApi} from "@/api/course";
 
+
 // 校验规则
 const formRef = ref()
 const rules = {
@@ -30,8 +31,7 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  parentId: 0,
-  categoryType: 2,
+  parentId: undefined,
   categoryName: undefined,
   sort: 1
 }
@@ -63,9 +63,14 @@ const onSubmit = async () => {
 
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
+const onOpen = (item: any, parentId?: number) => {
   if (item) {
     Object.assign(formModel, item);
+  }
+  if (parentId) {
+    formModel.parentId = parentId
+    formModel.id = undefined
+    formModel.categoryName = undefined
   }
   visible.value = true
 }

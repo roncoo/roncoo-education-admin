@@ -45,12 +45,12 @@ const handleCreated = (editor: any) => {
   editorRef.value = editor
 }
 const toolbarConfig = {
-  excludeKeys: ["emotion", "group-image", "group-video", "fullScreen"],
+  excludeKeys: ["emotion", "group-video"],
 }
 const editorConfig = ref({});
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .w-e-text-container {
-  height: 300px;
+  min-height: 300px;
 }
 </style>
