@@ -35,22 +35,23 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
+    <study ref="studyInfo"/>
   </div>
 </template>
 <script setup lang="ts">
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
-
 import {usersApi} from '@/api/users'
 import Pagination from "@/components/Pagination/index.vue";
+import Study from "./Study.vue";
 
-// 添加/修改
-const formRef = ref();
-const openFormModal = (item?: any) => {
-  formRef.value.onOpen(item)
+// 查看
+const studyInfo = ref();
+const studyRecord = (item?: any) => {
+  studyInfo.value.onOpen(item)
 };
 // 基础功能
-const {page, handlePage, query, handleQuery, resetQuery, handleStatus} = reactive({
+const {page, handlePage, query, handleQuery, resetQuery} = reactive({
   ...useTable({
     page: usersApi.userCoursePage,
   })

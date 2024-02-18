@@ -80,12 +80,10 @@ const onClose = () => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: systemApi.sysRolePage,
-})
-
 const {page, handlePage, query, handleQuery, resetQuery} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: systemApi.sysRolePage,
+  })
 })
 </script>
 

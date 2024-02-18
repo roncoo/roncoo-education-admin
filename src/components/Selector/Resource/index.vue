@@ -58,11 +58,10 @@ const handleClose = () => {
 }
 
 // 基础功能
-const apis = reactive({
-  page: courseApi.resourcePage,
-})
 const {page, handlePage, query, handleQuery, resetQuery} = reactive({
-  ...useTable(apis)
+  ...useTable({
+    page: courseApi.resourcePage,
+  })
 })
 </script>
 

@@ -22,11 +22,10 @@ const handleClick = (tab: TabsPaneContext) => {
 
 const activeName = ref('1')
 // 基础功能
-const apis = reactive({
-  page: systemApi.sysConfigList
-})
 const {page, handlePage, query} = reactive({
-  ...useTable(apis, {'configType': activeName.value})
+  ...useTable({
+    page: systemApi.sysConfigList
+  }, {'configType': activeName.value})
 })
 
 const tabPanes = [
