@@ -14,21 +14,28 @@ import {onMounted} from 'vue';
 import {statApi} from "@/api/dashboard";
 
 onMounted(() => {
+  let pieOne = echarts.getInstanceByDom(document.getElementById('cachePieOne'))
+  if (pieOne == undefined) {
+    pieOne = echarts.init(document.getElementById('cachePieOne'), 'light');
+  }
+  let pieTwo = echarts.getInstanceByDom(document.getElementById('cachePieTwo'))
+  if (pieTwo == undefined) {
+    pieTwo = echarts.init(document.getElementById('cachePieTwo'), 'light');
+  }
+
   statApi.vod().then(res => {
-    init1(res)
-    init2(res)
+    init1(pieOne, res)
+    init2(pieTwo, res)
   })
 })
 
-const init1 = (data: any) => {
+const init1 = (pieOne: any, data: any) => {
   // 总流量
   const totalFlow = data.totalFlow;
   // 已用流量
   const usedFlow = data.usedFlow ? data.usedFlow.toFixed(2) : 0;
   // 剩余流量
   const surplusFlow = (totalFlow - usedFlow).toFixed(2);
-
-  const pieOne = echarts.init(document.getElementById('cachePieOne'), 'light');
   const option1 = {
     title: {
       text: '流量使用情况',
@@ -93,7 +100,7 @@ const init1 = (data: any) => {
   pieOne.setOption(option1)
 }
 
-const init2 = (data: any) => {
+const init2 = (pieTwo: any, data: any) => {
   // 总空间
   const totalSpace = data.totalSpace;
   // 已用空间
@@ -101,7 +108,6 @@ const init2 = (data: any) => {
   // 剩余流量
   const surplusSpace = (totalSpace - usedSpace).toFixed(2);
 
-  const pieTwo = echarts.init(document.getElementById('cachePieTwo'), 'light');
   const option2 = {
     title: {
       text: '空间使用情况',
