@@ -1,36 +1,38 @@
 <template>
-  <el-aside @mouseleave="restoreSubMenu"  :class="{'show-sub':subMenuList}">
+  <el-aside @mouseleave="restoreSubMenu" :class="{ 'show-sub': subMenuList }">
     <div class="menu-side">
 
-   
-    <div class="menu-main">
-      <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
-        <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover':'']">
-          <router-link :to="item.path" @click="handleMenu(item)">
-            <el-menu-item :class="[item.id === showMenuId? 'is-active':'']" :key="item.id" :index="item.path">{{ item.menuName }}</el-menu-item>
-          </router-link>
-        </div>
-      </el-menu>
+
+      <div class="menu-main">
+        <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
+          <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)"
+            :class="[hoverMenuId === item.id ? 'hover' : '']">
+            <router-link :to="item.path" @click="handleMenu(item)">
+              <el-menu-item :class="[item.id === showMenuId ? 'is-active' : '']" :key="item.id" :index="item.path">{{
+                item.menuName }}</el-menu-item>
+            </router-link>
+          </div>
+        </el-menu>
+      </div>
+      <!-- 子菜单 -->
+      <div class="menu-sub" v-if="subMenuList">
+        <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList">
+          <div class="menu-sub-item">
+            <router-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
+              <el-menu-item :class="[sub.id === showSubMenuId ? 'is-active' : '']" :key="sub.id" :index="sub.path">
+                {{ sub.menuName }}
+              </el-menu-item>
+            </router-link>
+          </div>
+        </el-menu>
+      </div>
     </div>
-    <!-- 子菜单 -->
-    <div class="menu-sub" v-if="subMenuList">
-      <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList">
-        <div class="menu-sub-item">
-          <router-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
-            <el-menu-item :class="[sub.id === showSubMenuId ? 'is-active':'']" :key="sub.id" :index="sub.path">
-              {{ sub.menuName }}
-            </el-menu-item>
-          </router-link>
-        </div>
-      </el-menu>
-    </div>
-  </div>
   </el-aside>
 </template>
 <script setup lang="ts">
-import {computed, onMounted, ref, watchEffect} from 'vue'
-import {useUserStore} from '@/store/modules/user';
-import {useRoute} from "vue-router/dist/vue-router";
+import { computed, onMounted, ref, watchEffect } from 'vue'
+import { useUserStore } from '@/store/modules/user';
+import { useRoute } from "vue-router/dist/vue-router";
 import router from "@/router";
 
 // 加载用户菜单
@@ -91,7 +93,7 @@ function showChildrenMenu(menuList: any, menu?: any) {
 // 点击主菜单
 function handleMenu(menu: any) {
   if (menu.children) {
-    router.push({path: menu.children[0].path});
+    router.push({ path: menu.children[0].path });
   }
   showMenuList.value = menu.children
   showMenuId.value = menu.id
@@ -104,11 +106,15 @@ function handleMenu(menu: any) {
   // position: fixed;
   overflow: hidden;
   // width: var(--el-aside-width, 200px);
-  width:100px;
+  width: 100px;
+
   &.show-sub {
-    width: 200px
+    width: 200px;
   }
+
+  transition: all 0.2s;
 }
+
 .menu-side {
   position: fixed;
   top: 60px;
@@ -159,10 +165,15 @@ function handleMenu(menu: any) {
   }
 }
 
+
 .menu-sub {
-  width: 100px;
+  width: 0px;
+  opacity: 0;
   float: left;
-  margin-top: 10px;
+  padding-top: 10px;
+  background-color: #fff;
+  height: calc(100vh - 50px);
+  transition: all 0.2s;
 
   .el-menu {
     border: none;
@@ -171,23 +182,33 @@ function handleMenu(menu: any) {
   .menu-sub-item {
     .el-menu-item {
       height: 40px;
-
+      box-sizing: border-box;
+      margin: 5px auto;
+      justify-content: center;
+      width: 80px;
       &:hover {
         background-color: #f0f1ff;
         border-radius: 5px;
-        justify-content: center;
-        width: 80px;
-        margin: 5px auto;
+  
+        width: 80px;      
+      
       }
     }
 
     .is-active {
       background-color: #f0f1ff;
       border-radius: 5px;
-      justify-content: center;
+    
       width: 80px;
-      margin: 0 auto;
     }
+  }
+}
+
+.show-sub {
+  .menu-sub {
+    transition: all 0.2s;
+    width: 100px;
+    opacity: 1;
   }
 }
 

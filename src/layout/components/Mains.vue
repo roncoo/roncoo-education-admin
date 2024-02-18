@@ -16,7 +16,7 @@
   // margin-left: 200px;
   background: #f2f3f5;
   --el-main-padding: 20px 10px 10px;
-
+  transition: margin-right 2s;
   .main-container {
     background: #fff;
     min-height: calc(100vh - 130px);
