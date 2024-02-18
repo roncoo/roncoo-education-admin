@@ -3,33 +3,41 @@
     <span class="title">视频云使用情况</span>
   </div>
   <div class="cache_pie">
-    <div id="cachePieTwo" class="axis"></div>
-    <div id="cachePieOne" class="axis"></div>
+    <div id="cachePieTwo" ref="pieOneRef" class="axis"></div>
+    <div id="cachePieOne" ref="pieTwoRef" class="axis"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts';
-import {onMounted} from 'vue';
+import {EChartsType} from 'echarts/'
+import {onMounted,reactive,ref} from 'vue';
 import {statApi} from "@/api/dashboard";
 
+
+const charts = reactive({
+  pieOne:<EChartsType | null>null,
+  pieTwo:<EChartsType | null>null
+})
+const pieOneRef = ref<HTMLElement>()
+const pieTwoRef = ref<HTMLElement>()
+
 onMounted(() => {
-  let pieOne = echarts.getInstanceByDom(document.getElementById('cachePieOne'))
-  if (pieOne == undefined) {
-    pieOne = echarts.init(document.getElementById('cachePieOne'), 'light');
+
+  if(!charts.pieOne) {
+    charts.pieOne = echarts.init(pieOneRef.value)
   }
-  let pieTwo = echarts.getInstanceByDom(document.getElementById('cachePieTwo'))
-  if (pieTwo == undefined) {
-    pieTwo = echarts.init(document.getElementById('cachePieTwo'), 'light');
+  if(!charts.pieTwo) {
+    charts.pieTwo = echarts.init(pieTwoRef.value)
   }
 
   statApi.vod().then(res => {
-    init1(pieOne, res)
-    init2(pieTwo, res)
+    init1( res)
+    init2( res)
   })
 })
 
-const init1 = (pieOne: any, data: any) => {
+const init1 = ( data: any) => {
   // 总流量
   const totalFlow = data.totalFlow;
   // 已用流量
@@ -97,10 +105,11 @@ const init1 = (pieOne: any, data: any) => {
       }
     ]
   };
-  pieOne.setOption(option1)
+  // pieOne.setOption(option1)
+  charts.pieOne?.setOption(option1)
 }
 
-const init2 = (pieTwo: any, data: any) => {
+const init2 = (data: any) => {
   // 总空间
   const totalSpace = data.totalSpace;
   // 已用空间
@@ -170,7 +179,8 @@ const init2 = (pieTwo: any, data: any) => {
       }
     ]
   };
-  pieTwo.setOption(option2)
+  charts.pieTwo?.setOption(option2)
+
 }
 
 </script>
