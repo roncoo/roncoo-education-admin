@@ -31,7 +31,7 @@
         <template #default="scope">
           <el-button v-if="scope.row.periodName" plain type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.chapterName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" plain type="success" @click="openFormPeriodModal(scope.row)">节添加</el-button>
+          <el-button v-if="scope.row.chapterName" plain type="success" @click="openFormPeriodModal(null, scope.row.chapterId)">节添加</el-button>
           <el-dropdown>
             <el-button> 更多操作
               <el-icon class="el-icon--right">
@@ -69,8 +69,8 @@ import Period from "./Period.vue";
 
 // 节添加修改
 const formPeriodRef = ref();
-const openFormPeriodModal = (item?: any) => {
-  formPeriodRef.value.onOpen(item)
+const openFormPeriodModal = (item?: any, chapterId?: number) => {
+  formPeriodRef.value.onOpen(item, chapterId)
 }
 
 // 添加/修改

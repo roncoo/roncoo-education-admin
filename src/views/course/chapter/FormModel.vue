@@ -4,11 +4,11 @@
       <el-form-item class="form-group" label="章名称" prop="chapterName">
         <el-input v-model="formModel.chapterName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="收费" prop="isFree">
+      <el-form-item class="form-group" label="设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort" min="1"/>
+        <el-input-number v-model="formModel.sort"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -42,6 +42,7 @@ const formDefault = {
   carouselTitle: undefined,
   carouselUrl: undefined,
   carouselTarget: '_blank',
+  isFree: 1,
   sort: 1
 }
 const formModel = reactive({...formDefault})

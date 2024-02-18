@@ -1,6 +1,6 @@
 <template>
-  <svg :class="svgClass" v-bind="$attrs">
-    <use :xlink:href="iconName"></use>
+  <svg :class="svgClass">
+    <use :href="iconName"></use>
   </svg>
 </template>
 

@@ -2,20 +2,28 @@
   <div class="title-info">
     <span class="title">最近14天登录人数</span>
   </div>
-  <div id="axis" class="axis"/>
+  <div id="axis" ref="axisRef" class="axis"/>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts';
-import {onMounted} from "vue";
+import {EChartsType} from 'echarts';
+import {onMounted, reactive, ref} from "vue";
 import {statApi} from "@/api/dashboard";
 
+const charts = reactive({
+  axisRef: <EChartsType | null>null
+})
+const axisRef = ref<HTMLElement>()
+
 onMounted(() => {
+  if (!charts.axisRef) {
+    charts.axisRef = echarts.init(axisRef.value);
+  }
   init()
 })
 
 const init = async () => {
-  const myChart = echarts.init(document.getElementById('axis'), 'light');
   const data = await statApi.login();
   const option = {
     tooltip: {
@@ -50,10 +58,9 @@ const init = async () => {
         type: 'line',
         data: data.registerList
       }
-
     ]
   };
-  myChart.setOption(option)
+  charts.axisRef?.setOption(option)
 }
 </script>
 <style lang="less" scoped>

@@ -10,34 +10,31 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts';
-import {EChartsType} from 'echarts/'
-import {onMounted,reactive,ref} from 'vue';
+import {EChartsType} from 'echarts';
+import {onMounted, reactive, ref} from 'vue';
 import {statApi} from "@/api/dashboard";
 
-
 const charts = reactive({
-  pieOne:<EChartsType | null>null,
-  pieTwo:<EChartsType | null>null
+  pieOne: <EChartsType | null>null,
+  pieTwo: <EChartsType | null>null
 })
 const pieOneRef = ref<HTMLElement>()
 const pieTwoRef = ref<HTMLElement>()
 
 onMounted(() => {
-
-  if(!charts.pieOne) {
+  if (!charts.pieOne) {
     charts.pieOne = echarts.init(pieOneRef.value)
   }
-  if(!charts.pieTwo) {
+  if (!charts.pieTwo) {
     charts.pieTwo = echarts.init(pieTwoRef.value)
   }
-
   statApi.vod().then(res => {
-    init1( res)
-    init2( res)
+    init1(res)
+    init2(res)
   })
 })
 
-const init1 = ( data: any) => {
+const init1 = (data: any) => {
   // 总流量
   const totalFlow = data.totalFlow;
   // 已用流量
@@ -105,7 +102,6 @@ const init1 = ( data: any) => {
       }
     ]
   };
-  // pieOne.setOption(option1)
   charts.pieOne?.setOption(option1)
 }
 
@@ -180,7 +176,6 @@ const init2 = (data: any) => {
     ]
   };
   charts.pieTwo?.setOption(option2)
-
 }
 
 </script>

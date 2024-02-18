@@ -4,11 +4,11 @@
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit></el-input>
       </el-form-item>
-      <el-form-item class="form-group" label="收费" prop="isFree">
+      <el-form-item class="form-group" label="设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort" min="1"/>
+        <el-input-number v-model="formModel.sort"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -37,7 +37,9 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  periodName: undefined
+  periodName: undefined,
+  isFree: 1,
+  sort: 1
 }
 const formModel = reactive({...formDefault})
 const onSubmit = async () => {
@@ -67,9 +69,12 @@ const onSubmit = async () => {
 
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
+const onOpen = (item: any, chapterId?: number) => {
   if (item) {
     Object.assign(formModel, item);
+  }
+  if (chapterId) {
+    formModel.chapterId = chapterId
   }
   visible.value = true
 }
