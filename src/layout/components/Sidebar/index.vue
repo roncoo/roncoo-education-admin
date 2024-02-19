@@ -111,7 +111,7 @@ function handleMenu(menu: any) {
     width: 200px;
   }
 
-  transition: all 0.3s;
+  transition: all 0.5s;
 }
 
 .menu-side {
@@ -164,7 +164,6 @@ function handleMenu(menu: any) {
   }
 }
 
-
 .menu-sub {
   width: 0px;
   opacity: 0;
@@ -172,7 +171,7 @@ function handleMenu(menu: any) {
   padding-top: 10px;
   background-color: #fff;
   height: calc(100vh - 50px);
-  transition: all 0.2s;
+  transition: all 0.5s;
 
   .el-menu {
     border: none;
@@ -189,16 +188,13 @@ function handleMenu(menu: any) {
       &:hover {
         background-color: #f0f1ff;
         border-radius: 5px;
-
         width: 80px;
-
       }
     }
 
     .is-active {
       background-color: #f0f1ff;
       border-radius: 5px;
-
       width: 80px;
     }
   }
@@ -206,7 +202,7 @@ function handleMenu(menu: any) {
 
 .show-sub {
   .menu-sub {
-    transition: all 0.2s;
+    transition: all 0.5s;
     width: 100px;
     opacity: 1;
   }

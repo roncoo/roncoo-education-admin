@@ -1,9 +1,9 @@
 <template>
-  <div style="border: 1px solid #ccc; margin-top: 10px; width: 100%">
+  <div style="border: 1px solid #ccc; margin-top: 10px; width: 100%; ">
     <toolbar
         :editor="editorRef"
         :default-config="toolbarConfig"
-        mode="default"
+        mode="simple"
         style="border-bottom: 1px solid #ccc"
     />
     <editor
@@ -11,6 +11,7 @@
         :model-value="props.modelValue"
         @onChange="handleChange"
         @onCreated="handleCreated"
+        style="height: 300px"
     />
   </div>
 </template>
@@ -44,13 +45,13 @@ const editorRef = shallowRef();
 const handleCreated = (editor: any) => {
   editorRef.value = editor
 }
-const toolbarConfig = {
-  excludeKeys: ["emotion", "group-video"],
-}
+const toolbarConfig = ref({
+  excludeKeys: ["emotion", 'group-image', 'group-video', 'insertVideo', 'uploadVideo', 'redo', 'undo', 'fullScreen'],
+})
 const editorConfig = ref({});
 </script>
 <style lang="less">
 .w-e-text-container {
-  min-height: 300px;
+  height: 300px;
 }
 </style>

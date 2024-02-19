@@ -15,7 +15,7 @@
 .el-main {
   background: #f2f3f5;
   --el-main-padding: 20px 10px 10px;
-  transition: margin-right 0.3s;
+  transition: margin-right 0.5s;
 
   .main-container {
     background: #fff;
