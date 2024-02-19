@@ -23,6 +23,10 @@ const constantRoutes = [
         path: PATH.URL_403,
         component: () => import('@/views/403.vue'),
         meta: {title: '403'}
+    },
+    {
+        path: '/:pathMatch(.*)',
+        redirect: '/404'
     }
 ]
 
