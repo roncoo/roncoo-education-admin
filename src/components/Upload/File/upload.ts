@@ -21,7 +21,7 @@ export const handleVod = async (startFile: UploadFile) => {
                 startFile.progress = parseInt(String(data.progress * 100))
             }
             if (type === 'FileSucceed') {
-                startFile.videoVid = data.vid
+                startFile.videoVid = data.fileData.vid
                 handleResource(startFile).then(() => {
                     startFile.status = 'success'
                     useUploadStore().addSuccessFile(startFile)

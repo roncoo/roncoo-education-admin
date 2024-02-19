@@ -172,11 +172,9 @@ export const courseApi = {
 
     /**
      * 素材信息预览
-     * @param data
-     * @returns {*},
      */
     resourceLibraryPreview: (data: any) => {
-        return postRequest('/resource/admin/material/preview', data)
+        return getRequest('/course/admin/resource/preview?id=' + data.id)
     }
 }
 

@@ -35,7 +35,6 @@ const onUpload = (file: any) => {
     status: 'ready',
     progress: 0,
   }
-  console.log(file)
   // 资源类型：视频1，音频2，文档3，图片4，压缩文件5
   if (vodType.indexOf(file.file.type) > -1) {
     uploadFile.resourceType = 1

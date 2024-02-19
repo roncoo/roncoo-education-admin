@@ -82,7 +82,6 @@ const startUpload = (row?: UploadFile) => {
   if (startFile) {
     listing.value = true
     startFile.status = 'doing'
-    console.log(startFile)
     if (startFile.resourceType === 1 || startFile.resourceType === 2) {
       // 视频、音频上传
       handleVod(startFile)

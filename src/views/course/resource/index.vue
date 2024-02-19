@@ -50,8 +50,8 @@
           </el-table-column>
           <el-table-column :width="230" fixed="right" label="操作" prop="address">
             <template #default="scope">
-              <el-button plain type="primary" @click="openFormModal(scope.row)">编辑
-              </el-button>
+              <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+              <el-button plain type="primary" @click="onPreview(scope.row)">预览</el-button>
               <el-dropdown>
                 <el-button> 更多操作
                   <el-icon class="el-icon--right">
@@ -77,6 +77,7 @@
       </div>
     </div>
     <form-model ref="formRef" @refresh="handlePage"/>
+    <preview v-if="resource.visible" :resource-id="resource.resourceId"/>
   </div>
 </template>
 
@@ -84,14 +85,22 @@
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import FormModel from './FormModel.vue';
+import Preview from '@/components/Preview/index.vue';
 import Pagination from "@/components/Pagination/index.vue";
 import {courseApi} from "@/api/course";
 import {formatTime, getEnumObj, transformSize} from "@/utils/base";
 import CascaderCategory from "@/components/Cascader/Category/index.vue";
 import UploadFile from '@/components/Upload/File/index.vue'
 
-// 上传回调，保存资源
-
+// 预览
+const resource = reactive({
+  visible: false,
+  resourceId: ''
+})
+const onPreview = (item?: any) => {
+  resource.visible = true
+  resource.resourceId = item.id
+}
 
 // 添加/修改
 const formRef = ref();

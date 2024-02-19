@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" @close="handleClose">
+  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" center @close="handleClose">
     <div class="search_bar clearfix">
       <el-form :model="query" inline label-width="80px">
         <el-form-item label="讲师名称">

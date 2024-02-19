@@ -21,7 +21,7 @@ export const getPolyvClient = (userData: any) => {
         ptime: userData.ptime,
         hash: userData.hash,
         sign: userData.sign,
-        cataid: userData.cataid
+        cataid: userData.categoryId
     })
     return videoUpload;
 }
