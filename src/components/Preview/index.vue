@@ -1,9 +1,6 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="预览" width="600px" center @close="onClose">
-    <div class="play">
-      <div id="players"></div>
-    </div>
-
+  <el-dialog :append-to-body="true" :model-value="visible" :title="props.resourceName" width="600px" center @close="onClose">
+    <div id="player"></div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="onClose()">取消</el-button>
@@ -21,6 +18,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  resourceName: {
+    type: String,
+    default: '预览'
+  },
   visible: {
     type: Boolean,
     default: false
@@ -30,19 +31,23 @@ const visible = ref(props.visible)
 
 onMounted(async () => {
   const res = await courseApi.resourceLibraryPreview({id: props.resourceId})
-  console.log(JSON.parse(res.vodPlayConfig))
+  const params = JSON.parse(res.vodPlayConfig)
 
-  const polyvPlayer = window.polyvPlayer;
-  const player = polyvPlayer({
-    wrap: '#players',
-    vid: res.vid
+  window.polyvPlayer({
+    wrap: '#player',
+    autoplay: true,
+    showHd: false,
+    hideSwitchPlayer: true,
+    showLine: 'off',
+    playsafe: params.token,
+    ...params
   });
-
-  console.log(player)
 })
 
+const emit = defineEmits(['close']);
 const onClose = () => {
   visible.value = false;
+  emit('close')
 }
 </script>
 <style lang="less" scoped>

@@ -21,7 +21,12 @@
           <el-table-column type="selection" :width="40"/>
           <el-table-column label="资源名称" prop="resourceName">
             <template #default="scope">
-              <span>{{ scope.row.resourceName }}</span>
+              <span>{{ scope.row.resourceName }}</span>&nbsp;
+              <el-button link v-if="scope.row.videoStatus === 2" @click="onPreview(scope.row)">
+                <el-icon size="20">
+                  <VideoPlay/>
+                </el-icon>
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column :width="200" label="资源大小" prop="resourceSize">
@@ -51,7 +56,6 @@
           <el-table-column :width="230" fixed="right" label="操作" prop="address">
             <template #default="scope">
               <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-              <el-button plain type="primary" @click="onPreview(scope.row)">预览</el-button>
               <el-dropdown>
                 <el-button> 更多操作
                   <el-icon class="el-icon--right">
@@ -77,7 +81,7 @@
       </div>
     </div>
     <form-model ref="formRef" @refresh="handlePage"/>
-    <preview v-if="resource.visible" :resource-id="resource.resourceId"/>
+    <preview v-if="resource.visible" :visible="resource.visible" :resource-id="resource.resourceId" :resource-name="resource.resourceName" @close="closePreview"/>
   </div>
 </template>
 
@@ -95,11 +99,16 @@ import UploadFile from '@/components/Upload/File/index.vue'
 // 预览
 const resource = reactive({
   visible: false,
-  resourceId: ''
+  resourceId: '',
+  resourceName: ''
 })
 const onPreview = (item?: any) => {
   resource.visible = true
   resource.resourceId = item.id
+  resource.resourceName = item.resourceName
+}
+const closePreview = () => {
+  resource.visible = false
 }
 
 // 添加/修改
@@ -124,7 +133,7 @@ const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleSta
 }
 
 .table-main {
-  width: calc(100% - 240px);
+  width: calc(100% - 200px);
   min-height: 400px;
 }
 </style>
