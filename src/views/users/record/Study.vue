@@ -1,6 +1,6 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="visible" title="学习记录" width="800px" @close="onClose">
-    <el-table ref="formRef" :data="formModel" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all row-key="id">
+    <el-table :data="tableData" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all row-key="id">
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>
@@ -21,15 +21,15 @@
   </el-dialog>
 </template>
 <script setup lang="ts">
-import {reactive, ref} from 'vue';
+import {ref} from 'vue';
 
-const formModel = reactive({});
+const tableData = ref();
 
 // 打开和关闭
 const visible = ref(false);
 const onOpen = (item: any) => {
   if (item) {
-    Object.assign(formModel, item);
+    Object.assign(tableData, item);
   }
   visible.value = true
 }

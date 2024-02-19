@@ -12,7 +12,7 @@
         </p>
       </div>
       <div class="login-panel">
-        <el-form ref="loginForm" :model="loginForm" label-position="left">
+        <el-form :model="loginForm" label-position="left">
           <h3 class="login-head">管理员登录</h3>
           <el-form-item class="form-group" prop="mobile">
             <el-input v-model="loginForm.mobile" placeholder="用户名"/>

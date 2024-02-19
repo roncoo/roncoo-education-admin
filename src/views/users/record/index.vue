@@ -30,12 +30,12 @@
       <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate"/>
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button plain type="primary" @click="studyRecord(scope.row)">明细</el-button>
+          <el-button plain type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
-    <study ref="studyInfo"/>
+    <study ref="studyRef"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -46,9 +46,9 @@ import Pagination from "@/components/Pagination/index.vue";
 import Study from "./Study.vue";
 
 // 查看
-const studyInfo = ref();
-const studyRecord = (item?: any) => {
-  studyInfo.value.onOpen(item)
+const studyRef = ref();
+const openStudyRecord = (item?: any) => {
+  studyRef.value.onOpen(item)
 };
 // 基础功能
 const {page, handlePage, query, handleQuery, resetQuery} = reactive({
