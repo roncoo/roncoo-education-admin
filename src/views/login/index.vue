@@ -18,7 +18,7 @@
             <el-input v-model="loginForm.mobile" placeholder="用户名"/>
           </el-form-item>
           <el-form-item class="form-group" prop="mobilePwd">
-            <el-input v-model="loginForm.mobilePwd" placeholder="密码" type="password"/>
+            <el-input v-model="loginForm.mobilePwd" placeholder="密码" type="password" show-password/>
           </el-form-item>
           <el-form-item class="form-group" prop="verCode">
             <el-input class="var-input" v-model="loginForm.verCode" placeholder="验证码"/>
