@@ -20,6 +20,10 @@
           <el-form-item class="form-group" prop="mobilePwd">
             <el-input v-model="loginForm.mobilePwd" placeholder="密码" type="password"/>
           </el-form-item>
+          <el-form-item class="form-group" prop="verCode">
+            <el-input class="var-input" v-model="loginForm.verCode" placeholder="验证码"/>
+            <img class="var-img" :src="verImg" @click="getCaptcha"/>
+          </el-form-item>
           <el-button v-loading="loading" class="login-button" type="primary" @click="handleLogin">登 录</el-button>
           <div class="tip">账号：18800000000/123456（需要本地部署）</div>
         </el-form>
@@ -50,12 +54,34 @@ import {PATH} from "@/utils/constants/system";
 
 const router = useRouter();
 const loading = ref(false)
+const verImg = ref()
+
+// 站点信息
+const service = ref({})
+onMounted(() => {
+  loginApi.getWebsite().then((res: any) => {
+    service.value = res;
+  })
+
+  getCaptcha()
+})
 
 // 登录
 const loginForm = reactive({
   mobile: '18800000000',
   mobilePwd: '123456'
 })
+
+// 获取验证码
+async function getCaptcha() {
+  try {
+    const res = await loginApi.getCodeImg()
+    loginForm.verToken = res.verToken
+    verImg.value = res.img
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 async function handleLogin() {
   loading.value = true
@@ -74,14 +100,6 @@ async function handleLogin() {
     loading.value = false;
   }
 }
-
-// 站点信息
-const service = ref({})
-onMounted(() => {
-  loginApi.getWebsite().then((res: any) => {
-    service.value = res;
-  })
-})
 </script>
 
 <style lang="less" scoped>
@@ -135,7 +153,7 @@ onMounted(() => {
 
     .login-button {
       width: 350px;
-      height: 50px;
+      height: 45px;
       background: #2873f0;
       border-radius: 4px;
       font-size: 16px;
@@ -147,7 +165,7 @@ onMounted(() => {
     }
 
     .tip {
-      margin-top: 10px;
+      margin-top: 20px;
       font-size: 14px;
     }
   }
@@ -170,4 +188,16 @@ onMounted(() => {
   }
 }
 
+.var-input {
+  width: 200px;
+}
+
+.var-img {
+  margin-left: 20px;
+  width: 80px;
+}
+
+.el-input {
+  height: 40px;
+}
 </style>

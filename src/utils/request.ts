@@ -71,11 +71,11 @@ request.interceptors.response.use(
             }
             if (res.code === 306) {
                 router.push({path: PATH.URL_403})
-                ElMessage.warning('权限不足，请联系管理员')
+                ElMessage.error('权限不足，请联系管理员')
                 return Promise.reject(response)
             }
             if (res.code === 999) {
-                ElMessage.warning(response.data.msg)
+                ElMessage.error(response.data.msg)
                 return Promise.reject(response)
             }
 
