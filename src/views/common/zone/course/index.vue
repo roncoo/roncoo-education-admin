@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column :width="100" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.courseViewResp.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.courseViewResp.isPutaway] }}</span>
+          <span :class="{ 'c-special': scope.row.courseViewResp.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.courseViewResp.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort"/>

@@ -24,7 +24,7 @@
       <el-table-column label="登录时间" prop="gmtCreate"/>
       <el-table-column label="登录状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.loginStatus === 0 }">{{ getEnumObj('LoginStatusEnum')[scope.row.loginStatus] }}</span>
+          <span :class="{ 'c-special': scope.row.loginStatus === 0 }">{{ getEnumObj('LoginStatusEnum')[scope.row.loginStatus] }}</span>
         </template>
       </el-table-column>
     </el-table>
