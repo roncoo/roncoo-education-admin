@@ -19,7 +19,6 @@ import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {courseApi} from "@/api/course";
 
-
 // 校验规则
 const formRef = ref()
 const rules = {
@@ -31,7 +30,7 @@ const loading = ref(false);// 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
-  parentId: undefined,
+  parentId: 0,
   categoryName: undefined,
   sort: 1
 }

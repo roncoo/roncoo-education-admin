@@ -62,7 +62,7 @@ onMounted(() => {
   loginApi.getWebsite().then((res: any) => {
     service.value = res;
   })
-
+  // 验证码
   getCaptcha()
 })
 

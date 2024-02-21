@@ -46,7 +46,8 @@ const handleCreated = (editor: any) => {
   editorRef.value = editor
 }
 const toolbarConfig = ref({
-  excludeKeys: ["emotion", 'group-image', 'group-video', 'insertVideo', 'uploadVideo', 'redo', 'undo', 'fullScreen'],
+  // https://blog.csdn.net/weixin_62277266/article/details/130645112
+  excludeKeys: ['clearStyle', 'emotion', 'group-image', 'insertVideo', 'insertTable', 'redo', 'undo', 'fullScreen'],
 })
 const editorConfig = ref({});
 </script>
