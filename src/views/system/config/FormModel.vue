@@ -90,7 +90,7 @@ const onClose = () => {
 </script>
 <style lang="less" scoped>
 .image-upload {
-  width: 700px !important;
+  height: 200px !important;
   text-align: center;
   margin: 0 auto;
 }

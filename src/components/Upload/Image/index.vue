@@ -1,6 +1,6 @@
 <template>
   <el-upload :before-upload="beforeAvatarUpload" :http-request="onUpload" :on-success="handleAvatarSuccess" :show-file-list="false" :style="'width:' + width + 'px;height:' + height + 'px;'" class="image-upload">
-    <img v-if="imageUrl" :src="imageUrl"/>
+    <img class="img-info" v-if="imageUrl" :src="imageUrl"/>
     <el-icon v-else class="image-upload-icon">
       <Plus/>
     </el-icon>
