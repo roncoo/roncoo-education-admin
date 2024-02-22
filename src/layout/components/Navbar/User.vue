@@ -1,18 +1,21 @@
 <template>
-  <el-dropdown class="user-info">
-    <div>
-      {{ realName }}
-      <el-icon class="el-icon--right">
-        <arrow-down/>
-      </el-icon>
-    </div>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item>个人信息</el-dropdown-item>
-        <el-dropdown-item divided @click="onLogout">退出登录</el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <div class="info">
+    <!--<router-link to="/system/config"><el-icon><Setting /></el-icon></router-link>-->
+    <el-dropdown class="user-info">
+      <div>
+        {{ realName }}
+        <el-icon class="el-icon--right">
+          <arrow-down/>
+        </el-icon>
+      </div>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>个人信息</el-dropdown-item>
+          <el-dropdown-item divided @click="onLogout">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -43,6 +46,14 @@ const onLogout = () => {
 }
 </script>
 <style lang="less" scoped>
+.info{
+  display: flex;
+  align-items: center;
+  float: right;
+  height: 100%;
+  line-height: 50px;
+}
+
 .user-info {
   align-items: center;
   float: right;

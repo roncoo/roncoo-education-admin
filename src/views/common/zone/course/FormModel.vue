@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '排序' : '添加'" width="600px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
-        <el-input v-model="formModel.courseName" disabled style="width: 210px; margin-right: 20px"></el-input>
+        <el-input v-model="formModel.courseName" disabled style="width: 300px; margin-right: 20px"></el-input>
         <el-button plain type="primary" @click="courseSelect">选择课程</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
