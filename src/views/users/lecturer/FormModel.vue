@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="880px" center @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-row>
         <el-col :span="12">
@@ -19,7 +19,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="简介" prop="introduce">
+      <el-form-item label="简介" prop="introduce" style="max-width: 790px;">
         <editor v-model="formModel.introduce"/>
       </el-form-item>
     </el-form>

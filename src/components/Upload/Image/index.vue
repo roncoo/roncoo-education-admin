@@ -1,7 +1,7 @@
 <template>
   <el-upload :before-upload="beforeAvatarUpload" :http-request="onUpload" :on-success="handleAvatarSuccess" :show-file-list="false" :style="'width:' + width + 'px;height:' + height + 'px;'" class="image-upload">
-    <img class="img-info" v-if="imageUrl" :src="imageUrl"/>
-    <el-icon v-else class="image-upload-icon">
+    <img v-if="imageUrl" :src="imageUrl"/>
+    <el-icon v-else class="uploader-icon" :style="'width:' + width + 'px;height:' + height + 'px;'">
       <Plus/>
     </el-icon>
   </el-upload>
@@ -71,27 +71,14 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 <style lang="less" scoped>
 .image-upload {
   position: relative;
+  cursor: pointer;
   border-radius: 6px;
   border: 1px dashed #d9d9d9;
 
-  .el-upload {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .el-progress-circle {
-    svg {
-      padding: 10px;
-      max-width: 100%;
-      max-height: 100%;
-      vertical-align: middle;
-    }
+  .el-icon.uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    text-align: center;
   }
 }
 </style>
