@@ -1,17 +1,22 @@
 <template>
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType">
+      <el-tab-pane
+        v-for="item in tabPanes"
+        :label="item.label"
+        :name="item.configType"
+        :key="item.configType"
+      >
         <list :list="page.list" @refresh="handlePage"></list>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script setup>
-import {reactive, ref} from "vue";
+import { reactive, ref } from 'vue'
 import List from './List.vue'
-import {systemApi} from "@/api/system";
-import useTable from "@/utils/table";
+import { systemApi } from '@/api/system'
+import useTable from '@/utils/table'
 
 // 切换tab
 const handleClick = (tab) => {
@@ -21,10 +26,13 @@ const handleClick = (tab) => {
 
 const activeName = ref('1')
 // 基础功能
-const {page, handlePage, query} = reactive({
-  ...useTable({
-    page: systemApi.sysConfigList
-  }, {'configType': activeName.value})
+const { page, handlePage, query } = reactive({
+  ...useTable(
+    {
+      page: systemApi.sysConfigList
+    },
+    { configType: activeName.value }
+  )
 })
 
 const tabPanes = [

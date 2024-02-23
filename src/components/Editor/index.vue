@@ -23,7 +23,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
 const props = defineProps({
   modelValue: {
-    type,
+    type: String,
     default: ''
   }
 })

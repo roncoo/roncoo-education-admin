@@ -81,7 +81,7 @@ const openFormModal = (item, parentId) => {
 }
 
 const props = defineProps({
-  list: { type: Array, default: [] }
+  list: { type: Array, default: null }
 })
 </script>
 <style lang="scss" scoped>
