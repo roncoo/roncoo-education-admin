@@ -1,7 +1,6 @@
 <template>
   <el-cascader :options="options" :props="props" @change="handleChange" style="width: 100%" />
 </template>
-
 <script setup>
 import { onMounted, ref } from 'vue'
 import { courseApi } from '@/api/course'

@@ -11,37 +11,42 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column label="手机号码" prop="moblie"/>
-      <el-table-column label="登录IP" prop="loginIp"/>
+      <el-table-column align="center" label="序号" type="index" width="60" />
+      <el-table-column label="手机号码" prop="mobile" />
+      <el-table-column label="登录IP" prop="loginIp" />
       <el-table-column label="登录地址" prop="province">
-        <template #default="scope">
-          {{ scope.row.province }} {{ scope.row.city }}
-        </template>
+        <template #default="scope"> {{ scope.row.province }} {{ scope.row.city }} </template>
       </el-table-column>
-      <el-table-column label="操作系统" prop="os"/>
-      <el-table-column label="浏览器" prop="browser"/>
-      <el-table-column label="登录时间" prop="gmtCreate"/>
+      <el-table-column label="操作系统" prop="os" />
+      <el-table-column label="浏览器" prop="browser" />
+      <el-table-column label="登录时间" prop="gmtCreate" />
       <el-table-column label="登录状态">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.loginStatus === 0 }">{{ getEnumObj('LoginStatusEnum')[scope.row.loginStatus] }}</span>
+          <span :class="{ 'c-special': scope.row.loginStatus === 0 }">{{
+            getEnumObj('LoginStatusEnum')[scope.row.loginStatus]
+          }}</span>
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination
+      :total="page.totalCount"
+      v-model:current-page="page.pageCurrent"
+      v-model:page-size="page.pageSize"
+      @pagination="handlePage"
+    />
   </div>
 </template>
 <script setup>
-import {reactive} from 'vue';
-import {usersApi} from '@/api/users'
-import {getEnumObj} from '@/utils/base';
-import useTable from "@/utils/table";
-import Pagination from "@/components/Pagination/index.vue";
+import { reactive } from 'vue'
+import { usersApi } from '@/api/users'
+import { getEnumObj } from '@/utils/base'
+import useTable from '@/utils/table'
+import Pagination from '@/components/Pagination/index.vue'
 
 // 基础功能
-const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+const { page, handlePage, query, handleQuery, resetQuery } = reactive({
   ...useTable({
-    page: usersApi.logLoginPage,
+    page: usersApi.logLoginPage
   })
 })
 </script>

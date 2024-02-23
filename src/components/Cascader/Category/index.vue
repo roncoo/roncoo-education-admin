@@ -33,82 +33,82 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { courseApi } from '@/api/course'
-import FormCategory from './FormCategory.vue'
+  import { onMounted, ref } from 'vue'
+  import { courseApi } from '@/api/course'
+  import FormCategory from './FormCategory.vue'
 
-const props = defineProps({
-  categoryType: {
-    type: Number,
-    default: 0
-  },
-  categoryId: {
-    type: String,
-    default: ''
-  }
-})
-
-const categoryId = ref(props.categoryId)
-
-const emit = defineEmits(['update:category-id', 'refresh'])
-//
-const handleChangeCategory = (item) => {
-  emit('update:category-id', item.id)
-  emit('refresh')
-}
-
-// 删除文件夹
-const deleteCatalog = (item) => {
-  console.log(item)
-}
-
-// 添加/修改文件夹
-const catalogRef = ref()
-const openFormCatalog = (item, parentId) => {
-  catalogRef.value.onOpen(item, parentId)
-}
-
-// 列出文件夹
-const treeData = ref()
-onMounted(() => {
-  handleCatalog()
-})
-const handleCatalog = () => {
-  courseApi.categoryList({ categoryType: props.categoryType }).then((res) => {
-    treeData.value = res
+  const props = defineProps({
+    categoryType: {
+      type: Number,
+      default: 0
+    },
+    categoryId: {
+      type: String,
+      default: ''
+    }
   })
-}
+
+  const categoryId = ref(props.categoryId)
+
+  const emit = defineEmits(['update:category-id', 'refresh'])
+  //
+  const handleChangeCategory = (item) => {
+    emit('update:category-id', item.id)
+    emit('refresh')
+  }
+
+  // 删除文件夹
+  const deleteCatalog = (item) => {
+    console.log(item)
+  }
+
+  // 添加/修改文件夹
+  const catalogRef = ref()
+  const openFormCatalog = (item, parentId) => {
+    catalogRef.value.onOpen(item, parentId)
+  }
+
+  // 列出文件夹
+  const treeData = ref()
+  onMounted(() => {
+    handleCatalog()
+  })
+  const handleCatalog = () => {
+    courseApi.categoryList({ categoryType: props.categoryType }).then((res) => {
+      treeData.value = res
+    })
+  }
 </script>
 <style lang="scss" scoped>
-.table-catalog {
-  display: block;
-  min-height: calc(100vh - 180px);
-  margin-bottom: 52px;
-  width: 200px;
-  border: 1px solid #ebeef5;
-
-  .table-catalog-title {
-    cursor: default;
-    padding: 10px 20px;
-  }
-
-  .table-catalog-name {
-    margin-left: 5px;
-    width: 100px;
-  }
-
-  .table-catalog-dropdown {
-    display: none;
-  }
-}
-
-.active {
-  background-color: var(--el-tree-node-hover-bg-color);
-}
-
-.el-tree-node__content:hover {
-  .table-catalog-dropdown {
+  .table-catalog {
     display: block;
+    min-height: calc(100vh - 180px);
+    margin-bottom: 52px;
+    width: 200px;
+    border: 1px solid #ebeef5;
+
+    .table-catalog-title {
+      cursor: default;
+      padding: 10px 20px;
+    }
+
+    .table-catalog-name {
+      margin-left: 5px;
+      width: 100px;
+    }
+
+    .table-catalog-dropdown {
+      display: none;
+    }
   }
-}
+
+  .active {
+    background-color: var(--el-tree-node-hover-bg-color);
+  }
+
+  .el-tree-node__content:hover {
+    .table-catalog-dropdown {
+      display: block;
+    }
+  }
 </style>

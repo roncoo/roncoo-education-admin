@@ -56,7 +56,7 @@ export default function useTable(apis, paras = {}) {
   }
 
   //删除功能
-  const handleDelete = (data, tip) => {
+  const handleDelete = (data, tip = '') => {
     if (apis.delete) {
       ElMessageBox.confirm(tip || '确认删除当前数据?', '删除提示', {
         type: 'warning',
