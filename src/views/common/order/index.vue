@@ -4,10 +4,10 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item label="订单号">
-            <el-input v-model="query.orderNo" clearable/>
+            <el-input v-model="query.orderNo" clearable />
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input v-model="query.mobile" clearable/>
+            <el-input v-model="query.mobile" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()">查询</el-button>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60"/>
+      <el-table-column align="center" label="序号" type="index" width="60" />
       <el-table-column :width="180" label="订单号">
         <template #default="scope">
           {{ scope.row.orderNo }}
@@ -28,11 +28,11 @@
           {{ scope.row.courseViewVO.courseName }}
         </template>
       </el-table-column>
-      <el-table-column :width="150" label="手机号码" prop="mobile"/>
+      <el-table-column :width="150" label="手机号码" prop="mobile" />
       <el-table-column :width="160" label="支付方式/时间">
         <template #default="scope">
           <span>{{ getEnumObj('PayTypeEnum')[scope.row.payType] }}</span>
-          <br>
+          <br />
           <span v-if="scope.row.orderStatus === 2">{{ scope.row.payTime }}</span>
           <span v-else>{{ scope.row.gmtCreate }}</span>
         </template>
@@ -46,13 +46,15 @@
         <template #default="scope">
           <span v-if="scope.row.coursePrice == 0">免费</span>
           <span v-else>
-            ￥{{ scope.row.coursePrice }} <br><span style="text-decoration:line-through;">￥{{ scope.row.rulingPrice }}</span>
+            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through"
+              >￥{{ scope.row.rulingPrice }}</span
+            >
           </span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="客户/备注" prop="remarkCus">
         <template #default="scope">
-          {{ scope.row.remarkCus }}<br>
+          {{ scope.row.remarkCus }}<br />
           {{ scope.row.remark }}
         </template>
       </el-table-column>
@@ -62,26 +64,31 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
-    <form-modal ref="formRef" @refresh="handlePage"/>
+    <pagination
+      :total="page.totalCount"
+      v-model:current-page="page.pageCurrent"
+      v-model:page-size="page.pageSize"
+      @pagination="handlePage"
+    />
+    <form-modal ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
-import useTable from '@/utils/table';
-import {reactive, ref} from 'vue';
-import {usersApi} from '@/api/users';
-import Pagination from "@/components/Pagination/index.vue";
-import FormModal from "./FormModel.vue";
-import {getEnumObj} from "@/utils/base";
+import useTable from '@/utils/table'
+import { reactive, ref } from 'vue'
+import { usersApi } from '@/api/users'
+import Pagination from '@/components/Pagination/index.vue'
+import FormModal from './FormModel.vue'
+import { getEnumObj } from '@/utils/base'
 
 // 添加/修改
-const formRef = ref();
+const formRef = ref()
 const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 
 // 基础功能
-const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+const { page, handlePage, query, handleQuery, resetQuery } = reactive({
   ...useTable({
     page: usersApi.orderInfoPage
   })

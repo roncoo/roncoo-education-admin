@@ -102,7 +102,7 @@ async function handleLogin() {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .login-container {
   height: 100vh;
   background: #2873f0;

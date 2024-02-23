@@ -1,13 +1,11 @@
 <template>
   <div class="logo">
-    <img src="@/assets/images/logo.png" alt="logo">
+    <img src="@/assets/images/logo.png" alt="logo" />
   </div>
 </template>
-<script setup>
+<script setup></script>
 
-</script>
-
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .logo {
   padding: 5px 10px;
   display: inline-block;

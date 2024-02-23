@@ -1,36 +1,44 @@
 <template>
-  <el-upload :before-upload="beforeAvatarUpload" :http-request="onUpload" :on-success="handleAvatarSuccess" :show-file-list="false" :style="'width:' + width + 'px;height:' + height + 'px;'" class="image-upload">
-    <img v-if="imageUrl" :src="imageUrl"/>
+  <el-upload
+    :before-upload="beforeAvatarUpload"
+    :http-request="onUpload"
+    :on-success="handleAvatarSuccess"
+    :show-file-list="false"
+    :style="'width:' + width + 'px;height:' + height + 'px;'"
+    class="image-upload"
+  >
+    <img v-if="imageUrl" :src="imageUrl" />
     <el-icon v-else class="uploader-icon" :style="'width:' + width + 'px;height:' + height + 'px;'">
-      <Plus/>
+      <Plus />
     </el-icon>
   </el-upload>
 </template>
 
 <script setup>
-import {ref, toRefs, watch} from 'vue'
-import {ElMessage} from 'element-plus'
-import {uploadApi} from "@/api/upload"
+import { ref, toRefs, watch } from 'vue'
+import { ElMessage } from 'element-plus'
+import { uploadApi } from '@/api/upload'
 
-const imageType = "image/jpeg,image/png,image/gif,image/x-icon"
+const imageType = 'image/jpeg,image/png,image/gif,image/x-icon'
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-  modelValue: {type, default: ''},
-  width: {type: Number, default: 100},
-  height: {type: Number, default: 100},
-});
+  modelValue: { type: String, default: '' },
+  width: { type: Number, default: 100 },
+  height: { type: Number, default: 100 }
+})
 
 // 图片
 const imageUrl = ref()
-const {modelValue} = toRefs(props)
-watch(modelValue,
-    (newValue) => {
-      imageUrl.value = newValue
-    },
-    {
-      immediate: true,
-    }
+const { modelValue } = toRefs(props)
+watch(
+  modelValue,
+  (newValue) => {
+    imageUrl.value = newValue
+  },
+  {
+    immediate: true
+  }
 )
 
 /**
@@ -48,7 +56,7 @@ const onUpload = async (file) => {
  */
 const handleAvatarSuccess = (response) => {
   imageUrl.value = response
-  emit("update:modelValue", response)
+  emit('update:modelValue', response)
 }
 
 /**
@@ -67,7 +75,7 @@ const beforeAvatarUpload = (rawFile) => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .image-upload {
   position: relative;
   cursor: pointer;
@@ -81,4 +89,3 @@ const beforeAvatarUpload = (rawFile) => {
   }
 }
 </style>
-

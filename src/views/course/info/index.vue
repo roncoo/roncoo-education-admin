@@ -1,6 +1,13 @@
 <template>
   <div class="form-container">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent style="max-width: 980px">
+    <el-form
+      ref="formRef"
+      :model="formModel"
+      :rules="rules"
+      label-width="80px"
+      @submit.prevent
+      style="max-width: 980px"
+    >
       <div class="form-main">
         <div class="form-main-title">基础信息</div>
         <div class="form-main-content">
@@ -11,14 +18,18 @@
             <el-input v-model="formModel.courseName" maxlength="100" show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="讲师" prop="lecturerId">
-            <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>
+            <el-input
+              v-model="formModel.lecturerName"
+              disabled
+              style="width: 260px; margin-right: 20px"
+            ></el-input>
             <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item label="封面" prop="courseLogo">
-            <upload-image v-model="formModel.courseLogo" :width="260" :height="130"/>
+            <upload-image v-model="formModel.courseLogo" :width="260" :height="130" />
           </el-form-item>
           <el-form-item label="简介" prop="introduce">
-            <editor v-model="formModel.introduce"/>
+            <editor v-model="formModel.introduce" />
           </el-form-item>
         </div>
       </div>
@@ -26,10 +37,20 @@
         <div class="form-main-title">课程设置</div>
         <div class="form-main-content">
           <el-form-item label="销售价" prop="coursePrice">
-            <el-input-number v-model="formModel.coursePrice" :min="0" :precision="2" show-word-limit></el-input-number>
+            <el-input-number
+              v-model="formModel.coursePrice"
+              :min="0"
+              :precision="2"
+              show-word-limit
+            ></el-input-number>
           </el-form-item>
           <el-form-item label="划线价" prop="rulingPrice">
-            <el-input-number v-model="formModel.rulingPrice" :min="0" :precision="2" show-word-limit></el-input-number>
+            <el-input-number
+              v-model="formModel.rulingPrice"
+              :min="0"
+              :precision="2"
+              show-word-limit
+            ></el-input-number>
           </el-form-item>
           <el-form-item label="售卖" prop="isPutaway">
             <enum-radio v-model="formModel.isPutaway" :enum-name="'PutawayEnum'"></enum-radio>
@@ -42,19 +63,19 @@
       <el-button type="primary" @click="onSubmit()">确定</el-button>
     </div>
   </div>
-  <select-lecturer v-if="lecturer.visible" @close="handleLecturer"/>
+  <select-lecturer v-if="lecturer.visible" @close="handleLecturer" />
 </template>
 <script setup>
-import {ElMessage} from 'element-plus';
-import {onMounted, reactive, ref} from 'vue';
-import {courseApi} from '@/api/course'
-import UploadImage from '@/components/Upload/Image/index.vue';
+import { ElMessage } from 'element-plus'
+import { onMounted, reactive, ref } from 'vue'
+import { courseApi } from '@/api/course'
+import UploadImage from '@/components/Upload/Image/index.vue'
 import Editor from '@/components/Editor/index.vue'
 import SelectLecturer from '@/components/Selector/Lecturer/index.vue'
 import CascaderCourse from '@/components/Cascader/Course/index.vue'
 import EnumRadio from '@/components/Enum/Radio/index.vue'
-import {useRouter} from "vue-router";
-import {useRoute} from "vue-router/dist/vue-router";
+import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router/dist/vue-router'
 
 const router = useRouter()
 
@@ -76,14 +97,14 @@ const handleLecturer = (item) => {
 // 校验规则
 const formRef = ref()
 const rules = {
-  categoryId: [{required: true, message: '不能为空', trigger: 'blur'}],
-  courseName: [{required: true, message: '不能为空', trigger: 'blur'}],
-  lecturerId: [{required: true, message: '不能为空', trigger: 'blur'}],
-  courseLogo: [{required: true, message: '不能为空', trigger: 'blur'}]
+  categoryId: [{ required: true, message: '不能为空', trigger: 'blur' }],
+  courseName: [{ required: true, message: '不能为空', trigger: 'blur' }],
+  lecturerId: [{ required: true, message: '不能为空', trigger: 'blur' }],
+  courseLogo: [{ required: true, message: '不能为空', trigger: 'blur' }]
 }
 
 // 表单
-const loading = ref(false);// 加载进度状态
+const loading = ref(false) // 加载进度状态
 const emit = defineEmits(['refresh'])
 const formDefault = {
   id: undefined,
@@ -98,36 +119,36 @@ const formDefault = {
   courseSort: 1,
   isPutaway: 1
 }
-const formModel = reactive({...formDefault})
+const formModel = reactive({ ...formDefault })
 const onSubmit = async () => {
   // 校验
   const valid = await formRef.value.validate()
   if (!valid) return
 
   if (loading.value === true) {
-    ElMessage({type: 'warning', message: '正在处理···'});
-    return;
+    ElMessage({ type: 'warning', message: '正在处理···' })
+    return
   }
-  loading.value = true;
+  loading.value = true
   try {
     if (formModel.id) {
-      await courseApi.courseEdit(formModel);
-      ElMessage({type: 'success', message: '修改成功'});
+      await courseApi.courseEdit(formModel)
+      ElMessage({ type: 'success', message: '修改成功' })
     } else {
-      await courseApi.courseSave(formModel);
-      ElMessage({type: 'success', message: '添加成功'});
+      await courseApi.courseSave(formModel)
+      ElMessage({ type: 'success', message: '添加成功' })
     }
     handleClose()
     emit('refresh')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 // 初始化
 const route = useRoute()
 onMounted(() => {
   if (route.query.courseId) {
-    courseApi.courseView({id: route.query.courseId}).then((res) => {
+    courseApi.courseView({ id: route.query.courseId }).then((res) => {
       Object.assign(formModel, res)
     })
   } else {
@@ -138,7 +159,7 @@ const handleClose = () => {
   router.go(-1)
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .form-main-title {
   width: 120px;
 }
@@ -160,7 +181,7 @@ const handleClose = () => {
   align-items: center;
   background-color: #fff;
   padding: 20px;
-  border-top: 1px solid #EBEEF5;
+  border-top: 1px solid #ebeef5;
   border-bottom: 10px solid #f2f3f5;
   margin-left: -20px;
   z-index: 1;

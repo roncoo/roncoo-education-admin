@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import {computed} from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   name: {
-    type,
+    type: String,
     required: true
   }
 })
@@ -21,7 +21,7 @@ const svgClass = computed(() => {
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .svg-icon {
   width: 1em;
   height: 1em;

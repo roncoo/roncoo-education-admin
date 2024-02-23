@@ -1,8 +1,8 @@
 <template>
   <el-header>
-    <logo/>
-    <breadcrumb/>
-    <user/>
+    <logo />
+    <breadcrumb />
+    <user />
   </el-header>
 </template>
 <script setup>
@@ -11,7 +11,7 @@ import Breadcrumb from './Breadcrumb.vue'
 import User from './User.vue'
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-header {
   position: fixed;
   padding: 0;

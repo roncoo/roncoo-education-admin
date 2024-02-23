@@ -2,33 +2,31 @@
   <div class="title-info">
     <span class="title">最近14天登录人数</span>
   </div>
-  <div id="axis" ref="axisRef" class="axis"/>
+  <div id="axis" ref="axisRef" class="axis" />
 </template>
 
 <script setup>
-import * as echarts from 'echarts';
-import {EChartsType} from 'echarts';
-import {onMounted, reactive, ref} from "vue";
-import {statApi} from "@/api/dashboard";
+import * as echarts from 'echarts'
+import { onMounted, reactive, ref } from 'vue'
+import { statApi } from '@/api/dashboard'
 
-const charts = reactive({
-  axisRef: <EChartsType | null>null
-})
-const axisRef = ref<HTMLElement>()
+const charts = reactive({})
+const axisRef = ref()
 
 onMounted(() => {
   if (!charts.axisRef) {
-    charts.axisRef = echarts.init(axisRef.value);
+    charts.axisRef = echarts.init(axisRef.value)
   }
   init()
 })
 
 const init = async () => {
-  const data = await statApi.login();
+  const data = await statApi.login()
   const option = {
     tooltip: {
       trigger: 'axis',
-      axisPointer: { // 坐标轴指示器，坐标轴触发有效
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
         type: 'line' // 默认为直线，可选为：'line' | 'shadow'
       }
     },
@@ -37,7 +35,7 @@ const init = async () => {
     },
     xAxis: {
       type: 'category',
-      axisTick: {show: false},
+      axisTick: { show: false },
       data: data.dateList
     },
     yAxis: {
@@ -59,11 +57,11 @@ const init = async () => {
         data: data.registerList
       }
     ]
-  };
+  }
   charts.axisRef?.setOption(option)
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .axis {
   height: 400px;
 }

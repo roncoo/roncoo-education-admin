@@ -5,12 +5,13 @@ module.exports = {
         es2021: true,
         node: true
     },
-    parser: 'vue-eslint-parser',
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
     plugins: ['vue'],
-    extends: ['plugin:vue/recommended', 'eslint:recommended'],
-    rules: {}
+    extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
+    rules: {
+        'vue/multi-word-component-names':'off'
+    }
 }

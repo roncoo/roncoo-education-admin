@@ -2,14 +2,23 @@
   <el-aside @mouseleave="restoreSubMenu" :class="{ 'show-sub': subMenuList }">
     <div class="menu-side">
       <div class="menu-main">
-        <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList">
-          <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)"
-               :class="[hoverMenuId === item.id ? 'hover' : '']"
+        <el-menu
+          :default-active="showMenuId"
+          mode="vertical"
+          v-for="item in menuList"
+          :key="item.id"
+        >
+          <div
+            class="menu-main-item"
+            @mouseenter="showSubMenu(item.children, item)"
+            :class="[hoverMenuId === item.id ? 'hover' : '']"
           >
             <router-link :to="item.path" @click="handleMenu(item)">
-              <el-menu-item :class="[item.id === showMenuId ? 'is-active' : '']" :key="item.id" :index="item.path">{{
-                  item.menuName
-                }}
+              <el-menu-item
+                :class="[item.id === showMenuId ? 'is-active' : '']"
+                :key="item.id"
+                :index="item.path"
+                >{{ item.menuName }}
               </el-menu-item>
             </router-link>
           </div>
@@ -17,10 +26,19 @@
       </div>
       <!-- 子菜单 -->
       <div class="menu-sub" v-if="subMenuList">
-        <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList">
+        <el-menu
+          :default-active="showSubMenuId"
+          mode="vertical"
+          v-for="sub in subMenuList"
+          :key="sub.id"
+        >
           <div class="menu-sub-item">
-            <router-link :to="sub.path" @click="showChildrenMenu(subMenuList, sub)">
-              <el-menu-item :class="[sub.id === showSubMenuId ? 'is-active' : '']" :key="sub.id" :index="sub.path">
+            <router-link :to="sub.path" @click="showChildrenMenu(subMenuList)">
+              <el-menu-item
+                :class="[sub.id === showSubMenuId ? 'is-active' : '']"
+                :key="sub.id"
+                :index="sub.path"
+              >
                 {{ sub.menuName }}
               </el-menu-item>
             </router-link>
@@ -31,10 +49,10 @@
   </el-aside>
 </template>
 <script setup>
-import {computed, onMounted, ref, watchEffect} from 'vue'
-import {useUserStore} from '@/store/modules/user';
-import {useRoute} from "vue-router/dist/vue-router";
-import router from "@/router";
+import { computed, onMounted, ref, watchEffect } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { useRoute } from 'vue-router/dist/vue-router'
+import router from '@/router'
 
 // 加载用户菜单
 const menuList = computed(() => useUserStore().getMenuList)
@@ -85,7 +103,7 @@ function restoreSubMenu() {
 }
 
 // 点击子菜单
-function showChildrenMenu(menuList, menu) {
+function showChildrenMenu(menuList) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
   hoverMenuId.value = showMenuId.value
@@ -94,7 +112,7 @@ function showChildrenMenu(menuList, menu) {
 // 点击主菜单
 function handleMenu(menu) {
   if (menu.children) {
-    router.push({path: menu.children[0].path});
+    router.push({ path: menu.children[0].path })
   }
   showMenuList.value = menu.children
   showMenuId.value = menu.id
@@ -102,7 +120,7 @@ function handleMenu(menu) {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-aside {
   overflow: hidden;
   width: 100px;
@@ -132,7 +150,6 @@ function handleMenu(menu) {
   padding-left: 10px;
 
   .menu-main-item {
-
     .el-menu-item {
       width: 90px;
       height: 50px;
@@ -165,7 +182,7 @@ function handleMenu(menu) {
 }
 
 .menu-sub {
-  width: 0px;
+  width: 0;
   opacity: 0;
   float: left;
   padding-top: 10px;

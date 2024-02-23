@@ -5,7 +5,7 @@
       <div>
         {{ realName }}
         <el-icon class="el-icon--right">
-          <arrow-down/>
+          <arrow-down />
         </el-icon>
       </div>
       <template #dropdown>
@@ -19,13 +19,13 @@
 </template>
 
 <script setup>
-import {ArrowDown} from '@element-plus/icons-vue'
-import {useUserStore} from "@/store/modules/user";
-import {ref} from "vue";
-import {removeToken} from "@/utils/cookie";
-import {ElMessageBox} from "element-plus";
-import {useRouter} from "vue-router";
-import {PATH} from "@/utils/constants/system";
+import { ArrowDown } from '@element-plus/icons-vue'
+import { useUserStore } from '@/store/modules/user'
+import { ref } from 'vue'
+import { removeToken } from '@/utils/cookie'
+import { ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { PATH } from '@/utils/constants/system'
 
 const realName = ref(useUserStore().realName)
 const router = useRouter()
@@ -39,14 +39,14 @@ const onLogout = () => {
     cancelButtonText: '取消',
     confirmButtonText: '确认'
   }).then(async () => {
-    removeToken();
-    useUserStore().logout();
-    await router.push({path: PATH.URL_LOGIN})
-  });
+    removeToken()
+    useUserStore().logout()
+    await router.push({ path: PATH.URL_LOGIN })
+  })
 }
 </script>
-<style lang="less" scoped>
-.info{
+<style lang="scss" scoped>
+.info {
   display: flex;
   align-items: center;
   float: right;

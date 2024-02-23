@@ -1,4 +1,4 @@
-import {getRequest} from '@/utils/request'
+import { getRequest } from '@/utils/request'
 
 export const statApi = {
   // 用户注册登录统计

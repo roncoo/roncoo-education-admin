@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item label="角色名称">
-            <el-input v-model="query.roleName" clearable/>
+            <el-input v-model="query.roleName" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -14,11 +14,16 @@
       </div>
     </div>
     <el-table ref="tableRef" v-loading="page.loading" :data="page.list" border>
-      <el-table-column type="selection" :width="50"/>
-      <el-table-column label="角色名称" prop="roleName"/>
-      <el-table-column label="备注" prop="remark"/>
+      <el-table-column type="selection" :width="50" />
+      <el-table-column label="角色名称" prop="roleName" />
+      <el-table-column label="备注" prop="remark" />
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
+    <pagination
+      :total="page.totalCount"
+      v-model:current-page="page.pageCurrent"
+      v-model:page-size="page.pageSize"
+      @pagination="handlePage"
+    />
     <template #footer>
       <span class="handle_bar">
         <el-button @click="onClose()">取消</el-button>
@@ -29,11 +34,11 @@
 </template>
 
 <script setup>
-import {systemApi} from '@/api/system'
-import {reactive, ref} from 'vue'
+import { systemApi } from '@/api/system'
+import { reactive, ref } from 'vue'
 import useTable from '@/utils/table'
-import Pagination from "@/components/Pagination/index.vue"
-import {ElMessage} from "element-plus";
+import Pagination from '@/components/Pagination/index.vue'
+import { ElMessage } from 'element-plus'
 
 const tableRef = ref()
 const emit = defineEmits(['refresh'])
@@ -42,10 +47,10 @@ const onSubmit = async () => {
   if (roles.length > 0) {
     roleIds.value = []
     roles.forEach((item) => {
-      roleIds.value.push(item.id);
+      roleIds.value.push(item.id)
     })
-    await systemApi.sysRoleUserSave({'userId': userId.value, 'roleIdList': roleIds.value})
-    ElMessage({type: 'success', message: '设置成功'});
+    await systemApi.sysRoleUserSave({ userId: userId.value, roleIdList: roleIds.value })
+    ElMessage({ type: 'success', message: '设置成功' })
   }
   emit('refresh')
   onClose()
@@ -55,11 +60,11 @@ const onSubmit = async () => {
 const userId = ref()
 const roleIds = ref([])
 // 打开和关闭
-const visible = ref(false);// 弹窗显示状态
+const visible = ref(false) // 弹窗显示状态
 const onOpen = (item) => {
   if (item) {
     userId.value = item.id
-    systemApi.sysRoleUserList({'userId': item.id}).then((res) => {
+    systemApi.sysRoleUserList({ userId: item.id }).then((res) => {
       roleIds.value = res
       // 选中状态处理
       res.forEach((item) => {
@@ -73,20 +78,18 @@ const onOpen = (item) => {
   }
   visible.value = true
 }
-defineExpose({onOpen})
+defineExpose({ onOpen })
 const onClose = () => {
-  visible.value = false;
+  visible.value = false
   tableRef.value.clearSelection()
 }
 
 // 基础功能
-const {page, handlePage, query, handleQuery, resetQuery} = reactive({
+const { page, handlePage, query, handleQuery, resetQuery } = reactive({
   ...useTable({
-    page: systemApi.sysRolePage,
+    page: systemApi.sysRolePage
   })
 })
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,10 +1,10 @@
 <template>
   <el-container>
-    <navbar/>
+    <navbar />
     <el-scrollbar>
       <el-container class="container">
-        <sidebar/>
-        <mains/>
+        <sidebar />
+        <mains />
       </el-container>
     </el-scrollbar>
   </el-container>
@@ -14,7 +14,7 @@ import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Mains from './components/Mains.vue'
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-scrollbar {
   width: 100%;
 }

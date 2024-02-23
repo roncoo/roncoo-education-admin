@@ -1,23 +1,22 @@
 <template>
   <el-upload
-      :before-upload="beforeAvatarUpload"
-      :http-request="onUpload"
-      :show-file-list="false"
-      :multiple="true"
-      ref="upload"
+    :before-upload="beforeAvatarUpload"
+    :http-request="onUpload"
+    :show-file-list="false"
+    :multiple="true"
+    ref="upload"
   >
     <el-button type="success">上传</el-button>
   </el-upload>
 </template>
 
 <script setup>
-import {ElMessage} from "element-plus";
-import {useUploadStore} from "@/store/modules/upload";
+import { ElMessage } from 'element-plus'
+import { useUploadStore } from '@/store/modules/upload'
 
 const props = defineProps({
-  categoryId: {type, default: ''},
-});
-
+  categoryId: { type: String, default: '' }
+})
 
 /**
  * 上传
@@ -32,7 +31,7 @@ const onUpload = (file) => {
     fileSize: file.file.size,
     uid: file.file.uid,
     status: 'ready',
-    progress: 0,
+    progress: 0
   }
   // 资源类型：视频1，音频2，文档3，图片4，压缩文件5
   if (vodType.indexOf(file.file.type) > -1) {
@@ -54,11 +53,12 @@ const onUpload = (file) => {
 }
 
 /* 类型设置 */
-const vodType = "video/mp4,video/avi"
-const audioType = "audio/mpeg,audio/mp3,audio/mp4"
-const docType = "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-xls,text/plain"
-const imageType = "image/jpeg,image/png,image/gif,image/x-icon"
-const zipType = "application/zip,application/gzip,application/x-zip-compressed"
+const vodType = 'video/mp4,video/avi'
+const audioType = 'audio/mpeg,audio/mp3,audio/mp4'
+const docType =
+  'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-xls,text/plain'
+const imageType = 'image/jpeg,image/png,image/gif,image/x-icon'
+const zipType = 'application/zip,application/gzip,application/x-zip-compressed'
 
 /**
  * 上传前处理
@@ -72,9 +72,8 @@ const beforeAvatarUpload = (rawFile) => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-button {
   margin-left: 12px;
 }
 </style>
-

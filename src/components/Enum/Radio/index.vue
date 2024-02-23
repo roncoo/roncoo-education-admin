@@ -5,16 +5,15 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
-import {getEnumList} from "@/utils/base";
+import { onMounted, ref } from 'vue'
+import { getEnumList } from '@/utils/base'
 
 const props = defineProps({
-  enumName: {type, default: ''}
-});
+  enumName: { type: String, default: '' }
+})
 
 const enums = ref([])
 onMounted(() => {
   enums.value = getEnumList(props.enumName)
 })
-
 </script>

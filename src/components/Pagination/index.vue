@@ -1,19 +1,19 @@
 <!-- 基于 element-plus 的 el-pagination 简单封装，方便统一 -->
 <template>
   <el-pagination
-      v-show="props.total > 0"
-      v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      :total="props.total"
-      :background="true"
-      :page-sizes="[20, 50, 100, 200]"
-      layout="total, sizes, prev, pager, next, jumper"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+    v-show="props.total > 0"
+    v-model:current-page="currentPage"
+    v-model:page-size="pageSize"
+    :total="props.total"
+    :background="true"
+    :page-sizes="[20, 50, 100, 200]"
+    layout="total, sizes, prev, pager, next, jumper"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
   />
 </template>
 <script setup>
-import {computed} from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   // 总条目数
@@ -54,11 +54,11 @@ const handleSizeChange = (val) => {
   if (currentPage.value * val > props.total) {
     currentPage.value = 1
   }
-  emit('pagination', {currentPage: currentPage.value, pageSize: val})
+  emit('pagination', { currentPage: currentPage.value, pageSize: val })
 }
 const handleCurrentChange = (val) => {
-  emit('pagination', {currentPage: val, pageSize: pageSize.value})
+  emit('pagination', { currentPage: val, pageSize: pageSize.value })
 }
 
-defineOptions({name: 'Pagination'})
+defineOptions({ name: 'Pagination' })
 </script>

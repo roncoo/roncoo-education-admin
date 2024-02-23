@@ -6,15 +6,15 @@
       <p>2.可提供有偿指导服务：请联系作者：18302045627（微信同号）</p>
       <p>3.点播平台：私有化选项，属于付费功能，请联系作者：18302045627（微信同号）</p>
     </div>
-    <stat-login/>
-    <stat-vod/>
+    <stat-login />
+    <stat-vod />
   </div>
 </template>
 <script setup>
 import StatVod from './StatVod.vue'
 import StatLogin from './StatLogin.vue'
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .info {
   padding: 15px;
   background-color: #f5f7fa;

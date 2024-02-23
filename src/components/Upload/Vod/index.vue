@@ -1,11 +1,11 @@
 <template>
   <el-upload
-      :before-upload="beforeAvatarUpload"
-      :http-request="onUpload"
-      :on-success="handleAvatarSuccess"
-      :show-file-list="false"
-      ref="upload"
-      id="upload"
+    :before-upload="beforeAvatarUpload"
+    :http-request="onUpload"
+    :on-success="handleAvatarSuccess"
+    :show-file-list="false"
+    ref="upload"
+    id="upload"
   >
     <el-button type="success">上传</el-button>
   </el-upload>
@@ -19,7 +19,7 @@ import {uploadApi} from "@/api/upload";
 import {courseApi} from "@/api/course";
 
 const props = defineProps({
-  categoryId: {type, default: ''},
+  categoryId: {type: String, default: ''},
 });
 const vodType = "video/mp4,video/avi"
 const emit = defineEmits(['refresh'])
@@ -85,9 +85,8 @@ const handleResource = async (data) => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-button {
   margin-left: 12px;
 }
 </style>
-

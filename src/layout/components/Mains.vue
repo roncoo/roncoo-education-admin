@@ -1,17 +1,16 @@
 <template>
   <el-main>
     <div class="main-container">
-      <router-view v-slot="{Component, route}">
+      <router-view v-slot="{ Component, route }">
         <component :is="Component" :key="route.path"></component>
       </router-view>
     </div>
   </el-main>
 </template>
-<script setup>
 
-</script>
+<script setup></script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-main {
   background: #f2f3f5;
   --el-main-padding: 20px 10px 10px;

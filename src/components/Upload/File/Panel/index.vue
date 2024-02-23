@@ -1,18 +1,20 @@
 <!--全局上传文件列表组件-->
 <template>
   <div v-show="fileList.length > 0" class="fixed_upload_panel">
-    <div class="upload_file_container" :class="{'hidden_list': !listing}">
+    <div class="upload_file_container" :class="{ hidden_list: !listing }">
       <div class="upload_head">
-        <div class="upload_text">文件列表（{{ successFileList.length }}/{{ fileList.length }}）</div>
+        <div class="upload_text">
+          文件列表（{{ successFileList.length }}/{{ fileList.length }}）
+        </div>
         <div class="dialog_btn">
           <el-icon v-if="!listing" class="" title="展开列表" @click="listing = true">
-            <FullScreen/>
+            <FullScreen />
           </el-icon>
           <el-icon v-else class="ctrl_min_btn" title="最小化" @click="listing = false">
-            <Minus/>
+            <Minus />
           </el-icon>
           <el-icon title="关闭" @click="handleClosePanel">
-            <Close/>
+            <Close />
           </el-icon>
         </div>
       </div>
@@ -22,22 +24,26 @@
           <div class="file_size">{{ transformSize(item.fileSize) }}</div>
           <div class="file_progress_number">{{ item.progress }} %</div>
           <div class="file_status c-brand">{{ STATUSTIP[item.status] }}</div>
-          <div v-if="item.status === 'uploading'" class="file_ctrl_btn" @click.stop="stopUpload(item)">
+          <div
+            v-if="item.status === 'uploading'"
+            class="file_ctrl_btn"
+            @click.stop="stopUpload(item)"
+          >
             <el-icon>
-              <VideoPause/>
+              <VideoPause />
             </el-icon>
           </div>
           <div v-if="item.status === 'fail'" class="file_ctrl_btn" @click.stop="startUpload(item)">
             <el-icon>
-              <VideoPlay/>
+              <VideoPlay />
             </el-icon>
           </div>
           <div v-if="item.status === 'stop'" class="file_ctrl_btn" @click.stop="resumeUpload(item)">
             <el-icon>
-              <VideoPlay/>
+              <VideoPlay />
             </el-icon>
           </div>
-          <div class="file_progress" :style="{width: item.progress + '%'}"/>
+          <div class="file_progress" :style="{ width: item.progress + '%' }" />
         </div>
       </div>
     </div>
@@ -45,33 +51,30 @@
 </template>
 
 <script setup>
-import {ref, watch} from "vue";
-import {useUploadStore} from "@/store/modules/upload";
-import {transformSize} from "@/utils/base";
-import {handleFile, handlePic, handleVod, STATUSTIP} from "@/components/Upload/File/upload";
-import {ElMessageBox} from "element-plus";
+import { ref, watch } from 'vue'
+import { useUploadStore } from '@/store/modules/upload'
+import { transformSize } from '@/utils/base'
+import { handleFile, handlePic, handleVod, STATUSTIP } from '@/components/Upload/File/upload'
+import { ElMessageBox } from 'element-plus'
 
 // 文件
 const fileList = ref([])
 const successFileList = ref([])
 
 // 监听
-watch(
-    [useUploadStore().getFileList, useUploadStore().getSuccessFileList],
-    (newValue) => {
-      fileList.value = newValue[0]
-      successFileList.value = newValue[1]
-      // 开始上传
-      startUpload()
-    }
-)
+watch([useUploadStore().getFileList, useUploadStore().getSuccessFileList], (newValue) => {
+  fileList.value = newValue[0]
+  successFileList.value = newValue[1]
+  // 开始上传
+  startUpload()
+})
 
 // 状态
 const listing = ref(true)
 
 // 上传
 const startUpload = (row) => {
-  let startFile= row
+  let startFile = row
   if (!startFile) {
     fileList.value.map((item) => {
       if (item.status === 'ready' && !startFile) {
@@ -97,9 +100,7 @@ const startUpload = (row) => {
 
 // 暂停上传
 const stopUpload = (row) => {
-  if (row.vodPlatform === 1) {
-
-  }
+  console.log(row)
 }
 
 // 关闭面板
@@ -117,7 +118,7 @@ const handleClosePanel = () => {
       confirmButtonText: '确认'
     }).then(async () => {
       clear()
-    });
+    })
   } else {
     clear()
   }
@@ -129,7 +130,7 @@ const clear = () => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .fixed_upload_panel {
   position: fixed;
   right: 10px;
@@ -143,7 +144,7 @@ const clear = () => {
   border-radius: 6px 0 0 0;
   overflow: hidden;
   width: 540px;
-  transition: width .3s;
+  transition: width 0.3s;
 
   &.hidden_list {
     width: 250px;
@@ -234,7 +235,7 @@ const clear = () => {
       z-index: 1;
       padding: 0;
       background: #ebf7fe;
-      transition: width .5s;
+      transition: width 0.5s;
     }
   }
 }
