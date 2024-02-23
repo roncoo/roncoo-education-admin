@@ -9,7 +9,7 @@ import {computed} from 'vue';
 
 const props = defineProps({
   name: {
-    type: String,
+    type,
     required: true
   }
 })

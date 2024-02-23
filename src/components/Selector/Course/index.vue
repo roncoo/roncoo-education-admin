@@ -30,7 +30,7 @@ import Pagination from '@/components/Pagination/index.vue';
 
 const props = defineProps({
   title: {
-    type: String,
+    type,
     default: '请选择课程'
   },
   visible: {

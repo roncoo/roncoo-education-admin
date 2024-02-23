@@ -38,7 +38,7 @@ import {formatTime, getEnumObj} from "@/utils/base";
 
 const props = defineProps({
   title: {
-    type: String,
+    type,
     default: '请选择资源'
   },
   visible: {

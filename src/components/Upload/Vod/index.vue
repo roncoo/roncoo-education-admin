@@ -19,7 +19,7 @@ import {uploadApi} from "@/api/upload";
 import {courseApi} from "@/api/course";
 
 const props = defineProps({
-  categoryId: {type: String, default: ''},
+  categoryId: {type, default: ''},
 });
 const vodType = "video/mp4,video/avi"
 const emit = defineEmits(['refresh'])
@@ -37,7 +37,7 @@ const onUpload = (file) => {
 
     } else if (res.vodPlatform == 2) {
       // 保利威上传
-      polyvUpload(file.file, JSON.parse(res.vodUploadConfig), (type: string, data) => {
+      polyvUpload(file.file, JSON.parse(res.vodUploadConfig), (type, data) => {
         if (type === 'FileSucceed') {
           handleResource(data)
           emit("refresh", data)

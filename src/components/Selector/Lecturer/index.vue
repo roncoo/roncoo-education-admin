@@ -32,7 +32,7 @@ import {reactive} from "vue";
 
 const props = defineProps({
   title: {
-    type: String,
+    type,
     default: '请选择讲师'
   }
 })

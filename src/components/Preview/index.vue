@@ -15,11 +15,11 @@ import {courseApi} from '@/api/course';
 
 const props = defineProps({
   resourceId: {
-    type: String,
+    type,
     default: ''
   },
   resourceName: {
-    type: String,
+    type,
     default: '预览'
   },
   visible: {

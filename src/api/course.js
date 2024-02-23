@@ -151,7 +151,7 @@ export const courseApi = {
     },
 
 // 分页
-    userStudyePage: (params, pageCurrent=1, pageSize= 20) => {
+    userStudyPage: (params, pageCurrent=1, pageSize= 20) => {
         return postRequest('/course/admin/user/study/page', {pageCurrent, pageSize, ...params})
     },
 

@@ -74,7 +74,7 @@ import {getEnumObj} from "@/utils/base";
 
 // 进入专区课程列表
 const router = useRouter();
-const toCourse = (zoneId: string) => {
+const toCourse = (zoneId) => {
   router.push({path: '/common/zone/course', query: {zoneId}})
 }
 

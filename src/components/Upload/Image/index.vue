@@ -16,7 +16,7 @@ const imageType = "image/jpeg,image/png,image/gif,image/x-icon"
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-  modelValue: {type: String, default: ''},
+  modelValue: {type, default: ''},
   width: {type: Number, default: 100},
   height: {type: Number, default: 100},
 });

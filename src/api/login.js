@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from '../utils/request'
+import {getRequest, postRequest} from '@/utils/request'
 
 export const loginApi = {
     getWebsite: () => {

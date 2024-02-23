@@ -15,7 +15,7 @@ import {ElMessage} from "element-plus";
 import {useUploadStore} from "@/store/modules/upload";
 
 const props = defineProps({
-  categoryId: {type: String, default: ''},
+  categoryId: {type, default: ''},
 });
 
 
