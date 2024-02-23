@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+    "allowJs": true,
     // 启用所有严格类型检查选项
     "strict": true,
     // 不允许在表达式和声明上有隐含的any类型
