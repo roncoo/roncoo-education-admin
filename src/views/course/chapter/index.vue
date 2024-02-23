@@ -63,7 +63,7 @@
     <period ref="formPeriodRef" @refresh="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import {reactive, ref} from 'vue';
 import Pagination from "@/components/Pagination/index.vue";
 import useTable from "@/utils/table";
@@ -74,13 +74,13 @@ import Period from "./Period.vue";
 
 // 节添加修改
 const formPeriodRef = ref();
-const openFormPeriodModal = (item?: any, chapterId?: number) => {
+const openFormPeriodModal = (item, chapterId) => {
   formPeriodRef.value.onOpen(item, chapterId)
 }
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 

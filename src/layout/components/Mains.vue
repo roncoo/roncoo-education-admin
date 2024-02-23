@@ -7,7 +7,7 @@
     </div>
   </el-main>
 </template>
-<script setup lang="ts">
+<script setup>
 
 </script>
 

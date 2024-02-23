@@ -8,15 +8,15 @@ import {useUploadStore} from "@/store/modules/upload";
  * 视频上传
  * @param startFile
  */
-export const handleVod = async (startFile: UploadFile) => {
-    const res: any = await getVodConfig()
+export const handleVod = async (startFile) => {
+    const res = await getVodConfig()
     if (res.vodPlatform == 1) {
         // 私有化上传
 
     } else if (res.vodPlatform == 2) {
         // 保利威上传
         const polyvClient = getPolyvClient(JSON.parse(res.vodUploadConfig))
-        uploadPolyv(polyvClient, startFile, (type: string, data: any) => {
+        uploadPolyv(polyvClient, startFile, (type, data) => {
             if (type === 'FileProgress') {
                 startFile.progress = parseInt(String(data.progress * 100))
             }
@@ -41,11 +41,11 @@ export const handleVod = async (startFile: UploadFile) => {
  * 文档、压缩文件上传
  * @param startFile
  */
-export const handleFile = async (startFile: UploadFile) => {
+export const handleFile = async (startFile) => {
     startFile.status = 'uploading'
     try {
-        const res: any = await uploadApi.doc(startFile.file,
-            (p: number) => {
+        const res = await uploadApi.doc(startFile.file,
+            (p) => {
                 startFile.progress = p
                 startFile.status = 'uploading'
             },
@@ -66,10 +66,10 @@ export const handleFile = async (startFile: UploadFile) => {
  * 图片上传
  * @param startFile
  */
-export const handlePic = async (startFile: UploadFile) => {
+export const handlePic = async (startFile) => {
     startFile.status = 'uploading'
     try {
-        const res: any = await uploadApi.pic(startFile.file)
+        const res = await uploadApi.pic(startFile.file)
         startFile.resourceUrl = res
         await handleResource(startFile)
         startFile.status = 'success'
@@ -83,7 +83,7 @@ export const handlePic = async (startFile: UploadFile) => {
  * 保存资源
  * @param data
  */
-const handleResource = async (data: UploadFile) => {
+const handleResource = async (data) => {
     await uploadApi.saveResource({
         categoryId: data.categoryId,
         resourceType: data.resourceType,
@@ -112,25 +112,7 @@ const getVodConfig = async () => {
     return res
 }
 
-
-export interface UploadFile {
-    categoryId: string,
-    resourceType: number
-    file: object,
-    status: string
-    fileName: string
-    fileSize: string
-    uid: string,
-    progress: number,
-    cancelToken: object,
-    vodPlatform: number,
-    storagePlatform: number,
-    videoVid: string,
-    resourceUrl: string,
-    docPage: number
-}
-
-export const STATUSTIP: any = {
+export const STATUSTIP = {
     ready: '准备',
     doing: '处理中',
     uploading: '上传中',

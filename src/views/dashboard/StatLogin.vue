@@ -5,7 +5,7 @@
   <div id="axis" ref="axisRef" class="axis"/>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import * as echarts from 'echarts';
 import {EChartsType} from 'echarts';
 import {onMounted, reactive, ref} from "vue";

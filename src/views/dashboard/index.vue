@@ -10,7 +10,7 @@
     <stat-vod/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import StatVod from './StatVod.vue'
 import StatLogin from './StatLogin.vue'
 </script>

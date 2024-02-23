@@ -1,12 +1,11 @@
 import PlvVideoUpload from '@polyv/vod-upload-js-sdk'
-import {UploadFile} from "@/components/Upload/File/upload";
 
-export const getPolyvClient = (userData: any) => {
+export const getPolyvClient = (userData) => {
     //初始化上传实例
     const videoUpload = new PlvVideoUpload({
         region: 'auto',
         events: {
-            Error: (err: any) => {
+            Error: (err) => {
                 // 错误事件回调
                 console.error(err);
             },
@@ -26,25 +25,25 @@ export const getPolyvClient = (userData: any) => {
     return videoUpload;
 }
 
-export const uploadPolyv = (polyvClient: any, startFile: UploadFile, callback: any) => {
+export const uploadPolyv = (polyvClient, startFile, callback) => {
     // 添加文件到文件
     polyvClient.addFile(
         startFile.file,
         {
-            FileStarted: function (uploadInfo: any) { // 文件开始上传回调
+            FileStarted: function (uploadInfo) { // 文件开始上传回调
                 startFile.status = 'uploading'
                 callback('FileStarted', uploadInfo)
             },
-            FileProgress: function (uploadInfo: any) { // 文件上传过程返回上传进度信息回调
+            FileProgress: function (uploadInfo) { // 文件上传过程返回上传进度信息回调
                 callback('FileProgress', uploadInfo)
             },
-            FileStopped: function (uploadInfo: any) { // 文件暂停上传回调
+            FileStopped: function (uploadInfo) { // 文件暂停上传回调
                 callback('FileStopped', uploadInfo)
             },
-            FileSucceed: function (uploadInfo: any) { // 文件上传成功回调
+            FileSucceed: function (uploadInfo) { // 文件上传成功回调
                 callback('FileSucceed', uploadInfo)
             },
-            FileFailed: function (uploadInfo: any) { // 文件上传失败回调
+            FileFailed: function (uploadInfo) { // 文件上传失败回调
                 callback('FileFailed', uploadInfo)
             }
         },

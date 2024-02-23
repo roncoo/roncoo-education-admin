@@ -17,7 +17,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {systemApi} from '@/api/system'
 import {reactive, ref} from 'vue';
 import {ElMessage} from 'element-plus';
@@ -62,7 +62,7 @@ const onSubmit = async () => {
 
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
+const onOpen = (item) => {
   if (item) {
     Object.assign(formModel, item);
   }

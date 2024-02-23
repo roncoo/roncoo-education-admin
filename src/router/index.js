@@ -30,7 +30,7 @@ const constantRoutes = [
     }
 ]
 
-const createRouters = (routerList: any) => createRouter({
+const createRouters = (routerList) => createRouter({
     history: createWebHashHistory(),
     routes: routerList,
     strict: true
@@ -64,9 +64,9 @@ router.beforeEach(async (to, from, next) => {
 export default router
 
 // 创建路由
-export function createNewRouter(data: any) {
+export function createNewRouter(data) {
     data = data ? data : useUserStore().routerList || []
-    const menuList = data.filter((e: any) => e.path);
+    const menuList = data.filter((e) => e.path);
     const routerList = [];
     const modules = import.meta.glob('../views/**/**.vue');
     for (const e of menuList) {

@@ -63,7 +63,7 @@
     <form-modal ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 
@@ -75,13 +75,13 @@ import FormModal from "./FormModel.vue";
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 };
 
 // 查看数据
 const router = useRouter()
-const toUserRecord = function (row: any) {
+const toUserRecord = function (row) {
   router.push({path: '/users/record', query: {userId: row.id}});
 }
 

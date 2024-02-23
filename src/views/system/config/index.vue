@@ -7,15 +7,14 @@
     </el-tabs>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import {reactive, ref} from "vue";
 import List from './List.vue'
 import {systemApi} from "@/api/system";
 import useTable from "@/utils/table";
-import {TabsPaneContext} from "element-plus";
 
 // 切换tab
-const handleClick = (tab: TabsPaneContext) => {
+const handleClick = (tab) => {
   query.configType = tab.props.name
   handlePage()
 }

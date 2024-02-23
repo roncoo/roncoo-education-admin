@@ -31,7 +31,7 @@
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import {reactive} from 'vue';
 import {usersApi} from '@/api/users'
 import {getEnumObj} from '@/utils/base';

@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import '@wangeditor/editor/dist/css/style.css';
 import {onBeforeUnmount, ref, shallowRef} from 'vue';
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue';
@@ -30,7 +30,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 // 编辑器回调函数
-const handleChange = (editor: any) => {
+const handleChange = (editor) => {
   emit('update:modelValue', editor.getHtml())
 }
 
@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
 
 // 编辑器实例
 const editorRef = shallowRef();
-const handleCreated = (editor: any) => {
+const handleCreated = (editor) => {
   editorRef.value = editor
 }
 const toolbarConfig = ref({

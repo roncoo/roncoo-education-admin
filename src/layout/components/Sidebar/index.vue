@@ -30,7 +30,7 @@
     </div>
   </el-aside>
 </template>
-<script setup lang="ts">
+<script setup>
 import {computed, onMounted, ref, watchEffect} from 'vue'
 import {useUserStore} from '@/store/modules/user';
 import {useRoute} from "vue-router/dist/vue-router";
@@ -65,7 +65,7 @@ watchEffect(() => {
 })
 
 onMounted(() => {
-  const menu = menuList.value.filter((e: any) => e.id === showMenuId.value)
+  const menu = menuList.value.filter((e) => e.id === showMenuId.value)
   if (menu && menu.length > 0) {
     subMenuList.value = menu[0].children
   }
@@ -73,7 +73,7 @@ onMounted(() => {
 })
 
 // 鼠标移入
-function showSubMenu(menuList: any, menu: any) {
+function showSubMenu(menuList, menu) {
   subMenuList.value = menuList
   hoverMenuId.value = menu.id
 }
@@ -85,14 +85,14 @@ function restoreSubMenu() {
 }
 
 // 点击子菜单
-function showChildrenMenu(menuList: any, menu?: any) {
+function showChildrenMenu(menuList, menu) {
   // 记录当前菜单列表和菜单
   showMenuList.value = menuList
   hoverMenuId.value = showMenuId.value
 }
 
 // 点击主菜单
-function handleMenu(menu: any) {
+function handleMenu(menu) {
   if (menu.children) {
     router.push({path: menu.children[0].path});
   }

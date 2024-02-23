@@ -65,7 +65,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {systemApi} from '@/api/system';
 import Pagination from '@/components/Pagination/index.vue';
 import {nextTick, reactive, ref} from "vue";
@@ -78,7 +78,7 @@ import {getEnumObj} from "@/utils/base";
 // 角色分配
 const roleRef = ref();
 const roleVisible = ref(false);
-const openRoleModal = (item?: any) => {
+const openRoleModal = (item) => {
   roleVisible.value = true
   nextTick(() => {
     roleRef.value.onOpen(item)
@@ -91,13 +91,13 @@ const handleRole = () => {
 
 // 密码重置
 const passwordRef = ref();
-const openPasswordModal = (item?: any) => {
+const openPasswordModal = (item) => {
   passwordRef.value.onOpen(item)
 }
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 

@@ -1,14 +1,14 @@
-import {systemApi} from '@/api/system';
-import {getSessionStorage, setSessionStorage} from '@/utils/storage';
+import {systemApi} from '@/api/system.js';
+import {getSessionStorage, setSessionStorage} from '@/utils/storage.js';
 
 /**
  * 格式化时长
  * @param mss
  */
-export function formatTime(time: number) {
-    let a: number | string = ~~(time / 3600);
-    let b: number | string = ~~(time / 60) - a * 60;
-    let c: number | string = time % 60;
+export function formatTime(time) {
+    let a = ~~(time / 3600);
+    let b = ~~(time / 60) - a * 60;
+    let c = time % 60;
     a = String(a).padStart(2, "0");
     b = String(b).padStart(2, "0");
     c = String(c).padStart(2, "0");
@@ -20,7 +20,7 @@ export function formatTime(time: number) {
 }
 
 // 文件大小转换
-export function transformSize(bytes: string) {// 文件大小转换
+export function transformSize(bytes) {// 文件大小转换
     const bt = parseInt(bytes);
     let result;
     if (bt === 0) {
@@ -41,19 +41,19 @@ export function transformSize(bytes: string) {// 文件大小转换
 /**
  * 获取枚举
  */
-export function getEnumList(enumName: string) {
+export function getEnumList(enumName) {
     const enumAttr = getSessionStorage(enumName)
     if (enumAttr) {
         return enumAttr
     } else {
-        systemApi.getEnum({enumName}).then((res: any) => {
+        systemApi.getEnum({enumName}).then((res) => {
             setSessionStorage(enumName, res)
             return res
         })
     }
 }
 
-export function getEnumObj(enumName: string) {
+export function getEnumObj(enumName) {
     let enumList = getEnumList(enumName);
     if (!enumList) {
         enumList = getEnumList(enumName);
@@ -61,8 +61,8 @@ export function getEnumObj(enumName: string) {
     return toObj(enumList)
 }
 
-function toObj(attr: any) {
-    const obj: any = {}
+function toObj(attr) {
+    const obj = {}
     if (attr) {
         for (var i = 0; i < attr.length; i++) {
             obj[attr[i].code] = attr[i].desc

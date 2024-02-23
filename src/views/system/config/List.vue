@@ -33,7 +33,7 @@
   <form-view ref="viewRef"></form-view>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ref} from 'vue';
 import {getEnumObj} from "@/utils/base";
 import FormModel from "./FormModel.vue";
@@ -46,13 +46,13 @@ const handleList = () => {
 
 // 查看
 const viewRef = ref()
-const handleView = (item: any) => {
+const handleView = (item) => {
   viewRef.value.onOpen(item)
 }
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any, parentId?: string) => {
+const openFormModal = (item, parentId) => {
   formRef.value.onOpen(item, parentId)
 }
 

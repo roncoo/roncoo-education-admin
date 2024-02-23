@@ -5,7 +5,7 @@
     <user/>
   </el-header>
 </template>
-<script setup lang="ts">
+<script setup>
 import Logo from './Logo.vue'
 import Breadcrumb from './Breadcrumb.vue'
 import User from './User.vue'

@@ -25,7 +25,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ElMessage} from 'element-plus';
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course';
@@ -41,7 +41,7 @@ const resourceSelect = () => {
   resource.value.visible = true
 }
 
-const handleResource = (item: any) => {
+const handleResource = (item) => {
   resource.value.visible = false
   if (item) {
     formModel.resourceName = item.resourceName
@@ -95,7 +95,7 @@ const onSubmit = async () => {
 
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any, chapterId?: number) => {
+const onOpen = (item, chapterId) => {
   if (item) {
     Object.assign(formModel, item);
     formModel.resourceName = item.resourceViewResp.resourceName

@@ -23,14 +23,14 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ElMessage} from 'element-plus';
 import {ref} from 'vue';
 import {usersApi} from '@/api/users';
 import EnumRadio from '@/components/Enum/Radio/index.vue'
 
 // 打开和关闭
-const onOpen = (item: any) => {
+const onOpen = (item) => {
   if (item) {
     Object.assign(formModel.value, item);
   }

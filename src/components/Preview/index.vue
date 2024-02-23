@@ -9,7 +9,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {onMounted, ref} from 'vue';
 import {courseApi} from '@/api/course';
 
@@ -38,7 +38,7 @@ onMounted(async () => {
   }
 })
 
-const polyvPlay = (params: any) => {
+const polyvPlay = (params) => {
   window.polyvPlayer({
     wrap: '#player',
     autoplay: true,

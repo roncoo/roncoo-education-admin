@@ -83,7 +83,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive} from 'vue';
 import Pagination from "@/components/Pagination/index.vue";
@@ -94,12 +94,12 @@ import {useRouter} from "vue-router";
 const router = useRouter()
 
 // 章节管理
-const toCourseChapter = function (row: any) {
+const toCourseChapter = function (row) {
   router.push({path: '/course/chapter', query: {courseId: row.id}});
 }
 
 // 课程数据
-const toCourseRecord = function (row: any) {
+const toCourseRecord = function (row) {
   router.push({path: '/course/record', query: {courseId: row.id}});
 }
 
@@ -108,7 +108,7 @@ const toCourseAdd = () => {
   router.push({path: '/course/add'})
 }
 // 修改
-const toCourseUpdate = (item: any) => {
+const toCourseUpdate = (item) => {
   router.push({path: '/course/update', query: {courseId: item.id}})
 }
 

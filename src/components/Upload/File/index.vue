@@ -10,8 +10,7 @@
   </el-upload>
 </template>
 
-<script setup lang="ts">
-import type {UploadProps} from 'element-plus'
+<script setup>
 import {ElMessage} from "element-plus";
 import {useUploadStore} from "@/store/modules/upload";
 
@@ -24,7 +23,7 @@ const props = defineProps({
  * 上传
  * @param file
  */
-const onUpload = (file: any) => {
+const onUpload = (file) => {
   // 参数初始化
   const uploadFile = {
     categoryId: props.categoryId,
@@ -65,7 +64,7 @@ const zipType = "application/zip,application/gzip,application/x-zip-compressed"
  * 上传前处理
  * @param rawFile
  */
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvatarUpload = (rawFile) => {
   if (!rawFile) {
     return false
   }

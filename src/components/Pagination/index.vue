@@ -12,7 +12,7 @@
       @current-change="handleCurrentChange"
   />
 </template>
-<script setup lang="ts">
+<script setup>
 import {computed} from 'vue'
 
 const props = defineProps({
@@ -50,13 +50,13 @@ const pageSize = computed({
     emit('update:page-size', val)
   }
 })
-const handleSizeChange = (val: number) => {
+const handleSizeChange = (val) => {
   if (currentPage.value * val > props.total) {
     currentPage.value = 1
   }
   emit('pagination', {currentPage: currentPage.value, pageSize: val})
 }
-const handleCurrentChange = (val: number) => {
+const handleCurrentChange = (val) => {
   emit('pagination', {currentPage: val, pageSize: pageSize.value})
 }
 

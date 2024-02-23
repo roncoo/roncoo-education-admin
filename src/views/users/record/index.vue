@@ -38,7 +38,7 @@
     <study ref="studyRef"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {usersApi} from '@/api/users'
@@ -47,7 +47,7 @@ import Study from "./Study.vue";
 
 // 查看
 const studyRef = ref();
-const openStudyRecord = (item?: any) => {
+const openStudyRecord = (item) => {
   studyRef.value.onOpen(item)
 };
 // 基础功能

@@ -44,7 +44,7 @@
   </div>
   <select-lecturer v-if="lecturer.visible" @close="handleLecturer"/>
 </template>
-<script setup lang="ts">
+<script setup>
 import {ElMessage} from 'element-plus';
 import {onMounted, reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
@@ -65,7 +65,7 @@ const lecturer = reactive({
 const lecturerSelect = () => {
   lecturer.visible = true
 }
-const handleLecturer = (item?: any) => {
+const handleLecturer = (item) => {
   lecturer.visible = false
   if (item) {
     formModel.lecturerName = item.lecturerName
@@ -127,7 +127,7 @@ const onSubmit = async () => {
 const route = useRoute()
 onMounted(() => {
   if (route.query.courseId) {
-    courseApi.courseView({id: route.query.courseId}).then((res: any) => {
+    courseApi.courseView({id: route.query.courseId}).then((res) => {
       Object.assign(formModel, res)
     })
   } else {

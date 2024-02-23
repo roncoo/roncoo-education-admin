@@ -30,7 +30,7 @@ export const useUserStore = defineStore({
     },
     actions: {
         // 登录操作
-        login(data: any) {
+        login(data) {
             this.mobile = data.mobile
             this.realName = data.realName
             this.routerList = data.routerList
@@ -51,13 +51,13 @@ export const useUserStore = defineStore({
 /**
  * 构建菜单父级集合，面包屑导航
  */
-function buildBreadcrumbMap(menuTree: any) {
+function buildBreadcrumbMap(menuTree) {
     let breadcrumbMaps = new Map();
     recursiveMap(menuTree, [], breadcrumbMaps);
     return breadcrumbMaps;
 }
 
-function recursiveMap(menuList: any, parentList: any, breadcrumbMaps: any) {
+function recursiveMap(menuList, parentList, breadcrumbMaps) {
     for (const e of menuList) {
         if (e.parentId == 0) {
             parentList = [];

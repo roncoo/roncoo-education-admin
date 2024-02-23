@@ -11,7 +11,7 @@
   </el-upload>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import type {UploadProps} from 'element-plus'
 import {ElMessage} from "element-plus";
 import polyvUpload from "@/utils/vod/polyv"
@@ -29,15 +29,15 @@ const emit = defineEmits(['refresh'])
  * 上传
  * @param file
  */
-const onUpload = (file: any) => {
+const onUpload = (file) => {
   // 参数初始化
-  uploadApi.getVodConfig().then((res: any) => {
+  uploadApi.getVodConfig().then((res) => {
     if (res.vodPlatform == 1) {
       // 私有化上传
 
     } else if (res.vodPlatform == 2) {
       // 保利威上传
-      polyvUpload(file.file, JSON.parse(res.vodUploadConfig), (type: string, data: any) => {
+      polyvUpload(file.file, JSON.parse(res.vodUploadConfig), (type: string, data) => {
         if (type === 'FileSucceed') {
           handleResource(data)
           emit("refresh", data)
@@ -57,7 +57,7 @@ const onUpload = (file: any) => {
  * @param response
  * @param uploadFile
  */
-const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response) => {
   emit("refresh", response)
 }
 
@@ -73,7 +73,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
-const handleResource = async (data: any) => {
+const handleResource = async (data) => {
   await courseApi.resourceSave({
     categoryId: props.categoryId,
     resourceName: data.fileData.filename,

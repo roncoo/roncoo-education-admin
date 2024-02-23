@@ -6,7 +6,7 @@ import {TOKEN_KEY} from "@/utils/constants/system";
  */
 const TokenExpiresTime = 1
 
-export function setToken(token: string) {
+export function setToken(token) {
     return Cookies.set(TOKEN_KEY, token, {
         expires: TokenExpiresTime
     })

@@ -7,9 +7,8 @@
   </el-upload>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ref, toRefs, watch} from 'vue'
-import type {UploadProps} from 'element-plus'
 import {ElMessage} from 'element-plus'
 import {uploadApi} from "@/api/upload"
 
@@ -26,7 +25,7 @@ const props = defineProps({
 const imageUrl = ref()
 const {modelValue} = toRefs(props)
 watch(modelValue,
-    (newValue: string) => {
+    (newValue) => {
       imageUrl.value = newValue
     },
     {
@@ -38,7 +37,7 @@ watch(modelValue,
  * 上传
  * @param file
  */
-const onUpload = async (file: any) => {
+const onUpload = async (file) => {
   return await uploadApi.pic(file.file)
 }
 
@@ -47,7 +46,7 @@ const onUpload = async (file: any) => {
  * @param response
  * @param uploadFile
  */
-const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
+const handleAvatarSuccess = (response) => {
   imageUrl.value = response
   emit("update:modelValue", response)
 }
@@ -56,7 +55,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
  * 上传前校验
  * @param rawFile
  */
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvatarUpload = (rawFile) => {
   if (imageType.indexOf(rawFile.type) === -1) {
     ElMessage.error('图片格式不支持：' + rawFile.type)
     return false

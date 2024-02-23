@@ -44,21 +44,21 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ref, watch} from "vue";
 import {useUploadStore} from "@/store/modules/upload";
 import {transformSize} from "@/utils/base";
-import {handleFile, handlePic, handleVod, STATUSTIP, UploadFile} from "@/components/Upload/File/upload";
+import {handleFile, handlePic, handleVod, STATUSTIP} from "@/components/Upload/File/upload";
 import {ElMessageBox} from "element-plus";
 
 // 文件
-const fileList = ref<UploadFile[]>([])
-const successFileList = ref<UploadFile[]>([])
+const fileList = ref([])
+const successFileList = ref([])
 
 // 监听
 watch(
     [useUploadStore().getFileList, useUploadStore().getSuccessFileList],
-    (newValue: any) => {
+    (newValue) => {
       fileList.value = newValue[0]
       successFileList.value = newValue[1]
       // 开始上传
@@ -70,10 +70,10 @@ watch(
 const listing = ref(true)
 
 // 上传
-const startUpload = (row?: UploadFile) => {
-  let startFile: UploadFile | undefined = row
+const startUpload = (row) => {
+  let startFile= row
   if (!startFile) {
-    fileList.value.map((item: UploadFile) => {
+    fileList.value.map((item) => {
       if (item.status === 'ready' && !startFile) {
         startFile = item
       }
@@ -96,7 +96,7 @@ const startUpload = (row?: UploadFile) => {
 }
 
 // 暂停上传
-const stopUpload = (row: UploadFile) => {
+const stopUpload = (row) => {
   if (row.vodPlatform === 1) {
 
   }
@@ -104,8 +104,8 @@ const stopUpload = (row: UploadFile) => {
 
 // 关闭面板
 const handleClosePanel = () => {
-  let startFile: UploadFile | undefined
-  fileList.value.map((item: UploadFile) => {
+  let startFile
+  fileList.value.map((item) => {
     if (item.status !== 'success') {
       startFile = item
     }

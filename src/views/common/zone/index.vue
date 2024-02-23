@@ -63,7 +63,7 @@
     <form-model ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
 import Pagination from '@/components/Pagination/index.vue';
@@ -80,7 +80,7 @@ const toCourse = (zoneId: string) => {
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 

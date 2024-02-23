@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import * as echarts from 'echarts';
 import {EChartsType} from 'echarts';
 import {onMounted, reactive, ref} from 'vue';
@@ -34,7 +34,7 @@ onMounted(() => {
   })
 })
 
-const init1 = (data: any) => {
+const init1 = (data) => {
   // 总流量
   const totalFlow = data.totalFlow;
   // 已用流量
@@ -58,7 +58,7 @@ const init1 = (data: any) => {
     legend: {
       orient: 'vertical',
       left: 'left',
-      formatter(name: any) {
+      formatter(name) {
         let data = option1.series[0].data;
         let total = 0;
         let tarValue;
@@ -105,7 +105,7 @@ const init1 = (data: any) => {
   charts.pieOne?.setOption(option1)
 }
 
-const init2 = (data: any) => {
+const init2 = (data) => {
   // 总空间
   const totalSpace = data.totalSpace;
   // 已用空间
@@ -130,7 +130,7 @@ const init2 = (data: any) => {
     legend: {
       orient: 'vertical',
       left: 'left',
-      formatter(name: any) {
+      formatter(name) {
         const data = option2.series[0].data;
         let total = 0;
         let tarValue;

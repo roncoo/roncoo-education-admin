@@ -85,7 +85,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import FormModel from './FormModel.vue';
@@ -102,7 +102,7 @@ const resource = reactive({
   resourceId: '',
   resourceName: ''
 })
-const onPreview = (item?: any) => {
+const onPreview = (item) => {
   resource.visible = true
   resource.resourceId = item.id
   resource.resourceName = item.resourceName
@@ -113,7 +113,7 @@ const closePreview = () => {
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 

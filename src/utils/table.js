@@ -4,7 +4,7 @@
 import {onMounted, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
 
-export default function useTable(apis: any, paras?: any) {
+export default function useTable(apis, paras = {}) {
     // 分页对象
     const page = reactive({
         pageCurrent: 1,
@@ -36,7 +36,7 @@ export default function useTable(apis: any, paras?: any) {
     }
 
     // 查询对象
-    const query: any = reactive({})
+    const query = reactive({})
 
     // 查询
     const handleQuery = () => {
@@ -53,7 +53,7 @@ export default function useTable(apis: any, paras?: any) {
     };
 
     //删除功能
-    const handleDelete = (data: any, tip?: string) => {
+    const handleDelete = (data, tip) => {
         if (apis.delete) {
             ElMessageBox.confirm(tip || '确认删除当前数据?', '删除提示', {
                 type: 'warning',
@@ -73,7 +73,7 @@ export default function useTable(apis: any, paras?: any) {
     };
 
     // 状态修改
-    const handleStatus = async (row: any) => {
+    const handleStatus = async (row) => {
         page.loading = true
         try {
             if (apis.status) {

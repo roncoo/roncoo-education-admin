@@ -1,7 +1,7 @@
 /**
  * 存储localStorage
  */
-export function setStore(name: string, content: string) {
+export function setStore(name, content) {
     if (!name) return
     if (typeof content !== 'string') {
         content = JSON.stringify(content)
@@ -12,7 +12,7 @@ export function setStore(name: string, content: string) {
 /**
  * 获取localStorage
  */
-export function getStore(name: string) {
+export function getStore(name) {
     if (!name) return
     return window.localStorage.getItem(name)
 }
@@ -23,7 +23,7 @@ export function getStore(name: string) {
  * @param content
  * @param expireTime 单位：分
  */
-export function setSessionStorage(name: string, content: string, expireTime?: number | null) {
+export function setSessionStorage(name, content, expireTime) {
     if (!name) return
     let params = JSON.stringify(content)
     if (expireTime) {
@@ -36,10 +36,10 @@ export function setSessionStorage(name: string, content: string, expireTime?: nu
 /**
  * 获取sessionStorage
  */
-export function getSessionStorage(name: string) {
+export function getSessionStorage(name) {
     if (!name) return
 
-    let data: any = window.sessionStorage.getItem(name)
+    let data = window.sessionStorage.getItem(name)
     if (!data) return null
 
     data = JSON.parse(data)

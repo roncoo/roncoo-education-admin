@@ -4,7 +4,7 @@
   </el-radio-group>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {onMounted, ref} from 'vue';
 import {getEnumList} from "@/utils/base";
 

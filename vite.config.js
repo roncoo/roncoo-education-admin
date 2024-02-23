@@ -11,7 +11,7 @@ export default defineConfig({
             '/gateway': {
                 target: 'https://dev-os.roncoos.com/gateway/',
                 changeOrigin: true,
-                rewrite: (path: string) => path.replace(/^\/gateway/, '')
+                rewrite: (path) => path.replace(/^\/gateway/, '')
             }
         }
     },

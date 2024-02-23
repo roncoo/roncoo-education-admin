@@ -28,7 +28,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {systemApi} from '@/api/system'
 import {reactive, ref} from 'vue'
 import useTable from '@/utils/table'
@@ -41,7 +41,7 @@ const onSubmit = async () => {
   const roles = tableRef.value.getSelectionRows()
   if (roles.length > 0) {
     roleIds.value = []
-    roles.forEach((item: any) => {
+    roles.forEach((item) => {
       roleIds.value.push(item.id);
     })
     await systemApi.sysRoleUserSave({'userId': userId.value, 'roleIdList': roleIds.value})
@@ -56,13 +56,13 @@ const userId = ref()
 const roleIds = ref([])
 // 打开和关闭
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item: any) => {
+const onOpen = (item) => {
   if (item) {
     userId.value = item.id
-    systemApi.sysRoleUserList({'userId': item.id}).then((res: any) => {
+    systemApi.sysRoleUserList({'userId': item.id}).then((res) => {
       roleIds.value = res
       // 选中状态处理
-      res.forEach((item: any) => {
+      res.forEach((item) => {
         for (let i = 0; i < page.list.length; i++) {
           if (item == page.list[i].id) {
             tableRef.value.toggleRowSelection(page.list[i], true)

@@ -3,11 +3,11 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import '@/assets/styles/index.less'
 import App from '@/App.vue'
-import router, {createNewRouter} from '@/router/index'
-import store from '@/store/index'
-import {getToken} from '@/utils/cookie';
-import {loginApi} from '@/api/login';
-import {useUserStore} from '@/store/modules/user';
+import router, {createNewRouter} from '@/router/index.js'
+import store from '@/store/index.js'
+import {getToken} from '@/utils/cookie.js';
+import {loginApi} from '@/api/login.js';
+import {useUserStore} from '@/store/modules/user.js';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 if (!getToken()) {
@@ -15,7 +15,7 @@ if (!getToken()) {
     init()
 } else {
     // 初始化（用户已登录）
-    loginApi.getUserInfo().then((res: any) => {
+    loginApi.getUserInfo().then((res) => {
         createNewRouter(res.routerList)
         init()
         useUserStore().login(res)

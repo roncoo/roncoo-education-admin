@@ -16,10 +16,10 @@ export const useUploadStore = defineStore({
     },
     actions: {
         // 添加文件
-        addFile(data: any) {
+        addFile(data) {
             this.fileList.push(data)
         },
-        addSuccessFile(data: any) {
+        addSuccessFile(data) {
             this.successFileList.push(data)
         },
         // 清空文件

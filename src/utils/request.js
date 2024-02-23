@@ -1,13 +1,13 @@
 import axios from 'axios'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {getToken, removeToken} from '@/utils/cookie'
-import router from '@/router/index'
+import {getToken, removeToken} from '@/utils/cookie.js'
+import router from '@/router/index.js'
 import {PATH} from "@/utils/constants/system";
 
-const pending: any[] = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+const pending = []; // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 const CancelToken = axios.CancelToken;
 
-const removePending = (config: any, isCancel: boolean) => {
+const removePending = (config, isCancel) => {
     for (const p in pending) {
         // 枚举不处理
         if (config.url.indexOf('enum') === -1) {
@@ -107,36 +107,36 @@ export default request
 /**
  * post请求
  */
-export const postRequest = (url: string, data?: {}) => {
+export const postRequest = (url, data= {}) => {
     return request({url: url, data: data ? data : {}, method: 'post'});
 }
 
 /**
  * get请求
  */
-export const getRequest = (url: string) => {
+export const getRequest = (url) => {
     return request({url: url, method: 'get'});
 }
 
 /**
  * put请求
  */
-export const putRequest = (url: string, data?: {}) => {
+export const putRequest = (url, data={}) => {
     return request({url: url, data: data ? data : {}, method: 'put'});
 }
 
 /**
  * delete请求
  */
-export const deleteRequest = (url: string) => {
+export const deleteRequest = (url) => {
     return request({url: url, method: 'delete'});
 }
 
-export const upload = (url: string, file: any, fileName: string, cb?: any, cancelFun?: any) => {
+export const upload = (url, file, fileName, cb, cancelFun) => {
     const formData = new FormData()
     formData.append(fileName, file)
-    const config: any = {
-        onUploadProgress: (progressEvent: any) => {
+    const config = {
+        onUploadProgress: (progressEvent) => {
             const percent = Number((progressEvent.loaded / progressEvent.total * 100).toFixed(2))
             // 计算上传进度
             if (cb) {

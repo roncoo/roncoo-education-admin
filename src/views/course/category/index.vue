@@ -54,7 +54,7 @@
     <form-model ref="formRef" @refresh="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {courseApi} from "@/api/course";
@@ -63,7 +63,7 @@ import {getEnumObj} from "@/utils/base";
 
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any, parentId?: string) => {
+const openFormModal = (item, parentId) => {
   formRef.value.onOpen(item, parentId)
 }
 

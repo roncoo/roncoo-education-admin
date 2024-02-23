@@ -35,7 +35,7 @@
   <form-category ref="catalogRef" @refresh="handleCatalog"/>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {onMounted, ref} from 'vue';
 import {courseApi} from "@/api/course";
 import FormCategory from "./FormCategory.vue";
@@ -55,20 +55,20 @@ const categoryId = ref()
 
 const emit = defineEmits(['update:category-id', 'refresh'])
 //
-const handleChangeCategory = (item: any) => {
+const handleChangeCategory = (item) => {
   console.log(item)
   emit('update:category-id', item.id)
   emit('refresh')
 }
 
 // 删除文件夹
-const deleteCatalog = (item: any) => {
+const deleteCatalog = (item) => {
   console.log(item)
 }
 
 // 添加/修改文件夹
 const catalogRef = ref();
-const openFormCatalog = (item?: any, parentId?: number) => {
+const openFormCatalog = (item, parentId) => {
   catalogRef.value.onOpen(item, parentId)
 }
 
@@ -78,7 +78,7 @@ onMounted(() => {
   handleCatalog()
 })
 const handleCatalog = () => {
-  courseApi.categoryList({categoryType: props.categoryType}).then((res: any) => {
+  courseApi.categoryList({categoryType: props.categoryType}).then((res) => {
     treeData.value = res
   })
 }

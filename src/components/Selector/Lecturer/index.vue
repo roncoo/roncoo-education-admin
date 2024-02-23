@@ -24,7 +24,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {usersApi} from '@/api/users';
 import useTable from '@/utils/table';
 import Pagination from "@/components/Pagination/index.vue";
@@ -39,7 +39,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 // 选择老师
-const selectLecturer = (info: any) => {
+const selectLecturer = (info) => {
   emit('close', {lecturerName: info.lecturerName, lecturerId: info.id});
 }
 // 关闭

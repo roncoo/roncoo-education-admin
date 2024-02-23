@@ -41,7 +41,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {systemApi} from '@/api/system'
 import {nextTick, reactive, ref} from 'vue';
 import useTable from '@/utils/table';
@@ -53,7 +53,7 @@ import {getEnumObj} from "@/utils/base";
 // 设置菜单
 const menuRef = ref()
 const menuVisible = ref(false);
-const handSetMenu = (item?: any) => {
+const handSetMenu = (item) => {
   menuVisible.value = true
   nextTick(() => {
     menuRef.value.onOpen(item)
@@ -64,7 +64,7 @@ const handleMenu = () => {
 }
 // 添加/修改
 const formRef = ref();
-const openFormModal = (item?: any) => {
+const openFormModal = (item) => {
   formRef.value.onOpen(item)
 }
 

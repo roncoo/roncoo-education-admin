@@ -44,7 +44,7 @@
     </el-tabs>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive, ref} from 'vue';
 import {courseApi} from '@/api/course'
@@ -59,12 +59,12 @@ const activeName = ref('course')
 
 // 明显
 const formRef = ref()
-const openStudyRecord = (item: any) => {
+const openStudyRecord = (item) => {
   formRef.value.onOpen(item)
 }
 
 // 切换
-const handleClick = (target: any, action?: string) => {
+const handleClick = (target, action) => {
   if (target.props.name === 'course') {
     query.courseId = route.query.courseId
     handlePage

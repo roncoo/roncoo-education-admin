@@ -4,7 +4,7 @@
   </el-breadcrumb>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ArrowRight} from '@element-plus/icons-vue'
 import {computed} from 'vue'
 import {useRoute} from 'vue-router'

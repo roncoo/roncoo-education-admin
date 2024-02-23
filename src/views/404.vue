@@ -6,7 +6,7 @@
   </el-result>
 
 </template>
-<script setup lang="ts">
+<script setup>
 import {useRouter} from 'vue-router';
 import {PATH} from '@/utils/constants/system';
 

@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import {ArrowDown} from '@element-plus/icons-vue'
 import {useUserStore} from "@/store/modules/user";
 import {ref} from "vue";

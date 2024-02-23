@@ -10,7 +10,8 @@
     </template>
   </el-dialog>
 </template>
-<script setup lang="ts">// 打开和关闭
+<script setup>
+// 打开和关闭
 import {reactive, ref} from "vue";
 
 const config = reactive({
@@ -19,7 +20,7 @@ const config = reactive({
 });
 
 const visible = ref(false);// 弹窗显示状态
-const onOpen = (item?: any) => {
+const onOpen = (item) => {
   if (item) {
     Object.assign(config, item)
   }

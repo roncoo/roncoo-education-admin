@@ -22,12 +22,12 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {systemApi} from '@/api/system'
 import {ref} from 'vue';
 
 const treeRef = ref()
-const treeList: any = ref([])
+const treeList = ref([])
 
 // 提交
 const emit = defineEmits(['refresh'])
@@ -35,7 +35,7 @@ const onSubmit = async () => {
   const menus = treeRef.value.getCheckedNodes().concat(treeRef.value.getHalfCheckedNodes())
   if (menus.length > 0) {
     menuIds.value = []
-    menus.forEach((item: any) => {
+    menus.forEach((item) => {
       menuIds.value.push(item.id);
     })
   }
@@ -46,8 +46,8 @@ const onSubmit = async () => {
 }
 
 // 子节点全部取消，父节点也可以半选中
-const checkChange = (a: any, b: any, c: any) => {
-  const anode: any = treeRef.value.getNode(a)
+const checkChange = (a, b, c) => {
+  const anode = treeRef.value.getNode(a)
   if (!anode.checked) {
     const fnode = treeRef.value.getNode(anode.parent)
     if (!fnode.isLeaf) {
@@ -60,13 +60,13 @@ const checkChange = (a: any, b: any, c: any) => {
 const roleId = ref() // 角色ID
 const menuIds = ref([]) // 用户菜单集合
 const visible = ref(false);// 弹窗显示状态
-const onOpen = async (item: any) => {
+const onOpen = async (item) => {
   roleId.value = item.id
   treeList.value = await systemApi.sysMenuList()
-  systemApi.sysMenuRoleList({'roleId': roleId.value}).then((res: any) => {
+  systemApi.sysMenuRoleList({'roleId': roleId.value}).then((res) => {
     menuIds.value = []
     menuIds.value = res
-    res.forEach((item: any) => {
+    res.forEach((item) => {
       const node = treeRef.value.getNode(item);
       if (node != null && node.isLeaf) {
         treeRef.value.setChecked(node, true);

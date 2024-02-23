@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import {loginApi} from '@/api/login';
 import {onMounted, reactive, ref} from 'vue';
 import {setToken} from '@/utils/cookie';
@@ -59,7 +59,7 @@ const verImg = ref()
 // 站点信息
 const service = ref({})
 onMounted(() => {
-  loginApi.getWebsite().then((res: any) => {
+  loginApi.getWebsite().then((res) => {
     service.value = res;
   })
   // 验证码

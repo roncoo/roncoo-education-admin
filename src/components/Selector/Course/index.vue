@@ -22,7 +22,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {reactive} from 'vue';
 import useTable from '@/utils/table';
 import {courseApi} from '@/api/course';
@@ -40,7 +40,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close']);
-const selectCourse = (info: any) => {
+const selectCourse = (info) => {
   emit('close', {courseName: info.courseName, courseId: info.id});
 }
 

@@ -19,7 +19,7 @@
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import useTable from '@/utils/table';
 import {reactive} from 'vue';
 import {courseApi} from '@/api/course'
