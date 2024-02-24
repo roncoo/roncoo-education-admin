@@ -1,12 +1,5 @@
 <template>
-  <el-dialog
-    :append-to-body="true"
-    :model-value="props.visible"
-    :title="props.title"
-    width="800px"
-    center
-    @close="handleClose"
-  >
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" center @close="handleClose" :destroy-on-close="true">
     <el-form :model="query" class="filter-container" inline label-width="100px">
       <el-form-item label="课程名称">
         <el-input v-model="query.courseName" />
@@ -25,52 +18,47 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
   </el-dialog>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import useTable from '@/utils/table'
-import { courseApi } from '@/api/course'
-import Pagination from '@/components/Pagination/index.vue'
+  import { reactive } from 'vue'
+  import useTable from '@/utils/table'
+  import { courseApi } from '@/api/course'
+  import Pagination from '@/components/Pagination/index.vue'
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: '请选择课程'
-  },
-  visible: {
-    type: Boolean,
-    default: false
-  }
-})
-
-const emit = defineEmits(['close'])
-const selectCourse = (info) => {
-  emit('close', { courseName: info.courseName, courseId: info.id })
-}
-
-// 关闭
-const handleClose = () => {
-  emit('close')
-}
-
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-  ...useTable({
-    page: courseApi.coursePage
+  const props = defineProps({
+    title: {
+      type: String,
+      default: '请选择课程'
+    },
+    visible: {
+      type: Boolean,
+      default: false
+    }
   })
-})
+
+  const emit = defineEmits(['close'])
+  const selectCourse = (info) => {
+    emit('close', { courseName: info.courseName, courseId: info.id })
+  }
+
+  // 关闭
+  const handleClose = () => {
+    emit('close')
+  }
+
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
+    ...useTable({
+      page: courseApi.coursePage
+    })
+  })
 </script>
 
 <style lang="scss" scoped>
-.example-showcase .el-loading-mask {
-  z-index: 9;
-}
+  .example-showcase .el-loading-mask {
+    z-index: 9;
+  }
 </style>

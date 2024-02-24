@@ -1,12 +1,5 @@
 <template>
-  <el-dialog
-    :append-to-body="true"
-    :model-value="true"
-    :title="props.title"
-    width="800px"
-    center
-    @close="handleClose"
-  >
+  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" center @close="handleClose" :destroy-on-close="true">
     <div class="search_bar clearfix">
       <el-form :model="query" inline label-width="80px">
         <el-form-item label="讲师名称">
@@ -27,44 +20,39 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
   </el-dialog>
 </template>
 
 <script setup>
-import { usersApi } from '@/api/users'
-import useTable from '@/utils/table'
-import Pagination from '@/components/Pagination/index.vue'
-import { reactive } from 'vue'
+  import { usersApi } from '@/api/users'
+  import useTable from '@/utils/table'
+  import Pagination from '@/components/Pagination/index.vue'
+  import { reactive } from 'vue'
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: '请选择讲师'
-  }
-})
-
-const emit = defineEmits(['close'])
-// 选择老师
-const selectLecturer = (info) => {
-  emit('close', { lecturerName: info.lecturerName, lecturerId: info.id })
-}
-// 关闭
-const handleClose = () => {
-  emit('close')
-}
-
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-  ...useTable({
-    page: usersApi.lecturerPage
+  const props = defineProps({
+    title: {
+      type: String,
+      default: '请选择讲师'
+    }
   })
-})
+
+  const emit = defineEmits(['close'])
+  // 选择老师
+  const selectLecturer = (info) => {
+    emit('close', { lecturerName: info.lecturerName, lecturerId: info.id })
+  }
+  // 关闭
+  const handleClose = () => {
+    emit('close')
+  }
+
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
+    ...useTable({
+      page: usersApi.lecturerPage
+    })
+  })
 </script>
 
 <style lang="scss" scoped></style>

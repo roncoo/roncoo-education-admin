@@ -1,14 +1,14 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose" :destroy-on-close="true">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
-        <upload-image v-model="formModel.carouselImg" :width="260" :height="50" />
-      </el-form-item>
-      <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
-        <enum-radio v-model="formModel.carouselTarget" :enum-name="'TargetEnum'"></enum-radio>
+        <upload-image v-model="formModel.carouselImg" :width="520" :height="100" />
       </el-form-item>
       <el-form-item class="form-group" label="跳转地址" prop="carouselUrl">
         <el-input v-model="formModel.carouselUrl" maxlength="255" show-word-limit></el-input>
+      </el-form-item>
+      <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
+        <enum-radio v-model="formModel.carouselTarget" :enum-name="'TargetEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort"></el-input-number>
