@@ -1,6 +1,6 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center @close="onClose">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item label="类型" prop="menuType">
         <enum-radio v-model="formModel.menuType" :enum-name="'MenuTypeEnum'"></enum-radio>
       </el-form-item>

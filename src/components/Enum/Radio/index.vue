@@ -1,6 +1,6 @@
 <template>
   <el-radio-group v-model="radioValue" @change="handleChange">
-    <el-radio v-for="item in enums" :key="item.code" :label="item.code + ''">{{ item.desc }}</el-radio>
+    <el-radio v-for="item in enums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
   </el-radio-group>
 </template>
 
@@ -9,7 +9,7 @@
   import { getEnumList } from '@/utils/base'
 
   const props = defineProps({
-    modelValue: { type: String, default: '' },
+    modelValue: { type: Number, default: null },
     enumName: { type: String, default: '' }
   })
 

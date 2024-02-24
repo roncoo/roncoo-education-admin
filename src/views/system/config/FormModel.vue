@@ -77,6 +77,9 @@
   const onOpen = (item) => {
     if (item) {
       Object.assign(formModel, item)
+      if (formModel.contentType === 5) {
+        formModel.configValue = parseInt(formModel.configValue)
+      }
     }
     visible.value = true
   }

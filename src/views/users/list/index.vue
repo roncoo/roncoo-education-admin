@@ -32,9 +32,7 @@
       <el-table-column :min-width="120" label="注册时间" prop="gmtCreate" />
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{
-            getEnumObj('StatusIdEnum')[scope.row.statusId]
-          }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
@@ -50,23 +48,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                  <el-button v-permission="'user:admin:users:edit'" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button
-                    v-if="scope.row.statusId == 0"
-                    plain
-                    type="success"
-                    @click="handleStatus(scope.row)"
-                    >启用</el-button
-                  >
-                  <el-button
-                    v-if="scope.row.statusId == 1"
-                    plain
-                    type="warning"
-                    @click="handleStatus(scope.row)"
-                    >禁用</el-button
-                  >
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="warning" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -74,42 +60,37 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <form-modal ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
-import useTable from '@/utils/table'
-import { reactive, ref } from 'vue'
-import { usersApi } from '@/api/users'
-import { getEnumObj } from '@/utils/base'
-import { useRouter } from 'vue-router'
-import Pagination from '@/components/Pagination/index.vue'
-import FormModal from './FormModel.vue'
+  import useTable from '@/utils/table'
+  import { reactive, ref } from 'vue'
+  import { usersApi } from '@/api/users'
+  import { getEnumObj } from '@/utils/base'
+  import { useRouter } from 'vue-router'
+  import Pagination from '@/components/Pagination/index.vue'
+  import FormModal from './FormModel.vue'
 
-// 添加/修改
-const formRef = ref()
-const openFormModal = (item) => {
-  formRef.value.onOpen(item)
-}
+  // 添加/修改
+  const formRef = ref()
+  const openFormModal = (item) => {
+    formRef.value.onOpen(item)
+  }
 
-// 查看数据
-const router = useRouter()
-const toUserRecord = function (row) {
-  router.push({ path: '/users/record', query: { userId: row.id } })
-}
+  // 查看数据
+  const router = useRouter()
+  const toUserRecord = function (row) {
+    router.push({ path: '/users/record', query: { userId: row.id } })
+  }
 
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery, handleStatus } = reactive({
-  ...useTable({
-    page: usersApi.usersPage,
-    delete: usersApi.usersDelete,
-    status: usersApi.usersEdit
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery, handleStatus } = reactive({
+    ...useTable({
+      page: usersApi.usersPage,
+      delete: usersApi.usersDelete,
+      status: usersApi.usersEdit
+    })
   })
-})
 </script>

@@ -9,6 +9,7 @@ export const useUserStore = defineStore({
     realName: '',
     routerList: [],
     menuList: [],
+    permissionList: [],
     breadcrumbMap: new Map()
   }),
   getters: {
@@ -24,6 +25,9 @@ export const useUserStore = defineStore({
     getMenuList(state) {
       return state.menuList
     },
+    getPermissionList(state) {
+      return state.permissionList
+    },
     getBreadcrumbMap(state) {
       return state.breadcrumbMap
     }
@@ -35,6 +39,7 @@ export const useUserStore = defineStore({
       this.realName = data.realName
       this.routerList = data.routerList
       this.menuList = data.menuList
+      this.permissionList = data.permissionList
       this.breadcrumbMap = buildBreadcrumbMap(data.menuList)
     },
 
@@ -51,12 +56,11 @@ export const useUserStore = defineStore({
 /**
  * 构建菜单父级集合，面包屑导航
  */
-function buildBreadcrumbMap(menuTree) {
+function buildBreadcrumbMap(menuList) {
   let breadcrumbMaps = new Map()
-  recursiveMap(menuTree, [], breadcrumbMaps)
+  recursiveMap(menuList, [], breadcrumbMaps)
   return breadcrumbMaps
 }
-
 function recursiveMap(menuList, parentList, breadcrumbMaps) {
   for (const e of menuList) {
     if (e.parentId === 0) {
