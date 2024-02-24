@@ -9,7 +9,7 @@
   import { getEnumList } from '@/utils/base'
 
   const props = defineProps({
-    modelValue: { type: Number, default: null },
+    modelValue: { type: Number, default: 0 },
     enumName: { type: String, default: '' }
   })
 
