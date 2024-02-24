@@ -1,5 +1,6 @@
 import { systemApi } from '@/api/system.js'
 import { getSessionStorage, setSessionStorage } from '@/utils/storage.js'
+import { nextTick } from 'vue'
 
 /**
  * 格式化时长
@@ -44,21 +45,18 @@ export function transformSize(bytes) {
  */
 export function getEnumList(enumName) {
   const enumAttr = getSessionStorage(enumName)
-  if (enumAttr) {
-    return enumAttr
-  } else {
+  if (enumAttr === null || enumAttr === undefined) {
     systemApi.getEnum({ enumName }).then((res) => {
       setSessionStorage(enumName, res)
-      return res
+      return getSessionStorage(enumName)
     })
+  } else {
+    return enumAttr
   }
 }
 
 export function getEnumObj(enumName) {
   let enumList = getEnumList(enumName)
-  if (!enumList) {
-    enumList = getEnumList(enumName)
-  }
   return toObj(enumList)
 }
 

@@ -37,11 +37,9 @@ export function setSessionStorage(name, content, expireTime) {
  * 获取sessionStorage
  */
 export function getSessionStorage(name) {
-  if (!name) return
-
+  if (!name) return null
   let data = window.sessionStorage.getItem(name)
   if (!data) return null
-
   data = JSON.parse(data)
   if (data) {
     if (data.expireTime && data.expireTime > 0) {
