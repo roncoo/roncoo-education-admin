@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item label="导航名称">
-            <el-input v-model="query.navTitle" clearable/>
+            <el-input v-model="query.navTitle" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -15,15 +15,15 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60"/>
-      <el-table-column :width="200" label="导航名称" prop="navTitle"/>
-      <el-table-column label="导航地址" prop="navUrl"/>
+      <el-table-column align="center" label="序号" type="index" width="60" />
+      <el-table-column :width="200" label="导航名称" prop="navTitle" />
+      <el-table-column label="导航地址" prop="navUrl" />
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ getEnumObj('TargetEnum')[scope.row.target] }}</span>
+          <span>{{ getEnumObj('TargetEnum')[scope.row.navTarget] }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="排序" prop="sort"/>
+      <el-table-column :width="100" label="排序" prop="sort" />
       <el-table-column :width="100" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
@@ -33,9 +33,10 @@
         <template #default="scope">
           <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-dropdown>
-            <el-button> 更多操作
+            <el-button>
+              更多操作
               <el-icon class="el-icon--right">
-                <arrow-down/>
+                <arrow-down />
               </el-icon>
             </el-button>
             <template #dropdown>
@@ -53,30 +54,30 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
-    <form-modal ref="formRef" @refresh="handlePage"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <form-modal ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
-import useTable from '@/utils/table';
-import {reactive, ref} from 'vue';
-import {systemApi} from '@/api/system'
-import Pagination from '@/components/Pagination/index.vue';
-import FormModal from "./FormModel.vue";
-import {getEnumObj} from "@/utils/base";
+  import useTable from '@/utils/table'
+  import { reactive, ref } from 'vue'
+  import { systemApi } from '@/api/system'
+  import Pagination from '@/components/Pagination/index.vue'
+  import FormModal from './FormModel.vue'
+  import { getEnumObj } from '@/utils/base'
 
-// 添加/修改
-const formRef = ref();
-const openFormModal = (item) => {
-  formRef.value.onOpen(item)
-}
+  // 添加/修改
+  const formRef = ref()
+  const openFormModal = (item) => {
+    formRef.value.onOpen(item)
+  }
 
-// 基础功能
-const {page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus} = reactive({
-  ...useTable({
-    page: systemApi.navPage,
-    delete: systemApi.navDelete,
-    status: systemApi.navEdit
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
+    ...useTable({
+      page: systemApi.navPage,
+      delete: systemApi.navDelete,
+      status: systemApi.navEdit
+    })
   })
-})
 </script>

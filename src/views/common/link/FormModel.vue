@@ -23,67 +23,67 @@
   </el-dialog>
 </template>
 <script setup>
-import {ElMessage} from 'element-plus';
-import {reactive, ref} from 'vue';
-import {systemApi} from '@/api/system';
-import EnumRadio from "@/components/Enum/Radio/index.vue";
+  import { ElMessage } from 'element-plus'
+  import { reactive, ref } from 'vue'
+  import { systemApi } from '@/api/system'
+  import EnumRadio from '@/components/Enum/Radio/index.vue'
 
-// 规则
-const formRef = ref()
-const rules = {
-  linkName: [{required: true, message: '不能为空', trigger: 'blur'}],
-  linkUrl: [{required: true, message: '不能为空', trigger: 'blur'}],
-  linkTarget: [{required: true, message: '不能为空', trigger: 'blur'}]
-}
-
-// 表单
-const emit = defineEmits(['refresh'])
-const loading = ref(false);
-const formDefault = {
-  id: undefined,
-  linkName: undefined,
-  linkUrl: undefined,
-  linkTarget: '_blank',
-  sort: 1
-}
-const formModel = reactive({...formDefault})
-// 提交
-const onSubmit = async () => {
-  // 校验
-  const valid = await formRef.value.validate()
-  if (!valid) return
-
-  if (loading.value === true) {
-    ElMessage({type: 'warning', message: '正在处理···'});
-    return;
+  // 规则
+  const formRef = ref()
+  const rules = {
+    linkName: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    linkUrl: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    linkTarget: [{ required: true, message: '不能为空', trigger: 'blur' }]
   }
-  loading.value = true;
-  try {
-    if (formModel.id) {
-      await systemApi.linkEdit(formModel);
-      ElMessage({type: 'success', message: '修改成功'});
-    } else {
-      await systemApi.linkSave(formModel);
-      ElMessage({type: 'success', message: '添加成功'});
+
+  // 表单
+  const emit = defineEmits(['refresh'])
+  const loading = ref(false)
+  const formDefault = {
+    id: undefined,
+    linkName: undefined,
+    linkUrl: undefined,
+    linkTarget: 1,
+    sort: 1
+  }
+  const formModel = reactive({ ...formDefault })
+  // 提交
+  const onSubmit = async () => {
+    // 校验
+    const valid = await formRef.value.validate()
+    if (!valid) return
+
+    if (loading.value === true) {
+      ElMessage({ type: 'warning', message: '正在处理···' })
+      return
     }
-    emit('refresh')
-    onClose()
-  } finally {
-    loading.value = false;
+    loading.value = true
+    try {
+      if (formModel.id) {
+        await systemApi.linkEdit(formModel)
+        ElMessage({ type: 'success', message: '修改成功' })
+      } else {
+        await systemApi.linkSave(formModel)
+        ElMessage({ type: 'success', message: '添加成功' })
+      }
+      emit('refresh')
+      onClose()
+    } finally {
+      loading.value = false
+    }
   }
-}
 
-// 打开和关闭
-const visible = ref(false);
-const onOpen = (item) => {
-  if (item) {
-    Object.assign(formModel, item);
+  // 打开和关闭
+  const visible = ref(false)
+  const onOpen = (item) => {
+    if (item) {
+      Object.assign(formModel, item)
+    }
+    visible.value = true
   }
-  visible.value = true
-}
-const onClose = () => {
-  visible.value = false;
-  Object.assign(formModel, formDefault);
-}
-defineExpose({onOpen})
+  const onClose = () => {
+    visible.value = false
+    Object.assign(formModel, formDefault)
+  }
+  defineExpose({ onOpen })
 </script>

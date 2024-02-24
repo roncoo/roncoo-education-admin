@@ -12,7 +12,7 @@
         </p>
       </div>
       <div class="login-panel">
-        <el-form :model="loginForm" label-position="left">
+        <el-form :model="loginForm" label-position="left"  @keyup.enter="handleLogin()">
           <h3 class="login-head">管理员登录</h3>
           <el-form-item class="form-group" prop="mobile">
             <el-input v-model="loginForm.mobile" placeholder="用户名"/>
@@ -21,7 +21,7 @@
             <el-input v-model="loginForm.mobilePwd" placeholder="密码" type="password" show-password/>
           </el-form-item>
           <el-form-item class="form-group" prop="verCode">
-            <el-input class="var-input" v-model="loginForm.verCode" placeholder="验证码"/>
+            <el-input class="var-input" v-model="loginForm.verCode"  placeholder="验证码"/>
             <img class="var-img" :src="verImg" @click="getCaptcha"/>
           </el-form-item>
           <el-button v-loading="loading" class="login-button" type="primary" @click="handleLogin">登 录</el-button>
