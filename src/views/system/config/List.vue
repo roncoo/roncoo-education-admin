@@ -23,7 +23,7 @@
         <span style="color: #999; font-size: 13px">{{ scope.row.remark }}</span>
       </template>
     </el-table-column>
-    <el-table-column label="操作" width="220">
+    <el-table-column v-permission="'sys:config:edit'" label="操作" width="220">
       <template #default="scope">
         <el-button type="primary" @click="openFormModal(scope.row)">编辑</el-button>
       </template>

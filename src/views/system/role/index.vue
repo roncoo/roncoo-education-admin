@@ -36,42 +36,42 @@
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <form-modal ref="formRef" @refresh="handlePage" />
-    <set-menu ref="menuRef" v-if="menuVisible" @refresh="handleMenu"></set-menu>
+    <menu-set ref="menuRef" v-if="menuVisible" @refresh="handleMenu"></menu-set>
   </div>
 </template>
 <script setup>
-import { systemApi } from '@/api/system'
-import { nextTick, reactive, ref } from 'vue'
-import useTable from '@/utils/table'
-import FormModal from './FormModel.vue'
-import SetMenu from './SetMenu.vue'
-import Pagination from '@/components/Pagination/index.vue'
-import { getEnumObj } from '@/utils/base'
+  import { systemApi } from '@/api/system'
+  import { nextTick, reactive, ref } from 'vue'
+  import useTable from '@/utils/table'
+  import FormModal from './FormModel.vue'
+  import MenuSet from './MenuSet.vue'
+  import Pagination from '@/components/Pagination/index.vue'
+  import { getEnumObj } from '@/utils/base'
 
-// 设置菜单
-const menuRef = ref()
-const menuVisible = ref(false)
-const handSetMenu = (item) => {
-  menuVisible.value = true
-  nextTick(() => {
-    menuRef.value.onOpen(item)
-  })
-}
-const handleMenu = () => {
-  menuVisible.value = false
-}
-// 添加/修改
-const formRef = ref()
-const openFormModal = (item) => {
-  formRef.value.onOpen(item)
-}
+  // 设置菜单
+  const menuRef = ref()
+  const menuVisible = ref(false)
+  const handSetMenu = (item) => {
+    menuVisible.value = true
+    nextTick(() => {
+      menuRef.value.onOpen(item)
+    })
+  }
+  const handleMenu = () => {
+    menuVisible.value = false
+  }
+  // 添加/修改
+  const formRef = ref()
+  const openFormModal = (item) => {
+    formRef.value.onOpen(item)
+  }
 
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-  ...useTable({
-    page: systemApi.sysRolePage,
-    delete: systemApi.sysRoleDelete,
-    status: systemApi.sysRoleEdit
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
+    ...useTable({
+      page: systemApi.sysRolePage,
+      delete: systemApi.sysRoleDelete,
+      status: systemApi.sysRoleEdit
+    })
   })
-})
 </script>

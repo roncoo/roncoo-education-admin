@@ -41,7 +41,7 @@ function init() {
   // 注册自定义指令（权限使用）
   app.directive('permission', (el, binding) => {
     const permissions = useUserStore().getPermissionList
-    //console.log(permissions)
+    console.log(permissions)
     if (binding.value) {
       if (!permissions?.includes(binding.value)) {
         el.parentNode && el.parentNode.removeChild(el)
