@@ -8,4 +8,4 @@ export const PATH = {
   URL_GATEWAY: '/gateway',
   URL_DASHBOARD: '/dashboard'
 }
-export const TOKEN_KEY = 'EDU_OS_TOKEN'
+export const TOKEN_KEY = 'EDU_OS_ADMIN_TOKEN'
