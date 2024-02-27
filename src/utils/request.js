@@ -7,21 +7,6 @@ import { PATH } from '@/utils/constants/system'
 const pending = [] // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 const CancelToken = axios.CancelToken
 
-const removePending = (config, isCancel) => {
-  for (const p in pending) {
-    // 枚举不处理
-    if (config.url.indexOf('enum') === -1) {
-      if (pending[p].u === config.url + '&' + config.method) {
-        // 当前请求在数组中存在时执行函数体
-        if (isCancel) {
-          pending[p].f() // 执行取消操作
-        }
-        pending.splice(Number(p), 1) // 把这条记录从数组中移除
-      }
-    }
-  }
-}
-
 // create an axios instance
 const request = axios.create({
   baseURL: PATH.URL_GATEWAY, // url = request url + base url
@@ -117,6 +102,21 @@ request.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+const removePending = (config, isCancel) => {
+  for (const p in pending) {
+    // 枚举不处理
+    if (config.url.indexOf('enum') === -1) {
+      if (pending[p].u === config.url + '&' + config.method) {
+        // 当前请求在数组中存在时执行函数体
+        if (isCancel) {
+          pending[p].f() // 执行取消操作
+        }
+        pending.splice(Number(p), 1) // 把这条记录从数组中移除
+      }
+    }
+  }
+}
 
 /**
  * post请求
