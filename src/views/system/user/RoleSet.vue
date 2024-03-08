@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="角色设置" width="800px" center @close="onClose()" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" title="角色设置" width="800px" center align-center @close="onClose()" :destroy-on-close="true">
     <div class="page_head" style="text-align: left">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">

@@ -50,25 +50,6 @@ img {
   margin-left: 10px;
 }
 
-// 弹框居中
-.el-dialog {
-  display: flex;
-  flex-direction: column;
-  margin: 0 !important;
-  padding: 20px 40px;
-  max-height: calc(100% - 60px - 36px);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  .el-dialog__body {
-    padding-top: 20px;
-    overflow-y: auto;
-    text-align: center;
-  }
-}
-
 // 滚动条样式
 ::-webkit-scrollbar {
   width: 5px;

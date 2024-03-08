@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="props.resourceName" width="600px" center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="props.resourceName" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <div id="player"></div>
     <template #footer>
       <span class="dialog-footer">

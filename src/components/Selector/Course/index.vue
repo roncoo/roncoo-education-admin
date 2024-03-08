@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" center align-center @close="handleClose" :destroy-on-close="true">
     <el-form :model="query" class="filter-container" inline label-width="100px">
       <el-form-item label="课程名称">
         <el-input v-model="query.courseName" />
