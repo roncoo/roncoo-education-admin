@@ -1,7 +1,7 @@
 <template>
   <div class="table-catalog">
     <div class="table-catalog-title">
-      <span>资源目录</span>
+      <span style="cursor: pointer" @click="handleChangeCategory">资源目录</span>
       <el-button text link style="margin-left: 70px" @click="openFormCatalog(null, null)">
         <el-icon>
           <CirclePlus />
@@ -10,12 +10,12 @@
     </div>
     <el-tree :data="treeData" :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }" node-key="id" @node-click="handleChangeCategory">
       <template #default="{ node, data }">
-        <span
-          ><el-icon><Folder /></el-icon
-        ></span>
+        <span>
+          <el-icon><Folder /></el-icon>
+        </span>
         <span class="table-catalog-name">{{ data.categoryName }}</span>
         <span class="table-catalog-dropdown" :class="{ active: data.id === categoryId }">
-          <el-dropdown trigger="click" style="margin-top: 3px">
+          <el-dropdown style="margin-top: 3px">
             <el-icon><More /></el-icon>
             <template #dropdown>
               <el-dropdown-menu>
@@ -51,7 +51,7 @@
   const categoryId = ref(props.categoryId)
 
   const emit = defineEmits(['update:category-id', 'refresh'])
-  //
+  // 选择目录
   const handleChangeCategory = (item) => {
     emit('update:category-id', item.id)
     emit('refresh')
@@ -73,6 +73,8 @@
   onMounted(() => {
     handleCatalog()
   })
+
+  // 列出目录
   const handleCatalog = () => {
     courseApi.categoryList({ categoryType: props.categoryType }).then((res) => {
       treeData.value = res
