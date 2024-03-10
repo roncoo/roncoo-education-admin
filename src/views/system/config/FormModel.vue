@@ -7,7 +7,7 @@
         <!-- 富文本类型 -->
         <editor v-if="formModel.contentType === 2" v-model="formModel.configValue" />
         <!-- 图片类型 -->
-        <upload-image v-if="formModel.contentType === 3" v-model="formModel.configValue" :width="800" />
+        <upload-image v-if="formModel.contentType === 3" v-model="formModel.configValue" :width="700" />
         <!-- 枚举类型 -->
         <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
@@ -89,10 +89,14 @@
     Object.assign(formModel, formDefault)
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .image-upload {
     height: 200px !important;
     text-align: center;
     margin: 0 auto;
+    .image {
+      height: 200px;
+      width: auto;
+    }
   }
 </style>

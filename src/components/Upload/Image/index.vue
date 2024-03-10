@@ -7,7 +7,7 @@
     :style="'width:' + width + 'px;height:' + height + 'px;'"
     class="image-upload"
   >
-    <img v-if="imageUrl" :src="imageUrl" />
+    <img class="image" v-if="imageUrl" :src="imageUrl" />
     <el-icon v-else class="uploader-icon" :style="'width:' + width + 'px;height:' + height + 'px;'">
       <Plus />
     </el-icon>
@@ -15,77 +15,77 @@
 </template>
 
 <script setup>
-import { ref, toRefs, watch } from 'vue'
-import { ElMessage } from 'element-plus'
-import { uploadApi } from '@/api/upload'
+  import { ref, toRefs, watch } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import { uploadApi } from '@/api/upload'
 
-const imageType = 'image/jpeg,image/png,image/gif,image/x-icon'
-const emit = defineEmits(['update:modelValue'])
+  const imageType = 'image/jpeg,image/png,image/gif,image/x-icon'
+  const emit = defineEmits(['update:modelValue'])
 
-const props = defineProps({
-  modelValue: { type: String, default: '' },
-  width: { type: Number, default: 100 },
-  height: { type: Number, default: 100 }
-})
+  const props = defineProps({
+    modelValue: { type: String, default: '' },
+    width: { type: Number, default: 100 },
+    height: { type: Number, default: 100 }
+  })
 
-// 图片
-const imageUrl = ref()
-const { modelValue } = toRefs(props)
-watch(
-  modelValue,
-  (newValue) => {
-    imageUrl.value = newValue
-  },
-  {
-    immediate: true
+  // 图片
+  const imageUrl = ref()
+  const { modelValue } = toRefs(props)
+  watch(
+    modelValue,
+    (newValue) => {
+      imageUrl.value = newValue
+    },
+    {
+      immediate: true
+    }
+  )
+
+  /**
+   * 上传
+   * @param file
+   */
+  const onUpload = async (file) => {
+    return await uploadApi.pic(file.file)
   }
-)
 
-/**
- * 上传
- * @param file
- */
-const onUpload = async (file) => {
-  return await uploadApi.pic(file.file)
-}
-
-/**
- * 上传成功
- * @param response
- * @param uploadFile
- */
-const handleAvatarSuccess = (response) => {
-  imageUrl.value = response
-  emit('update:modelValue', response)
-}
-
-/**
- * 上传前校验
- * @param rawFile
- */
-const beforeAvatarUpload = (rawFile) => {
-  if (imageType.indexOf(rawFile.type) === -1) {
-    ElMessage.error('图片格式不支持：' + rawFile.type)
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 10) {
-    ElMessage.error('图片大小不能超过10MB')
-    return false
+  /**
+   * 上传成功
+   * @param response
+   * @param uploadFile
+   */
+  const handleAvatarSuccess = (response) => {
+    imageUrl.value = response
+    emit('update:modelValue', response)
   }
-  return true
-}
+
+  /**
+   * 上传前校验
+   * @param rawFile
+   */
+  const beforeAvatarUpload = (rawFile) => {
+    if (imageType.indexOf(rawFile.type) === -1) {
+      ElMessage.error('图片格式不支持：' + rawFile.type)
+      return false
+    } else if (rawFile.size / 1024 / 1024 > 10) {
+      ElMessage.error('图片大小不能超过10MB')
+      return false
+    }
+    return true
+  }
 </script>
 
 <style lang="scss" scoped>
-.image-upload {
-  position: relative;
-  cursor: pointer;
-  border-radius: 6px;
-  border: 1px dashed #d9d9d9;
+  .image-upload {
+    position: relative;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px dashed #d9d9d9;
 
-  .el-icon.uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    text-align: center;
+    .el-icon.uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      text-align: center;
+    }
   }
-}
 </style>

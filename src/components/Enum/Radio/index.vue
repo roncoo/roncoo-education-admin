@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { getEnumList } from '@/utils/base'
 
   const props = defineProps({
@@ -13,7 +13,9 @@
     enumName: { type: String, default: '' }
   })
 
-  const modelValue = ref(props.modelValue)
+  const modelValue = computed(() => {
+    return props.modelValue
+  })
 
   const emit = defineEmits(['update:modelValue'])
   function handleChange(item) {
