@@ -44,11 +44,9 @@
       </el-table-column>
       <el-table-column :width="100" label="价格">
         <template #default="scope">
-          <span v-if="scope.row.coursePrice == 0">免费</span>
+          <span v-if="scope.row.coursePrice === 0">免费</span>
           <span v-else>
-            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through"
-              >￥{{ scope.row.rulingPrice }}</span
-            >
+            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through">￥{{ scope.row.rulingPrice }}</span>
           </span>
         </template>
       </el-table-column>
@@ -60,37 +58,32 @@
       </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button plain type="primary" @click="openFormModal(scope.row)">备注</el-button>
+          <el-button v-permission="'order:remark'" plain type="primary" @click="openFormModal(scope.row)">备注</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <form-modal ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
-import useTable from '@/utils/table'
-import { reactive, ref } from 'vue'
-import { usersApi } from '@/api/users'
-import Pagination from '@/components/Pagination/index.vue'
-import FormModal from './FormModel.vue'
-import { getEnumObj } from '@/utils/base'
+  import useTable from '@/utils/table'
+  import { reactive, ref } from 'vue'
+  import { usersApi } from '@/api/users'
+  import Pagination from '@/components/Pagination/index.vue'
+  import FormModal from './FormModel.vue'
+  import { getEnumObj } from '@/utils/base'
 
-// 添加/修改
-const formRef = ref()
-const openFormModal = (item) => {
-  formRef.value.onOpen(item)
-}
+  // 添加/修改
+  const formRef = ref()
+  const openFormModal = (item) => {
+    formRef.value.onOpen(item)
+  }
 
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-  ...useTable({
-    page: usersApi.orderInfoPage
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
+    ...useTable({
+      page: usersApi.orderInfoPage
+    })
   })
-})
 </script>

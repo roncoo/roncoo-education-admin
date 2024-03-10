@@ -62,17 +62,17 @@
     if (!valid) return
 
     if (loading.value === true) {
-      ElMessage({ type: 'warning', message: '正在处理···' })
+      ElMessage.warning('正在处理···')
       return
     }
     loading.value = true
     try {
       if (formModel.id) {
         await courseApi.zoneCourseEdit(formModel)
-        ElMessage({ type: 'success', message: '修改成功' })
+        ElMessage.success('修改成功')
       } else {
         await courseApi.zoneCourseSave(formModel)
-        ElMessage({ type: 'success', message: '添加成功' })
+        ElMessage.success('添加成功')
       }
       emit('refresh')
       onClose()

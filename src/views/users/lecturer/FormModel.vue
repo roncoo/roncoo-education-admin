@@ -64,7 +64,7 @@
     const valid = await formRef.value.validate()
     if (!valid) return
     if (loading.value === true) {
-      ElMessage({ type: 'warning', message: '正在处理...' })
+      ElMessage.warning('正在处理...')
       return
     }
 
@@ -72,10 +72,10 @@
     try {
       if (formModel.id) {
         await usersApi.lecturerEdit(formModel)
-        ElMessage({ type: 'success', message: '修改成功' })
+        ElMessage.success('修改成功')
       } else {
         await usersApi.lecturerSave(formModel)
-        ElMessage({ type: 'warning', message: '添加成功' })
+        ElMessage.success('添加成功')
       }
       emit('refresh')
       onClose()

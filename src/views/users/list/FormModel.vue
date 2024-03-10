@@ -51,7 +51,7 @@
     const valid = await formRef.value.validate()
     if (!valid) return
     if (loading.value === true) {
-      ElMessage({ type: 'warning', message: '正在处理...' })
+      ElMessage.warning('正在处理...')
       return
     }
 
@@ -59,9 +59,9 @@
     try {
       if (formModel.value.id) {
         await usersApi.usersEdit(formModel.value)
-        ElMessage({ type: 'success', message: '修改成功' })
+        ElMessage.success('修改成功')
       } else {
-        ElMessage({ type: 'warning', message: '不支持后台添加，请在门户注册' })
+        ElMessage.warning('不支持后台添加，请在门户注册')
       }
       emit('refresh')
       onClose()

@@ -24,9 +24,7 @@
       <el-table-column label="名称/分类-讲师" prop="courseName">
         <template #default="scope">
           <span
-            ><a :href="'/course/' + scope.row.id" target="_blank">
-              {{ scope.row.courseName }}</a
-            ></span
+            ><a :href="'/course/' + scope.row.id" target="_blank"> {{ scope.row.courseName }}</a></span
           ><br />
           <span>{{ scope.row.categoryName }} - 【{{ scope.row.lecturerName }}】</span>
         </template>
@@ -35,9 +33,7 @@
         <template #default="scope">
           <span v-if="scope.row.isFree == 1">免费</span>
           <span v-if="scope.row.isFree == 0">
-            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through"
-              >￥{{ scope.row.rulingPrice }}</span
-            >
+            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through">￥{{ scope.row.rulingPrice }}</span>
           </span>
         </template>
       </el-table-column>
@@ -49,22 +45,18 @@
       <el-table-column :width="80" label="排序" prop="courseSort" />
       <el-table-column :width="80" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.isPutaway === 0 }">{{
-            getEnumObj('PutawayEnum')[scope.row.isPutaway]
-          }}</span>
+          <span :class="{ 'c-special': scope.row.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.isPutaway] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="80" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{
-            getEnumObj('StatusIdEnum')[scope.row.statusId]
-          }}</span>
+          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="280" fixed="right" label="操作" prop="address">
         <template #default="scope">
           <el-button plain type="success" @click="toCourseRecord(scope.row)">数据</el-button>
-          <el-button plain type="success" @click="toCourseChapter(scope.row)">章节</el-button>
+          <el-button plain type="primary" @click="toCourseChapter(scope.row)">章节</el-button>
           <el-dropdown>
             <el-button>
               更多操作
@@ -75,25 +67,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button plain type="primary" @click="toCourseUpdate(scope.row)"
-                    >编辑</el-button
-                  >
+                  <el-button plain type="primary" @click="toCourseUpdate(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button
-                    v-if="scope.row.statusId == 0"
-                    plain
-                    type="success"
-                    @click="handleStatus(scope.row)"
-                    >启用</el-button
-                  >
-                  <el-button
-                    v-if="scope.row.statusId == 1"
-                    plain
-                    type="danger"
-                    @click="handleStatus(scope.row)"
-                    >禁用</el-button
-                  >
+                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -104,50 +82,45 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
   </div>
 </template>
 
 <script setup>
-import useTable from '@/utils/table'
-import { reactive } from 'vue'
-import Pagination from '@/components/Pagination/index.vue'
-import { courseApi } from '@/api/course'
-import { getEnumObj } from '@/utils/base'
-import { useRouter } from 'vue-router'
+  import useTable from '@/utils/table'
+  import { reactive } from 'vue'
+  import Pagination from '@/components/Pagination/index.vue'
+  import { courseApi } from '@/api/course'
+  import { getEnumObj } from '@/utils/base'
+  import { useRouter } from 'vue-router'
 
-const router = useRouter()
+  const router = useRouter()
 
-// 章节管理
-const toCourseChapter = function (row) {
-  router.push({ path: '/course/chapter', query: { courseId: row.id } })
-}
+  // 章节管理
+  const toCourseChapter = function (row) {
+    router.push({ path: '/course/chapter', query: { courseId: row.id } })
+  }
 
-// 课程数据
-const toCourseRecord = function (row) {
-  router.push({ path: '/course/record', query: { courseId: row.id } })
-}
+  // 课程数据
+  const toCourseRecord = function (row) {
+    router.push({ path: '/course/record', query: { courseId: row.id } })
+  }
 
-// 添加
-const toCourseAdd = () => {
-  router.push({ path: '/course/add' })
-}
-// 修改
-const toCourseUpdate = (item) => {
-  router.push({ path: '/course/update', query: { courseId: item.id } })
-}
+  // 添加
+  const toCourseAdd = () => {
+    router.push({ path: '/course/add' })
+  }
+  // 修改
+  const toCourseUpdate = (item) => {
+    router.push({ path: '/course/update', query: { courseId: item.id } })
+  }
 
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-  ...useTable({
-    page: courseApi.coursePage,
-    delete: courseApi.courseDelete,
-    status: courseApi.courseEdit
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
+    ...useTable({
+      page: courseApi.coursePage,
+      delete: courseApi.courseDelete,
+      status: courseApi.courseEdit
+    })
   })
-})
 </script>

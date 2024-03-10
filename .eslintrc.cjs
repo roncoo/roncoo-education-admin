@@ -9,9 +9,10 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['vue'],
     extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
     rules: {
+        "space-before-function-paren": 0,
+        "vue/no-multiple-template-root":'off',
         'vue/multi-word-component-names':'off'
     }
 }

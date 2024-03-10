@@ -98,7 +98,7 @@
       try {
         item.statusId = item.statusId === 0 ? 1 : 0
         const res = await courseApi.courseChapterPeriodEdit({ id: item.id, statusId: item.statusId })
-        ElMessage({ type: 'success', message: res.msg ? res.msg : '操作成功' })
+        ElMessage.success({ message: res.msg ? res.msg : '操作成功' })
       } finally {
         page.loading = false
       }
@@ -117,7 +117,7 @@
         page.loading = true
         try {
           const res = await courseApi.courseChapterPeriodDelete({ id: item.id })
-          ElMessage({ type: 'success', message: res.msg ? res.msg : '删除成功' })
+          ElMessage.success({ message: res.msg ? res.msg : '删除成功' })
           await handlePage()
         } finally {
           page.loading = false

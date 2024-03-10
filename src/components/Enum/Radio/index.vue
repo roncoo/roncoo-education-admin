@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-model="radioValue" @change="handleChange">
+  <el-radio-group v-model="modelValue" @change="handleChange">
     <el-radio v-for="item in enums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
   </el-radio-group>
 </template>
@@ -13,7 +13,7 @@
     enumName: { type: String, default: '' }
   })
 
-  const radioValue = ref(props.modelValue)
+  const modelValue = ref(props.modelValue)
 
   const emit = defineEmits(['update:modelValue'])
   function handleChange(item) {

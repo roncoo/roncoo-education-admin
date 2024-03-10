@@ -32,7 +32,7 @@
             <el-input-number v-model="formModel.rulingPrice" :min="0" :precision="2" show-word-limit></el-input-number>
           </el-form-item>
           <el-form-item label="售卖" prop="isPutaway">
-            <enum-radio v-model="formModel.isPutaway" :enum-name="'PutawayEnum'"></enum-radio>
+            <enum-radio v-model="formModel.isPutaway" :enum-name="'PutawayEnum'" />
           </el-form-item>
         </div>
       </div>
@@ -105,17 +105,17 @@
     if (!valid) return
 
     if (loading.value === true) {
-      ElMessage({ type: 'warning', message: '正在处理···' })
+      ElMessage.warning('正在处理···')
       return
     }
     loading.value = true
     try {
       if (formModel.id) {
         await courseApi.courseEdit(formModel)
-        ElMessage({ type: 'success', message: '修改成功' })
+        ElMessage.success('修改成功')
       } else {
         await courseApi.courseSave(formModel)
-        ElMessage({ type: 'success', message: '添加成功' })
+        ElMessage.success('添加成功')
       }
       handleClose()
       emit('refresh')
@@ -125,11 +125,10 @@
   }
   // 初始化
   const route = useRoute()
-  onMounted(() => {
+  onMounted(async () => {
     if (route.query.courseId) {
-      courseApi.courseView({ id: route.query.courseId }).then((res) => {
-        Object.assign(formModel, res)
-      })
+      const res = await courseApi.courseView({ id: route.query.courseId })
+      Object.assign(formModel, res)
     } else {
       Object.assign(formModel, formDefault)
     }

@@ -42,9 +42,7 @@ export default function useTable(apis, paras = {}) {
   const handleQuery = () => {
     page.pageCurrent = 1
     // 分页查询
-    handlePage().then(() => {
-      //ElMessage({ type: 'success', message: '查询成功' })
-    })
+    handlePage()
   }
 
   // 重置
@@ -66,7 +64,7 @@ export default function useTable(apis, paras = {}) {
         page.loading = true
         try {
           const res = await apis.delete({ id: data.id })
-          ElMessage({ type: 'success', message: res.msg ? res.msg : '删除成功' })
+          ElMessage.success({ message: res.msg ? res.msg : '删除成功' })
           await handlePage()
         } finally {
           page.loading = false
@@ -82,7 +80,7 @@ export default function useTable(apis, paras = {}) {
       if (apis.status) {
         row.statusId = row.statusId ? 0 : 1
         const res = await apis.status({ id: row.id, statusId: row.statusId })
-        ElMessage({ type: 'success', message: res.msg ? res.msg : '操作成功' })
+        ElMessage.success({ message: res.msg ? res.msg : '操作成功' })
       }
     } finally {
       page.loading = false

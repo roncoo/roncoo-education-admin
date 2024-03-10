@@ -79,14 +79,14 @@ request.interceptors.response.use(
       }
 
       // 其他异常
-      ElMessage({ message: res.msg, type: 'error', duration: 5 * 1000 })
+      ElMessage.error({ message: res.msg, duration: 5 * 1000 })
       return Promise.reject(response)
     }
     return Promise.resolve(res.data)
   },
   (error) => {
     if (error.response && error.response.status === 500) {
-      ElMessage({ message: error.response.data.msg, type: 'error', duration: 5 * 1000 })
+      ElMessage.error({ message: error.response.data.msg, duration: 5 * 1000 })
     }
     if (error.response && error.response.data && error.response.data.code === 301) {
       // 301=token过期
@@ -97,7 +97,7 @@ request.interceptors.response.use(
       return Promise.reject(error.response)
     }
     if (error.response && error.response.data && error.response.data.message) {
-      ElMessage({ message: error.response.data.message, type: 'error', duration: 5 * 1000 })
+      ElMessage.error({ message: error.response.data.message, duration: 5 * 1000 })
     }
     return Promise.reject(error)
   }

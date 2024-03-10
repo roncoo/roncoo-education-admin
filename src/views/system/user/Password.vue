@@ -44,14 +44,14 @@
     if (!valid) return
 
     if (loading.value === true) {
-      ElMessage({ type: 'warning', message: '正在处理···' })
+      ElMessage.warning('正在处理···')
       return
     }
     loading.value = true
     try {
       if (formModel.id) {
         await systemApi.sysUserPassword(formModel)
-        ElMessage({ type: 'success', message: '修改成功' })
+        ElMessage.success('修改成功')
       }
       emit('refresh')
       onClose()

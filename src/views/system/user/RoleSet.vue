@@ -45,7 +45,7 @@
         roleIds.value.push(item.id)
       })
       await systemApi.sysRoleUserSave({ userId: userId.value, roleIdList: roleIds.value })
-      ElMessage({ type: 'success', message: '设置成功' })
+      ElMessage.success('设置成功')
     }
     emit('refresh')
     onClose()

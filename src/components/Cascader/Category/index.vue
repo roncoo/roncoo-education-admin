@@ -9,7 +9,7 @@
       </el-button>
     </div>
     <el-tree :data="treeData" :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }" node-key="id" @node-click="handleChangeCategory">
-      <template #default="{ node, data }">
+      <template #default="{ data }">
         <span>
           <el-icon><Folder /></el-icon>
         </span>
