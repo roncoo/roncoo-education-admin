@@ -35,14 +35,14 @@
     const params = JSON.parse(res.vodPlayConfig)
     if (res.vodPlatform === 1) {
       console.log(params)
-      // 简易
+      // 私有化
       simplePlay(params)
     } else if (res.vodPlatform === 2) {
       // 保利威
       polyvPlay(params)
     } else {
-      // 简易
-      ElMessage.warning('暂不支持该播放器')
+      // 其他
+      ElMessage.warning('暂不支持该类型的播放')
     }
   })
 
