@@ -12,6 +12,7 @@
 <script setup>
   import { onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     resourceId: {
@@ -32,11 +33,29 @@
   onMounted(async () => {
     const res = await courseApi.resourceLibraryPreview({ id: props.resourceId })
     const params = JSON.parse(res.vodPlayConfig)
-    if (res.vodPlatform === 2) {
+    if (res.vodPlatform === 1) {
+      console.log(params)
+      // 简易
+      simplePlay(params)
+    } else if (res.vodPlatform === 2) {
       // 保利威
       polyvPlay(params)
+    } else {
+      // 简易
+      ElMessage.warning('暂不支持该播放器')
     }
   })
+
+  function simplePlay(params) {
+    window.polyvPlayer({
+      wrap: '#player',
+      autoplay: true,
+      hideSwitchPlayer: true,
+      showLine: 'off',
+      height: 350,
+      url: params.hdUrl
+    })
+  }
 
   const polyvPlay = (params) => {
     window.polyvPlayer({
@@ -44,6 +63,7 @@
       autoplay: true,
       hideSwitchPlayer: true,
       showLine: 'off',
+      height: 350,
       playsafe: params.token,
       ...params
     })
