@@ -10,6 +10,8 @@
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
             <upload-file :category-id="query.categoryId" @refresh="handlePage" />
+
+            <el-button style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -17,7 +19,7 @@
     <div class="table-container">
       <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
       <div class="table-main">
-        <el-table v-loading="page.loading" :data="page.list" border>
+        <el-table v-loading="page.loading" :data="page.list" border @selection-change="handleSelectionChange">
           <el-table-column type="selection" :width="40" />
           <el-table-column label="资源名称" prop="resourceName">
             <template #default="scope">
@@ -97,6 +99,7 @@
   import { formatTime, getEnumObj, transformSize } from '@/utils/base'
   import CascaderCategory from '@/components/Cascader/Category/index.vue'
   import UploadFile from '@/components/Upload/File/index.vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
 
   // 预览
   const resource = reactive({
@@ -119,6 +122,27 @@
     formRef.value.onOpen(item)
   }
 
+  // 批量删除
+  const ids = ref([])
+  const handleSelectionChange = (rows) => {
+    ids.value = []
+    rows.forEach((row) => {
+      ids.value.push(row.id)
+    })
+    //
+  }
+  const handleBatchDelete = async () => {
+    ElMessageBox.confirm('是否确认删除？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      courseApi.resourceBatchDelete({ ids: ids.value }).then((res) => {
+        ElMessage.success(res)
+        handlePage()
+      })
+    })
+  }
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
     ...useTable({

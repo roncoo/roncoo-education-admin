@@ -76,9 +76,14 @@ export const courseApi = {
     return postRequest('/course/admin/resource/save', data)
   },
 
-  // 资源修改
+  // 资源删除
   resourceDelete: (data) => {
     return deleteRequest('/course/admin/resource/delete?id=' + data.id)
+  },
+
+  // 资源批量删除
+  resourceBatchDelete: (data) => {
+    return putRequest('/course/admin/resource/batch/delete', data)
   },
 
   // 课程章节分页
