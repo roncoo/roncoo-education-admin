@@ -12,7 +12,7 @@
         </p>
       </div>
       <div class="login-panel">
-        <el-form :model="loginForm" label-position="left"  @keyup.enter="handleLogin()">
+        <el-form v-loading="loading" :model="loginForm" label-position="left"  @keyup.enter="handleLogin()">
           <h3 class="login-head">管理员登录</h3>
           <el-form-item class="form-group" prop="mobile">
             <el-input v-model="loginForm.mobile" placeholder="用户名"/>
@@ -24,7 +24,7 @@
             <el-input class="var-input" v-model="loginForm.verCode"  placeholder="验证码"/>
             <img class="var-img" :src="verImg" @click="getCaptcha"/>
           </el-form-item>
-          <el-button v-loading="loading" class="login-button" type="primary" @click="handleLogin">登 录</el-button>
+          <el-button  class="login-button" type="primary" @click="handleLogin">登 录</el-button>
           <div class="tip">账号：18800000000/123456（需要本地部署）</div>
         </el-form>
       </div>
