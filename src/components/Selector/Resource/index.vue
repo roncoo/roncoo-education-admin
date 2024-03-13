@@ -14,8 +14,13 @@
       <el-table-column label="资源名称" prop="resourceName" />
       <el-table-column label="资源类型" prop="resourceType" :width="200">
         <template #default="scope">
-          <span>{{ getEnumObj('ResourceTypeEnum')[scope.row.resourceType] }}</span
-          ><br />
+          <span>
+            {{ getEnumObj('ResourceTypeEnum')[scope.row.resourceType] }}
+            【<span v-if="scope.row.resourceType < 3">{{ getEnumObj('VodPlatformEnum')[scope.row.vodPlatform] }}</span>
+            <span v-else>{{ getEnumObj('StoragePlatformEnum')[scope.row.storagePlatform] }}</span
+            >】
+          </span>
+          <br />
           <span v-if="scope.row.resourceType < 3">{{ formatTime(scope.row.videoLength) }}</span>
           <span v-else>{{ scope.row.docPage }} 页</span>
         </template>

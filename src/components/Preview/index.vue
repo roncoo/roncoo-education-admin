@@ -63,6 +63,7 @@
       autoplay: true,
       hideSwitchPlayer: true,
       showLine: 'off',
+      history_video_duration: 1,
       height: 350,
       playsafe: params.token,
       ...params
