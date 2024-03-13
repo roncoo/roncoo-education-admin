@@ -45,49 +45,46 @@ request.interceptors.response.use(
       false
     )
     const res = response.data
-    // console.log(res)
-    if (res.code && res.code !== 200) {
-      if (res.code === 99 || res.code === 301) {
-        // 301=token过期
-        removeToken()
-        router.push(PATH.URL_LOGIN).then(() => {
-          ElMessage.error('登录已过期，请重新登录')
-        })
-        return Promise.reject(response)
-      }
-      if (res.code === 304) {
-        // 异地登录
-        ElMessageBox.confirm('异地登录', '确定登出', {
-          confirmButtonText: '重新登录',
-          showCancelButton: false,
-          type: 'warning'
-        }).then(() => {
-          removeToken()
-          location.reload() // 重新实例化vue-router对象
-        })
-        return Promise.reject(response)
-      }
-      if (res.code === 306) {
-        router.push({ path: PATH.URL_403 }).then(() => {
-          ElMessage.error('权限不足，请联系管理员')
-        })
-        return Promise.reject(response)
-      }
-      if (res.code === 999) {
-        ElMessage.error(response.data.msg)
-        return Promise.reject(response)
-      }
-
-      // 其他异常
-      ElMessage.error({ message: res.msg, duration: 5 * 1000 })
+    if (res.code === 200) {
+      return Promise.resolve(res.data)
+    }
+    // 异常处理
+    if (res.code === 99 || res.code === 301) {
+      // 301=token过期
+      removeToken()
+      router.push(PATH.URL_LOGIN).then(() => {
+        ElMessage.error('登录已过期，请重新登录')
+      })
       return Promise.reject(response)
     }
-    return Promise.resolve(res.data)
+    if (res.code === 304) {
+      // 异地登录
+      ElMessageBox.confirm('异地登录', '确定登出', {
+        confirmButtonText: '重新登录',
+        showCancelButton: false,
+        type: 'warning'
+      }).then(() => {
+        removeToken()
+        location.reload() // 重新实例化vue-router对象
+      })
+      return Promise.reject(response)
+    }
+    if (res.code === 306) {
+      router.push({ path: PATH.URL_403 }).then(() => {
+        ElMessage.error('权限不足，请联系管理员')
+      })
+      return Promise.reject(response)
+    }
+    if (res.code === 999) {
+      ElMessage.error(response.data.msg)
+      return Promise.reject(response)
+    }
+
+    // 其他异常
+    ElMessage.error({ message: res.msg, duration: 5 * 1000 })
+    return Promise.reject(response)
   },
   (error) => {
-    if (error.response && error.response.status === 500) {
-      ElMessage.error({ message: error.response.data.msg, duration: 5 * 1000 })
-    }
     if (error.response && error.response.data && error.response.data.code === 301) {
       // 301=token过期
       removeToken()
@@ -96,8 +93,11 @@ request.interceptors.response.use(
       })
       return Promise.reject(error.response)
     }
-    if (error.response && error.response.data && error.response.data.message) {
-      ElMessage.error({ message: error.response.data.message, duration: 5 * 1000 })
+
+    if (error.response && error.response.status === 500 && error.response.data.message) {
+      ElMessage.error({ message: error.response.data.msg, duration: 5 * 1000 })
+    } else {
+      ElMessage.error({ message: '系统繁忙，请稍后再试', duration: 5 * 1000 })
     }
     return Promise.reject(error)
   }

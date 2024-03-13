@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item class="form-group" label="资源" prop="resourceName">
         <el-input v-model="formModel.resourceName" disabled style="width: 210px; margin-right: 20px" />
-        <el-button plain type="primary" @click="resourceSelect">选择资源</el-button>
+        <el-button type="primary" @click="resourceSelect">选择资源</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
@@ -94,13 +94,16 @@
 
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
-  const onOpen = (item, chapterId) => {
+  const onOpen = (item, chapterId, courseId) => {
     if (item) {
       Object.assign(formModel, item)
       formModel.resourceName = item.resourceViewResp.resourceName
     }
     if (chapterId) {
       formModel.chapterId = chapterId
+    }
+    if (courseId) {
+      formModel.courseId = courseId
     }
     visible.value = true
   }

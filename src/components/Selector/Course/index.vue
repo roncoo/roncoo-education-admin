@@ -14,7 +14,7 @@
       <el-table-column label="课程名称" prop="courseName" />
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button plain type="primary" @click="selectCourse(scope.row)">选择</el-button>
+          <el-button type="primary" @click="selectCourse(scope.row)">选择</el-button>
         </template>
       </el-table-column>
     </el-table>

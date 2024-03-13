@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'sys:role:save'" plain type="success" @click="openFormModal(null)">添加</el-button>
+            <el-button v-permission="'sys:role:save'" type="success" @click="openFormModal(null)">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -26,11 +26,11 @@
       <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" width="360">
         <template #default="scope">
-          <el-button v-permission="'sys:role:edit'" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-permission="'sys:role:menu:set'" plain type="warning" @click="handSetMenu(scope.row)">分配菜单</el-button>
-          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
-          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
-          <el-button v-permission="'sys:role:delete'" plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="'sys:role:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'sys:role:menu:set'" type="warning" @click="handSetMenu(scope.row)">分配菜单</el-button>
+          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
+          <el-button v-permission="'sys:role:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

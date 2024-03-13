@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'学习记录'" width="800px" center @close="onClose" :destroy-on-close="true">
     <el-table :data="tableData" :tree-props="{ children: 'userStudyPeriodPageRespList' }" default-expand-all row-key="id">
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">

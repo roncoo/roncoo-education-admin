@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-button plain type="success" @click="openFormModal()">章添加</el-button>
+            <el-button type="success" @click="openFormModal()">章添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -35,9 +35,9 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="scope.row.periodName" plain type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" plain type="success" @click="openFormPeriodModal(null, scope.row.id)">节添加</el-button>
+          <el-button v-if="scope.row.periodName" type="primary" @click="openFormPeriodModal(scope.row, null)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" type="success" @click="openFormPeriodModal(null, scope.row.id)">节添加</el-button>
           <el-dropdown>
             <el-button>
               更多操作
@@ -48,11 +48,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="doHandleStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" plain type="danger" @click="doHandleStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" type="success" @click="doHandleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" type="danger" @click="doHandleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button plain type="danger" @click="doHandleDelete(scope.row)">删除</el-button>
+                  <el-button type="danger" @click="doHandleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -62,7 +62,7 @@
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <form-model ref="formRef" @refresh="handlePage" />
-    <period ref="formPeriodRef" @refresh="handlePage" />
+    <form-period ref="formPeriodRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -72,7 +72,7 @@
   import { courseApi } from '@/api/course'
   import { formatTime, getEnumObj } from '@/utils/base'
   import FormModel from './FormModel.vue'
-  import Period from './Period.vue'
+  import FormPeriod from './FormPeriod.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import { ElMessage, ElMessageBox } from 'element-plus'
 
@@ -81,13 +81,13 @@
   // 节添加修改
   const formPeriodRef = ref()
   const openFormPeriodModal = (item, chapterId) => {
-    formPeriodRef.value.onOpen(item, chapterId)
+    formPeriodRef.value.onOpen(item, chapterId, route.query.courseId)
   }
 
-  // 添加/修改
+  // 章添加/修改
   const formRef = ref()
   const openFormModal = (item) => {
-    formRef.value.onOpen(item)
+    formRef.value.onOpen(item, route.query.courseId)
   }
 
   const doHandleStatus = async (item) => {

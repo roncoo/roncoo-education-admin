@@ -39,7 +39,6 @@
   const emit = defineEmits(['refresh'])
   const formDefault = {
     id: undefined,
-    mobile: undefined,
     realName: undefined,
     remark: undefined,
     sort: 1

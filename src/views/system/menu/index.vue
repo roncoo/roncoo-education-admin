@@ -5,7 +5,7 @@
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
             <el-button @click="resetQuery()">刷新</el-button>
-            <el-button v-permission="'sys:menu:save'" plain type="success" @click="openFormModal(null, '0')">添加</el-button>
+            <el-button v-permission="'sys:menu:save'" type="success" @click="openFormModal(null, '0')">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -42,8 +42,8 @@
       </el-table-column>
       <el-table-column label="操作" width="280">
         <template #default="scope">
-          <el-button v-permission="'sys:menu:save'" v-if="scope.row.menuType !== 3" plain type="success" @click="openFormModal(null, scope.row.id)">新增</el-button>
-          <el-button v-permission="'sys:menu:edit'" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'sys:menu:save'" v-if="scope.row.menuType !== 3" type="success" @click="openFormModal(null, scope.row.id)">新增</el-button>
+          <el-button v-permission="'sys:menu:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button>
               更多操作
@@ -53,12 +53,14 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-permission="'sys:menu:edit'">
-                  <el-button v-if="scope.row.statusId === 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
-                  <el-button v-if="scope.row.statusId === 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
+                <el-dropdown-item>
+                  <div v-permission="'sys:menu:edit'">
+                    <el-button v-if="scope.row.statusId === 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                    <el-button v-if="scope.row.statusId === 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
+                  </div>
                 </el-dropdown-item>
-                <el-dropdown-item v-permission="'sys:menu:delete'">
-                  <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                <el-dropdown-item>
+                  <el-button v-permission="'sys:menu:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

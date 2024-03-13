@@ -11,49 +11,45 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60"/>
+      <el-table-column align="center" label="序号" type="index" width="60" />
       <el-table-column label="封面" min-width="20" prop="courseLogo">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo"/>
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" />
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" min-width="20" prop="courseName"/>
+      <el-table-column label="课程名称" min-width="20" prop="courseName" />
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
-          <el-progress
-              :percentage="scope.row.courseProgress"
-              :stroke-width="25"
-              :text-inside="true"
-          />
+          <el-progress :percentage="scope.row.courseProgress" :stroke-width="25" :text-inside="true" />
         </template>
       </el-table-column>
-      <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate"/>
+      <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate" />
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button plain type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
+          <el-button type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage"/>
-    <study ref="studyRef"/>
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <study ref="studyRef" />
   </div>
 </template>
 <script setup>
-import useTable from '@/utils/table';
-import {reactive, ref} from 'vue';
-import {usersApi} from '@/api/users'
-import Pagination from "@/components/Pagination/index.vue";
-import Study from "./Study.vue";
+  import useTable from '@/utils/table'
+  import { reactive, ref } from 'vue'
+  import { usersApi } from '@/api/users'
+  import Pagination from '@/components/Pagination/index.vue'
+  import Study from './Study.vue'
 
-// 查看
-const studyRef = ref();
-const openStudyRecord = (item) => {
-  studyRef.value.onOpen(item)
-};
-// 基础功能
-const {page, handlePage, query, handleQuery, resetQuery} = reactive({
-  ...useTable({
-    page: usersApi.userCoursePage,
+  // 查看
+  const studyRef = ref()
+  const openStudyRecord = (item) => {
+    studyRef.value.onOpen(item)
+  }
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
+    ...useTable({
+      page: usersApi.userCoursePage
+    })
   })
-})
 </script>

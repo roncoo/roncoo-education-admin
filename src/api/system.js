@@ -237,7 +237,7 @@ export const systemApi = {
 
   // 系统用户密码--编辑
   sysUserPassword: (data) => {
-    return postRequest('/system/admin/sys/user/password', data)
+    return putRequest('/system/admin/sys/user/password', data)
   },
 
   // 系统用户角色--分页

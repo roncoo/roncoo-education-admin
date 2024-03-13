@@ -33,7 +33,7 @@
   const loading = ref(false) // 加载进度状态
   const emit = defineEmits(['refresh'])
   const formDefault = {
-    id: undefined,
+    userId: undefined,
     mobilePwd: undefined,
     confirmPassword: undefined
   }
@@ -64,7 +64,7 @@
   const visible = ref(false) // 弹窗显示状态
   const onOpen = (item) => {
     if (item) {
-      Object.assign(formModel, item)
+      formModel.userId = item.id
     }
     visible.value = true
   }

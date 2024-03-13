@@ -3,7 +3,7 @@
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 300px; margin-right: 20px"></el-input>
-        <el-button plain type="primary" @click="courseSelect">选择课程</el-button>
+        <el-button type="primary" @click="courseSelect">选择课程</el-button>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort" />

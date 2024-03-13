@@ -12,7 +12,7 @@
           </el-form-item>
           <el-form-item label="讲师" prop="lecturerId">
             <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>
-            <el-button plain type="primary" @click="lecturerSelect">选择讲师</el-button>
+            <el-button type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item label="封面" prop="courseLogo">
             <upload-image v-model="formModel.courseLogo" :width="260" :height="130" />

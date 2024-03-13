@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'sys:user:save'" plain type="success" @click="openFormModal()">添加</el-button>
+            <el-button v-permission="'sys:user:save'" type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -32,8 +32,8 @@
       <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" :width="320">
         <template #default="scope">
-          <el-button v-permission="'sys:user:edit'" plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-permission="'sys:user:role:set'" plain type="warning" @click="openRoleModal(scope.row)">角色分配</el-button>
+          <el-button v-permission="'sys:user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'sys:user:role:set'" type="warning" @click="openRoleModal(scope.row)">角色分配</el-button>
           <el-dropdown style="margin-left: 10px">
             <el-button>
               更多操作
@@ -43,15 +43,17 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-permission="'sys:user:password'">
-                  <el-button plain type="warning" @click="openPasswordModal(scope.row)">密码</el-button>
+                <el-dropdown-item>
+                  <el-button v-permission="'sys:user:password'" type="warning" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item v-permission="'sys:user:edit'">
-                  <el-button v-if="scope.row.statusId === 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId === 1" plain type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                <el-dropdown-item>
+                  <div v-permission="'sys:user:edit'">
+                    <el-button v-if="scope.row.statusId === 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
+                    <el-button v-if="scope.row.statusId === 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                  </div>
                 </el-dropdown-item>
-                <el-dropdown-item v-permission="'sys:user:delete'">
-                  <el-button plain type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                <el-dropdown-item>
+                  <el-button v-permission="'sys:user:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

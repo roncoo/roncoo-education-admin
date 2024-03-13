@@ -6,6 +6,10 @@ export const usersApi = {
     return postRequest('/user/admin/order/info/page', { pageCurrent, pageSize, ...params })
   },
 
+  orderEdit: (data) => {
+    return putRequest('/user/admin/order/info/edit', data)
+  },
+
   // 讲师分页
   lecturerPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/user/admin/lecturer/page', { pageCurrent, pageSize, ...params })

@@ -16,7 +16,7 @@
 <script setup>
   import { ElMessage } from 'element-plus'
   import { reactive, ref } from 'vue'
-  import { systemApi } from '@/api/system'
+  import { usersApi } from '@/api/users'
 
   // 规则
   const formRef = ref()
@@ -45,11 +45,8 @@
     loading.value = true
     try {
       if (formModel.id) {
-        await systemApi.linkEdit(formModel)
+        await usersApi.orderEdit(formModel)
         ElMessage.success('修改成功')
-      } else {
-        await systemApi.linkSave(formModel)
-        ElMessage.success('添加成功')
       }
       emit('refresh')
       onClose()

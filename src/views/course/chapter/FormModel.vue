@@ -73,9 +73,12 @@
 
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
-  const onOpen = (item) => {
+  const onOpen = (item, courseId) => {
     if (item) {
       Object.assign(formModel, item)
+    }
+    if (courseId) {
+      formModel.courseId = courseId
     }
     visible.value = true
   }

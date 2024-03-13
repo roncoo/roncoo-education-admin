@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'user:record'" plain type="success" @click="toUserRecord(scope.row)">数据</el-button>
+          <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row)">数据</el-button>
           <el-dropdown>
             <el-button
               >更多操作
@@ -47,12 +47,14 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-permission="'user:edit'">
-                  <el-button plain type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                <el-dropdown-item>
+                  <el-button v-permission="'user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item v-permission="'user:edit'">
-                  <el-button v-if="scope.row.statusId == 0" plain type="success" @click="handleStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" plain type="warning" @click="handleStatus(scope.row)">禁用</el-button>
+                <el-dropdown-item>
+                  <div v-permission="'user:edit'">
+                    <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
+                    <el-button v-if="scope.row.statusId == 1" type="warning" @click="handleStatus(scope.row)">禁用</el-button>
+                  </div>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
