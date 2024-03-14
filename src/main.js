@@ -9,6 +9,8 @@ import { getToken } from '@/utils/cookie.js'
 import { loginApi } from '@/api/login.js'
 import { useUserStore } from '@/store/modules/user.js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import 'virtual:svg-icons-register'
+import Icon from '@/components/Icon/index.vue'
 
 // 初始化
 setupInit()
@@ -37,6 +39,8 @@ function init() {
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
+  // 注册图标组件
+  app.component('Icon', Icon)
 
   // 注册自定义指令（权限使用）
   app.directive('permission', (el, binding) => {

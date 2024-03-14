@@ -12,7 +12,7 @@
     </div>
     <el-table :data="page.list" v-loading="page.loading" :tree-props="{ children: 'childrenList', hasChildren: 'hasChildren' }" border row-key="id">
       <el-table-column label="名称" min-width="60" prop="menuName">
-        <template #default="scope"> &nbsp;{{ scope.row.menuName }} </template>
+        <template #default="scope"> <icon :name="scope.row.menuIcon" class="menu-icon" /> &nbsp;{{ scope.row.menuName }} </template>
       </el-table-column>
       <el-table-column label="类型" min-width="50">
         <template #default="scope">
