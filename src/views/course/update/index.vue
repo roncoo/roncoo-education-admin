@@ -25,6 +25,9 @@
       <div class="form-main">
         <div class="form-main-title">课程设置</div>
         <div class="form-main-content">
+          <el-form-item class="form-group" label="课程排序" prop="sort">
+            <el-input-number v-model="formModel.courseSort"></el-input-number>
+          </el-form-item>
           <el-form-item label="销售价" prop="coursePrice">
             <el-input-number v-model="formModel.coursePrice" :min="0" :precision="2" show-word-limit></el-input-number>
           </el-form-item>

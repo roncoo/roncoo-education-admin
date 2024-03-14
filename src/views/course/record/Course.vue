@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="course">
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
@@ -12,12 +12,8 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column label="封面" min-width="20" prop="courseLogo">
-        <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" />
-        </template>
-      </el-table-column>
-      <el-table-column label="课程名称" min-width="20" prop="courseName" />
+      <el-table-column label="手机号码" min-width="20" prop="mobile" />
+      <el-table-column label="用户昵称" min-width="20" prop="nickname" />
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
           <el-progress :percentage="scope.row.courseProgress" :stroke-width="20" :text-inside="true" />
@@ -31,29 +27,32 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <study ref="studyRef" />
+    <study ref="formRef" />
   </div>
 </template>
 <script setup>
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
-  import { usersApi } from '@/api/users'
-  import Pagination from '@/components/Pagination/index.vue'
+  import { courseApi } from '@/api/course'
   import Study from './Study.vue'
-  import { useRoute } from 'vue-router/dist/vue-router'
+  import Pagination from '@/components/Pagination/index.vue'
+  import { useRoute } from 'vue-router'
+
   const route = useRoute()
-  // 查看
-  const studyRef = ref()
+
+  // 明显
+  const formRef = ref()
   const openStudyRecord = (item) => {
-    studyRef.value.onOpen(item)
+    formRef.value.onOpen(item)
   }
+
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery } = reactive({
     ...useTable(
       {
-        page: usersApi.userCoursePage
+        page: courseApi.userCourseRecord
       },
-      { userId: route.query.userId }
+      { courseId: route.query.courseId }
     )
   })
 </script>

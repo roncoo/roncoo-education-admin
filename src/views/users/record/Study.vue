@@ -14,7 +14,7 @@
       </el-table-column>
       <el-table-column label="学习进度" prop="courseProgress" width="200">
         <template #default="scope">
-          <el-progress v-if="scope.row.progress" :percentage="scope.row.progress" :stroke-width="25" :text-inside="true" />
+          <el-progress v-if="scope.row.progress" :percentage="scope.row.progress" :stroke-width="20" :text-inside="true" />
         </template>
       </el-table-column>
     </el-table>
@@ -22,6 +22,7 @@
 </template>
 <script setup>
   import { ref } from 'vue'
+  import { courseApi } from '@/api/course.js'
 
   const tableData = ref()
 
@@ -29,7 +30,9 @@
   const visible = ref(false)
   const onOpen = (item) => {
     if (item) {
-      Object.assign(tableData, item)
+      courseApi.userStudyPage({ courseId: item.courseId, userId: item.userId }).then((res) => {
+        tableData.value = res.list
+      })
     }
     visible.value = true
   }

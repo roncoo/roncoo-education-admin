@@ -9,27 +9,29 @@
       </el-table-column>
       <el-table-column label="学习时间" prop="gmtCreate" width="200">
         <template #default="scope">
-          <span v-if="scope.row.progress > 0">{{ scope.row.gmtCreate }}</span>
+          <span v-if="scope.row.progress">{{ scope.row.gmtCreate }}</span>
         </template>
       </el-table-column>
       <el-table-column label="学习进度" prop="courseProgress" width="200">
         <template #default="scope">
-          <el-progress v-if="scope.row.progress" :percentage="scope.row.progress" :stroke-width="25" :text-inside="true" />
+          <el-progress v-if="scope.row.progress" :percentage="scope.row.progress" :stroke-width="20" :text-inside="true" />
         </template>
       </el-table-column>
     </el-table>
   </el-dialog>
 </template>
 <script setup>
+  import { courseApi } from '@/api/course.js'
   import { ref } from 'vue'
-
   const tableData = ref()
 
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
   const onOpen = (item) => {
     if (item) {
-      Object.assign(tableData, item)
+      courseApi.userStudyPage({ courseId: item.courseId, userId: item.userId }).then((res) => {
+        tableData.value = res.list
+      })
     }
     visible.value = true
   }
