@@ -103,6 +103,7 @@
 <style lang="scss" scoped>
   img {
     height: 50px;
+    width: auto;
   }
 
   .vod-info {

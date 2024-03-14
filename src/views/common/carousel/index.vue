@@ -15,7 +15,7 @@
       <el-table-column align="center" label="序号" type="index" width="60" />
       <el-table-column label="图片">
         <template #default="scope">
-          <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px" />
+          <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px; width: auto" />
         </template>
       </el-table-column>
       <el-table-column label="地址" prop="carouselUrl">

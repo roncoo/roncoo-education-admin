@@ -16,9 +16,9 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="120" label="封面">
+      <el-table-column :width="130" label="封面">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" />
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="height: 50px; width: auto" />
         </template>
       </el-table-column>
       <el-table-column label="名称/分类-讲师" prop="courseName">

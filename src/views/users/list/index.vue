@@ -18,7 +18,7 @@
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
       <el-table-column label="用户头像" :min-width="40">
         <template #default="scope">
-          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px" />
+          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px; width: auto" />
         </template>
       </el-table-column>
       <el-table-column label="用户昵称" :min-width="40" prop="nickname" />
