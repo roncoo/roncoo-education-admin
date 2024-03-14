@@ -90,6 +90,10 @@ export const systemApi = {
     return getRequest('/system/admin/sys/config/video/init')
   },
 
+  videoConfig: () => {
+    return getRequest('/system/admin/sys/config/video/config')
+  },
+
   // 系统配置--列出
   sysConfigList: (data) => {
     return postRequest('/system/admin/sys/config/list', data)

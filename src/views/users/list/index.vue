@@ -15,22 +15,20 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list" border>
       <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column label="手机号码" prop="mobile" />
-      <el-table-column label="用户头像">
+      <el-table-column label="手机号码" :min-width="40" prop="mobile" />
+      <el-table-column label="用户头像" :min-width="40">
         <template #default="scope">
           <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px" />
         </template>
       </el-table-column>
-      <el-table-column label="用户昵称" prop="nickname" />
-      <el-table-column label="用户年龄" prop="userAge" />
-      <el-table-column label="用户性别">
+      <el-table-column label="用户昵称" :min-width="40" prop="nickname" />
+      <el-table-column label="备注" prop="remark">
         <template #default="scope">
-          <span>{{ getEnumObj('UserSexEnum')[scope.row.userSex] }}</span>
+          <span v-html="scope.row.remark" />
         </template>
       </el-table-column>
-      <el-table-column label="备注" prop="remark" />
-      <el-table-column :min-width="120" label="注册时间" prop="gmtCreate" />
-      <el-table-column label="状态">
+      <el-table-column :min-width="60" label="注册时间" prop="gmtCreate" />
+      <el-table-column :min-width="40" label="状态">
         <template #default="scope">
           <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
         </template>

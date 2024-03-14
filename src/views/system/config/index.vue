@@ -1,18 +1,8 @@
 <template>
   <div class="app-container">
-    <div v-if="query.configType === '3'" class="page_head">
-      <div class="search_bar clearfix">
-        <el-form :model="query" inline label-width="80px">
-          <el-form-item>
-            <el-button v-loading="loading" v-permission="'sys:config:video:init'" @click="vodInit()">视频云初始化</el-button>
-            <span style="color: red; font-size: 12px; margin-left: 10px">视频配置完成，请进行初始化处理</span>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType" :key="item.configType">
-        <list :list="page.list" @refresh="handlePage"></list>
+        <list :list="page.list" :configType="item.configType" @refresh="handlePage"></list>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -22,16 +12,6 @@
   import List from './List.vue'
   import { systemApi } from '@/api/system'
   import useTable from '@/utils/table'
-  import { ElMessage } from 'element-plus'
-
-  // 初始化
-  const loading = ref(false)
-  const vodInit = async () => {
-    loading.value = true
-    const res = await systemApi.videoInit()
-    loading.value = false
-    ElMessage.success(res)
-  }
 
   // 切换tab
   const handleClick = (tab) => {
@@ -73,3 +53,9 @@
     }
   ]
 </script>
+<style lang="scss" scoped>
+  .vod-info {
+    color: red;
+    font-size: 12px;
+  }
+</style>
