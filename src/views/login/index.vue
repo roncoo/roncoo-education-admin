@@ -7,7 +7,7 @@
           领课教育系统（roncoo-education）是基于领课网络多年的在线教育平台开发和运营经验打造出来的产品，致力于打造一个各行业都适用的分布式在线教育系统。系统采用前后端分离模式，前台采用vue.js为核心框架，后台采用Spring Cloud为核心框架。系统目前主要功能有课程点播功能，支持多家视频云的接入，课程附件管理功能，支持多家存储云的接入，可以帮助个人或者企业快速搭建一个轻量级的在线教育平台。
         </p>
         <p style="text-align: center; font-size: 10px">
-          <img src="@/assets/images/weixin.png" alt="作者微信二维码" style="width: 120px;">
+          <img src="@/assets/images/weixin.png" alt="作者微信二维码" style="width: 120px; height: auto">
           <div style="text-align: center">作者微信</div>
         </p>
       </div>
@@ -36,7 +36,7 @@
       <div>
         <a v-if="service.websiteIcp" href="http://beian.miit.gov.cn/" target="_blank">{{ service.websiteIcp }}</a>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <img v-if="service.websitePrn" :alt="service.websitePrn" src="../../assets/images/common/beian.png"/>
+        <img class="website-prn" v-if="service.websitePrn" :alt="service.websitePrn" src="../../assets/images/common/beian.png"/>
         <a v-if="service.websitePrn" :href="'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + service.websitePrnNo" target="_blank">&nbsp;{{ service.websitePrn }} </a>
       </div>
     </div>
@@ -186,6 +186,9 @@ async function handleLogin() {
     text-decoration: none;
     color: #fff;
   }
+  .website-prn{
+    width: auto;
+  }
 }
 
 .var-input {
@@ -195,6 +198,7 @@ async function handleLogin() {
 .var-img {
   margin-left: 20px;
   width: 80px;
+  height: auto;
 }
 
 .el-input {
