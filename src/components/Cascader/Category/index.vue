@@ -19,9 +19,15 @@
             <el-icon><More /></el-icon>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="openFormCatalog(data, data.id)">添加子文件夹</el-dropdown-item>
-                <el-dropdown-item @click="openFormCatalog(data, null)">修改</el-dropdown-item>
-                <el-dropdown-item @click="deleteCatalog(data)">删除</el-dropdown-item>
+                <span v-permission="'category:save'">
+                  <el-dropdown-item @click="openFormCatalog(data, data.id)">添加子文件夹</el-dropdown-item>
+                </span>
+                <span v-permission="'category:edit'">
+                  <el-dropdown-item @click="openFormCatalog(data, null)">修改</el-dropdown-item>
+                </span>
+                <span v-permission="'category:delete'">
+                  <el-dropdown-item @click="deleteCatalog(data)">删除</el-dropdown-item>
+                </span>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

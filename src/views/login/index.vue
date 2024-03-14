@@ -68,7 +68,7 @@ onMounted(() => {
 
 // 登录
 const loginForm = reactive({
-  mobile: '18800000000',
+  mobile: '13300000000',
   mobilePwd: '123456'
 })
 
