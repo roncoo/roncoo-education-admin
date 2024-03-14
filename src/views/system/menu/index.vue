@@ -12,7 +12,9 @@
     </div>
     <el-table :data="page.list" v-loading="page.loading" :tree-props="{ children: 'childrenList', hasChildren: 'hasChildren' }" border row-key="id">
       <el-table-column label="名称" min-width="60" prop="menuName">
-        <template #default="scope"> <icon :name="scope.row.menuIcon" class="menu-icon" /> &nbsp;{{ scope.row.menuName }} </template>
+        <template #default="scope">
+          <span v-if="scope.row.menuIcon"><icon :name="scope.row.menuIcon" class="menu-icon" /> </span> &nbsp;{{ scope.row.menuName }}
+        </template>
       </el-table-column>
       <el-table-column label="类型" min-width="50">
         <template #default="scope">

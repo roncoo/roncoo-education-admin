@@ -23,6 +23,11 @@
         <el-switch v-model="formModel.isShow" inline-prompt active-text="菜单" inactive-text="路由" />
         <span class="tip-info">当为菜单时，也有路由功能</span>
       </el-form-item>
+      <el-form-item v-if="formModel.parentId === '0'" label="图标" prop="sort">
+        <icon :name="formModel.menuIcon" />
+        <el-button type="text" @click="handleIcon">&nbsp;&nbsp;选择图标</el-button>
+        <selector-svg v-if="iconVisible" :visible="iconVisible" @update="handleUpdateIcon" @close="onCloseIcon" />
+      </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formModel.sort" :min="0" controls-position="right" />
       </el-form-item>
@@ -41,6 +46,20 @@
   import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
+  import SelectorSvg from '@/components/Selector/Svg/index.vue'
+
+  const iconVisible = ref(false)
+  // 选择图标
+  const handleIcon = () => {
+    iconVisible.value = true
+  }
+  const handleUpdateIcon = (icon) => {
+    formModel.menuIcon = icon
+    onCloseIcon()
+  }
+  const onCloseIcon = () => {
+    iconVisible.value = false
+  }
 
   // 校验规则
   const formRef = ref()
