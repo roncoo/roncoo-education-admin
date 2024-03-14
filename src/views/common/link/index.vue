@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button type="success" @click="openFormModal()">添加</el-button>
+            <el-button v-permission="'website:link:save'" type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -31,7 +31,7 @@
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'website:link:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button>
               更多操作
@@ -42,11 +42,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-if="scope.row.statusId == 0" type="success">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" type="danger">禁用</el-button>
+                  <el-button v-permission="'website:link:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
+                  <el-button v-permission="'website:link:edit'" v-if="scope.row.statusId == 1" type="danger">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                  <el-button v-permission="'website:link:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

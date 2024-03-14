@@ -9,9 +9,9 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <upload-file :category-id="query.categoryId" @refresh="handlePage" />
+            <upload-file v-permission="'resource:save'" :category-id="query.categoryId" @refresh="handlePage" />
 
-            <el-button style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
+            <el-button v-permission="'resource:delete'" style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -58,7 +58,7 @@
           </el-table-column>
           <el-table-column :width="230" fixed="right" label="操作" prop="address">
             <template #default="scope">
-              <el-button type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+              <el-button v-permission="'resource:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
               <el-dropdown>
                 <el-button>
                   更多操作
@@ -69,11 +69,13 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item>
-                      <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-                      <el-button v-if="scope.row.statusId == 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                      <div v-permission="'resource:edit'">
+                        <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
+                        <el-button v-if="scope.row.statusId == 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                      </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                      <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                      <el-button v-permission="'resource:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
