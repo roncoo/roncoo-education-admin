@@ -19,7 +19,7 @@
       <el-table-column label="类型" min-width="50">
         <template #default="scope">
           <el-tag v-if="scope.row.menuType === 2 && !scope.row.isShow">路由</el-tag>
-          <span v-else>{{ getEnumObj('MenuTypeEnum')[scope.row.menuType] }}</span>
+          <enum-view v-else :enum-name="'MenuTypeEnum'" :enum-value="scope.row.menuType" />
         </template>
       </el-table-column>
       <el-table-column label="路径/组件" prop="menuUrl">
@@ -39,7 +39,7 @@
       <el-table-column label="排序" min-width="50" prop="sort" />
       <el-table-column label="状态" min-width="50">
         <template #default="scope">
-          <span :class="{ red: scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
@@ -79,7 +79,7 @@
   import { reactive, ref } from 'vue'
   import FormModel from './FormModel.vue'
   import { systemApi } from '@/api/system'
-  import { getEnumObj } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改
   const formRef = ref()

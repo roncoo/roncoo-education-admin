@@ -20,13 +20,13 @@
       <el-table-column label="友情地址" prop="linkUrl" />
       <el-table-column :width="120" label="跳转方式">
         <template #default="scope">
-          <span>{{ getEnumObj('TargetEnum')[scope.row.linkTarget] }}</span>
+          <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.linkTarget" />
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort" />
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
@@ -64,7 +64,7 @@
   import { systemApi } from '@/api/system'
   import FormModal from './FormModel.vue'
   import Pagination from '@/components/Pagination/index.vue'
-  import { getEnumObj } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改
   const formRef = ref()

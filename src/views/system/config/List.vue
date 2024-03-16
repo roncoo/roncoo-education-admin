@@ -16,9 +16,9 @@
         <el-button v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && !scope.row.configShow" link @click="handleView(scope.row)">【点击查看详情】</el-button>
         <img v-if="scope.row.contentType === 3" :alt="scope.row.configName" :src="scope.row.configValue" />
         <span v-if="scope.row.contentType === 4">{{ scope.row.configValue == 1 ? '开启' : '关闭' }}</span>
-        <span v-if="scope.row.configKey === 'storagePlatform'">{{ getEnumObj('StoragePlatformEnum')[scope.row.configValue] }}</span>
-        <span v-if="scope.row.configKey === 'vodPlatform'">{{ getEnumObj('VodPlatformEnum')[scope.row.configValue] }}</span>
-        <span v-if="scope.row.configKey === 'smsPlatform'">{{ getEnumObj('SmsPlatformEnum')[scope.row.configValue] }}</span>
+        <enum-view v-if="scope.row.configKey === 'vodPlatform'" :enum-name="'VodPlatformEnum'" :enum-value="scope.row.configValue" />
+        <enum-view v-if="scope.row.configKey === 'storagePlatform'" :enum-name="'StoragePlatformEnum'" :enum-value="scope.row.configValue" />
+        <enum-view v-if="scope.row.configKey === 'smsPlatform'" :enum-name="'SmsPlatformEnum'" :enum-value="scope.row.configValue" />
         <br />
         <span style="color: #999; font-size: 13px">{{ scope.row.remark }}</span>
       </template>
@@ -52,11 +52,11 @@
 
 <script setup>
   import { onMounted, ref } from 'vue'
-  import { getEnumObj } from '@/utils/base'
   import FormModel from './FormModel.vue'
   import FormView from './View.vue'
   import { systemApi } from '@/api/system.js'
   import { ElMessage } from 'element-plus'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 视频云初始化
   const loading = ref(false)

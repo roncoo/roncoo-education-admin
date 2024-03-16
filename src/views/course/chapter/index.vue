@@ -16,7 +16,7 @@
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
           <span v-if="scope.row.resourceViewResp">
-            【{{ getEnumObj('ResourceTypeEnum')[scope.row.resourceViewResp.resourceType] }}：{{ scope.row.resourceViewResp.resourceName }} |
+            【 <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> ：{{ scope.row.resourceViewResp.resourceName }} |
             <span v-if="scope.row.resourceViewResp.resourceType < 3">{{ formatTime(scope.row.resourceViewResp.videoLength) }}</span>
             <span v-else>{{ scope.row.resourceViewResp.docPage }} 页</span> 】
           </span>
@@ -25,12 +25,12 @@
       <el-table-column :width="100" label="排序" prop="sort" />
       <el-table-column :width="100" label="收费">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.isFree === 0 }">{{ getEnumObj('FreeEnum')[scope.row.isFree] }}</span>
+          <enum-view :enum-name="'FreeEnum'" :enum-value="scope.row.isFree" />
         </template>
       </el-table-column>
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
@@ -70,11 +70,12 @@
   import Pagination from '@/components/Pagination/index.vue'
   import useTable from '@/utils/table'
   import { courseApi } from '@/api/course'
-  import { formatTime, getEnumObj } from '@/utils/base'
+  import { formatTime } from '@/utils/base'
   import FormModel from './FormModel.vue'
   import FormPeriod from './FormPeriod.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   const route = useRoute()
 

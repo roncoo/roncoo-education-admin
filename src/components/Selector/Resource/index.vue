@@ -15,10 +15,9 @@
       <el-table-column label="资源类型" prop="resourceType" :width="200">
         <template #default="scope">
           <span>
-            {{ getEnumObj('ResourceTypeEnum')[scope.row.resourceType] }}
-            【<span v-if="scope.row.resourceType < 3">{{ getEnumObj('VodPlatformEnum')[scope.row.vodPlatform] }}</span>
-            <span v-else>{{ getEnumObj('StoragePlatformEnum')[scope.row.storagePlatform] }}</span
-            >】
+            <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceType" />
+            【<span v-if="scope.row.resourceType < 3"> <enum-view :enum-name="'VodPlatformEnum'" :enum-value="scope.row.vodPlatform" /></span>
+            <span v-else><enum-view :enum-name="'StoragePlatformEnum'" :enum-value="scope.row.storagePlatform" /></span>】
           </span>
           <br />
           <span v-if="scope.row.resourceType < 3">{{ formatTime(scope.row.videoLength) }}</span>
@@ -40,7 +39,8 @@
   import useTable from '@/utils/table'
   import { courseApi } from '@/api/course'
   import Pagination from '@/components/Pagination/index.vue'
-  import { formatTime, getEnumObj } from '@/utils/base'
+  import { formatTime } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   const props = defineProps({
     title: {

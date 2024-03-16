@@ -40,19 +40,21 @@
           </el-table-column>
           <el-table-column :width="120" label="资源类型" prop="resourceType">
             <template #default="scope">
-              <span>{{ getEnumObj('ResourceTypeEnum')[scope.row.resourceType] }}</span>
+              <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceType" />
             </template>
           </el-table-column>
           <el-table-column :width="100" label="资源状态" prop="videoStatus">
             <template #default="scope">
-              <span v-if="scope.row.resourceType < 3">{{ getEnumObj('VideoStatusEnum')[scope.row.videoStatus] }}</span>
+              <span v-if="scope.row.resourceType < 3">
+                <enum-view :enum-name="'VideoStatusEnum'" :enum-value="scope.row.videoStatus" />
+              </span>
               <span v-else>成功</span>
             </template>
           </el-table-column>
           <el-table-column :width="100" label="平台" prop="vodPlatform">
             <template #default="scope">
-              <span v-if="scope.row.resourceType < 3">{{ getEnumObj('VodPlatformEnum')[scope.row.vodPlatform] }}</span>
-              <span v-else>{{ getEnumObj('StoragePlatformEnum')[scope.row.storagePlatform] }}</span>
+              <enum-view v-if="scope.row.resourceType < 3" :enum-name="'VodPlatformEnum'" :enum-value="scope.row.vodPlatform" />
+              <enum-view v-else :enum-name="'StoragePlatformEnum'" :enum-value="scope.row.storagePlatform" />
             </template>
           </el-table-column>
           <el-table-column :width="230" fixed="right" label="操作" prop="address">
@@ -97,10 +99,11 @@
   import Preview from '@/components/Preview/index.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import { courseApi } from '@/api/course'
-  import { formatTime, getEnumObj, transformSize } from '@/utils/base'
+  import { formatTime, transformSize } from '@/utils/base'
   import CascaderCategory from '@/components/Cascader/Category/index.vue'
   import UploadFile from '@/components/Upload/File/index.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 预览
   const resource = reactive({

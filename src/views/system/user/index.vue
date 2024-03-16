@@ -26,7 +26,7 @@
       <el-table-column label="备注" prop="remark" />
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort" />
@@ -76,7 +76,7 @@
   import FormModal from './FormModel.vue'
   import Password from './Password.vue'
   import RoleSet from './RoleSet.vue'
-  import { getEnumObj } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 角色分配
   const roleRef = ref()

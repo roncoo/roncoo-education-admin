@@ -23,7 +23,7 @@
   }
 
   const enums = ref([])
-  onMounted(() => {
-    enums.value = getEnumList(props.enumName)
+  onMounted(async () => {
+    enums.value = await getEnumList(props.enumName)
   })
 </script>

@@ -31,7 +31,7 @@
       <el-table-column :width="100" label="排序" prop="sort" />
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
@@ -73,7 +73,6 @@
   import useTable from '@/utils/table'
   import FormModel from './FormModel.vue'
   import { useRouter } from 'vue-router'
-  import { getEnumObj } from '@/utils/base'
 
   // 进入专区课程列表
   const router = useRouter()

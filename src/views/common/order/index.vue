@@ -31,7 +31,7 @@
       <el-table-column :width="150" label="手机号码" prop="mobile" />
       <el-table-column :width="160" label="支付方式/时间">
         <template #default="scope">
-          <span>{{ getEnumObj('PayTypeEnum')[scope.row.payType] }}</span>
+          <enum-view :enum-name="'PayTypeEnum'" :enum-value="scope.row.payType" />
           <br />
           <span v-if="scope.row.orderStatus === 2">{{ scope.row.payTime }}</span>
           <span v-else>{{ scope.row.gmtCreate }}</span>
@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column :width="100" label="订单状态">
         <template #default="scope">
-          <span>{{ getEnumObj('OrderStatusEnum')[scope.row.orderStatus] }}</span>
+          <enum-view :enum-name="'OrderStatusEnum'" :enum-value="scope.row.orderStatus" />
         </template>
       </el-table-column>
       <el-table-column :width="100" label="价格">
@@ -72,7 +72,7 @@
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
   import FormModal from './FormModel.vue'
-  import { getEnumObj } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改
   const formRef = ref()

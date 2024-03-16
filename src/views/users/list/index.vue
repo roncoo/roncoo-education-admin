@@ -18,7 +18,7 @@
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
       <el-table-column label="用户头像" :min-width="40">
         <template #default="scope">
-          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px; width: auto" />
+          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px; width: auto; border-radius: 50%" />
         </template>
       </el-table-column>
       <el-table-column label="用户昵称" :min-width="40" prop="nickname" />
@@ -30,7 +30,7 @@
       <el-table-column :min-width="60" label="注册时间" prop="gmtCreate" />
       <el-table-column :min-width="40" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
@@ -68,9 +68,9 @@
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
   import { usersApi } from '@/api/users'
-  import { getEnumObj } from '@/utils/base'
   import { useRouter } from 'vue-router'
   import Pagination from '@/components/Pagination/index.vue'
+  import EnumView from '@/components/Enum/View/index.vue'
   import FormModal from './FormModel.vue'
 
   // 添加/修改

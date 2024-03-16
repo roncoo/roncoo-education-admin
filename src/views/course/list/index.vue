@@ -45,12 +45,12 @@
       <el-table-column :width="80" label="排序" prop="courseSort" />
       <el-table-column :width="80" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.isPutaway] }}</span>
+          <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.isPutaway" />
         </template>
       </el-table-column>
       <el-table-column :width="80" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="280" fixed="right" label="操作" prop="address">
@@ -93,8 +93,8 @@
   import { reactive } from 'vue'
   import Pagination from '@/components/Pagination/index.vue'
   import { courseApi } from '@/api/course'
-  import { getEnumObj } from '@/utils/base'
   import { useRouter } from 'vue-router'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   const router = useRouter()
 

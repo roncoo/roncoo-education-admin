@@ -37,13 +37,15 @@
       </el-table-column>
       <el-table-column :width="100" label="售卖">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.courseViewResp.isPutaway === 0 }">{{ getEnumObj('PutawayEnum')[scope.row.courseViewResp.isPutaway] }}</span>
+          <span :class="{ 'c-special': scope.row.courseViewResp.isPutaway === 0 }">
+            <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.courseViewResp.isPutaway" />
+          </span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="排序" prop="sort" />
       <el-table-column :width="100" label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
@@ -63,9 +65,9 @@
   import { reactive, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import useTable from '@/utils/table'
-  import { getEnumObj } from '@/utils/base'
   import Pagination from '@/components/Pagination/index.vue'
   import FormModel from './FormModel.vue'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改
   const formRef = ref()

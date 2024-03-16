@@ -18,7 +18,7 @@
       <el-table-column align="center" label="序号" type="index" width="60" />
       <el-table-column label="讲师头像">
         <template #default="scope">
-          <img :alt="scope.row.lecturerName" :src="scope.row.lecturerHead" style="height: 50px" />
+          <img :alt="scope.row.lecturerName" :src="scope.row.lecturerHead" style="height: 50px; width: auto; border-radius: 50%" />
         </template>
       </el-table-column>
       <el-table-column label="讲师名称" prop="lecturerName" />
@@ -26,7 +26,7 @@
       <el-table-column label="排序" prop="sort" />
       <el-table-column label="状态">
         <template #default="scope">
-          <span :class="{ 'c-danger': scope.row.statusId === 0 }">{{ getEnumObj('StatusIdEnum')[scope.row.statusId] }}</span>
+          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
@@ -62,11 +62,12 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { usersApi } from '@/api/users'
   import FormModal from './FormModel.vue'
   import Pagination from '@/components/Pagination/index.vue'
-  import { getEnumObj } from '@/utils/base'
+  import EnumView from '@/components/Enum/View/index.vue'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改
   const formRef = ref()

@@ -22,31 +22,24 @@
       <el-table-column label="登录时间" prop="gmtCreate" />
       <el-table-column label="登录状态">
         <template #default="scope">
-          <span :class="{ 'c-special': scope.row.loginStatus === 0 }">{{
-            getEnumObj('LoginStatusEnum')[scope.row.loginStatus]
-          }}</span>
+          <enum-view :enum-name="'LoginStatusEnum'" :enum-value="scope.row.loginStatus" />
         </template>
       </el-table-column>
     </el-table>
-    <pagination
-      :total="page.totalCount"
-      v-model:current-page="page.pageCurrent"
-      v-model:page-size="page.pageSize"
-      @pagination="handlePage"
-    />
+    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
   </div>
 </template>
 <script setup>
-import { reactive } from 'vue'
-import { usersApi } from '@/api/users'
-import { getEnumObj } from '@/utils/base'
-import useTable from '@/utils/table'
-import Pagination from '@/components/Pagination/index.vue'
+  import { reactive } from 'vue'
+  import { usersApi } from '@/api/users'
+  import EnumView from '@/components/Enum/View/index.vue'
+  import useTable from '@/utils/table'
+  import Pagination from '@/components/Pagination/index.vue'
 
-// 基础功能
-const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-  ...useTable({
-    page: usersApi.logLoginPage
+  // 基础功能
+  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
+    ...useTable({
+      page: usersApi.logLoginPage
+    })
   })
-})
 </script>
