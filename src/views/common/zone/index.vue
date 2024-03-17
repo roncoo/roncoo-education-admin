@@ -49,9 +49,9 @@
                 <el-dropdown-item>
                   <el-button v-permission="'zone:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+                <el-dropdown-item @click="handleStatus(scope.row)">
+                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
+                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'zone:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -73,6 +73,7 @@
   import useTable from '@/utils/table'
   import FormModel from './FormModel.vue'
   import { useRouter } from 'vue-router'
+  import EnumView from '@/components/Enum/View/index.vue'
 
   // 进入专区课程列表
   const router = useRouter()

@@ -52,7 +52,7 @@
         <template #default="scope">
           <el-button type="primary" @click="openFormModal(scope.row)">排序</el-button>
           <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-          <el-button v-if="scope.row.statusId == 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
+          <el-button v-if="scope.row.statusId == 1" type="warning" @click="handleStatus(scope.row)">禁用</el-button>
           <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>

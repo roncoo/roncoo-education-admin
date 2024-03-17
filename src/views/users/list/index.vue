@@ -22,20 +22,28 @@
         </template>
       </el-table-column>
       <el-table-column label="用户昵称" :min-width="40" prop="nickname" />
+      <el-table-column label="账户">
+        <template #default="scope">
+          <span>余额：￥{{ scope.row.usersAccountViewResp.availableAmount }}元</span>
+          <br />
+          <span>冻结：￥{{ scope.row.usersAccountViewResp.freezeAmount }}元</span>&nbsp;
+          <el-button v-permission="'user:record'" type="text" @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="备注" prop="remark">
         <template #default="scope">
           <span v-html="scope.row.remark" />
         </template>
       </el-table-column>
-      <el-table-column :min-width="60" label="注册时间" prop="gmtCreate" />
-      <el-table-column :min-width="40" label="状态">
+      <el-table-column :min-width="50" label="注册时间" prop="gmtCreate" />
+      <el-table-column :min-width="20" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row)">数据</el-button>
+          <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row, 'course')">数据</el-button>
           <el-dropdown>
             <el-button
               >更多操作
@@ -46,13 +54,14 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                  <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row, 'account')">账户</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <div v-permission="'user:edit'">
-                    <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-                    <el-button v-if="scope.row.statusId == 1" type="warning" @click="handleStatus(scope.row)">禁用</el-button>
-                  </div>
+                  <el-button v-permission="'user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleStatus(scope.row)">
+                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
+                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -81,8 +90,8 @@
 
   // 查看数据
   const router = useRouter()
-  const toUserRecord = function (row) {
-    router.push({ path: '/users/record', query: { userId: row.id } })
+  const toUserRecord = function (row, tabName) {
+    router.push({ path: '/users/record', query: { userId: row.id, activeName: tabName } })
   }
 
   // 基础功能

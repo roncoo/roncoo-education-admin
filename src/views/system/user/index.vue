@@ -46,11 +46,9 @@
                 <el-dropdown-item>
                   <el-button v-permission="'sys:user:password'" type="warning" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <div v-permission="'sys:user:edit'">
-                    <el-button v-if="scope.row.statusId === 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-                    <el-button v-if="scope.row.statusId === 1" type="danger" @click="handleStatus(scope.row)">禁用</el-button>
-                  </div>
+                <el-dropdown-item @click="handleStatus(scope.row)">
+                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 0" type="success">启用</el-button>
+                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 1" type="warning">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'sys:user:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
