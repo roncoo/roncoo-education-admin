@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="菜单设置" width="600px" center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" title="菜单设置" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <div style="min-height: 10vh">
       <el-tree ref="treeRef" :data="treeList" :props="defaultProps" node-key="id" accordion highlight-current show-checkbox @check-change="checkChange" />
     </div>

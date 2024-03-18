@@ -24,13 +24,29 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort" />
-      <el-table-column label="操作" width="360">
+      <el-table-column label="操作" width="320">
         <template #default="scope">
           <el-button v-permission="'sys:role:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-button v-permission="'sys:role:menu:set'" type="warning" @click="handSetMenu(scope.row)">分配菜单</el-button>
-          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 1" type="warning" @click="handleStatus(scope.row)">禁用</el-button>
-          <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-          <el-button v-permission="'sys:role:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-dropdown>
+            <el-button
+              >更多操作
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="handleStatus(scope.row)">
+                  <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 1" type="warning">禁用</el-button>
+                  <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 0" type="success">启用</el-button>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+              <el-dropdown-item>
+                <el-button v-permission="'sys:role:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+              </el-dropdown-item>
+            </template>
+          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>

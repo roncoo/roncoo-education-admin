@@ -54,9 +54,6 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row, 'account')">账户</el-button>
-                </el-dropdown-item>
-                <el-dropdown-item>
                   <el-button v-permission="'user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
