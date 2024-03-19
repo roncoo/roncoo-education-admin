@@ -16,6 +16,7 @@
       </div>
     </div>
     <div class="table-container">
+      <!-- 目录 -->
       <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
       <div class="table-main">
         <el-table v-loading="page.loading" :data="page.list" border @selection-change="handleSelectionChange">

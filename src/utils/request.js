@@ -54,6 +54,7 @@ request.interceptors.response.use(
       removeToken()
       router.push(PATH.URL_LOGIN).then(() => {
         ElMessage.error('登录已过期，请重新登录')
+        location.reload() // 重新实例化vue-router对象
       })
       return Promise.reject(response)
     }

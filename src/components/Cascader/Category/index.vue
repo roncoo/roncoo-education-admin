@@ -8,7 +8,15 @@
         </el-icon>
       </el-button>
     </div>
-    <el-tree :data="treeData" :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }" node-key="id" @node-click="handleChangeCategory">
+    <el-tree
+      :data="treeData"
+      :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }"
+      node-key="id"
+      draggable
+      :expand-on-click-node="false"
+      @node-drop="handleDrop"
+      @node-click="handleChangeCategory"
+    >
       <template #default="{ data }">
         <span>
           <el-icon><Folder /></el-icon>
@@ -42,6 +50,7 @@
   import { onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import FormCategory from './FormCategory.vue'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     categoryType: {
@@ -63,6 +72,28 @@
     emit('refresh')
   }
 
+  const handleDrop = () => {
+    const sortList = getTreeSort(treeData.value, firstTree.value.sort)
+    courseApi.categorySort(sortList).then((res) => {
+      ElMessage.success(res)
+      handleCatalog()
+    })
+  }
+
+  const getTreeSort = (list, sort) => {
+    return list.map((el, index) => {
+      if (el['childrenList'] && el['childrenList'].length > 0) {
+        el.children = getTreeSort(el['childrenList'], sort)
+      }
+      el.sort = sort + index
+      return {
+        id: el.id,
+        sort: el.sort,
+        childrenList: el.children
+      }
+    })
+  }
+
   // 删除文件夹
   const deleteCatalog = (item) => {
     console.log(item)
@@ -76,6 +107,7 @@
 
   // 列出文件夹
   const treeData = ref()
+  const firstTree = ref()
   onMounted(() => {
     handleCatalog()
   })
@@ -84,6 +116,7 @@
   const handleCatalog = () => {
     courseApi.categoryList({ categoryType: props.categoryType }).then((res) => {
       treeData.value = res
+      firstTree.value = res[0]
     })
   }
 </script>
@@ -101,12 +134,18 @@
     }
 
     .table-catalog-name {
+      position: relative;
       margin-left: 5px;
-      width: 100px;
+      overflow: hidden;
     }
 
     .table-catalog-dropdown {
       display: none;
+      right: 0;
+      position: sticky;
+      background-color: #fff;
+      margin: 0 auto;
+      padding-right: 10px;
     }
   }
 

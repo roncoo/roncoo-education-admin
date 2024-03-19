@@ -61,6 +61,11 @@ export const courseApi = {
     return deleteRequest('/course/admin/category/delete?id=' + data.id)
   },
 
+  // 分类排序
+  categorySort: (data) => {
+    return putRequest('/course/admin/category/sort', data)
+  },
+
   // 资源分页
   resourcePage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/course/admin/resource/page', { pageCurrent, pageSize, ...params })
