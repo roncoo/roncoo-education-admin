@@ -15,7 +15,7 @@
             <el-button type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item label="封面" prop="courseLogo">
-            <upload-image v-model="formModel.courseLogo" :width="260" :height="130" />
+            <upload-image v-model="formModel.courseLogo" :width="'260px'" :height="'130px'" />
           </el-form-item>
           <el-form-item label="简介" prop="introduce">
             <editor v-model="formModel.introduce" />

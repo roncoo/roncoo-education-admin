@@ -16,15 +16,14 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
       <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="100" label="封面">
+      <el-table-column :width="150" label="封面">
         <template #default="scope">
-          <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo" />
+          <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo" style="height: 50px; width: auto" />
         </template>
       </el-table-column>
       <el-table-column label="名称" prop="courseName">
         <template #default="scope">
-          <span>{{ scope.row.courseViewResp.courseName }}</span
-          ><br />
+          <span>{{ scope.row.courseViewResp.courseName }}</span>
         </template>
       </el-table-column>
       <el-table-column :width="100" label="价格">

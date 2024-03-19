@@ -2,7 +2,7 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
-        <upload-image v-model="formModel.carouselImg" :width="430" :height="80" />
+        <upload-image v-model="formModel.carouselImg" :width="'430px'" :height="'80px'" />
       </el-form-item>
       <el-form-item class="form-group" label="跳转地址" prop="carouselUrl">
         <el-input v-model="formModel.carouselUrl" maxlength="255" show-word-limit></el-input>

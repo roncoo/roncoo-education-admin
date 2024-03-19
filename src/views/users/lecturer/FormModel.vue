@@ -15,7 +15,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload-image v-model="formModel.lecturerHead" :width="120" :height="120" />
+            <upload-image v-model="formModel.lecturerHead" :width="'120px'" />
           </el-form-item>
         </el-col>
       </el-row>

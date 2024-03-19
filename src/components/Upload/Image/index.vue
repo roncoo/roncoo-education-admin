@@ -7,8 +7,8 @@
     :style="'width:' + width + 'px;height:' + height + 'px;'"
     class="image-upload"
   >
-    <img class="image" v-if="imageUrl" :src="imageUrl" />
-    <el-icon v-else class="uploader-icon" :style="'width:' + width + 'px;height:' + height + 'px;'">
+    <img class="image" v-if="imageUrl" :src="imageUrl" :style="'width:' + width + ';height:' + height + ';'" />
+    <el-icon v-else class="uploader-icon" :style="'width:' + width + ';height:' + height + ';'">
       <Plus />
     </el-icon>
   </el-upload>
@@ -24,8 +24,8 @@
 
   const props = defineProps({
     modelValue: { type: String, default: '' },
-    width: { type: Number, default: 100 },
-    height: { type: Number, default: 100 }
+    width: { type: String, default: '100%' },
+    height: { type: String, default: '100%' }
   })
 
   // 图片
@@ -81,11 +81,12 @@
     cursor: pointer;
     border-radius: 6px;
     border: 1px dashed #d9d9d9;
+    display: flex;
+    justify-content: center;
 
     .el-icon.uploader-icon {
       font-size: 28px;
       color: #8c939d;
-      text-align: center;
     }
   }
 </style>

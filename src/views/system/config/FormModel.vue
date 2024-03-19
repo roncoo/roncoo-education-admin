@@ -7,7 +7,7 @@
         <!-- 富文本类型 -->
         <editor v-if="formModel.contentType === 2" v-model="formModel.configValue" />
         <!-- 图片类型 -->
-        <upload-image class="image-upload" v-if="formModel.contentType === 3" v-model="formModel.configValue" :width="700" />
+        <upload-image class="image-upload" v-if="formModel.contentType === 3" v-model="formModel.configValue" :height="'300px'" />
         <!-- 枚举类型 -->
         <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
