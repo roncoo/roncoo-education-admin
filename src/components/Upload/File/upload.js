@@ -55,7 +55,7 @@ export const handleVod = async (startFile) => {
 }
 
 /**
- * 文档、压缩文件上传
+ * 文档、压缩包上传
  * @param startFile
  */
 export const handleFile = async (startFile) => {

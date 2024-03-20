@@ -23,8 +23,8 @@
           <el-table-column type="selection" :width="40" />
           <el-table-column label="资源名称" prop="resourceName">
             <template #default="scope">
-              <span>{{ scope.row.resourceName }}</span
-              >&nbsp;
+              <el-image v-if="scope.row.resourceType === 4" :src="scope.row.resourceUrl" style="height: 50px; width: auto" />
+              <span v-else>{{ scope.row.resourceName }}</span>
               <el-button link v-if="scope.row.videoStatus === 2" @click="onPreview(scope.row)">
                 <el-icon size="20">
                   <VideoPlay />
@@ -34,9 +34,9 @@
           </el-table-column>
           <el-table-column :width="200" label="资源大小" prop="resourceSize">
             <template #default="scope">
-              {{ transformSize(scope.row.resourceSize) }} |
-              <span v-if="scope.row.resourceType < 3">时长：{{ formatTime(scope.row.videoLength) }}</span>
-              <span v-else>{{ scope.row.docPage }} 页</span>
+              {{ transformSize(scope.row.resourceSize) }}
+              <span v-if="scope.row.resourceType < 3">| 时长：{{ formatTime(scope.row.videoLength) }}</span>
+              <span v-if="scope.row.resourceType === 3">| {{ scope.row.docPage }} 页</span>
             </template>
           </el-table-column>
           <el-table-column :width="120" label="资源类型" prop="resourceType">

@@ -3,9 +3,7 @@
   <div v-show="fileList.length > 0" class="fixed_upload_panel">
     <div class="upload_file_container" :class="{ hidden_list: !listing }">
       <div class="upload_head">
-        <div class="upload_text">
-          文件列表（{{ successFileList.length }}/{{ fileList.length }}）
-        </div>
+        <div class="upload_text">文件列表（{{ successFileList.length }}/{{ fileList.length }}）</div>
         <div class="dialog_btn">
           <el-icon v-if="!listing" class="" title="展开列表" @click="listing = true">
             <FullScreen />
@@ -24,11 +22,7 @@
           <div class="file_size">{{ transformSize(item.fileSize) }}</div>
           <div class="file_progress_number">{{ item.progress }} %</div>
           <div class="file_status c-brand">{{ STATUSTIP[item.status] }}</div>
-          <div
-            v-if="item.status === 'uploading'"
-            class="file_ctrl_btn"
-            @click.stop="stopUpload(item)"
-          >
+          <div v-if="item.status === 'uploading'" class="file_ctrl_btn" @click.stop="stopUpload(item)">
             <el-icon>
               <VideoPause />
             </el-icon>
@@ -51,192 +45,192 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useUploadStore } from '@/store/modules/upload'
-import { transformSize } from '@/utils/base'
-import { handleFile, handlePic, handleVod, STATUSTIP } from '@/components/Upload/File/upload'
-import { ElMessageBox } from 'element-plus'
+  import { ref, watch } from 'vue'
+  import { useUploadStore } from '@/store/modules/upload'
+  import { transformSize } from '@/utils/base'
+  import { handleFile, handlePic, handleVod, STATUSTIP } from '@/components/Upload/File/upload'
+  import { ElMessageBox } from 'element-plus'
 
-// 文件
-const fileList = ref([])
-const successFileList = ref([])
+  // 文件
+  const fileList = ref([])
+  const successFileList = ref([])
 
-// 监听
-watch([useUploadStore().getFileList, useUploadStore().getSuccessFileList], (newValue) => {
-  fileList.value = newValue[0]
-  successFileList.value = newValue[1]
-  // 开始上传
-  startUpload()
-})
+  // 监听
+  watch([useUploadStore().getFileList, useUploadStore().getSuccessFileList], (newValue) => {
+    fileList.value = newValue[0]
+    successFileList.value = newValue[1]
+    // 开始上传
+    startUpload()
+  })
 
-// 状态
-const listing = ref(true)
+  // 状态
+  const listing = ref(true)
 
-// 上传
-const startUpload = (row) => {
-  let startFile = row
-  if (!startFile) {
+  // 上传
+  const startUpload = (row) => {
+    let startFile = row
+    if (!startFile) {
+      fileList.value.map((item) => {
+        if (item.status === 'ready' && !startFile) {
+          startFile = item
+        }
+      })
+    }
+    if (startFile) {
+      listing.value = true
+      startFile.status = 'doing'
+      if (startFile.resourceType === 1 || startFile.resourceType === 2) {
+        // 视频、音频上传
+        handleVod(startFile)
+      } else if (startFile.resourceType === 4) {
+        // 图片
+        handlePic(startFile)
+      } else {
+        // 文档、压缩包上传
+        handleFile(startFile)
+      }
+    }
+  }
+
+  // 暂停上传
+  const stopUpload = (row) => {
+    console.log(row)
+  }
+
+  // 关闭面板
+  const handleClosePanel = () => {
+    let startFile
     fileList.value.map((item) => {
-      if (item.status === 'ready' && !startFile) {
+      if (item.status !== 'success') {
         startFile = item
       }
     })
-  }
-  if (startFile) {
-    listing.value = true
-    startFile.status = 'doing'
-    if (startFile.resourceType === 1 || startFile.resourceType === 2) {
-      // 视频、音频上传
-      handleVod(startFile)
-    } else if (startFile.resourceType === 4) {
-      // 图片
-      handlePic(startFile)
+    if (startFile) {
+      ElMessageBox.confirm('没上传完成的文件将不再上传，确认要关闭？', '文件列表', {
+        type: 'warning',
+        cancelButtonText: '取消',
+        confirmButtonText: '确认'
+      }).then(async () => {
+        clear()
+      })
     } else {
-      // 文档、压缩文件上传
-      handleFile(startFile)
-    }
-  }
-}
-
-// 暂停上传
-const stopUpload = (row) => {
-  console.log(row)
-}
-
-// 关闭面板
-const handleClosePanel = () => {
-  let startFile
-  fileList.value.map((item) => {
-    if (item.status !== 'success') {
-      startFile = item
-    }
-  })
-  if (startFile) {
-    ElMessageBox.confirm('没上传完成的文件将不再上传，确认要关闭？', '文件列表', {
-      type: 'warning',
-      cancelButtonText: '取消',
-      confirmButtonText: '确认'
-    }).then(async () => {
       clear()
-    })
-  } else {
-    clear()
+    }
   }
-}
 
-const clear = () => {
-  useUploadStore().clearFile()
-  useUploadStore().clearSuccessFile()
-}
+  const clear = () => {
+    useUploadStore().clearFile()
+    useUploadStore().clearSuccessFile()
+  }
 </script>
 
 <style lang="scss" scoped>
-.fixed_upload_panel {
-  position: fixed;
-  right: 10px;
-  bottom: 20px;
-  z-index: 9999;
-}
-
-.upload_file_container {
-  background-color: #fff;
-  box-shadow: -1px -1px 4px #ddd;
-  border-radius: 6px 0 0 0;
-  overflow: hidden;
-  width: 540px;
-  transition: width 0.3s;
-
-  &.hidden_list {
-    width: 250px;
+  .fixed_upload_panel {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    z-index: 9999;
   }
 
-  .upload_head {
-    display: flex;
-    padding: 0 12px;
-    line-height: 40px;
-    color: #666;
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #eee;
+  .upload_file_container {
+    background-color: #fff;
+    box-shadow: -1px -1px 4px #ddd;
+    border-radius: 6px 0 0 0;
+    overflow: hidden;
+    width: 540px;
+    transition: width 0.3s;
 
-    .upload_text {
-      flex: 1;
-    }
-  }
-
-  .dialog_btn {
-    text-align: right;
-    width: 100px;
-
-    i {
-      cursor: pointer;
-      padding: 4px;
-      font-size: 18px;
+    &.hidden_list {
+      width: 250px;
     }
 
-    .ctrl_min_btn {
-      transform: rotateX(180deg);
-    }
-  }
-}
-
-.upload_file_list {
-  width: 540px;
-  max-height: 30vh;
-  overflow: auto;
-
-  .upload_file_item {
-    position: relative;
-    padding: 0 10px;
-    display: flex;
-    line-height: 45px;
-    border-bottom: 1px solid #dedede;
-    font-size: 12px;
-
-    div {
+    .upload_head {
+      display: flex;
       padding: 0 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .file_type {
-      padding: 0;
-      font-size: 18px;
-    }
-
-    .file_name {
-      width: 200px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .file_size {
-      width: 60px;
+      line-height: 40px;
       color: #666;
-      text-align: center;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #eee;
+
+      .upload_text {
+        flex: 1;
+      }
     }
 
-    .file_status {
-      text-align: center;
-      width: 60px;
-    }
+    .dialog_btn {
+      text-align: right;
+      width: 100px;
 
-    .file_ctrl_btn {
-      font-size: 20px;
-      color: #237cc3;
-    }
+      i {
+        cursor: pointer;
+        padding: 4px;
+        font-size: 18px;
+      }
 
-    .file_progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      z-index: 1;
-      padding: 0;
-      background: #ebf7fe;
-      transition: width 0.5s;
+      .ctrl_min_btn {
+        transform: rotateX(180deg);
+      }
     }
   }
-}
+
+  .upload_file_list {
+    width: 540px;
+    max-height: 30vh;
+    overflow: auto;
+
+    .upload_file_item {
+      position: relative;
+      padding: 0 10px;
+      display: flex;
+      line-height: 45px;
+      border-bottom: 1px solid #dedede;
+      font-size: 12px;
+
+      div {
+        padding: 0 12px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .file_type {
+        padding: 0;
+        font-size: 18px;
+      }
+
+      .file_name {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file_size {
+        width: 60px;
+        color: #666;
+        text-align: center;
+      }
+
+      .file_status {
+        text-align: center;
+        width: 60px;
+      }
+
+      .file_ctrl_btn {
+        font-size: 20px;
+        color: #237cc3;
+      }
+
+      .file_progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        z-index: 1;
+        padding: 0;
+        background: #ebf7fe;
+        transition: width 0.5s;
+      }
+    }
+  }
 </style>
