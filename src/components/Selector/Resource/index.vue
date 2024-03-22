@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" align-center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="1000px" align-center @close="handleClose" :destroy-on-close="true">
     <el-tabs v-if="props.resourceType === 0" v-model="activeName" @tab-click="handleTablClick">
       <el-tab-pane :label="'全部'" :name="0" :key="0" />
       <el-tab-pane v-for="item in tabPanes" :label="item.desc" :name="item.code" :key="item.code" />
@@ -23,6 +23,10 @@
             <div v-if="item['check']" class="card-check" />
             <img class="table-main-card-item-img" :src="item.resourceUrl" />
             <div class="table-main-card-item-name">{{ item.resourceName }}</div>
+            <div class="table-main-card-item-desc">
+              <span>{{ transformSize(item.resourceSize) }}</span>
+              <span>{{ item.imgWidth }}*{{ item.imgHeight }}</span>
+            </div>
           </div>
         </div>
         <el-table v-else v-loading="page.loading" :data="page.list">
@@ -63,7 +67,7 @@
   import useTable from '@/utils/table'
   import { courseApi } from '@/api/course'
   import Pagination from '@/components/Pagination/index.vue'
-  import { formatTime, getEnumList } from '@/utils/base'
+  import { formatTime, getEnumList, transformSize } from '@/utils/base'
   import EnumView from '@/components/Enum/View/index.vue'
   import CascaderCategory from '@/components/Cascader/Category/index.vue'
 
@@ -79,18 +83,29 @@
     resourceType: {
       type: Number,
       default: 0
+    },
+    multiple: {
+      type: Boolean,
+      default: false
     }
   })
 
   // 卡片
   const itemList = ref([])
   const handleCard = (item) => {
-    console.log(item)
     item.check = !item.check
     const ids = itemList.value.map((el) => el.id)
     if (item.check) {
       if (ids.indexOf(item.id) === -1) {
-        itemList.value.push(item)
+        if (props.multiple) {
+          itemList.value.push(item)
+        } else {
+          // 单选
+          itemList.value.forEach((i) => {
+            i.check = false
+          })
+          itemList.value = [item]
+        }
       }
     } else {
       if (ids.indexOf(item.id) > -1) {
@@ -159,19 +174,28 @@
     .table-main-card-item {
       cursor: pointer;
       margin: 10px;
-      width: 150px;
+      width: 210px;
       position: relative;
       overflow: hidden;
+      border: 1px solid #ebeef5;
+      border-radius: 5px;
       .table-main-card-item-img {
-        height: 100px;
+        height: 120px;
         width: 100%;
         object-fit: cover;
       }
       .table-main-card-item-name {
-        margin-top: 10px;
+        margin: 5px 0;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        padding: 0 10px;
+      }
+      .table-main-card-item-desc {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        margin-bottom: 5px;
       }
     }
   }

@@ -89,6 +89,8 @@ export const handlePic = async (startFile) => {
   try {
     const res = await uploadApi.pic(startFile.file)
     startFile.resourceUrl = res
+    await handleWidthHeight(startFile)
+
     await handleResource(startFile)
     startFile.status = 'success'
     useUploadStore().addSuccessFile(startFile)
@@ -111,7 +113,9 @@ const handleResource = async (data) => {
     vodPlatform: data.vodPlatform,
     storagePlatform: data.storagePlatform,
     videoVid: data.videoVid,
-    docPage: data.docPage
+    docPage: data.docPage,
+    imgWidth: data.imgWidth,
+    imgHeight: data.imgHeight
   })
   ElMessage.success('上传成功')
 }
@@ -128,6 +132,27 @@ const getVodConfig = async () => {
     return res
   }
   return res
+}
+
+const handleWidthHeight = (file) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file.file)
+    reader.onload = function () {
+      const img = new Image()
+      img.src = reader.result
+      if (img.complete) {
+        file.imgWidth = img.width
+        file.imgHeight = img.height
+      } else {
+        img.onload = function () {
+          file.imgWidth = img.width
+          file.imgHeight = img.height
+          resolve(file)
+        }
+      }
+    }
+  })
 }
 
 export const STATUSTIP = {

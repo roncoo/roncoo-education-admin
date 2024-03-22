@@ -3,7 +3,7 @@
     <toolbar :editor="editorRef" :default-config="toolbarConfig" mode="simple" style="border-bottom: 1px solid #ccc" />
     <editor :default-config="editorConfig" :model-value="props.modelValue" @onChange="handleChange" @onCreated="handleCreated" style="height: 300px" />
   </div>
-  <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :visible="picVisible" @close="handleCallback" />
+  <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :multiple="true" :visible="picVisible" @close="handleCallback" />
 </template>
 
 <script setup>

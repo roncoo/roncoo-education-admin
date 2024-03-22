@@ -10,7 +10,6 @@
     <div class="image-box">
       <el-button type="primary" @click="handleSelect">选择图片</el-button>
       <div class="image-box-info">{{ props.sugImg }}</div>
-      <div></div>
     </div>
   </div>
   <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :visible="picVisible" @close="handleCallback" />
@@ -54,7 +53,9 @@
 
   const handleCallback = (item) => {
     picVisible.value = false
-    emit('update:modelValue', item[0].resourceUrl)
+    if (item) {
+      emit('update:modelValue', item[0].resourceUrl)
+    }
   }
 </script>
 
