@@ -16,9 +16,9 @@
           <span>{{ scope.row.chapterName }}</span>
           <span>{{ scope.row.periodName }}</span>
           <span v-if="scope.row.resourceViewResp">
-            【 <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> ：{{ scope.row.resourceViewResp.resourceName }} |
-            <span v-if="scope.row.resourceViewResp.resourceType < 3">{{ formatTime(scope.row.resourceViewResp.videoLength) }}</span>
-            <span v-else>{{ scope.row.resourceViewResp.docPage }} 页</span> 】
+            【 <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> ：{{ scope.row.resourceViewResp.resourceName }}
+            <span v-if="scope.row.resourceViewResp.resourceType < 3"> | {{ formatTime(scope.row.resourceViewResp.videoLength) }}</span>
+            <span v-if="scope.row.resourceViewResp.resourceType === 3"> | {{ scope.row.resourceViewResp.docPage }} 页</span> 】
           </span>
         </template>
       </el-table-column>

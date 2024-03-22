@@ -27,7 +27,7 @@
           <span>余额：￥{{ scope.row.usersAccountViewResp.availableAmount }}元</span>
           <br />
           <span>冻结：￥{{ scope.row.usersAccountViewResp.freezeAmount }}元</span>&nbsp;
-          <el-button v-permission="'user:record'" type="text" @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
+          <el-button v-permission="'user:record'" link @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
         </template>
       </el-table-column>
       <el-table-column label="备注" prop="remark">

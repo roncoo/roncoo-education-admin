@@ -165,6 +165,6 @@
     border-top: 1px solid #ebeef5;
     border-bottom: 10px solid #f2f3f5;
     margin-left: -20px;
-    z-index: 1;
+    z-index: 9;
   }
 </style>

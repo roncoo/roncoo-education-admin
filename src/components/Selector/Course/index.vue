@@ -78,6 +78,6 @@
 
 <style lang="scss" scoped>
   .example-showcase .el-loading-mask {
-    z-index: 9;
+    z-index: 99;
   }
 </style>

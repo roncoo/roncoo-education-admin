@@ -13,7 +13,7 @@
     width: 80px;
     height: 50px;
     vertical-align: top;
-    z-index: 100;
+    z-index: 99;
     text-align: center;
 
     img {

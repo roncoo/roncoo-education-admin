@@ -31,6 +31,7 @@
   const formDefault = {
     id: undefined,
     parentId: 0,
+    categoryType: 2,
     categoryName: undefined,
     sort: 1
   }

@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
     <div class="page_head">
+      <el-tabs v-model="activeName" @tab-click="handleTablClick">
+        <el-tab-pane :label="'全部'" :name="0" :key="0" />
+        <el-tab-pane v-for="item in tabPanes" :label="item.desc" :name="item.code" :key="item.code" />
+      </el-tabs>
+
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item label="资源名称">
@@ -93,16 +98,28 @@
 
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import FormModel from './FormModel.vue'
   import Preview from '@/components/Preview/index.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import { courseApi } from '@/api/course'
-  import { formatTime, transformSize } from '@/utils/base'
+  import { formatTime, getEnumList, transformSize } from '@/utils/base'
   import CascaderCategory from '@/components/Cascader/Category/index.vue'
   import UploadFile from '@/components/Upload/File/index.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import EnumView from '@/components/Enum/View/index.vue'
+
+  // 类型
+  const activeName = ref(0)
+  const tabPanes = ref()
+  onMounted(async () => {
+    tabPanes.value = await getEnumList('ResourceTypeEnum')
+  })
+  const handleTablClick = (tab) => {
+    activeName.value = tab.props.name
+    query.resourceType = tab.props.name
+    handleQuery()
+  }
 
   // 预览
   const resource = reactive({

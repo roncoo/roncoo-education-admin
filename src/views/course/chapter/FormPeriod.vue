@@ -45,7 +45,7 @@
     resource.value.visible = false
     if (item) {
       formModel.resourceName = item.resourceName
-      formModel.resourceId = item.resourceId
+      formModel.resourceId = item.id
     }
   }
 

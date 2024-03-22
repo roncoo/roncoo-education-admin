@@ -129,7 +129,7 @@
     position: fixed;
     right: 10px;
     bottom: 20px;
-    z-index: 9999;
+    z-index: 999;
   }
 
   .upload_file_container {
@@ -189,7 +189,7 @@
       div {
         padding: 0 12px;
         position: relative;
-        z-index: 2;
+        z-index: 99;
       }
 
       .file_type {
@@ -226,7 +226,7 @@
         left: 0;
         bottom: 0;
         width: 0;
-        z-index: 1;
+        z-index: 9;
         padding: 0;
         background: #ebf7fe;
         transition: width 0.5s;

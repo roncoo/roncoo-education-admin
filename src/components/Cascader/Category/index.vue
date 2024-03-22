@@ -18,27 +18,29 @@
       @node-click="handleChangeCategory"
     >
       <template #default="{ data }">
-        <span>
-          <el-icon><Folder /></el-icon>
-        </span>
-        <span class="table-catalog-name">{{ data.categoryName }}</span>
-        <span class="table-catalog-dropdown" :class="{ active: data.id === categoryId }">
-          <el-dropdown style="margin-top: 3px">
-            <el-icon><More /></el-icon>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <span v-permission="'category:save'">
-                  <el-dropdown-item @click="openFormCatalog(data, data.id)">添加子文件夹</el-dropdown-item>
-                </span>
-                <span v-permission="'category:edit'">
-                  <el-dropdown-item @click="openFormCatalog(data, null)">修改</el-dropdown-item>
-                </span>
-                <span v-permission="'category:delete'">
-                  <el-dropdown-item @click="deleteCatalog(data)">删除</el-dropdown-item>
-                </span>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+        <span class="table-catalog-item">
+          <span>
+            <el-icon><Folder /></el-icon>
+          </span>
+          <span class="table-catalog-name">{{ data.categoryName }}</span>
+          <span class="table-catalog-dropdown" :class="{ active: data.id === categoryId }">
+            <el-dropdown style="margin-top: 3px">
+              <el-icon><More /></el-icon>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <span v-permission="'category:save'">
+                    <el-dropdown-item @click="openFormCatalog(data, data.id)">添加子文件夹</el-dropdown-item>
+                  </span>
+                  <span v-permission="'category:edit'">
+                    <el-dropdown-item @click="openFormCatalog(data, null)">修改</el-dropdown-item>
+                  </span>
+                  <span v-permission="'category:delete'">
+                    <el-dropdown-item @click="deleteCatalog(data)">删除</el-dropdown-item>
+                  </span>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </span>
         </span>
       </template>
     </el-tree>
@@ -96,7 +98,10 @@
 
   // 删除文件夹
   const deleteCatalog = (item) => {
-    console.log(item)
+    courseApi.categoryDelete(item).then((res) => {
+      ElMessage.success(res)
+      handleCatalog()
+    })
   }
 
   // 添加/修改文件夹
@@ -123,14 +128,20 @@
 <style lang="scss" scoped>
   .table-catalog {
     display: block;
-    min-height: calc(100vh - 180px);
-    margin-bottom: 52px;
+    min-height: calc(100vh - 220px);
     width: 200px;
+    margin-bottom: 52px;
+    overflow: auto;
     border: 1px solid #ebeef5;
 
     .table-catalog-title {
       cursor: default;
       padding: 10px 20px;
+    }
+
+    .table-catalog-item {
+      display: flex;
+      align-items: center;
     }
 
     .table-catalog-name {
@@ -142,7 +153,7 @@
     .table-catalog-dropdown {
       display: none;
       right: 0;
-      position: sticky;
+      position: absolute;
       background-color: #fff;
       margin: 0 auto;
       padding-right: 10px;
