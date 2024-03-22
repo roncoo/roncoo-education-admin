@@ -15,6 +15,7 @@
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
             <upload-file v-permission="'resource:save'" :category-id="query.categoryId" @refresh="handlePage" />
+            <el-button v-permission="'resource:edit'" style="margin-left: 10px" @click="handleBatchMove()" :disabled="!ids.length > 0">批量移动</el-button>
             <el-button v-permission="'resource:delete'" style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
           </el-form-item>
         </el-form>
@@ -92,6 +93,7 @@
       </div>
     </div>
     <form-model ref="formRef" @refresh="handlePage" />
+    <move-model v-if="ids.length > 0" ref="moveRef" @refresh="handlePage" />
     <preview v-if="resource.visible" :visible="resource.visible" :resource-id="resource.resourceId" :resource-name="resource.resourceName" @close="closePreview" />
   </div>
 </template>
@@ -100,6 +102,7 @@
   import useTable from '@/utils/table'
   import { onMounted, reactive, ref } from 'vue'
   import FormModel from './FormModel.vue'
+  import MoveModel from './MoveModel.vue'
   import Preview from '@/components/Preview/index.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import { courseApi } from '@/api/course'
@@ -142,15 +145,21 @@
     formRef.value.onOpen(item)
   }
 
-  // 批量删除
   const ids = ref([])
   const handleSelectionChange = (rows) => {
     ids.value = []
     rows.forEach((row) => {
       ids.value.push(row.id)
     })
-    //
   }
+
+  // 批量移动
+  const moveRef = ref()
+  const handleBatchMove = () => {
+    moveRef.value.onOpen(ids.value)
+  }
+
+  // 批量删除
   const handleBatchDelete = async () => {
     ElMessageBox.confirm('是否确认删除？', '提示', {
       confirmButtonText: '确定',
@@ -163,6 +172,7 @@
       })
     })
   }
+
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
     ...useTable({

@@ -11,9 +11,9 @@
     <el-tree
       :data="treeData"
       :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }"
+      :expand-on-click-node="false"
       node-key="id"
       draggable
-      :expand-on-click-node="false"
       @node-drop="handleDrop"
       @node-click="handleChangeCategory"
     >

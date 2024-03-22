@@ -210,7 +210,7 @@
     transform: rotate(45deg);
   }
   .card-check:before {
-    background-image: url('../../../assets/svg/check.svg');
+    background-image: url('../../../assets/images/check.svg');
     background-repeat: no-repeat;
     content: '';
     width: 14px;

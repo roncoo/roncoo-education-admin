@@ -76,6 +76,11 @@ export const courseApi = {
     return putRequest('/course/admin/resource/edit', data)
   },
 
+  // 资源批量移动
+  resourceBatchEdit: (data) => {
+    return putRequest('/course/admin/resource/batch/edit', data)
+  },
+
   // 资源保存
   resourceSave: (data) => {
     return postRequest('/course/admin/resource/save', data)
