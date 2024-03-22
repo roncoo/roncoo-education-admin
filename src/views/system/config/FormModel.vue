@@ -7,7 +7,8 @@
         <!-- 富文本类型 -->
         <editor v-if="formModel.contentType === 2" v-model="formModel.configValue" />
         <!-- 图片类型 -->
-        <upload-image class="image-upload" v-if="formModel.contentType === 3" v-model="formModel.configValue" :height="'200px'" />
+        <selector-image v-if="formModel.configKey === 'websiteLogo'" v-model="formModel.configValue" :width="'374px'" :height="'90px'" :sug-img="'尺寸：187x45px，格式：JPG、PNG，大小：<2M'" />
+        <selector-image v-if="formModel.configKey === 'websiteIcon'" v-model="formModel.configValue" :width="'120px'" :height="'120px'" :sug-img="'尺寸：64x64px，格式：JPG、PNG，大小：<2M'" />
         <!-- 枚举类型 -->
         <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
@@ -28,8 +29,8 @@
   import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
   import Editor from '@/components/Editor/index.vue'
-  import UploadImage from '@/components/Upload/Image/index.vue'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
+  import SelectorImage from '@/components/Selector/Image/index.vue'
 
   // 校验规则
   const formRef = ref()

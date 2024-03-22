@@ -15,7 +15,7 @@
             <el-button type="primary" @click="lecturerSelect">选择讲师</el-button>
           </el-form-item>
           <el-form-item label="封面" prop="courseLogo">
-            <upload-image v-model="formModel.courseLogo" :width="'260px'" :height="'130px'" />
+            <selector-image v-model="formModel.courseLogo" :width="'270px'" :height="'150px'" :sug-img="'尺寸：900x500px，格式：JPG、PNG，大小：<2M'" />
           </el-form-item>
           <el-form-item label="简介" prop="introduce">
             <editor v-model="formModel.introduce" />
@@ -51,13 +51,13 @@
   import { ElMessage } from 'element-plus'
   import { onMounted, reactive, ref } from 'vue'
   import { courseApi } from '@/api/course'
-  import UploadImage from '@/components/Upload/Image/index.vue'
   import Editor from '@/components/Editor/index.vue'
   import SelectLecturer from '@/components/Selector/Lecturer/index.vue'
   import CascaderCourse from '@/components/Cascader/Course/index.vue'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
   import { useRouter } from 'vue-router'
   import { useRoute } from 'vue-router/dist/vue-router'
+  import SelectorImage from '@/components/Selector/Image/index.vue'
 
   const router = useRouter()
 

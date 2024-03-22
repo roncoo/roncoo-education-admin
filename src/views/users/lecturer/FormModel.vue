@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="880px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="1000px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
       <el-row>
         <el-col :span="12">
@@ -15,11 +15,11 @@
         </el-col>
         <el-col :span="12">
           <el-form-item class="form-group" label="" prop="lecturerHead">
-            <upload-image v-model="formModel.lecturerHead" :width="'120px'" />
+            <selector-image v-model="formModel.lecturerHead" :width="'120px'" :height="'120px'" :sug-img="'尺寸：120x120px，格式：JPG、PNG，大小：<2M'" />
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="简介" prop="introduce" style="max-width: 790px">
+      <el-form-item label="简介" prop="introduce">
         <editor v-model="formModel.introduce" />
       </el-form-item>
     </el-form>
@@ -35,9 +35,9 @@
 <script setup>
   import { ElMessage } from 'element-plus'
   import { reactive, ref } from 'vue'
-  import UploadImage from '@/components/Upload/Image/index.vue'
   import Editor from '@/components/Editor/index.vue'
   import { usersApi } from '@/api/users'
+  import SelectorImage from '@/components/Selector/Image/index.vue'
 
   // 规则
   const formRef = ref()
