@@ -29,7 +29,7 @@
   // 校验规则
   const formRef = ref()
   const rules = {
-    resourceName: [{ required: true, message: '不能为空', trigger: 'blur' }]
+    consumeAmount: [{ required: true, message: '不能为空', trigger: 'blur' }]
   }
 
   // 表单

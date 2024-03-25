@@ -6,7 +6,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button type="success" @click="openConsumeRecord()"> 余额操作 </el-button>
+            <el-button v-permission="'user:edit'" type="success" @click="openConsumeRecord()"> 余额操作 </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -31,7 +31,7 @@
       <el-table-column label="订单号" prop="orderNo" />
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <consume ref="consumeRef" @refresh="handlePage" />
+    <form-consume ref="consumeRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -39,7 +39,7 @@
   import { reactive, ref } from 'vue'
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
-  import Consume from './Consume.vue'
+  import FormConsume from './FormConsume.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
   const route = useRoute()

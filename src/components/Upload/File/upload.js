@@ -55,6 +55,25 @@ export const handleVod = async (startFile) => {
 }
 
 /**
+ * 图片上传
+ * @param startFile
+ */
+export const handlePic = async (startFile) => {
+  startFile.status = 'uploading'
+  try {
+    const res = await uploadApi.pic(startFile.file)
+    startFile.resourceUrl = res
+    await handleWidthHeight(startFile)
+
+    await handleResource(startFile)
+    startFile.status = 'success'
+    useUploadStore().addSuccessFile(startFile)
+  } catch (e) {
+    startFile.status = 'fail'
+  }
+}
+
+/**
  * 文档、压缩包上传
  * @param startFile
  */
@@ -72,25 +91,6 @@ export const handleFile = async (startFile) => {
     startFile.storagePlatform = res.storagePlatform
     startFile.resourceUrl = res.docUrl
     startFile.docPage = res.pageCount
-    await handleResource(startFile)
-    startFile.status = 'success'
-    useUploadStore().addSuccessFile(startFile)
-  } catch (e) {
-    startFile.status = 'fail'
-  }
-}
-
-/**
- * 图片上传
- * @param startFile
- */
-export const handlePic = async (startFile) => {
-  startFile.status = 'uploading'
-  try {
-    const res = await uploadApi.pic(startFile.file)
-    startFile.resourceUrl = res
-    await handleWidthHeight(startFile)
-
     await handleResource(startFile)
     startFile.status = 'success'
     useUploadStore().addSuccessFile(startFile)

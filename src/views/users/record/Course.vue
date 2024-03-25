@@ -14,7 +14,7 @@
       <el-table-column align="center" label="序号" type="index" width="60" />
       <el-table-column label="封面" min-width="20" prop="courseLogo">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" />
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="width: auto; height: 50px" />
         </template>
       </el-table-column>
       <el-table-column label="课程名称" min-width="20" prop="courseName" />

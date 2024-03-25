@@ -51,6 +51,7 @@ import {useRouter} from 'vue-router';
 import {useUserStore} from '@/store/modules/user';
 import {createNewRouter} from '@/router';
 import {PATH} from "@/utils/constants/system";
+import { ElMessage } from 'element-plus'
 
 const router = useRouter();
 const loading = ref(false)
@@ -84,6 +85,11 @@ async function getCaptcha() {
 }
 
 async function handleLogin() {
+  if(!loginForm.verCode){
+    ElMessage.error('请输入验证码')
+    return
+  }
+
   loading.value = true
   try {
     const res = await loginApi.login(loginForm)
@@ -96,6 +102,7 @@ async function handleLogin() {
     await router.push(PATH.URL_DASHBOARD)
   } catch (error) {
     console.error(error)
+    await getCaptcha()
   } finally {
     loading.value = false;
   }
