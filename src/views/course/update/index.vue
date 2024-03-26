@@ -25,6 +25,14 @@
       <div class="form-main">
         <div class="form-main-title">课程设置</div>
         <div class="form-main-content">
+          <el-form-item class="form-group" label="倍速播放" prop="speedDouble">
+            <enum-radio v-model="formModel.speedDouble" :enum-name="'SpeedDoubleEnum'" />
+            <span class="tooltip">开启后，用户可在播放页面选择播放速度，默认为1倍速播放。 </span>
+          </el-form-item>
+          <el-form-item class="form-group" label="拖拽播放" prop="speedDrag">
+            <enum-radio v-model="formModel.speedDrag" :enum-name="'SpeedDragEnum'" />
+            <span class="tooltip">开启后，用户可在播放页面快速拖拽播放，若关闭，首次学习禁止拖拽播放。</span>
+          </el-form-item>
           <el-form-item class="form-group" label="课程排序" prop="sort">
             <el-input-number v-model="formModel.courseSort"></el-input-number>
           </el-form-item>
@@ -99,7 +107,9 @@
     coursePrice: 0,
     rulingPrice: 0,
     courseSort: 1,
-    isPutaway: 1
+    isPutaway: 1,
+    speedDouble: 1,
+    speedDrag: 1
   }
   const formModel = reactive({ ...formDefault })
   const onSubmit = async () => {
@@ -166,5 +176,10 @@
     border-bottom: 10px solid #f2f3f5;
     margin-left: -20px;
     z-index: 9;
+  }
+
+  .tooltip {
+    margin-left: 20px;
+    color: #999;
   }
 </style>
