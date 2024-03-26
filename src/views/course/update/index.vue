@@ -31,7 +31,7 @@
           </el-form-item>
           <el-form-item class="form-group" label="拖拽播放" prop="speedDrag">
             <enum-radio v-model="formModel.speedDrag" :enum-name="'SpeedDragEnum'" />
-            <span class="tooltip">开启后，用户可在播放页面快速拖拽播放，若关闭，首次学习禁止拖拽播放。</span>
+            <span class="tooltip">开启后，用户可在播放页面快速拖拽播放，关闭则无法进行拖拽播放。</span>
           </el-form-item>
           <el-form-item class="form-group" label="课程排序" prop="sort">
             <el-input-number v-model="formModel.courseSort"></el-input-number>
