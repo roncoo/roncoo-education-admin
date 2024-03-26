@@ -1,4 +1,4 @@
-// 私有化分片上传
+// 分片上传
 import SimpleUploader from 'simple-uploader.js'
 
 export const getSimpleClient = (userData) => {

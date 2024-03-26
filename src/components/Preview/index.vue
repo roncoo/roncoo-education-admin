@@ -35,7 +35,7 @@
     const params = JSON.parse(res.vodPlayConfig)
     if (res.vodPlatform === 1) {
       console.log(params)
-      // 私有化
+      // 领课云
       simplePlay(params)
     } else if (res.vodPlatform === 2) {
       // 保利威

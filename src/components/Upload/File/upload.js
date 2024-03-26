@@ -12,7 +12,7 @@ import { getSimpleClient, uploadSimple } from '@/utils/vod/simple.js'
 export const handleVod = async (startFile) => {
   const res = await getVodConfig()
   if (res.vodPlatform == 1) {
-    // 私有化上传
+    // 领课云上传
     const simpleClient = getSimpleClient(JSON.parse(res.vodUploadConfig))
     uploadSimple(simpleClient, startFile, (type, data) => {
       if (type === 'FileProgress') {
