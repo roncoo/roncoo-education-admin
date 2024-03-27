@@ -5,6 +5,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 export default defineConfig({
   base: './',
+  telemetry: false,
   server: {
     port: 9528, // 服务启动端口号
     open: true, // 服务启动时是否自动打开浏览器

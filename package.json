@@ -8,6 +8,9 @@
     "build": "vite build",
     "serve": "vite preview"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@polyv/vod-upload-js-sdk": "^1.6.0",
