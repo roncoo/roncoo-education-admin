@@ -1,4 +1,18 @@
 <template>
+  <div v-if="props.configType === '3'" class="page_head">
+    <div class="clearfix">
+      <div v-if="vodConfig" class="vod-info">
+        <span>当前视频云回调地址：{{ vodConfig }}</span>
+      </div>
+
+      <div v-if="!vodConfig" class="vod-info">
+        <span>
+          视频配置完成之后，需要进行初始化处理
+          <el-button v-loading="loading" size="small" type="danger" v-permission="'sys:config:video:init'" @click="vodInit()">点击初始化</el-button>
+        </span>
+      </div>
+    </div>
+  </div>
   <el-table :data="props.list">
     <el-table-column label="配置名称" prop="configName" width="300">
       <template #default="scope">
@@ -31,21 +45,6 @@
     </el-table-column>
   </el-table>
 
-  <div v-if="props.configType === '3'" class="page_head">
-    <div class="clearfix">
-      <div v-if="vodConfig" class="vod-info">
-        <span>当前视频云回调地址：{{ vodConfig }}</span>
-      </div>
-
-      <div v-if="!vodConfig" class="vod-info">
-        <span>
-          视频配置完成之后，需要进行初始化处理
-          <el-button v-loading="loading" size="small" type="primary" v-permission="'sys:config:video:init'" @click="vodInit()">点击这里初始化</el-button>
-        </span>
-      </div>
-    </div>
-  </div>
-
   <form-model ref="formRef" @refresh="handleList"></form-model>
   <form-view ref="viewRef"></form-view>
 </template>
@@ -73,6 +72,8 @@
       handleConfig()
     }
   })
+
+  // 视频云初始化
   const handleConfig = async () => {
     const res = await systemApi.videoConfig()
     vodConfig.value = res
@@ -112,9 +113,9 @@
     justify-content: flex-start;
     flex-direction: row;
     height: 50px;
-    color: #2873f0;
+    color: #999;
     span {
-      margin-left: 20px;
+      margin-left: 10px;
       margin-right: 160px;
     }
   }

@@ -1,5 +1,8 @@
 <template>
   <div class="info">
+    <a href="https://www.roncoo.net/?from=os-admin" target="_blank" class="info-home">
+      <el-icon><Monitor /></el-icon>&nbsp;领课网络
+    </a>
     <a href="/" target="_blank" class="info-home">
       <el-icon><House /></el-icon>&nbsp;首页
     </a>
