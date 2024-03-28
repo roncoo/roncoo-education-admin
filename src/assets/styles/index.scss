@@ -30,10 +30,14 @@ a {
   margin-left: 5px;
   font-size: 12px;
 }
-//
+
+// 弹窗
 .el-dialog__body{
+  max-height: 80vh;
+  overflow: auto;
   padding: 0 20px
 }
+
 // 分页组件
 .el-pagination {
   margin-top: 20px;
