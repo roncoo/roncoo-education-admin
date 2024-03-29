@@ -2,13 +2,12 @@
   <div v-if="props.configType === '3'" class="page_head">
     <div class="clearfix">
       <div v-if="vodConfig" class="vod-info">
-        <span>当前视频云回调地址：{{ vodConfig }}</span>
+        <span>回调地址：{{ vodConfig }}</span>
       </div>
-
       <div v-if="!vodConfig" class="vod-info">
         <span>
-          视频配置完成之后，需要进行初始化处理
           <el-button v-loading="loading" size="small" type="danger" v-permission="'sys:config:video:init'" @click="vodInit()">点击初始化</el-button>
+          视频配置完成，需要重新初始化
         </span>
       </div>
     </div>
@@ -112,8 +111,9 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    height: 50px;
+    height: 35px;
     color: #999;
+    font-size: 14px;
     span {
       margin-left: 10px;
       margin-right: 160px;

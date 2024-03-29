@@ -1,7 +1,7 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="visible" title="菜单设置" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <div style="min-height: 10vh">
-      <el-tree ref="treeRef" :data="treeList" :props="defaultProps" node-key="id" accordion highlight-current show-checkbox @check-change="checkChange" />
+      <el-tree ref="treeRef" :data="treeList" :props="defaultProps" node-key="id" accordion highlight-current show-checkbox @check="handleCheck" />
     </div>
 
     <template #footer>
@@ -30,14 +30,13 @@
         menuIds.value.push(item.id)
       })
     }
-    console.log(menuIds.value)
     await systemApi.sysMenuRoleSave({ roleId: roleId.value, menuIdList: menuIds.value })
     emit('refresh')
     onClose()
   }
 
   // 子节点全部取消，父节点也可以半选中
-  const checkChange = (a, b, c) => {
+  const handleCheck = (a, b, c) => {
     const anode = treeRef.value.getNode(a)
     if (!anode.checked) {
       const fnode = treeRef.value.getNode(anode.parent)
