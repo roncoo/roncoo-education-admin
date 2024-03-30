@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="专区名称">
-            <el-input v-model="query.zoneName" clearable />
+          <el-form-item>
+            <el-input v-model="query.zoneName" placeholder="请输入专区名称" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>

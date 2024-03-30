@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="课程名称">
-            <el-input v-model="query.courseName" clearable />
+          <el-form-item>
+            <el-input v-model="query.courseName" placeholder="请输入课程名称" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -48,7 +48,7 @@
           <el-button v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)">启用</el-button>
           <el-button v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)">禁用</el-button>
           <el-divider direction="vertical" />
-          <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button text type="primary" @click="handleDelete(scope.row, '确认要移除当前课程吗？')">移除</el-button>
         </template>
       </el-table-column>
     </el-table>

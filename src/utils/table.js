@@ -56,7 +56,7 @@ export default function useTable(apis, paras = {}) {
   //删除功能
   const handleDelete = (data, tip = '') => {
     if (apis.delete) {
-      ElMessageBox.confirm(tip || '确认删除当前数据?', '删除提示', {
+      ElMessageBox.confirm(tip || '确认删除当前数据?', '提示', {
         type: 'warning',
         cancelButtonText: '取消',
         confirmButtonText: '确认'
@@ -64,7 +64,7 @@ export default function useTable(apis, paras = {}) {
         page.loading = true
         try {
           const res = await apis.delete({ id: data.id })
-          ElMessage.success({ message: res.msg ? res.msg : '删除成功' })
+          ElMessage.success({ message: res.msg ? res.msg : '操作成功' })
           await handlePage()
         } finally {
           page.loading = false
