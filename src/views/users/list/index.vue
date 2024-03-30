@@ -15,21 +15,21 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
-      <el-table-column label="用户信息" :min-width="40">
+      <el-table-column label="用户信息" :min-width="50">
         <template #default="scope">
           <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
           &nbsp;{{ scope.row.nickname }}
         </template>
       </el-table-column>
-      <el-table-column label="账户">
+      <el-table-column :min-width="50" label="账户">
         <template #default="scope">
-          <span>余额：￥{{ scope.row.usersAccountViewResp.availableAmount }}元</span>
+          <span>余额：￥{{ scope.row.usersAccountViewResp?.availableAmount }}元</span>
           <br />
-          <span>冻结：￥{{ scope.row.usersAccountViewResp.freezeAmount }}元</span>&nbsp;
+          <span>冻结：￥{{ scope.row.usersAccountViewResp?.freezeAmount }}元</span>&nbsp;
           <el-button v-permission="'user:record'" link @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
         </template>
       </el-table-column>
-      <el-table-column :min-width="100" label="备注" prop="remark">
+      <el-table-column :min-width="50" label="备注" prop="remark">
         <template #default="scope">
           <span v-html="scope.row.remark" />
         </template>

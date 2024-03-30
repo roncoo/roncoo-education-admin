@@ -17,7 +17,7 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">
-      <el-table-column :min-width="120" label="商品信息">
+      <el-table-column :min-width="180" label="商品信息">
         <template #default="scope">
           <img :alt="scope.row.courseViewVO.courseName" :src="scope.row.courseViewVO.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px">

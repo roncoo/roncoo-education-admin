@@ -6,18 +6,6 @@
           <template #header>数据统计</template>
           <el-row>
             <el-col :span="6">
-              <el-statistic title="今天新增用户" :value="3223" />
-            </el-col>
-            <el-col :span="6">
-              <el-statistic title="今天活跃用户" :value="3223" />
-            </el-col>
-            <el-col :span="6">
-              <el-statistic title="总用户数" :value="3223" />
-            </el-col>
-          </el-row>
-          <br />
-          <el-row>
-            <el-col :span="6">
               <el-statistic title="今天订单数" :value="3223" />
             </el-col>
             <el-col :span="6">
@@ -28,6 +16,21 @@
             </el-col>
             <el-col :span="6">
               <el-statistic title="总收入" :value="3223" :prefix="'￥'" />
+            </el-col>
+          </el-row>
+          <br />
+          <el-row>
+            <el-col :span="6">
+              <el-statistic title="今天新增用户" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="今天活跃用户" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="总用户数" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="总支付人数" :value="3223" />
             </el-col>
           </el-row>
         </el-card>

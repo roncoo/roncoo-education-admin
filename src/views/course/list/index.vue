@@ -15,7 +15,7 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">
-      <el-table-column :min-width="150" label="课程信息">
+      <el-table-column :min-width="180" label="课程信息">
         <template #default="scope">
           <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px">
@@ -28,7 +28,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column :min-width="80" label="所属分类/讲师" prop="courseName">
+      <el-table-column :min-width="60" label="所属分类/讲师" prop="courseName">
         <template #default="scope">
           <span>
             {{ scope.row.categoryName }}
@@ -37,7 +37,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column :min-width="80" label="销售量/学习人数" prop="countBuy">
+      <el-table-column :min-width="50" label="销售量/学习人数" prop="countBuy">
         <template #default="scope">
           <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
         </template>
