@@ -1,20 +1,43 @@
 <template>
   <div class="dashboard-container">
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :span="16">
         <el-card class="info">
-          <template #header>更新日志：v14.0.0-RELEASE</template>
-          <p>1. 管理后台升级并优化：Vue3 + Element-Plus + Vite + Axios + Pinia</p>
-          <p>2. 门户系统升级并优化：Nuxt3 + Element-Plus + Vite + Axios + Pinia</p>
-          <p>3. 增加余额支付、文档学习、视频学习控制等功能，并修复bug若干</p>
+          <template #header>数据统计</template>
+          <el-row>
+            <el-col :span="6">
+              <el-statistic title="今天新增用户" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="今天活跃用户" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="总用户数" :value="3223" />
+            </el-col>
+          </el-row>
+          <br />
+          <el-row>
+            <el-col :span="6">
+              <el-statistic title="今天订单数" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="今天收入" :value="3223" :prefix="'￥'" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="总订单数" :value="3223" />
+            </el-col>
+            <el-col :span="6">
+              <el-statistic title="总收入" :value="3223" :prefix="'￥'" />
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-card class="info">
           <template #header>特别说明</template>
-          <p>1. 演示环境仅提供查看功能，本地部署能体验更多功能</p>
-          <p>2. 可提供有偿指导服务：请联系作者：18302045627（微信同号）</p>
-          <p>3. 点播平台：领课云可以私有化部署，请联系作者：18302045627（微信同号）</p>
+          <p>1. 演示环境仅提供查看功能，更多功能需本地部署</p>
+          <p>2. 系统如何搭建部署？视频如何实现本地私有化？</p>
+          <p>3. 作者提供有偿指导服务：18302045627(微信同号)</p>
         </el-card>
       </el-col>
     </el-row>
