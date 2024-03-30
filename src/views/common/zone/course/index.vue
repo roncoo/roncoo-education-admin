@@ -14,45 +14,41 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="150" label="封面">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id">
+      <el-table-column :min-width="130" label="课程信息">
         <template #default="scope">
-          <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo" style="height: 50px; width: auto" />
+          <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
+          <div style="float: left; margin-left: 10px">
+            {{ scope.row.courseViewResp.courseName }}
+            <br />
+            <span v-if="scope.row.courseViewResp.isFree == 1">免费</span>
+            <span v-if="scope.row.courseViewResp.isFree == 0">
+              ￥{{ scope.row.courseViewResp.coursePrice }}<span style="text-decoration: line-through; margin-left: 10px">￥{{ scope.row.courseViewResp.rulingPrice }}</span>
+            </span>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="名称" prop="courseName">
-        <template #default="scope">
-          <span>{{ scope.row.courseViewResp.courseName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="100" label="价格">
-        <template #default="scope">
-          <span v-if="scope.row.courseViewResp.isFree == 1">免费</span>
-          <span v-if="scope.row.courseViewResp.isFree == 0">
-            ￥{{ scope.row.courseViewResp.coursePrice }} <br /><span style="text-decoration: line-through">￥{{ scope.row.courseViewResp.rulingPrice }}</span>
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="100" label="售卖">
+      <el-table-column :min-width="30" label="售卖">
         <template #default="scope">
           <span :class="{ 'c-special': scope.row.courseViewResp.isPutaway === 0 }">
             <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.courseViewResp.isPutaway" />
           </span>
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="排序" prop="sort" />
-      <el-table-column :width="100" label="状态">
+      <el-table-column :min-width="30" label="排序" prop="sort" />
+      <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button type="primary" @click="openFormModal(scope.row)">排序</el-button>
-          <el-button v-if="scope.row.statusId == 0" type="success" @click="handleStatus(scope.row)">启用</el-button>
-          <el-button v-if="scope.row.statusId == 1" type="warning" @click="handleStatus(scope.row)">禁用</el-button>
-          <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button text type="primary" @click="openFormModal(scope.row)">排序</el-button>
+          <el-divider direction="vertical" />
+          <el-button v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)">启用</el-button>
+          <el-button v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)">禁用</el-button>
+          <el-divider direction="vertical" />
+          <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

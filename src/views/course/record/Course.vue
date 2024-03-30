@@ -10,8 +10,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="手机号码" min-width="20" prop="mobile" />
       <el-table-column label="用户昵称" min-width="20" prop="nickname" />
       <el-table-column label="学习进度" prop="courseProgress">

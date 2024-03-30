@@ -14,7 +14,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item class="form-group" label="" prop="lecturerHead">
+          <el-form-item class="form-group" prop="lecturerHead">
             <selector-image v-model="formModel.lecturerHead" :width="'120px'" :height="'120px'" :sug-img="'尺寸：120x120px，格式：JPG、PNG，大小：<2M'" />
           </el-form-item>
         </el-col>

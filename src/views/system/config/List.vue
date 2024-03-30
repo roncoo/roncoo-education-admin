@@ -1,17 +1,4 @@
 <template>
-  <div v-if="props.configType === '3'" class="page_head">
-    <div class="clearfix">
-      <div v-if="vodConfig" class="vod-info">
-        <span>回调地址：{{ vodConfig }}</span>
-      </div>
-      <div v-if="!vodConfig" class="vod-info">
-        <span>
-          <el-button v-loading="loading" size="small" type="danger" v-permission="'sys:config:video:init'" @click="vodInit()">点击初始化</el-button>
-          视频配置完成，需要重新初始化
-        </span>
-      </div>
-    </div>
-  </div>
   <el-table :data="props.list">
     <el-table-column label="配置名称" prop="configName" width="300">
       <template #default="scope">
@@ -36,13 +23,26 @@
         <span style="color: #999; font-size: 13px">{{ scope.row.remark }}</span>
       </template>
     </el-table-column>
-
     <el-table-column v-permission="'sys:config:edit'" label="操作" width="220">
       <template #default="scope">
-        <el-button type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+        <el-button text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
+
+  <div v-if="props.configType === '3'" class="page_head">
+    <div class="clearfix">
+      <div v-if="vodConfig" class="vod-info">
+        <span>回调地址：{{ vodConfig }}</span>
+      </div>
+      <div v-if="!vodConfig" class="vod-info">
+        <span>
+          <el-button v-loading="loading" size="small" type="danger" v-permission="'sys:config:video:init'" @click="vodInit()">点击初始化</el-button>
+          视频配置完成，需要重新初始化
+        </span>
+      </div>
+    </div>
+  </div>
 
   <form-model ref="formRef" @refresh="handleList"></form-model>
   <form-view ref="viewRef"></form-view>

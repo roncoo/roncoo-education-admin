@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="登录账号">
-            <el-input v-model="query.mobile" clearable />
+          <el-form-item>
+            <el-input v-model="query.mobile" placeholder="请输入登录账号" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -14,8 +14,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" :width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="登录账号" prop="mobile" />
       <el-table-column label="用户昵称" prop="realName" />
       <el-table-column label="所属角色">
@@ -32,10 +31,12 @@
       <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" :width="320">
         <template #default="scope">
-          <el-button v-permission="'sys:user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-permission="'sys:user:role:set'" type="warning" @click="openRoleModal(scope.row)">角色分配</el-button>
-          <el-dropdown style="margin-left: 10px">
-            <el-button>
+          <el-button v-permission="'sys:user:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-divider direction="vertical" />
+          <el-button v-permission="'sys:user:role:set'" text type="primary" @click="openRoleModal(scope.row)">角色分配</el-button>
+          <el-divider direction="vertical" />
+          <el-dropdown>
+            <el-button text type="primary">
               更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -44,14 +45,14 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'sys:user:password'" type="warning" @click="openPasswordModal(scope.row)">密码</el-button>
+                  <el-button v-permission="'sys:user:password'" text type="primary" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 0" type="success">启用</el-button>
-                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 1" type="warning">禁用</el-button>
+                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 0" text type="primary">启用</el-button>
+                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 1" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-permission="'sys:user:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                  <el-button v-permission="'sys:user:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

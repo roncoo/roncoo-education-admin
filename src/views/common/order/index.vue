@@ -3,11 +3,11 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="订单号">
-            <el-input v-model="query.orderNo" clearable />
+          <el-form-item>
+            <el-input v-model="query.orderNo" placeholder="根据订单号搜索" prefix-icon="Search" />
           </el-form-item>
-          <el-form-item label="手机号码">
-            <el-input v-model="query.mobile" clearable />
+          <el-form-item>
+            <el-input v-model="query.mobile" placeholder="根据手机号码搜索" prefix-icon="Search" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()">查询</el-button>
@@ -16,20 +16,32 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="180" label="订单号">
+    <el-table v-loading="page.loading" :data="page.list">
+      <el-table-column :min-width="120" label="商品信息">
+        <template #default="scope">
+          <img :alt="scope.row.courseViewVO.courseName" :src="scope.row.courseViewVO.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
+          <div style="float: left; margin-left: 10px">
+            {{ scope.row.courseViewVO.courseName }}
+            <br />
+            <span v-if="scope.row.courseViewVO.isFree == 1">免费</span>
+            <span v-if="scope.row.courseViewVO.isFree == 0">
+              ￥{{ scope.row.courseViewVO.coursePrice }}<span style="text-decoration: line-through; margin-left: 10px">￥{{ scope.row.courseViewVO.rulingPrice }}</span>
+            </span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column :min-width="80" label="订单号">
         <template #default="scope">
           {{ scope.row.orderNo }}
         </template>
       </el-table-column>
-      <el-table-column label="课程信息">
+      <el-table-column :min-width="50" label="用户手机" prop="mobile" />
+      <el-table-column :min-width="50" label="实付金额">
         <template #default="scope">
-          {{ scope.row.courseViewVO.courseName }}
+          <span> ￥{{ scope.row.rulingPrice }} </span>
         </template>
       </el-table-column>
-      <el-table-column :width="150" label="手机号码" prop="mobile" />
-      <el-table-column :width="160" label="支付方式/时间">
+      <el-table-column :min-width="80" label="支付方式/时间">
         <template #default="scope">
           <enum-view :enum-name="'PayTypeEnum'" :enum-value="scope.row.payType" />
           <br />
@@ -37,20 +49,12 @@
           <span v-else>{{ scope.row.gmtCreate }}</span>
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="订单状态">
+      <el-table-column :min-width="50" label="订单状态">
         <template #default="scope">
           <enum-view :enum-name="'OrderStatusEnum'" :enum-value="scope.row.orderStatus" />
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="价格">
-        <template #default="scope">
-          <span v-if="scope.row.coursePrice === 0">免费</span>
-          <span v-else>
-            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through">￥{{ scope.row.rulingPrice }}</span>
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="100" label="客户/备注" prop="remarkCus">
+      <el-table-column :min-width="50" label="客户/备注" prop="remarkCus">
         <template #default="scope">
           {{ scope.row.remarkCus }}<br />
           {{ scope.row.remark }}
@@ -58,7 +62,7 @@
       </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'order:remark'" type="primary" @click="openFormModal(scope.row)">备注</el-button>
+          <el-button v-permission="'order:remark'" text type="primary" @click="openFormModal(scope.row)">写备注</el-button>
         </template>
       </el-table-column>
     </el-table>

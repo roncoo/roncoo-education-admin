@@ -13,7 +13,7 @@
         </el-form>
       </div>
     </div>
-    <el-table ref="tableRef" v-loading="page.loading" :data="page.list" border>
+    <el-table ref="tableRef" v-loading="page.loading" :data="page.list">
       <el-table-column type="selection" :width="50" />
       <el-table-column label="角色名称" prop="roleName" />
       <el-table-column label="备注" prop="remark" />

@@ -8,8 +8,8 @@
 
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="资源名称">
-            <el-input v-model="query.resourceName" clearable />
+          <el-form-item>
+            <el-input v-model="query.resourceName" placeholder="请输入资源名称" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -25,7 +25,7 @@
       <!-- 目录 -->
       <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
       <div class="table-main">
-        <el-table v-loading="page.loading" :data="page.list" border @selection-change="handleSelectionChange">
+        <el-table v-loading="page.loading" :data="page.list" @selection-change="handleSelectionChange">
           <el-table-column type="selection" :width="40" />
           <el-table-column label="资源名称" prop="resourceName">
             <template #default="scope">
@@ -66,9 +66,10 @@
           </el-table-column>
           <el-table-column :width="230" fixed="right" label="操作" prop="address">
             <template #default="scope">
-              <el-button v-permission="'resource:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+              <el-button v-permission="'resource:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+              <el-divider direction="vertical" />
               <el-dropdown>
-                <el-button>
+                <el-button text type="primary">
                   更多操作
                   <el-icon class="el-icon--right">
                     <arrow-down />
@@ -77,11 +78,11 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="handleStatus(scope.row)">
-                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
-                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
+                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
+                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                      <el-button v-permission="'resource:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                      <el-button v-permission="'resource:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>

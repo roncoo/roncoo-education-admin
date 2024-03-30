@@ -13,8 +13,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="用户手机" min-width="20" prop="mobile" />
       <el-table-column label="用户昵称" min-width="20" prop="nickname" />
       <el-table-column label="内容" prop="commentText" />

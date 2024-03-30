@@ -9,23 +9,21 @@
         <el-button class="filter-item" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="130" label="封面">
+    <el-table v-loading="page.loading" :data="page.list">
+      <el-table-column :min-width="130" label="课程信息">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="height: 50px; width: auto" />
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
+          <div style="float: left; margin-left: 10px">
+            {{ scope.row.courseName }}
+            <br />
+            <span v-if="scope.row.isFree == 1">免费</span>
+            <span v-if="scope.row.isFree == 0">
+              ￥{{ scope.row.coursePrice }}<span style="text-decoration: line-through; margin-left: 10px">￥{{ scope.row.rulingPrice }}</span>
+            </span>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" prop="courseName" />
-      <el-table-column :width="100" label="价格">
-        <template #default="scope">
-          <span v-if="scope.row.isFree == 1">免费</span>
-          <span v-if="scope.row.isFree == 0">
-            ￥{{ scope.row.coursePrice }} <br /><span style="text-decoration: line-through">￥{{ scope.row.rulingPrice }}</span>
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="80" label="售卖">
+      <el-table-column :min-width="30" label="售卖">
         <template #default="scope">
           <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.isPutaway" />
         </template>

@@ -30,7 +30,6 @@
           </div>
         </div>
         <el-table v-else v-loading="page.loading" :data="page.list">
-          <el-table-column align="center" label="序号" type="index" width="60" />
           <el-table-column label="资源名称" prop="resourceName" />
           <el-table-column label="资源类型" prop="resourceType" :width="200">
             <template #default="scope">

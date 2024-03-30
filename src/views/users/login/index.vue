@@ -10,8 +10,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="手机号码" prop="mobile" />
       <el-table-column label="登录IP" prop="loginIp" />
       <el-table-column label="登录地址" prop="province">

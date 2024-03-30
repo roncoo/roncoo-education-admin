@@ -14,26 +14,26 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column :width="200" label="导航名称" prop="navTitle" />
-      <el-table-column label="导航地址" prop="navUrl" />
-      <el-table-column :width="120" label="跳转方式">
+    <el-table v-loading="page.loading" :data="page.list">
+      <el-table-column :min-width="100" label="导航名称" prop="navTitle" />
+      <el-table-column :min-width="100" label="导航地址" prop="navUrl" />
+      <el-table-column :min-width="50" label="跳转方式">
         <template #default="scope">
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.navTarget" />
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="排序" prop="sort" />
-      <el-table-column :width="100" label="状态">
+      <el-table-column :min-width="30" label="排序" prop="sort" />
+      <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
       <el-table-column :width="210" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'website:nav:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'website:nav:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-divider direction="vertical" />
           <el-dropdown>
-            <el-button>
+            <el-button text type="primary">
               更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -42,11 +42,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'website:nav:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
-                  <el-button v-permission="'website:nav:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
+                  <el-button v-permission="'website:nav:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
+                  <el-button v-permission="'website:nav:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-permission="'website:nav:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                  <el-button v-permission="'website:nav:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

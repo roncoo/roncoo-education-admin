@@ -44,9 +44,14 @@ a {
   justify-content: center;
 }
 
-// 下拉组件
-.el-dropdown {
-  margin-left: 10px;
+// 表头样式
+.el-table .el-table__header th.is-leaf {
+  background-color: #f2f3f5;
+  height: 50px;
+}
+
+.el-divider--vertical{
+  margin: 0;
 }
 
 // 滚动条样式

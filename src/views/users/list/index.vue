@@ -3,8 +3,8 @@
     <div class="page_head">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="手机号码">
-            <el-input v-model="query.mobile" clearable />
+          <el-form-item>
+            <el-input v-model="query.mobile" placeholder="请输入手机号码" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -13,15 +13,14 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
-      <el-table-column label="用户头像" :min-width="40">
+      <el-table-column label="用户信息" :min-width="40">
         <template #default="scope">
-          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 50px; width: auto; border-radius: 50%" />
+          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
+          &nbsp;{{ scope.row.nickname }}
         </template>
       </el-table-column>
-      <el-table-column label="用户昵称" :min-width="40" prop="nickname" />
       <el-table-column label="账户">
         <template #default="scope">
           <span>余额：￥{{ scope.row.usersAccountViewResp.availableAmount }}元</span>
@@ -30,7 +29,7 @@
           <el-button v-permission="'user:record'" link @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="备注" prop="remark">
+      <el-table-column :min-width="100" label="备注" prop="remark">
         <template #default="scope">
           <span v-html="scope.row.remark" />
         </template>
@@ -43,9 +42,10 @@
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'user:record'" type="success" @click="toUserRecord(scope.row, 'course')">数据</el-button>
+          <el-button v-permission="'user:record'" text type="primary" @click="toUserRecord(scope.row, 'course')">数据</el-button>
+          <el-divider direction="vertical" />
           <el-dropdown>
-            <el-button
+            <el-button text type="primary"
               >更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -54,11 +54,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'user:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                  <el-button v-permission="'user:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
-                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
+                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
+                  <el-button v-permission="'user:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

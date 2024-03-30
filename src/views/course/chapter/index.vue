@@ -9,8 +9,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" border default-expand-all row-key="id">
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" default-expand-all row-key="id">
       <el-table-column label="章节名称" prop="chapterName">
         <template #default="scope">
           <span>{{ scope.row.chapterName }}</span>
@@ -35,11 +34,13 @@
       </el-table-column>
       <el-table-column :width="300" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="scope.row.periodName" type="primary" @click="openFormPeriodModal(scope.row, null)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" type="success" @click="openFormPeriodModal(null, scope.row.id)">节添加</el-button>
+          <el-button v-if="scope.row.periodName" text type="primary" @click="openFormPeriodModal(scope.row, null)">编辑</el-button>
+          <el-button v-if="scope.row.chapterName" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-divider direction="vertical" />
+          <el-button v-if="scope.row.chapterName" text type="primary" @click="openFormPeriodModal(null, scope.row.id)">节添加</el-button>
+          <el-divider direction="vertical" />
           <el-dropdown>
-            <el-button>
+            <el-button text type="primary">
               更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -48,11 +49,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-if="scope.row.statusId == 0" type="success" @click="doHandleStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" type="danger" @click="doHandleStatus(scope.row)">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" text type="primary" @click="doHandleStatus(scope.row)">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" text type="primary" @click="doHandleStatus(scope.row)">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button type="danger" @click="doHandleDelete(scope.row)">删除</el-button>
+                  <el-button text type="primary" @click="doHandleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

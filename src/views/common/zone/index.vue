@@ -14,31 +14,31 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column label="专区名称" prop="zoneName">
+    <el-table v-loading="page.loading" :data="page.list">
+      <el-table-column :min-width="100" label="专区名称" prop="zoneName">
         <template #default="scope">
           <span>{{ scope.row.zoneName }}</span
           ><br />
         </template>
       </el-table-column>
-      <el-table-column label="描述" prop="zoneDesc">
+      <el-table-column :min-width="100" label="描述" prop="zoneDesc">
         <template #default="scope">
           <span>{{ scope.row.zoneDesc }}</span
           ><br />
         </template>
       </el-table-column>
-      <el-table-column :width="100" label="排序" prop="sort" />
-      <el-table-column :width="100" label="状态">
+      <el-table-column :min-width="50" label="排序" prop="sort" />
+      <el-table-column :min-width="50" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
-      <el-table-column :width="210" fixed="right" label="操作" prop="address">
+      <el-table-column :width="220" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'zone:manage'" type="success" @click="toCourse(scope.row.id)">课程</el-button>
+          <el-button v-permission="'zone:manage'" text type="primary" @click="toCourse(scope.row.id)">课程</el-button>
+          <el-divider direction="vertical" />
           <el-dropdown>
-            <el-button>
+            <el-button text type="primary">
               更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -47,14 +47,14 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'zone:edit'" type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+                  <el-button v-permission="'zone:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 0" type="success">启用</el-button>
-                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 1" type="warning">禁用</el-button>
+                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
+                  <el-button v-permission="'zone:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-permission="'zone:delete'" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                  <el-button v-permission="'zone:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

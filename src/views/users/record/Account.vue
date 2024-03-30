@@ -11,8 +11,7 @@
         </el-form>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
+    <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="时间" prop="gmtCreate" />
       <el-table-column label="消费类型" prop="consumeType">
         <template #default="scope">

@@ -11,9 +11,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" border>
-      <el-table-column align="center" label="序号" type="index" width="60" />
-      <el-table-column label="讲师名称" prop="lecturerName" />
+    <el-table v-loading="page.loading" :data="page.list">
+      <el-table-column label="讲师信息">
+        <template #default="scope">
+          <img :alt="scope.row.lecturerName" :src="scope.row.lecturerHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
+          &nbsp;{{ scope.row.lecturerName }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="scope">
           <el-button type="primary" @click="selectLecturer(scope.row)">选择</el-button>
