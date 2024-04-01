@@ -70,14 +70,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <form-model ref="formRef" @refresh="handlePage" />
+    <menu-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 
 <script setup>
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
-  import FormModel from './FormModel.vue'
+  import MenuForm from './MenuForm.vue'
   import { systemApi } from '@/api/system'
   import EnumView from '@/components/Enum/View/index.vue'
 

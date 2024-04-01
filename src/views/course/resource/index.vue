@@ -24,6 +24,7 @@
     <div class="table-container">
       <!-- 目录 -->
       <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
+
       <div class="table-main">
         <el-table v-loading="page.loading" :data="page.list" @selection-change="handleSelectionChange">
           <el-table-column type="selection" :width="40" />
@@ -93,7 +94,7 @@
         <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
       </div>
     </div>
-    <form-model ref="formRef" @refresh="handlePage" />
+    <resource-form ref="formRef" @refresh="handlePage" />
     <move-model v-if="ids.length > 0" ref="moveRef" @refresh="handlePage" />
     <preview v-if="resource.visible" :visible="resource.visible" :resource-id="resource.resourceId" :resource-name="resource.resourceName" @close="closePreview" />
   </div>
@@ -102,7 +103,7 @@
 <script setup>
   import useTable from '@/utils/table'
   import { onMounted, reactive, ref } from 'vue'
-  import FormModel from './FormModel.vue'
+  import ResourceForm from './ResourceForm.vue'
   import MoveModel from './MoveModel.vue'
   import Preview from '@/components/Preview/index.vue'
   import Pagination from '@/components/Pagination/index.vue'

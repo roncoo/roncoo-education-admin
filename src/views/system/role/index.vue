@@ -52,7 +52,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-modal ref="formRef" @refresh="handlePage" />
+    <role-form ref="formRef" @refresh="handlePage" />
     <menu-set ref="menuRef" v-if="menuVisible" @refresh="handleMenu"></menu-set>
   </div>
 </template>
@@ -60,7 +60,7 @@
   import { systemApi } from '@/api/system'
   import { nextTick, reactive, ref } from 'vue'
   import useTable from '@/utils/table'
-  import FormModal from './FormModel.vue'
+  import RoleForm from './RoleForm.vue'
   import MenuSet from './MenuSet.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'

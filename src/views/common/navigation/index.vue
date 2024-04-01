@@ -55,7 +55,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-modal ref="formRef" @refresh="handlePage" />
+    <navigation-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -63,7 +63,7 @@
   import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
   import Pagination from '@/components/Pagination/index.vue'
-  import FormModal from './FormModel.vue'
+  import NavigationForm from './NavigationForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改

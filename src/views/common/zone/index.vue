@@ -63,7 +63,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-model ref="formRef" @refresh="handlePage" />
+    <zone-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -71,7 +71,7 @@
   import { courseApi } from '@/api/course'
   import Pagination from '@/components/Pagination/index.vue'
   import useTable from '@/utils/table'
-  import FormModel from './FormModel.vue'
+  import ZoneForm from './ZoneForm.vue'
   import { useRouter } from 'vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
 

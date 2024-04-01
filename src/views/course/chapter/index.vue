@@ -63,7 +63,7 @@
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <form-model ref="formRef" @refresh="handlePage" />
-    <form-period ref="formPeriodRef" @refresh="handlePage" />
+    <period-form ref="formPeriodRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -73,7 +73,7 @@
   import { courseApi } from '@/api/course'
   import { formatTime } from '@/utils/base'
   import FormModel from './FormModel.vue'
-  import FormPeriod from './FormPeriod.vue'
+  import PeriodForm from './PeriodForm.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import EnumView from '@/components/Enum/View/index.vue'

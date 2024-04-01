@@ -44,13 +44,13 @@
     </div>
   </div>
 
-  <form-model ref="formRef" @refresh="handleList"></form-model>
+  <config-form ref="formRef" @refresh="handleList"></config-form>
   <form-view ref="viewRef"></form-view>
 </template>
 
 <script setup>
   import { onMounted, ref } from 'vue'
-  import FormModel from './FormModel.vue'
+  import ConfigForm from './ConfigForm.vue'
   import FormView from './View.vue'
   import { systemApi } from '@/api/system.js'
   import { ElMessage } from 'element-plus'

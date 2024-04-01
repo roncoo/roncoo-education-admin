@@ -60,14 +60,14 @@
       </el-table-column>
     </el-table>
     <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
-    <form-model ref="formRef" @refresh="handlePage" />
+    <carousel-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
-  import FormModel from './FormModel.vue'
+  import CarouselForm from './CarouselForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
 

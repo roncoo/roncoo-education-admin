@@ -61,7 +61,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-modal ref="formRef" @refresh="handlePage" />
+    <user-form ref="formRef" @refresh="handlePage" />
     <password ref="passwordRef" @refresh="handlePage" />
     <role-set ref="roleRef" v-if="roleVisible" @refresh="handleRole" />
   </div>
@@ -72,7 +72,7 @@
   import Pagination from '@/components/Pagination/index.vue'
   import { nextTick, reactive, ref } from 'vue'
   import useTable from '@/utils/table'
-  import FormModal from './FormModel.vue'
+  import UserForm from './UserForm.vue'
   import Password from './Password.vue'
   import RoleSet from './RoleSet.vue'
   import EnumView from '@/components/Enum/View/index.vue'

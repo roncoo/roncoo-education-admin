@@ -54,14 +54,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <form-model ref="formRef" @refresh="handlePage" />
+    <category-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
   import { courseApi } from '@/api/course'
-  import FormModel from './FormModel.vue'
+  import CategoryForm from './CategoryForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
 
   // 添加/修改

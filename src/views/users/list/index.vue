@@ -67,7 +67,7 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-modal ref="formRef" @refresh="handlePage" />
+    <users-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
@@ -77,7 +77,7 @@
   import { useRouter } from 'vue-router'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
-  import FormModal from './FormModel.vue'
+  import UsersForm from './UsersForm.vue'
 
   // 添加/修改
   const formRef = ref()

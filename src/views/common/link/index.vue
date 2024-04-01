@@ -54,14 +54,14 @@
       </el-table-column>
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-modal ref="formRef" @refresh="handlePage" />
+    <link-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>
 <script setup>
   import useTable from '@/utils/table'
   import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
-  import FormModal from './FormModel.vue'
+  import LinkForm from './LinkForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
 
