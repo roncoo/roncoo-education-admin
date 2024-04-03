@@ -9,9 +9,11 @@
       </el-button>
     </div>
     <el-tree
+      ref="treeRef"
       :data="treeData"
       :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }"
       :expand-on-click-node="false"
+      highlight-current
       node-key="id"
       draggable
       @node-drop="handleDrop"
@@ -19,11 +21,9 @@
     >
       <template #default="{ data }">
         <span class="table-catalog-item">
-          <span>
-            <el-icon><Folder /></el-icon>
-          </span>
+          <img src="@/assets/images/folder.svg" />&nbsp;
           <span class="table-catalog-name">{{ data.categoryName }}</span>
-          <span class="table-catalog-dropdown" :class="{ active: data.id === categoryId }">
+          <span class="table-catalog-dropdown">
             <el-dropdown style="margin-top: 3px">
               <el-icon><More /></el-icon>
               <template #dropdown>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import CategoryForm from './CategoryForm.vue'
   import { ElMessage } from 'element-plus'
@@ -65,7 +65,14 @@
     }
   })
 
-  const categoryId = ref(props.categoryId)
+  const categoryId = computed(() => {
+    return props.categoryId
+  })
+
+  const treeRef = ref()
+  onMounted(() => {
+    treeRef['value'].setCurrentKey(categoryId.value)
+  })
 
   const emit = defineEmits(['update:category-id', 'refresh'])
   // 选择目录
@@ -156,7 +163,7 @@
       position: absolute;
       background-color: #fff;
       margin: 0 auto;
-      padding-right: 10px;
+      padding: 0 10px;
     }
   }
 

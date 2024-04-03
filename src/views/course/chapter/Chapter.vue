@@ -1,40 +1,36 @@
 <template>
   <div class="table-catalog">
     <div class="table-catalog-title">
-      <span style="cursor: pointer" @click="handleChangeCategory">资源目录</span>
-      <el-button text link style="margin-left: 70px" @click="openFormCatalog(null, null)">
+      <span style="cursor: pointer">章节目录</span>
+      <el-button text link style="margin-left: 120px" @click="openFormCatalog(null, props.treeData[0].courseId)">
         <el-icon>
           <CirclePlus />
         </el-icon>
       </el-button>
     </div>
     <el-tree
-      :data="treeData"
-      :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }"
+      ref="treeRef"
+      :data="props.treeData"
+      :props="{ value: 'id', label: 'chapterName', children: 'childrenList' }"
       :expand-on-click-node="false"
       node-key="id"
       draggable
+      highlight-current
       @node-drop="handleDrop"
-      @node-click="handleChangeCategory"
+      @node-click="handleClick"
     >
       <template #default="{ data }">
         <span class="table-catalog-item">
-          <span>
-            <el-icon><Folder /></el-icon>
-          </span>
-          <span class="table-catalog-name">{{ data.categoryName }}</span>
-          <span class="table-catalog-dropdown" :class="{ active: data.id === categoryId }">
+          <span class="table-catalog-name">{{ data.chapterName }}</span>
+          <span class="table-catalog-dropdown">
             <el-dropdown style="margin-top: 3px">
               <el-icon><More /></el-icon>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <span v-permission="'category:save'">
-                    <el-dropdown-item @click="openFormCatalog(data, data.id)">添加子文件夹</el-dropdown-item>
+                  <span>
+                    <el-dropdown-item @click="openFormCatalog(data, null)">重命名</el-dropdown-item>
                   </span>
-                  <span v-permission="'category:edit'">
-                    <el-dropdown-item @click="openFormCatalog(data, null)">修改</el-dropdown-item>
-                  </span>
-                  <span v-permission="'category:delete'">
+                  <span>
                     <el-dropdown-item @click="deleteCatalog(data)">删除</el-dropdown-item>
                   </span>
                 </el-dropdown-menu>
@@ -45,40 +41,45 @@
       </template>
     </el-tree>
   </div>
-  <category-form ref="catalogRef" @refresh="handleCatalog" />
+  <chapter-form ref="chapterRef" @refresh="handleList" />
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
-  import CategoryForm from './CategoryForm.vue'
+  import ChapterForm from './ChapterForm.vue'
   import { ElMessage } from 'element-plus'
 
   const props = defineProps({
-    categoryType: {
-      type: Number,
-      default: 0
+    treeData: {
+      type: Object,
+      default: null
     },
-    categoryId: {
+    chapterId: {
       type: String,
       default: ''
     }
   })
 
-  const categoryId = ref(props.categoryId)
+  const chapterId = computed(() => {
+    return props.chapterId
+  })
 
-  const emit = defineEmits(['update:category-id', 'refresh'])
+  const treeRef = ref()
+  onMounted(() => {
+    treeRef['value'].setCurrentKey(chapterId.value)
+  })
+
+  const emit = defineEmits(['node-click', 'refresh'])
   // 选择目录
-  const handleChangeCategory = (item) => {
-    emit('update:category-id', item.id)
-    emit('refresh')
+  const handleClick = (item) => {
+    emit('node-click', item)
   }
 
   const handleDrop = () => {
-    const sortList = getTreeSort(treeData.value, firstTree.value.sort)
-    courseApi.categorySort(sortList).then((res) => {
+    const sortList = getTreeSort(props.treeData, 1)
+    courseApi.courseChapterSort(sortList).then((res) => {
       ElMessage.success(res)
-      handleCatalog()
     })
   }
 
@@ -98,38 +99,27 @@
 
   // 删除文件夹
   const deleteCatalog = (item) => {
-    courseApi.categoryDelete(item).then((res) => {
+    courseApi.courseChapterDelete(item).then((res) => {
       ElMessage.success(res)
-      handleCatalog()
+      emit('refresh')
     })
   }
 
   // 添加/修改文件夹
-  const catalogRef = ref()
-  const openFormCatalog = (item, parentId) => {
-    catalogRef.value.onOpen(item, parentId)
+  const chapterRef = ref()
+  const openFormCatalog = (item, courseId) => {
+    chapterRef.value.onOpen(item, courseId)
   }
 
-  // 列出文件夹
-  const treeData = ref()
-  const firstTree = ref()
-  onMounted(() => {
-    handleCatalog()
-  })
-
-  // 列出目录
-  const handleCatalog = () => {
-    courseApi.categoryList({ categoryType: props.categoryType }).then((res) => {
-      treeData.value = res
-      firstTree.value = res[0]
-    })
+  const handleList = () => {
+    emit('refresh')
   }
 </script>
 <style lang="scss" scoped>
   .table-catalog {
     display: block;
     min-height: calc(100vh - 220px);
-    width: 200px;
+    width: 250px;
     margin-bottom: 52px;
     overflow: auto;
     border: 1px solid #ebeef5;
@@ -146,7 +136,6 @@
 
     .table-catalog-name {
       position: relative;
-      margin-left: 5px;
       overflow: hidden;
     }
 
@@ -156,7 +145,7 @@
       position: absolute;
       background-color: #fff;
       margin: 0 auto;
-      padding-right: 10px;
+      padding: 0 10px;
     }
   }
 
@@ -168,5 +157,9 @@
     .table-catalog-dropdown {
       display: block;
     }
+  }
+
+  .el-tree-node__content {
+    height: 45px;
   }
 </style>

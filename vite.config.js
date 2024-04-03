@@ -12,8 +12,8 @@ export default defineConfig({
     proxy: {
       // 代理
       '/gateway': {
-        //target: 'https://dev-os.roncoos.com/gateway/',
-        target: 'http://10.65.1.18/gateway/',
+        target: 'https://dev-os.roncoos.com/gateway',
+        //target: 'http://10.65.1.18/gateway',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/gateway/, '')
       }

@@ -4,15 +4,8 @@
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit />
       </el-form-item>
-      <el-form-item class="form-group" label="资源" prop="resourceName">
-        <el-input v-model="formModel.resourceName" disabled style="width: 210px; margin-right: 20px" />
-        <el-button type="primary" @click="resourceSelect">选择资源</el-button>
-      </el-form-item>
-      <el-form-item class="form-group" label="设置" prop="isFree">
+      <el-form-item class="form-group" label="收费设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
-      </el-form-item>
-      <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -21,7 +14,6 @@
         <el-button type="primary" @click="onSubmit()">确定</el-button>
       </span>
     </template>
-    <select-resource v-if="resource.visible" :visible="resource.visible" @close="handleResource" />
   </el-dialog>
 </template>
 
@@ -30,30 +22,11 @@
   import { reactive, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
-  import SelectResource from '@/components/Selector/Resource/index.vue'
-
-  // 资源设置
-  const resource = ref({
-    visible: false
-  })
-
-  const resourceSelect = () => {
-    resource.value.visible = true
-  }
-
-  const handleResource = (item) => {
-    resource.value.visible = false
-    if (item) {
-      formModel.resourceName = item.resourceName
-      formModel.resourceId = item.id
-    }
-  }
 
   // 校验规则
   const formRef = ref()
   const rules = {
-    periodName: [{ required: true, message: '不能为空', trigger: 'blur' }],
-    resourceName: [{ required: true, message: '不能为空', trigger: 'blur' }]
+    periodName: [{ required: true, message: '不能为空', trigger: 'blur' }]
   }
 
   // 表单
@@ -62,9 +35,7 @@
   const formDefault = {
     id: undefined,
     periodName: undefined,
-    resourceName: undefined,
-    isFree: 1,
-    sort: 1
+    isFree: 1
   }
   const formModel = reactive({ ...formDefault })
   const onSubmit = async () => {

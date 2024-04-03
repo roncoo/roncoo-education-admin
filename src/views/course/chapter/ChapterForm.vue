@@ -1,8 +1,8 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
-      <el-form-item class="form-group" label="文件夹名" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit />
+      <el-form-item class="form-group" label="章节名称" prop="chapterName">
+        <el-input v-model="formModel.chapterName" maxlength="50" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -22,7 +22,7 @@
   // 校验规则
   const formRef = ref()
   const rules = {
-    categoryName: [{ required: true, message: '不能为空', trigger: 'blur' }]
+    chapterName: [{ required: true, message: '不能为空', trigger: 'blur' }]
   }
 
   // 表单
@@ -30,9 +30,6 @@
   const emit = defineEmits(['refresh'])
   const formDefault = {
     id: undefined,
-    parentId: 0,
-    categoryType: 2,
-    categoryName: undefined,
     sort: 1
   }
   const formModel = reactive({ ...formDefault })
@@ -48,10 +45,10 @@
     loading.value = true
     try {
       if (formModel.id) {
-        await courseApi.categoryEdit(formModel)
+        await courseApi.courseChapterEdit(formModel)
         ElMessage.success('修改成功')
       } else {
-        await courseApi.categorySave(formModel)
+        await courseApi.courseChapterSave(formModel)
         ElMessage.success('添加成功')
       }
       emit('refresh')
@@ -63,14 +60,12 @@
 
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
-  const onOpen = (item, parentId) => {
+  const onOpen = (item, courseId) => {
     if (item) {
       Object.assign(formModel, item)
     }
-    if (parentId) {
-      formModel.parentId = parentId
-      formModel.id = undefined
-      formModel.categoryName = undefined
+    if (courseId) {
+      formModel.courseId = courseId
     }
     visible.value = true
   }

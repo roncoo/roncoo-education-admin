@@ -46,8 +46,12 @@ a {
 
 // 表头样式
 .el-table .el-table__header th.is-leaf {
-  background-color: #f2f3f5;
+  background-color: #f9f9f9;
   height: 50px;
+}
+
+.el-tree-node__content{
+  height: 40px;
 }
 
 .el-divider--vertical{

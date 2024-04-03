@@ -105,6 +105,11 @@ export const courseApi = {
     })
   },
 
+  // 课程章分页
+  courseChapterPeriodList: (data) => {
+    return postRequest('/course/admin/course/chapter/period/list', data)
+  },
+
   // 课程章节修改
   courseChapterPeriodEdit: (data) => {
     return putRequest('/course/admin/course/chapter/period/edit', data)
@@ -113,6 +118,11 @@ export const courseApi = {
   // 课程章节保存
   courseChapterPeriodSave: (data) => {
     return postRequest('/course/admin/course/chapter/period/save', data)
+  },
+
+  // 课程章节排序
+  courseChapterPeriodSort: (data) => {
+    return putRequest('/course/admin/course/chapter/period/sort', data)
   },
 
   // 课程章节修改
@@ -125,9 +135,19 @@ export const courseApi = {
     return postRequest('/course/admin/course/chapter/page', { pageCurrent, pageSize, ...params })
   },
 
+  // 课程章分页
+  courseChapterList: (data) => {
+    return postRequest('/course/admin/course/chapter/list', data)
+  },
+
   // 课程章修改
   courseChapterEdit: (data) => {
     return putRequest('/course/admin/course/chapter/edit', data)
+  },
+
+  // 课程章排序
+  courseChapterSort: (data) => {
+    return putRequest('/course/admin/course/chapter/sort', data)
   },
 
   // 课程章保存

@@ -1,144 +1,224 @@
 <template>
   <div class="app-container">
-    <div class="page_head">
-      <div class="search_bar clearfix">
-        <el-form :model="query" inline label-width="80px">
-          <el-form-item>
-            <el-button type="success" @click="openFormModal()">章添加</el-button>
-          </el-form-item>
-        </el-form>
+    <div class="container-header">
+      <div class="header-info">
+        <img :src="currentCourseInfo.courseLogo" :alt="currentCourseInfo.courseName" style="height: 120px; width: auto; border-radius: 10px" />
+        <div class="info">
+          <div class="info-title">{{ currentCourseInfo.courseName }}</div>
+          <div class="info-name">讲师：{{ currentCourseInfo.lecturerName }}</div>
+          <div class="info-name">销售价：￥{{ currentCourseInfo.coursePrice }}</div>
+          <div class="info-name">上架状态：售卖</div>
+        </div>
+      </div>
+      <div class="header-button">
+        <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
+        <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
+        <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'periodViewRespList' }" default-expand-all row-key="id">
-      <el-table-column label="章节名称" prop="chapterName">
-        <template #default="scope">
-          <span>{{ scope.row.chapterName }}</span>
-          <span>{{ scope.row.periodName }}</span>
-          <span v-if="scope.row.resourceViewResp">
-            【 <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> ：{{ scope.row.resourceViewResp.resourceName }}
-            <span v-if="scope.row.resourceViewResp.resourceType < 3"> | {{ formatTime(scope.row.resourceViewResp.videoLength) }}</span>
-            <span v-if="scope.row.resourceViewResp.resourceType === 3"> | {{ scope.row.resourceViewResp.docPage }} 页</span> 】
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column :width="100" label="排序" prop="sort" />
-      <el-table-column :width="100" label="收费">
-        <template #default="scope">
-          <enum-view :enum-name="'FreeEnum'" :enum-value="scope.row.isFree" />
-        </template>
-      </el-table-column>
-      <el-table-column :width="100" label="状态">
-        <template #default="scope">
-          <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
-        </template>
-      </el-table-column>
-      <el-table-column :width="300" fixed="right" label="操作" prop="address">
-        <template #default="scope">
-          <el-button v-if="scope.row.periodName" text type="primary" @click="openFormPeriodModal(scope.row, null)">编辑</el-button>
-          <el-button v-if="scope.row.chapterName" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
-          <el-divider direction="vertical" />
-          <el-button v-if="scope.row.chapterName" text type="primary" @click="openFormPeriodModal(null, scope.row.id)">节添加</el-button>
-          <el-divider direction="vertical" />
-          <el-dropdown>
-            <el-button text type="primary">
-              更多操作
-              <el-icon class="el-icon--right">
-                <arrow-down />
-              </el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>
-                  <el-button v-if="scope.row.statusId == 0" text type="primary" @click="doHandleStatus(scope.row)">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" text type="primary" @click="doHandleStatus(scope.row)">禁用</el-button>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button text type="primary" @click="doHandleDelete(scope.row)">删除</el-button>
-                </el-dropdown-item>
-              </el-dropdown-menu>
+
+    <div class="tips">章只有一个时，前台不显示章，只显示小节</div>
+
+    <div class="container-main">
+      <!-- 目录 -->
+      <chapter v-if="currentChapterInfo.id" :tree-data="treeData" :chapter-id="currentChapterInfo.id" @node-click="handleChapterClick" @refresh="handleChapterList" />
+
+      <div class="main-table">
+        <el-table v-loading="loading" :data="periodList">
+          <el-table-column align="left">
+            <template #header>
+              <div class="table-header">
+                {{ currentChapterInfo.chapterName }}
+              </div>
             </template>
-          </el-dropdown>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
-    <form-model ref="formRef" @refresh="handlePage" />
-    <period-form ref="formPeriodRef" @refresh="handlePage" />
+            <template #default="scope">
+              <div class="table-default">
+                <span>{{ scope.$index + 1 }}.</span>
+                <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
+                <span>{{ scope.row.resourceViewResp.resourceName }}</span>
+                <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
+                <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column align="right">
+            <template #header>
+              <div>
+                <el-button @click="resourceSelect">添加资源</el-button>
+              </div>
+            </template>
+            <template #default="scope">
+              <el-button text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button text type="primary">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
   </div>
+  <select-resource v-if="period.visible" :visible="period.visible" @close="handleResource" />
+  <period-form ref="periodFormRef" />
 </template>
 <script setup>
-  import { reactive, ref } from 'vue'
-  import Pagination from '@/components/Pagination/index.vue'
-  import useTable from '@/utils/table'
-  import { courseApi } from '@/api/course'
-  import { formatTime } from '@/utils/base'
-  import FormModel from './FormModel.vue'
+  import { nextTick, onMounted, ref } from 'vue'
+  import { courseApi as couseApi, courseApi } from '@/api/course'
   import PeriodForm from './PeriodForm.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
-  import { ElMessage, ElMessageBox } from 'element-plus'
   import EnumView from '@/components/Enum/View/index.vue'
+  import Chapter from './Chapter.vue'
+  import { useRouter } from 'vue-router'
+  import { formatTime } from '@/utils/base.js'
+  import SelectResource from '@/components/Selector/Resource/index.vue'
+  import { ElMessage } from 'element-plus'
+  import Sortable from 'sortablejs'
 
+  const router = useRouter()
   const route = useRoute()
+  const currentCourseInfo = ref({})
+  const currentChapterInfo = ref({})
 
-  // 节添加修改
-  const formPeriodRef = ref()
-  const openFormPeriodModal = (item, chapterId) => {
-    formPeriodRef.value.onOpen(item, chapterId, route.query.courseId)
-  }
-
-  // 章添加/修改
-  const formRef = ref()
-  const openFormModal = (item) => {
-    formRef.value.onOpen(item, route.query.courseId)
-  }
-
-  const doHandleStatus = async (item) => {
-    if (item.chapterName) {
-      handleStatus(item)
-    } else {
-      page.loading = true
-      try {
-        item.statusId = item.statusId === 0 ? 1 : 0
-        const res = await courseApi.courseChapterPeriodEdit({ id: item.id, statusId: item.statusId })
-        ElMessage.success({ message: res.msg ? res.msg : '操作成功' })
-      } finally {
-        page.loading = false
-      }
-    }
-  }
-
-  const doHandleDelete = async (item) => {
-    if (item.chapterName) {
-      handleDelete(item)
-    } else {
-      ElMessageBox.confirm('确认删除当前数据?', '删除提示', {
-        type: 'warning',
-        cancelButtonText: '取消',
-        confirmButtonText: '确认'
-      }).then(async () => {
-        page.loading = true
-        try {
-          const res = await courseApi.courseChapterPeriodDelete({ id: item.id })
-          ElMessage.success({ message: res.msg ? res.msg : '删除成功' })
-          await handlePage()
-        } finally {
-          page.loading = false
-        }
-      })
-    }
-  }
-
-  // 基础功能
-  const { page, handlePage, query, handleDelete, handleStatus } = reactive({
-    ...useTable(
-      {
-        page: courseApi.courseChapterPage,
-        delete: courseApi.courseChapterDelete,
-        status: courseApi.courseChapterEdit
-      },
-      {
-        courseId: route.query.courseId
-      }
-    )
+  onMounted(async () => {
+    // 课程信息
+    await handleCourseInfo()
+    // 章节信息
+    await handleChapterList()
   })
+
+  // 课时信息
+  const period = ref({
+    visible: false,
+    courseId: route.query.courseId,
+    chapterId: ''
+  })
+  // 选择资源
+  const resourceSelect = () => {
+    period.value.visible = true
+  }
+  // 添加资源
+  const handleResource = async (item) => {
+    period.value.visible = false
+    if (item) {
+      period.value.periodName = item.resourceName
+      period.value.resourceId = item.id
+      period.value.chapterId = currentChapterInfo.value.id
+      await courseApi.courseChapterPeriodSave(period.value)
+      ElMessage.success('添加成功')
+    }
+    // 列出
+    await handlePeriodList(currentChapterInfo.value.id)
+  }
+
+  //章点击回调
+  const handleChapterClick = (item) => {
+    currentChapterInfo.value = item
+    handlePeriodList(item.id)
+  }
+
+  // 课程信息
+  const handleCourseInfo = async () => {
+    currentCourseInfo.value = await courseApi.courseView({ id: route.query.courseId })
+  }
+
+  // 章节课时列出
+  const loading = ref(false)
+  const treeData = ref()
+  const handleChapterList = async () => {
+    const res = await courseApi.courseChapterList({ courseId: route.query.courseId })
+    treeData.value = res
+    if (res && res.length > 0) {
+      currentChapterInfo.value = res[0]
+      await handlePeriodList(res[0].id)
+    }
+  }
+
+  // 课时列出
+  const periodList = ref([])
+  const handlePeriodList = (chapterId) => {
+    loading.value = true
+    courseApi.courseChapterPeriodList({ chapterId: chapterId }).then((res) => {
+      periodList.value = res
+      loading.value = false
+      handlePeriodSort()
+    })
+  }
+
+  // 课时修改
+  const periodFormRef = ref()
+  const openFormPeriodModal = (item) => {
+    periodFormRef.value.onOpen(item)
+  }
+
+  // 课程修改
+  const toCourseUpdate = () => {
+    router.push({ path: '/course/update', query: { courseId: route.query.courseId } })
+  }
+
+  const handlePeriodSort = () => {
+    const tbody = document.querySelector('.el-table__body-wrapper tbody')
+    Sortable.create(tbody, {
+      onEnd: ({ newIndex, oldIndex }) => {
+        const newRow = JSON.parse(JSON.stringify(periodList.value[0]))
+        const currRow = periodList.value.splice(oldIndex, 1)[0]
+        periodList.value.splice(newIndex, 0, currRow)
+        let i = 0
+        periodList.value.forEach((el) => {
+          el.sort = newRow.sort - i
+          i++
+        })
+        const periods = periodList.value.map((el, i) => {
+          return {
+            id: el.id,
+            sort: i + 1
+          }
+        })
+        couseApi.courseChapterPeriodSort(periods).then((res) => {
+          ElMessage.success(res)
+          periodList.value = []
+          handlePeriodList(currentChapterInfo.value.id)
+        })
+      }
+    })
+  }
 </script>
+<style lang="scss" scoped>
+  .container-header {
+    display: flex;
+    justify-content: space-between;
+    .header-info {
+      display: flex;
+      .info {
+        margin-left: 20px;
+        line-height: 30px;
+        .info-name {
+          color: #999;
+        }
+      }
+    }
+
+    .header-button {
+      float: right;
+    }
+  }
+
+  .container-main {
+    display: flex;
+    .main-table {
+      width: calc(100% - 250px);
+      min-height: 400px;
+    }
+
+    .table-default-tag {
+      margin: 0 10px;
+    }
+  }
+
+  .tips {
+    padding: 10px 15px;
+    background: rgba(61, 127, 255, 0.1);
+    border: 1px solid rgba(61, 127, 255, 0.6);
+    color: #666;
+    border-radius: 4px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+</style>

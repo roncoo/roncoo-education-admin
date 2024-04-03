@@ -38,7 +38,7 @@
       <el-table-column :min-width="50" label="用户手机" prop="mobile" />
       <el-table-column :min-width="50" label="实付金额">
         <template #default="scope">
-          <span> ￥{{ scope.row.rulingPrice }} </span>
+          <span> ￥{{ scope.row.coursePrice }} </span>
         </template>
       </el-table-column>
       <el-table-column :min-width="80" label="支付方式/时间">
