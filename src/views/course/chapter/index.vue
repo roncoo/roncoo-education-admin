@@ -12,17 +12,12 @@
       </div>
       <div class="header-button">
         <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
-        <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
-        <el-button v-permission="'course:edit'" link type="primary" @click="toCourseUpdate()">编辑</el-button>
       </div>
     </div>
-
     <div class="tips">章只有一个时，前台不显示章，只显示小节</div>
-
     <div class="container-main">
       <!-- 目录 -->
       <chapter v-if="currentChapterInfo.id" :tree-data="treeData" :chapter-id="currentChapterInfo.id" @node-click="handleChapterClick" @refresh="handleChapterList" />
-
       <div class="main-table">
         <el-table v-loading="loading" :data="periodList">
           <el-table-column align="left">
@@ -35,7 +30,7 @@
               <div class="table-default">
                 <span>{{ scope.$index + 1 }}.</span>
                 <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
-                <span>{{ scope.row.resourceViewResp.resourceName }}</span>
+                <span>{{ scope.row.periodName }}</span>
                 <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
                 <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
               </div>
@@ -49,7 +44,8 @@
             </template>
             <template #default="scope">
               <el-button text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
-              <el-button text type="primary">删除</el-button>
+              <el-divider direction="vertical" />
+              <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -60,8 +56,8 @@
   <period-form ref="periodFormRef" />
 </template>
 <script setup>
-  import { nextTick, onMounted, ref } from 'vue'
-  import { courseApi as couseApi, courseApi } from '@/api/course'
+  import { onMounted, ref } from 'vue'
+  import { courseApi } from '@/api/course'
   import PeriodForm from './PeriodForm.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
@@ -69,7 +65,7 @@
   import { useRouter } from 'vue-router'
   import { formatTime } from '@/utils/base.js'
   import SelectResource from '@/components/Selector/Resource/index.vue'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import Sortable from 'sortablejs'
 
   const router = useRouter()
@@ -148,6 +144,21 @@
     periodFormRef.value.onOpen(item)
   }
 
+  // 课时删除
+  const handleDelete = (item) => {
+    ElMessageBox.confirm('确定删除吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      courseApi.courseChapterPeriodDelete(item).then((res) => {
+        ElMessage.success(res)
+        periodList.value = []
+        handlePeriodList(currentChapterInfo.value.id)
+      })
+    })
+  }
+
   // 课程修改
   const toCourseUpdate = () => {
     router.push({ path: '/course/update', query: { courseId: route.query.courseId } })
@@ -171,7 +182,7 @@
             sort: i + 1
           }
         })
-        couseApi.courseChapterPeriodSort(periods).then((res) => {
+        courseApi.courseChapterPeriodSort(periods).then((res) => {
           ElMessage.success(res)
           periodList.value = []
           handlePeriodList(currentChapterInfo.value.id)

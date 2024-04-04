@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '节修改' : '节添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="节名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit />
@@ -65,16 +65,11 @@
 
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
-  const onOpen = (item, chapterId, courseId) => {
+  const onOpen = (item) => {
     if (item) {
-      Object.assign(formModel, item)
-      formModel.resourceName = item.resourceViewResp.resourceName
-    }
-    if (chapterId) {
-      formModel.chapterId = chapterId
-    }
-    if (courseId) {
-      formModel.courseId = courseId
+      formModel.id = item.id
+      formModel.periodName = item.periodName
+      formModel.isFree = item.isFree
     }
     visible.value = true
   }
