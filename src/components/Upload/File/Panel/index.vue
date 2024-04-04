@@ -129,7 +129,7 @@
     position: fixed;
     right: 10px;
     bottom: 20px;
-    z-index: 999;
+    z-index: 2999;
   }
 
   .upload_file_container {

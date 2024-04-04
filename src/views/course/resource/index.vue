@@ -14,7 +14,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <upload-file v-permission="'resource:save'" :category-id="query.categoryId" @refresh="handlePage" />
+            <upload-file v-permission="'resource:save'" :category-id="query.categoryId" :on-bus="onBus" @refresh="handlePage" />
             <el-button v-permission="'resource:edit'" style="margin-left: 10px" @click="handleBatchMove()" :disabled="!ids.length > 0">批量移动</el-button>
             <el-button v-permission="'resource:delete'" style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
           </el-form-item>
@@ -102,7 +102,7 @@
 
 <script setup>
   import useTable from '@/utils/table'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, onUnmounted, reactive, ref } from 'vue'
   import ResourceForm from './ResourceForm.vue'
   import MoveModel from './MoveModel.vue'
   import Preview from '@/components/Preview/index.vue'
@@ -117,9 +117,16 @@
   // 类型
   const activeName = ref(0)
   const tabPanes = ref()
+
+  const onBus = ref(false)
   onMounted(async () => {
+    onBus.value = true
     tabPanes.value = await getEnumList('ResourceTypeEnum')
   })
+  onUnmounted(() => {
+    onBus.value = false
+  })
+
   const handleTablClick = (tab) => {
     activeName.value = tab.props.name
     query.resourceType = tab.props.name

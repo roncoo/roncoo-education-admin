@@ -1,5 +1,5 @@
 <template>
-  <el-upload :before-upload="beforeAvatarUpload" :http-request="onUpload" :show-file-list="false" :multiple="true" ref="upload">
+  <el-upload ref="upload" :before-upload="beforeAvatarUpload" :http-request="onUpload" :show-file-list="false" :multiple="true">
     <el-button type="success">上传</el-button>
   </el-upload>
 </template>
@@ -7,10 +7,34 @@
 <script setup>
   import { ElMessage } from 'element-plus'
   import { useUploadStore } from '@/store/modules/upload'
+  import { toRefs, watch } from 'vue'
+  import bus from '@/utils/bus.js'
 
   const props = defineProps({
+    onBus: { type: Boolean, default: false },
     categoryId: { type: String, default: '' }
   })
+
+  const { onBus } = toRefs(props)
+
+  const emit = defineEmits(['refresh'])
+  const refresh = () => {
+    emit('refresh')
+  }
+
+  watch(
+    () => onBus.value,
+    (val) => {
+      if (val) {
+        bus.on('upload-event', refresh)
+      } else {
+        bus.off('upload-event', refresh)
+      }
+    },
+    {
+      immediate: true
+    }
+  )
 
   /**
    * 上传

@@ -11,6 +11,7 @@
       <el-form-item>
         <el-button class="filter-item" type="primary" @click="handleQuery">查询</el-button>
         <el-button class="filter-item" @click="resetQuery">重置</el-button>
+        <upload-file v-permission="'resource:save'" :category-id="query.categoryId" :on-bus="props.visible" @refresh="handleQuery" />
       </el-form-item>
     </el-form>
 
@@ -69,6 +70,7 @@
   import { formatTime, getEnumList, transformSize } from '@/utils/base'
   import EnumView from '@/components/Enum/View/index.vue'
   import CascaderCategory from '@/components/Cascader/Category/index.vue'
+  import UploadFile from '@/components/Upload/File/index.vue'
 
   const props = defineProps({
     title: {

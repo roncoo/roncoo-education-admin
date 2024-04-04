@@ -3,7 +3,8 @@ import { uploadApi } from '@/api/upload'
 import { getPolyvClient, uploadPolyv } from '@/utils/vod/polyv'
 import { getSessionStorage, setSessionStorage } from '@/utils/storage'
 import { useUploadStore } from '@/store/modules/upload'
-import { getSimpleClient, uploadSimple } from '@/utils/vod/simple.js'
+import { getSimpleClient, uploadSimple } from '@/utils/vod/simple'
+import bus from '@/utils/bus'
 
 /**
  * 视频上传
@@ -118,6 +119,8 @@ const handleResource = async (data) => {
     imgHeight: data.imgHeight
   })
   ElMessage.success('上传成功')
+  // 触发事件
+  bus.emit('upload-event')
 }
 
 /**
