@@ -15,7 +15,7 @@
       <el-table-column label="用户昵称" min-width="20" prop="nickname" />
       <el-table-column label="学习进度" prop="courseProgress">
         <template #default="scope">
-          <el-progress :percentage="scope.row.courseProgress" :stroke-width="20" :text-inside="true" />
+          <el-progress :percentage="scope.row.courseProgress" :stroke-width="15" :text-inside="true" />
         </template>
       </el-table-column>
       <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate" />
