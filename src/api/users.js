@@ -1,4 +1,4 @@
-import { deleteRequest, postRequest, putRequest } from '@/utils/request'
+import { deleteRequest, getRequest, postRequest, putRequest } from '@/utils/request'
 
 export const usersApi = {
   // 用户账号金额消费
@@ -61,5 +61,8 @@ export const usersApi = {
   },
   orderEdit: (data) => {
     return putRequest('/user/admin/order/info/edit', data)
+  },
+  usersView(data) {
+    return getRequest('/user/admin/users/view?id=' + data.id)
   }
 }

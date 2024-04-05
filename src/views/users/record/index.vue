@@ -1,7 +1,15 @@
 <template>
   <div class="app-container">
-    <el-descriptions title="用户信息" :column="4">
-      <el-descriptions-item label="用户ID"> 3223 </el-descriptions-item>
+    <el-descriptions title="用户信息" :column="5">
+      <el-descriptions-item label="">
+        <img :alt="usersInfo.nickname" :src="usersInfo.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
+        <span style="margin-left: 10px">
+          {{ usersInfo.nickname }}
+          <span v-if="usersInfo.remark"> 【{{ usersInfo.remark }}】</span>
+        </span>
+      </el-descriptions-item>
+      <el-descriptions-item label="用户手机"> {{ usersInfo.mobile }} </el-descriptions-item>
+      <el-descriptions-item label="用户年龄"> {{ usersInfo.userAge }} 岁</el-descriptions-item>
     </el-descriptions>
     <div style="height: 20px"></div>
     <el-descriptions title="数据统计" :column="4">
@@ -24,12 +32,22 @@
 <script setup>
   import UsersCourse from './Course.vue'
   import UsersAccount from './Account.vue'
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useRoute } from 'vue-router'
+  import { usersApi } from '@/api/users.js'
+  import { getEnumList, getEnumObj } from '@/utils/base.js'
   const route = useRoute()
   const activeName = ref(route.query.activeName)
   // 切换
   const handleClick = (target) => {
     activeName.value = target.props.name
   }
+
+  /**
+   * @description: 获取用户信息
+   */
+  const usersInfo = ref({})
+  onMounted(async () => {
+    usersInfo.value = await usersApi.usersView({ id: route.query.userId })
+  })
 </script>
