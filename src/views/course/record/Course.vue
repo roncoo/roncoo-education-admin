@@ -21,7 +21,7 @@
       <el-table-column label="开始学习时间" min-width="30" prop="gmtCreate" />
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <el-button type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
+          <el-button text type="primary" @click="openStudyRecord(scope.row)">明细</el-button>
         </template>
       </el-table-column>
     </el-table>

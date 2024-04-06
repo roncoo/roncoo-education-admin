@@ -42,7 +42,7 @@
       </el-table-column>
       <el-table-column :width="230" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'user:record'" text type="primary" @click="toUserRecord(scope.row, 'course')">数据</el-button>
+          <el-button v-permission="'user:record'" text type="primary" @click="toUserRecord(scope.row, 'order')">数据</el-button>
           <el-divider direction="vertical" />
           <el-dropdown>
             <el-button text type="primary"

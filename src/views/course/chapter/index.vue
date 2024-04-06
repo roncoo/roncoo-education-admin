@@ -73,11 +73,11 @@
   const currentCourseInfo = ref({})
   const currentChapterInfo = ref({})
 
-  onMounted(async () => {
+  onMounted(() => {
     // 课程信息
-    await handleCourseInfo()
+    handleCourseInfo()
     // 章节信息
-    await handleChapterList()
+    handleChapterList()
   })
 
   // 课时信息
