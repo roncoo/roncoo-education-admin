@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <el-row :gutter="20">
       <el-col :span="16">
-        <el-card class="info">
+        <el-card v-permission="'stat:data'" class="info">
           <template #header>数据统计</template>
           <el-row>
             <el-col :span="6">
@@ -12,7 +12,7 @@
             </el-col>
             <el-col :span="6">
               <router-link to="/common/order">
-                <el-statistic title="今天收入" precision="2" :value="statData.todayMoney" :prefix="'￥'" />
+                <el-statistic title="今天收入" :precision="2" :value="statData.todayMoney" :prefix="'￥'" />
               </router-link>
             </el-col>
             <el-col :span="6">
@@ -45,7 +45,7 @@
             </el-col>
             <el-col :span="6">
               <router-link to="/common/order">
-                <el-statistic title="总收入" precision="2" :value="statData.orderMoney" :prefix="'￥'" />
+                <el-statistic title="总收入" :precision="2" :value="statData.orderMoney" :prefix="'￥'" />
               </router-link>
             </el-col>
           </el-row>
