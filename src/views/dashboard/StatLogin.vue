@@ -1,6 +1,6 @@
 <template>
   <el-card class="title-info">
-    <template #header>最近14天登录人数</template>
+    <template #header>最近14天人数统计</template>
     <div id="axis" ref="axisRef" class="axis" />
   </el-card>
 </template>
@@ -31,11 +31,10 @@
         }
       },
       legend: {
-        data: ['登录人数', '注册人数']
+        data: ['活跃人数', '新增人数']
       },
       xAxis: {
         type: 'category',
-        axisTick: { show: false },
         data: data.dateList
       },
       yAxis: {
@@ -43,7 +42,7 @@
       },
       series: [
         {
-          name: '登录人数',
+          name: '活跃人数',
           type: 'line',
           data: data.loginList,
           label: {
@@ -52,7 +51,7 @@
           }
         },
         {
-          name: '注册人数',
+          name: '新增人数',
           type: 'line',
           data: data.registerList
         }

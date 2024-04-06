@@ -35,13 +35,14 @@
   // 当前路由
   const route = useRoute()
 
-  // 子菜单集合
-  const subMenuList = ref([])
-
   // 菜单集合
   const showMenuList = ref([])
   const showMenuId = ref()
   const showSubMenuId = ref()
+
+  // 子菜单集合
+  const subMenuList = ref([])
+  // 选择的菜单ID
   const hoverMenuId = ref()
 
   watchEffect(() => {

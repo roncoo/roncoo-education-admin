@@ -6,31 +6,47 @@
           <template #header>数据统计</template>
           <el-row>
             <el-col :span="6">
-              <el-statistic title="今天订单数" :value="3223" />
+              <router-link to="/common/order">
+                <el-statistic title="今天订单数" :value="3223" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="今天收入" :value="3223" :prefix="'￥'" />
+              <router-link to="/common/order">
+                <el-statistic title="今天收入" :value="3223" :prefix="'￥'" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="总订单数" :value="3223" />
+              <router-link to="/common/order">
+                <el-statistic title="昨天订单数" :value="3223" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="总收入" :value="3223" :prefix="'￥'" />
+              <router-link to="/common/order">
+                <el-statistic title="昨天收入" :value="3223" :prefix="'￥'" />
+              </router-link>
             </el-col>
           </el-row>
           <br />
           <el-row>
             <el-col :span="6">
-              <el-statistic title="今天新增用户" :value="3223" />
+              <router-link to="/users/list">
+                <el-statistic title="总用户数" :value="3223" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="今天活跃用户" :value="3223" />
+              <router-link to="/course/list">
+                <el-statistic title="总课程数" :value="3223" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="总用户数" :value="3223" />
+              <router-link to="/common/order">
+                <el-statistic title="总订单数" :value="3223" />
+              </router-link>
             </el-col>
             <el-col :span="6">
-              <el-statistic title="总支付人数" :value="3223" />
+              <router-link to="/common/order">
+                <el-statistic title="总收入" :value="3223" :prefix="'￥'" />
+              </router-link>
             </el-col>
           </el-row>
         </el-card>
