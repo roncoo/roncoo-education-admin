@@ -28,7 +28,7 @@
       <div class="table-main">
         <el-table v-loading="page.loading" :data="page.list" @selection-change="handleSelectionChange">
           <el-table-column type="selection" :width="40" />
-          <el-table-column label="资源名称" prop="resourceName">
+          <el-table-column :min-width="100" label="资源名称" prop="resourceName">
             <template #default="scope">
               <el-image v-if="scope.row.resourceType === 4" :src="scope.row.resourceUrl" style="height: 50px; width: auto" />
               <span v-else>{{ scope.row.resourceName }}</span>
@@ -39,19 +39,19 @@
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column :width="200" label="资源大小" prop="resourceSize">
+          <el-table-column :min-width="100" label="资源大小" prop="resourceSize">
             <template #default="scope">
               {{ transformSize(scope.row.resourceSize) }}
-              <span v-if="scope.row.resourceType < 3">| 时长：{{ formatTime(scope.row.videoLength) }}</span>
+              <span v-if="scope.row.resourceType < 3">| {{ formatTime(scope.row.videoLength) }}</span>
               <span v-if="scope.row.resourceType === 3">| {{ scope.row.docPage }} 页</span>
             </template>
           </el-table-column>
-          <el-table-column :width="120" label="资源类型" prop="resourceType">
+          <el-table-column :min-width="50" label="资源类型" prop="resourceType">
             <template #default="scope">
               <enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceType" />
             </template>
           </el-table-column>
-          <el-table-column :width="100" label="资源状态" prop="videoStatus">
+          <el-table-column :min-width="50" label="资源状态" prop="videoStatus">
             <template #default="scope">
               <span v-if="scope.row.resourceType < 3">
                 <enum-view :enum-name="'VideoStatusEnum'" :enum-value="scope.row.videoStatus" />
@@ -59,7 +59,7 @@
               <span v-else>成功</span>
             </template>
           </el-table-column>
-          <el-table-column :width="100" label="平台" prop="vodPlatform">
+          <el-table-column :min-width="50" label="平台" prop="vodPlatform">
             <template #default="scope">
               <enum-view v-if="scope.row.resourceType < 3" :enum-name="'VodPlatformEnum'" :enum-value="scope.row.vodPlatform" />
               <enum-view v-else :enum-name="'StoragePlatformEnum'" :enum-value="scope.row.storagePlatform" />

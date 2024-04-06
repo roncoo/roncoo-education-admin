@@ -19,6 +19,24 @@ export function formatTime(time) {
   }
 }
 
+/**
+ * 格式化时长
+ * @param time
+ */
+export function formatTimeTotal(time) {
+  let a = ~~(time / 3600)
+  let b = ~~(time / 60) - a * 60
+  let c = time % 60
+  a = String(a).padStart(2, '0')
+  b = String(b).padStart(2, '0')
+  c = String(c).padStart(2, '0')
+  if (a === '00') {
+    return `${b}分${c}秒`
+  } else {
+    return `${a}时${b}分${c}秒`
+  }
+}
+
 // 文件大小转换
 export function transformSize(bytes) {
   // 文件大小转换

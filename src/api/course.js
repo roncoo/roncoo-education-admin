@@ -189,6 +189,10 @@ export const courseApi = {
     return postRequest('/course/admin/user/course/record', { pageCurrent, pageSize, ...params })
   },
 
+  userStudyStat: (data) => {
+    return getRequest('/course/admin/user/study/stat?userId=' + data.userId)
+  },
+
   // 分页
   userStudyPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/course/admin/user/study/page', { pageCurrent, pageSize, ...params })

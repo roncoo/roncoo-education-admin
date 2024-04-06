@@ -13,10 +13,10 @@
     </el-descriptions>
     <div style="height: 20px"></div>
     <el-descriptions title="数据统计" :column="4">
-      <el-descriptions-item label="购买课程数:"> 3223 </el-descriptions-item>
-      <el-descriptions-item label="消费总金额:"> ￥3223 </el-descriptions-item>
-      <el-descriptions-item label="学习课程数:"> 3223 </el-descriptions-item>
-      <el-descriptions-item label="学习总时长:"> 3223 </el-descriptions-item>
+      <el-descriptions-item label="购买课程数:"> {{ orderInfoStat.courseBuySum }} </el-descriptions-item>
+      <el-descriptions-item label="消费总金额:"> ￥{{ orderInfoStat.courseBuyMoney }} </el-descriptions-item>
+      <el-descriptions-item label="学习课程数:"> {{ userCourseStat.courseStudySum }} </el-descriptions-item>
+      <el-descriptions-item label="学习总时长:"> {{ formatTimeTotal(userCourseStat.courseStudyDuration) }} </el-descriptions-item>
     </el-descriptions>
     <div style="height: 20px"></div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -34,8 +34,9 @@
   import UsersAccount from './Account.vue'
   import { onMounted, ref } from 'vue'
   import { useRoute } from 'vue-router'
-  import { usersApi } from '@/api/users.js'
-  import { getEnumList, getEnumObj } from '@/utils/base.js'
+  import { usersApi } from '@/api/users'
+  import { courseApi } from '@/api/course.js'
+  import { formatTime, formatTimeTotal } from '@/utils/base.js'
   const route = useRoute()
   const activeName = ref(route.query.activeName)
   // 切换
@@ -43,11 +44,21 @@
     activeName.value = target.props.name
   }
 
-  /**
-   * @description: 获取用户信息
-   */
   const usersInfo = ref({})
-  onMounted(async () => {
-    usersInfo.value = await usersApi.usersView({ id: route.query.userId })
+  const orderInfoStat = ref({})
+  const userCourseStat = ref({})
+  onMounted(() => {
+    // 获取用户信息
+    usersApi.usersView({ id: route.query.userId }).then((res) => {
+      usersInfo.value = res
+    })
+    // 获取订单统计
+    usersApi.orderInfoStat({ userId: route.query.userId }).then((res) => {
+      orderInfoStat.value = res
+    })
+    // 获取课程统计
+    courseApi.userStudyStat({ userId: route.query.userId }).then((res) => {
+      userCourseStat.value = res
+    })
   })
 </script>

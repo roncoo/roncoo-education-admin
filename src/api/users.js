@@ -40,6 +40,9 @@ export const usersApi = {
     return putRequest('/user/admin/users/edit', data)
   },
 
+  usersView(data) {
+    return getRequest('/user/admin/users/view?id=' + data.id)
+  },
   // 用户删除
   usersDelete: (data) => {
     return deleteRequest('/user/admin/users/delete?id=' + data.id)
@@ -55,14 +58,14 @@ export const usersApi = {
     return postRequest('/course/admin/user/course/page', { pageCurrent, pageSize, ...params })
   },
 
-  // 订单信息分页
+  // 订单
   orderInfoPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/user/admin/order/info/page', { pageCurrent, pageSize, ...params })
   },
   orderEdit: (data) => {
     return putRequest('/user/admin/order/info/edit', data)
   },
-  usersView(data) {
-    return getRequest('/user/admin/users/view?id=' + data.id)
+  orderInfoStat: (data) => {
+    return getRequest('/user/admin/order/info/stat?userId=' + data.userId)
   }
 }
