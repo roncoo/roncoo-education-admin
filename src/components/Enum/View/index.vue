@@ -12,8 +12,8 @@
   })
 
   let enumObj = []
-  const enumVal = ref()
   const { enumValue } = toRefs(props)
+  const enumVal = ref()
   watch(enumValue, (newValue) => {
     enumVal.value = enumObj[newValue]
   })

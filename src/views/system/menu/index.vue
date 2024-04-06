@@ -4,6 +4,9 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
+            <el-input v-model="query.menuName" placeholder="请输入菜单名称" prefix-icon="Search" clearable />
+          </el-form-item>
+          <el-form-item>
             <el-button @click="resetQuery()">刷新</el-button>
             <el-button v-permission="'sys:menu:save'" type="success" @click="openFormModal(null, '0')">添加</el-button>
           </el-form-item>

@@ -4,6 +4,9 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
+            <el-input v-model="query.carouselUrl" placeholder="请输入地址" prefix-icon="Search" clearable />
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询 </el-button>
             <el-button @click="resetQuery()"> 重置 </el-button>
             <el-button v-permission="'website:carousel:save'" type="success" @click="openFormModal()"> 添加 </el-button>

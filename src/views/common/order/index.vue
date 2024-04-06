@@ -10,6 +10,9 @@
             <el-input v-model="query.mobile" placeholder="根据手机号码搜索" prefix-icon="Search" />
           </el-form-item>
           <el-form-item>
+            <enum-select v-model="query.orderStatus" :enum-name="'OrderStatusEnum'" />
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" @click="handleQuery()">查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
           </el-form-item>
@@ -72,11 +75,12 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
   import OrderForm from './OrderForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
+  import EnumSelect from '@/components/Enum/Select/index.vue'
 
   // 添加/修改
   const formRef = ref()
@@ -89,5 +93,9 @@
     ...useTable({
       page: usersApi.orderInfoPage
     })
+  })
+
+  onMounted(() => {
+    query.orderStatus = 2
   })
 </script>
