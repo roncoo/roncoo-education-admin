@@ -11,6 +11,7 @@ import { useUserStore } from '@/store/modules/user.js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'virtual:svg-icons-register'
 import Icon from '@/components/Icon/index.vue'
+import { hasPermission } from '@/utils/permission.js'
 
 // 初始化
 setupInit()
@@ -44,11 +45,8 @@ function init() {
 
   // 注册自定义指令（权限使用）
   app.directive('permission', (el, binding) => {
-    const permissions = useUserStore().getPermissionList
-    if (binding.value) {
-      if (!permissions?.includes(binding.value)) {
-        el.parentNode && el.parentNode.removeChild(el)
-      }
+    if (!hasPermission(binding.value)) {
+      el.parentNode && el.parentNode.removeChild(el)
     }
   })
 

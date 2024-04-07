@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <el-row :gutter="20">
-      <el-col v-permission="'stat:data'" :span="16">
+      <el-col v-if="hasPermission('stat:data')" :span="16">
         <stat-data />
       </el-col>
       <el-col :span="8">
@@ -14,10 +14,10 @@
       </el-col>
     </el-row>
 
-    <div v-permission="'stat:login'">
+    <div v-if="hasPermission('stat:login')">
       <stat-login />
     </div>
-    <div v-permission="'stat:vod'">
+    <div v-if="hasPermission('stat:vod')">
       <stat-vod />
     </div>
   </div>
@@ -26,6 +26,7 @@
   import StatVod from './StatVod.vue'
   import StatLogin from './StatLogin.vue'
   import StatData from './StatData.vue'
+  import { hasPermission } from '@/utils/permission.js'
 </script>
 <style lang="scss" scoped>
   .info {
