@@ -59,7 +59,8 @@
   const visible = ref(false)
   const onOpen = (item) => {
     if (item) {
-      Object.assign(formModel, item)
+      formModel.id = item.id
+      formModel.remark = item.remark
     }
     visible.value = true
   }

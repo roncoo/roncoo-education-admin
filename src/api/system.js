@@ -267,5 +267,10 @@ export const systemApi = {
   // 系统用户角色--编辑
   sysUserRoleEdit: (data) => {
     return putRequest('/system/admin/sys/user/role/edit', data)
+  },
+
+  // 系统日志
+  sysLogPage: (data) => {
+    return postRequest('/system/admin/sys/log/page', data)
   }
 }
