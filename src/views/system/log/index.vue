@@ -19,9 +19,7 @@
       <el-table-column :min-width="120" label="操作">
         <template #default="scope">
           {{ scope.row.operation }}
-          <el-button v-if="scope.row.content" text type="primary" @click="handleView(scope.row)">
-            <el-icon :size="20"><Document /></el-icon>
-          </el-button>
+          <el-button v-if="scope.row.content" text type="primary" @click="handleView(scope.row)"> 查看 </el-button>
         </template>
       </el-table-column>
       <el-table-column :min-width="120" label="请求接口" prop="path" />
