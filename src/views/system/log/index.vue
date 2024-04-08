@@ -14,22 +14,22 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">
-      <el-table-column label="登录账号" prop="mobile" />
-      <el-table-column label="真实姓名" prop="realName" />
-      <el-table-column label="登录IP" prop="loginIp" />
-      <el-table-column label="登录地址" prop="province">
-        <template #default="scope"> {{ scope.row.province }} {{ scope.row.city }} </template>
-      </el-table-column>
-      <el-table-column label="时间" prop="gmtCreate" />
-      <el-table-column label="操作" prop="operation" />
-      <el-table-column label="资源" prop="path" />
-      <el-table-column label="内容">
+      <el-table-column :min-width="60" label="登录账号" prop="mobile" />
+      <el-table-column :min-width="50" label="真实姓名" prop="realName" />
+      <el-table-column :min-width="120" label="操作">
         <template #default="scope">
+          {{ scope.row.operation }}
           <el-button v-if="scope.row.content" text type="primary" @click="handleView(scope.row)">
             <el-icon :size="20"><Document /></el-icon>
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column :min-width="120" label="请求接口" prop="path" />
+      <el-table-column :min-width="60" label="登录IP" prop="loginIp" />
+      <el-table-column :min-width="60" label="登录地址" prop="province">
+        <template #default="scope"> {{ scope.row.province }} {{ scope.row.city }} </template>
+      </el-table-column>
+      <el-table-column :min-width="100" label="时间" prop="gmtCreate" />
     </el-table>
     <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
     <log-view ref="formRef" />
