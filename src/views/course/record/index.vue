@@ -14,25 +14,25 @@
     <div style="height: 20px"></div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-if="currentCourseInfo.coursePrice > 0" label="售卖记录" name="order">
-        <course-order v-if="activeName === 'order'" />
+        <record-order v-if="activeName === 'order'" />
       </el-tab-pane>
       <el-tab-pane label="学习记录" name="course">
-        <course-course v-if="activeName === 'course'" />
+        <record-course v-if="activeName === 'course'" />
       </el-tab-pane>
       <el-tab-pane label="评论记录" name="comment">
-        <course-comment v-if="activeName === 'comment'" />
+        <record-comment v-if="activeName === 'comment'" />
       </el-tab-pane>
       <el-tab-pane label="收藏记录" name="collect">
-        <course-collect v-if="activeName === 'collect'" />
+        <record-collect v-if="activeName === 'collect'" />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script setup>
-  import CourseOrder from './Order.vue'
-  import CourseComment from './Comment.vue'
-  import CourseCollect from './Collect.vue'
-  import CourseCourse from './Course.vue'
+  import RecordOrder from './Order.vue'
+  import RecordComment from './Comment.vue'
+  import RecordCollect from './Collect.vue'
+  import RecordCourse from './Course.vue'
   import { onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course.js'
   import { useRoute } from 'vue-router'

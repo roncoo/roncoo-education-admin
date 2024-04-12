@@ -21,7 +21,7 @@
 
   const emit = defineEmits(['update', 'close'])
 
-  const iconArray = ref(['概况', '常用', '课程', '用户', '系统'])
+  const iconArray = ref(['概况', '常用', '装修', '课程', '用户', '系统'])
 
   function handleClick(icon) {
     emit('update', icon)

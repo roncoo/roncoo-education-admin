@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item v-if="formModel.parentId === '0'" label="图标" prop="sort">
         <icon :name="formModel.menuIcon" />
-        <el-button type="text" @click="handleIcon">&nbsp;&nbsp;选择图标</el-button>
+        <el-button link type="primary" @click="handleIcon">&nbsp;&nbsp;选择图标</el-button>
         <selector-svg v-if="iconVisible" :visible="iconVisible" @update="handleUpdateIcon" @close="onCloseIcon" />
       </el-form-item>
       <el-form-item label="排序" prop="sort">
