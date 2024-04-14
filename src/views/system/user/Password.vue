@@ -19,8 +19,10 @@
 
 <script setup>
   import { systemApi } from '@/api/system'
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { ElMessage } from 'element-plus'
+  import { loginApi } from '@/api/login.js'
+  import { encrypt } from '@/utils/base.js'
 
   // 校验规则
   const formRef = ref()
@@ -38,6 +40,15 @@
     confirmPassword: undefined
   }
   const formModel = reactive({ ...formDefault })
+
+  // 站点信息
+  const service = ref({})
+  onMounted(() => {
+    loginApi.getWebsite().then((res) => {
+      service.value = res
+    })
+  })
+
   const onSubmit = async () => {
     // 校验
     const valid = await formRef.value.validate()
@@ -49,12 +60,18 @@
     }
     loading.value = true
     try {
-      if (formModel.id) {
-        await systemApi.sysUserPassword(formModel)
-        ElMessage.success('修改成功')
+      if (formModel.userId) {
+        // 密码加密
+        formModel.mobilePwdEncrypt = encrypt(formModel.mobilePwd, service.value.rsaLoginPublicKey)
+        delete formModel.mobilePwd
+        delete formModel.confirmPassword
+        const res = await systemApi.sysUserPassword(formModel)
+        ElMessage.success(res)
+        emit('refresh')
+        onClose()
       }
-      emit('refresh')
-      onClose()
+    } catch (error) {
+      console.error(error)
     } finally {
       loading.value = false
     }

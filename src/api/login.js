@@ -12,11 +12,5 @@ export const loginApi = {
   },
   getUserInfo: () => {
     return getRequest('/system/admin/sys/user/current')
-  },
-  getUserMenu: (data) => {
-    return postRequest('/system/admin/sys/menu/user/list', data)
-  },
-  getUserPermission: () => {
-    return getRequest('/system/admin/sys/menu/permission/list')
   }
 }

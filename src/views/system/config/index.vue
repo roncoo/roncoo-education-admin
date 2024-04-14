@@ -36,6 +36,10 @@
       configType: '1'
     },
     {
+      label: '登录设置',
+      configType: '2'
+    },
+    {
       label: '视频设置',
       configType: '3'
     },

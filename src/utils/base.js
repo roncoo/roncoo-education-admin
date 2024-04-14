@@ -1,5 +1,7 @@
 import { systemApi } from '@/api/system.js'
 import { getSessionStorage, setSessionStorage } from '@/utils/storage.js'
+import _ from 'lodash'
+import { JSEncrypt } from 'jsencrypt'
 
 /**
  * 格式化时长
@@ -57,6 +59,11 @@ export function transformSize(bytes) {
   return result
 }
 
+export function cloneDeep(obj) {
+  //return JSON.parse(JSON.stringify(obj))
+  return _.cloneDeep(obj)
+}
+
 /**
  * 获取枚举
  */
@@ -83,4 +90,10 @@ function toObj(attr) {
     }
   }
   return obj
+}
+
+export function encrypt(password, publicKey) {
+  const crypt = new JSEncrypt()
+  crypt.setPublicKey(publicKey)
+  return crypt.encrypt(password)
 }

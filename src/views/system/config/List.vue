@@ -13,7 +13,7 @@
     <el-table-column label="参数">
       <template #default="scope">
         <span v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && scope.row.configShow">{{ scope.row.configValue }}</span>
-        <el-button v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && !scope.row.configShow" link @click="handleView(scope.row)">【点击查看详情】</el-button>
+        <el-button v-if="(scope.row.contentType === 1 || scope.row.contentType === 2) && !scope.row.configShow" link type="primary" @click="handleView(scope.row)">【查看详情】</el-button>
         <img v-if="scope.row.contentType === 3" :alt="scope.row.configName" :src="scope.row.configValue" />
         <span v-if="scope.row.contentType === 4">{{ scope.row.configValue == 1 ? '开启' : '关闭' }}</span>
         <enum-view v-if="scope.row.configKey === 'vodPlatform'" :enum-name="'VodPlatformEnum'" :enum-value="scope.row.configValue" />

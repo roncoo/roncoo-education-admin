@@ -52,6 +52,7 @@ import {useUserStore} from '@/store/modules/user';
 import {createNewRouter} from '@/router';
 import {PATH} from "@/utils/constants/system";
 import { ElMessage } from 'element-plus'
+import { encrypt } from '@/utils/base.js'
 
 const router = useRouter();
 const loading = ref(false)
@@ -92,6 +93,9 @@ async function handleLogin() {
 
   loading.value = true
   try {
+    // 密码加密
+    loginForm.mobilePwdEncrypt = encrypt(loginForm.mobilePwd, service.value.rsaLoginPublicKey)
+    delete loginForm.mobilePwd
     const res = await loginApi.login(loginForm)
     // 存入cookie
     setToken(res.token)
