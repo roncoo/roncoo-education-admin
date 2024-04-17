@@ -6,9 +6,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'user:edit'" type="success" @click="openConsumeRecord()"> 余额操作 </el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'user:edit'" type="primary" @click="openConsumeRecord()">添加余额</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">

@@ -9,9 +9,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询 </el-button>
             <el-button @click="resetQuery()"> 重置 </el-button>
-            <el-button v-permission="'website:carousel:save'" type="success" @click="openFormModal()"> 添加 </el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'website:carousel:save'" type="primary" @click="openFormModal()">添加轮播</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">
@@ -50,11 +52,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 0" text type="success" @click="handleStatus(scope.row)"> 启用 </el-button>
-                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 1" text type="warning" @click="handleStatus(scope.row)"> 禁用 </el-button>
+                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)"> 启用 </el-button>
+                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)"> 禁用 </el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-permission="'website:carousel:delete'" text type="danger" @click="handleDelete(scope.row)"> 删除 </el-button>
+                  <el-button v-permission="'website:carousel:delete'" text type="primary" @click="handleDelete(scope.row)"> 删除 </el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

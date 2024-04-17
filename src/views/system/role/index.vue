@@ -9,9 +9,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'sys:role:save'" type="success" @click="openFormModal(null)">添加</el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'sys:role:save'" type="primary" @click="openFormModal(null)">添加角色</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">

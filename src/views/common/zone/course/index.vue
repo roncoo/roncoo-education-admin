@@ -9,9 +9,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button type="success" @click="openFormModal()">课程添加</el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button type="primary" @click="openFormModal()">添加课程</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" row-key="id">

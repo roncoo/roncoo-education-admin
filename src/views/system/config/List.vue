@@ -30,17 +30,16 @@
     </el-table-column>
   </el-table>
 
-  <div v-if="props.configType === '3'" class="page_head">
+  <div v-if="props.configType === '3'">
     <div class="clearfix">
-      <div v-if="vodConfig" class="vod-info">
-        <span>回调地址：{{ vodConfig }}</span>
-      </div>
-      <div v-if="!vodConfig" class="vod-info">
-        <span>
-          <el-button v-loading="loading" size="small" type="danger" v-permission="'sys:config:video:init'" @click="vodInit()">点击初始化</el-button>
-          视频配置完成，需要重新初始化
-        </span>
-      </div>
+      <el-row class="vod-info">
+        <el-col :span="6"> &nbsp;&nbsp;&nbsp;&nbsp;视频回调地址</el-col>
+        <el-col :span="14">
+          <div v-if="vodConfig">{{ vodConfig }}</div>
+          <div style="color: #999; font-size: 12px">视频配置完成，需要重新初始化</div>
+        </el-col>
+        <el-col :span="4"><el-button v-loading="loading" text type="primary" v-permission="'sys:config:video:init'" @click="vodInit()">视频初始化</el-button></el-col>
+      </el-row>
     </div>
   </div>
 
@@ -53,17 +52,24 @@
   import ConfigForm from './ConfigForm.vue'
   import FormView from './View.vue'
   import { systemApi } from '@/api/system.js'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import EnumView from '@/components/Enum/View/index.vue'
 
   // 视频云初始化
   const loading = ref(false)
   const vodConfig = ref(null)
-  const vodInit = async () => {
-    loading.value = true
-    const res = await systemApi.videoInit()
-    loading.value = false
-    ElMessage.success(res)
+  const vodInit = () => {
+    ElMessageBox.confirm('确定初始化视频云配置吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      loading.value = true
+      systemApi.videoInit().then((res) => {
+        ElMessage.success(res)
+        loading.value = false
+      })
+    })
   }
 
   onMounted(() => {
@@ -111,8 +117,8 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    height: 35px;
-    color: #999;
+    color: #606266;
+    line-height: 2;
     font-size: 14px;
     span {
       margin-left: 10px;

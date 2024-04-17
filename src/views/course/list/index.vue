@@ -9,9 +9,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'course:save'" type="success" @click="toCourseAdd()">添加</el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'course:save'" type="primary" @click="toCourseAdd()">添加课程</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">

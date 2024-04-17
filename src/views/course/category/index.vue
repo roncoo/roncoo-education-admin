@@ -9,9 +9,11 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'category:save'" type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'category:save'" type="primary" @click="openFormModal()">添加分类</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'childrenList' }" row-key="id">

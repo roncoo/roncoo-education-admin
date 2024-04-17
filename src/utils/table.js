@@ -3,6 +3,7 @@
  */
 import { onMounted, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import Sortable from 'sortablejs'
 
 export default function useTable(apis, paras = {}) {
   // 分页对象
@@ -28,6 +29,10 @@ export default function useTable(apis, paras = {}) {
         if (res) {
           page.list = res.list || res || []
           page.totalCount = res.totalCount || 0
+
+          if (apis.sort) {
+            await handleSort()
+          }
         }
       } finally {
         page.loading = false
@@ -87,6 +92,28 @@ export default function useTable(apis, paras = {}) {
     }
   }
 
+  // 排序
+  const handleSort = async () => {
+    const tbody = document.querySelector('.drag-table .el-table__body-wrapper tbody')
+    Sortable.create(tbody, {
+      onEnd({ oldIndex, newIndex }) {
+        const row = page.list.splice(oldIndex, 1)[0]
+        page.list.splice(newIndex, 0, row)
+        const sorts = page.list.map((item, index) => {
+          return {
+            id: item.id,
+            sort: index + 1
+          }
+        })
+        apis.sort(sorts).then((res) => {
+          if (res) {
+            ElMessage.success(res)
+          }
+        })
+      }
+    })
+  }
+
   // 获取数据
   onMounted(handlePage)
 
@@ -97,6 +124,7 @@ export default function useTable(apis, paras = {}) {
     handleQuery,
     resetQuery,
     handleDelete,
-    handleStatus
+    handleStatus,
+    handleSort
   }
 }

@@ -8,9 +8,11 @@
           </el-form-item>
           <el-form-item>
             <el-button @click="resetQuery()">刷新</el-button>
-            <el-button v-permission="'sys:menu:save'" type="success" @click="openFormModal(null, '0')">添加</el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="button_bar">
+        <el-button v-permission="'sys:menu:save'" type="primary" @click="openFormModal(null, '0')">添加菜单</el-button>
       </div>
     </div>
     <el-table :data="page.list" v-loading="page.loading" :tree-props="{ children: 'childrenList', hasChildren: 'hasChildren' }" row-key="id">

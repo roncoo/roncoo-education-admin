@@ -9,12 +9,14 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'sys:user:save'" type="success" @click="openFormModal()">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
+      <div class="button_bar">
+        <el-button v-permission="'sys:user:save'" type="primary" @click="openFormModal()">添加账号</el-button>
+      </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column label="登录账号" prop="mobile" />
       <el-table-column label="用户昵称" prop="realName" />
       <el-table-column label="所属角色">
@@ -70,7 +72,7 @@
 <script setup>
   import { systemApi } from '@/api/system'
   import Pagination from '@/components/Pagination/index.vue'
-  import { nextTick, reactive, ref } from 'vue'
+  import { nextTick, ref } from 'vue'
   import useTable from '@/utils/table'
   import UserForm from './UserForm.vue'
   import Password from './Password.vue'
@@ -104,11 +106,9 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.sysUserPage,
-      delete: systemApi.sysUserDelete,
-      status: systemApi.sysUserEdit
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.sysUserPage,
+    delete: systemApi.sysUserDelete,
+    status: systemApi.sysUserEdit
   })
 </script>
