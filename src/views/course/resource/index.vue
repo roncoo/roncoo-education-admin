@@ -26,7 +26,7 @@
       <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
 
       <div class="table-main">
-        <el-table v-loading="page.loading" :data="page.list" @selection-change="handleSelectionChange">
+        <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table" @selection-change="handleSelectionChange">
           <el-table-column type="selection" :width="40" />
           <el-table-column :min-width="100" label="资源名称" prop="resourceName">
             <template #default="scope">
@@ -187,7 +187,8 @@
     ...useTable({
       page: courseApi.resourcePage,
       delete: courseApi.resourceDelete,
-      status: courseApi.resourceEdit
+      status: courseApi.resourceEdit,
+      sort: courseApi.resourceSort
     })
   })
 </script>

@@ -99,16 +99,14 @@ export default function useTable(apis, paras = {}) {
       onEnd({ oldIndex, newIndex }) {
         const row = page.list.splice(oldIndex, 1)[0]
         page.list.splice(newIndex, 0, row)
-        const sorts = page.list.map((item, index) => {
+        const newSorts = page.list.map((item, index) => {
           return {
             id: item.id,
-            sort: index + 1
+            sort: page.pageSize * (page.pageCurrent - 1) + index + 1
           }
         })
-        apis.sort(sorts).then((res) => {
-          if (res) {
-            ElMessage.success(res)
-          }
+        apis.sort(newSorts).then(() => {
+          ElMessage.success('排序完成')
         })
       }
     })

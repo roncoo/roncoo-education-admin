@@ -16,7 +16,7 @@
         <el-button v-permission="'lecturer:save'" type="primary" @click="openFormModal()">添加讲师</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column label="讲师信息">
         <template #default="scope">
           <img :alt="scope.row.lecturerName" :src="scope.row.lecturerHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
@@ -24,7 +24,6 @@
         </template>
       </el-table-column>
       <el-table-column label="职位" prop="lecturerPosition" />
-      <el-table-column label="排序" prop="sort" />
       <el-table-column label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -79,7 +78,8 @@
     ...useTable({
       page: usersApi.lecturerPage,
       delete: usersApi.lecturerDelete,
-      status: usersApi.lecturerEdit
+      status: usersApi.lecturerEdit,
+      sort: usersApi.lecturerSort
     })
   })
 </script>

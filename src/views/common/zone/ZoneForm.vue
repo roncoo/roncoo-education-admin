@@ -10,9 +10,6 @@
       <el-form-item label="状态" prop="statusId">
         <enum-radio v-model="formModel.statusId" :enum-name="'StatusIdEnum'"></enum-radio>
       </el-form-item>
-      <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"></el-input-number>
-      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">

@@ -10,9 +10,6 @@
       <el-form-item class="form-group" label="跳转方式" prop="carouselTarget">
         <enum-radio v-model="formModel.carouselTarget" :enum-name="'TargetEnum'"></enum-radio>
       </el-form-item>
-      <el-form-item class="form-group" label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"></el-input-number>
-      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">

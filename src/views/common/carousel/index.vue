@@ -16,7 +16,7 @@
         <el-button v-permission="'website:carousel:save'" type="primary" @click="openFormModal()">添加轮播</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="120" label="图片">
         <template #default="scope">
           <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px; width: auto" />
@@ -32,7 +32,6 @@
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.carouselTarget" />
         </template>
       </el-table-column>
-      <el-table-column :min-width="30" label="排序" prop="sort" />
       <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -87,7 +86,8 @@
     ...useTable({
       page: systemApi.carouselPage,
       delete: systemApi.carouselDelete,
-      status: systemApi.carouselEdit
+      status: systemApi.carouselEdit,
+      sort: systemApi.carouselSort
     })
   })
 </script>

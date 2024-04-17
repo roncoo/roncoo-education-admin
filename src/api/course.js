@@ -11,6 +11,11 @@ export const courseApi = {
     return putRequest('/course/admin/zone/course/edit', data)
   },
 
+  // 专区课程修改
+  zoneCourseSort: (data) => {
+    return putRequest('/course/admin/zone/course/sort', data)
+  },
+
   // 专区课程保存
   zoneCourseSave: (data) => {
     return postRequest('/course/admin/zone/course/save', data)
@@ -29,6 +34,11 @@ export const courseApi = {
   // 专区修改
   zoneEdit: (data) => {
     return putRequest('/course/admin/zone/edit', data)
+  },
+
+  // 专区修改
+  zoneSort: (data) => {
+    return putRequest('/course/admin/zone/sort', data)
   },
 
   // 专区保存
@@ -75,7 +85,10 @@ export const courseApi = {
   resourceEdit: (data) => {
     return putRequest('/course/admin/resource/edit', data)
   },
-
+  // 资源排序
+  resourceSort: (data) => {
+    return putRequest('/course/admin/resource/sort', data)
+  },
   // 资源批量移动
   resourceBatchEdit: (data) => {
     return putRequest('/course/admin/resource/batch/edit', data)
@@ -173,7 +186,10 @@ export const courseApi = {
   courseEdit: (data) => {
     return putRequest('/course/admin/course/edit', data)
   },
-
+  // 课程排序
+  courseSort: (data) => {
+    return putRequest('/course/admin/course/sort', data)
+  },
   // 课程保存
   courseSave: (data) => {
     return postRequest('/course/admin/course/save', data)

@@ -16,7 +16,7 @@
         <el-button v-permission="'website:nav:save'" type="primary" @click="openFormModal()">添加导航</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="100" label="导航名称" prop="navTitle" />
       <el-table-column :min-width="100" label="导航地址" prop="navUrl" />
       <el-table-column :min-width="50" label="跳转方式">
@@ -24,7 +24,6 @@
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.navTarget" />
         </template>
       </el-table-column>
-      <el-table-column :min-width="30" label="排序" prop="sort" />
       <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -79,7 +78,8 @@
     ...useTable({
       page: systemApi.navPage,
       delete: systemApi.navDelete,
-      status: systemApi.navEdit
+      status: systemApi.navEdit,
+      sort: systemApi.navSort
     })
   })
 </script>

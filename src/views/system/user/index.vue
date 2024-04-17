@@ -30,7 +30,6 @@
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" :width="320">
         <template #default="scope">
           <el-button v-permission="'sys:user:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
@@ -109,6 +108,7 @@
   const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
     page: systemApi.sysUserPage,
     delete: systemApi.sysUserDelete,
-    status: systemApi.sysUserEdit
+    status: systemApi.sysUserEdit,
+    sort: systemApi.sysUserSort
   })
 </script>

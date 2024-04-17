@@ -16,7 +16,7 @@
         <el-button v-permission="'sys:role:save'" type="primary" @click="openFormModal(null)">添加角色</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column label="角色名称" prop="roleName" />
       <el-table-column label="备注" prop="remark" />
       <el-table-column label="状态">
@@ -24,7 +24,6 @@
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" />
       <el-table-column label="操作" width="320">
         <template #default="scope">
           <el-button v-permission="'sys:role:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
@@ -90,7 +89,8 @@
     ...useTable({
       page: systemApi.sysRolePage,
       delete: systemApi.sysRoleDelete,
-      status: systemApi.sysRoleEdit
+      status: systemApi.sysRoleEdit,
+      sort: systemApi.sysRoleSort
     })
   })
 </script>

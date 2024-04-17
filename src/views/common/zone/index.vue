@@ -16,7 +16,7 @@
         <el-button v-permission="'zone:save'" type="primary" @click="openFormModal()">添加专区</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="100" label="专区名称" prop="zoneName">
         <template #default="scope">
           <span>{{ scope.row.zoneName }}</span
@@ -29,7 +29,6 @@
           ><br />
         </template>
       </el-table-column>
-      <el-table-column :min-width="50" label="排序" prop="sort" />
       <el-table-column :min-width="50" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -94,7 +93,8 @@
     ...useTable({
       page: courseApi.zonePage,
       delete: courseApi.zoneDelete,
-      status: courseApi.zoneEdit
+      status: courseApi.zoneEdit,
+      sort: courseApi.zoneSort
     })
   })
 </script>

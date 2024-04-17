@@ -16,7 +16,7 @@
         <el-button v-permission="'course:save'" type="primary" @click="toCourseAdd()">添加课程</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="180" label="课程信息">
         <template #default="scope">
           <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
@@ -44,7 +44,6 @@
           <span>{{ scope.row.countBuy }} / {{ scope.row.countStudy }}</span>
         </template>
       </el-table-column>
-      <el-table-column :min-width="30" label="排序" prop="courseSort" />
       <el-table-column :min-width="30" label="售卖">
         <template #default="scope">
           <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.isPutaway" />
@@ -124,7 +123,8 @@
     ...useTable({
       page: courseApi.coursePage,
       delete: courseApi.courseDelete,
-      status: courseApi.courseEdit
+      status: courseApi.courseEdit,
+      sort: courseApi.courseSort
     })
   })
 </script>

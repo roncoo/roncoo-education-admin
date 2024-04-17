@@ -19,6 +19,10 @@ export const usersApi = {
   lecturerEdit: (data) => {
     return putRequest('/user/admin/lecturer/edit', data)
   },
+  // 讲师排序
+  lecturerSort: (data) => {
+    return putRequest('/user/admin/lecturer/sort', data)
+  },
 
   // 讲师保存
   lecturerSave: (data) => {

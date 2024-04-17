@@ -16,7 +16,7 @@
         <el-button type="primary" @click="openFormModal()">添加课程</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list" row-key="id">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="130" label="课程信息">
         <template #default="scope">
           <img :alt="scope.row.courseViewResp.courseName" :src="scope.row.courseViewResp.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
@@ -37,7 +37,6 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column :min-width="30" label="排序" prop="sort" />
       <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -45,8 +44,6 @@
       </el-table-column>
       <el-table-column :width="250" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button text type="primary" @click="openFormModal(scope.row)">排序</el-button>
-          <el-divider direction="vertical" />
           <el-button v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)">启用</el-button>
           <el-button v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)">禁用</el-button>
           <el-divider direction="vertical" />
@@ -77,7 +74,8 @@
     ...useTable({
       page: courseApi.zoneCoursePage,
       delete: courseApi.zoneCourseDelete,
-      status: courseApi.zoneCourseEdit
+      status: courseApi.zoneCourseEdit,
+      sort: courseApi.zoneCourseSort
     })
   })
 </script>

@@ -16,14 +16,13 @@
         <el-button v-permission="'website:link:save'" type="primary" @click="openFormModal()">添加链接</el-button>
       </div>
     </div>
-    <el-table v-loading="page.loading" :data="page.list">
+    <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="120" label="友情地址" prop="linkUrl" />
       <el-table-column :min-width="80" label="跳转方式">
         <template #default="scope">
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.linkTarget" />
         </template>
       </el-table-column>
-      <el-table-column :min-width="30" label="排序" prop="sort" />
       <el-table-column :min-width="30" label="状态">
         <template #default="scope">
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
@@ -78,7 +77,8 @@
     ...useTable({
       page: systemApi.linkPage,
       delete: systemApi.linkDelete,
-      status: systemApi.linkEdit
+      status: systemApi.linkEdit,
+      sort: systemApi.linkSort
     })
   })
 </script>

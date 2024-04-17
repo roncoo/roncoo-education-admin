@@ -10,9 +10,6 @@
       <el-form-item label="备注" prop="remark">
         <el-input v-model="formModel.remark" class="form-group" maxlength="500" show-word-limit type="textarea" />
       </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="formModel.sort"></el-input-number>
-      </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">

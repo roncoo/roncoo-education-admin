@@ -15,6 +15,11 @@ export const systemApi = {
     return putRequest('/system/admin/website/nav/edit', data)
   },
 
+  // 头部导航修改
+  navSort: (data) => {
+    return putRequest('/system/admin/website/nav/sort', data)
+  },
+
   // 头部导航保存
   navSave: (data) => {
     return postRequest('/system/admin/website/nav/save', data)
@@ -33,6 +38,11 @@ export const systemApi = {
   // 轮播修改
   carouselEdit: (data) => {
     return putRequest('/system/admin/website/carousel/edit', data)
+  },
+
+  // 轮播排序
+  carouselSort: (data) => {
+    return putRequest('/system/admin/website/carousel/sort', data)
   },
 
   // 轮播保存
@@ -73,6 +83,11 @@ export const systemApi = {
   // 友情链接修改
   linkEdit: (data) => {
     return putRequest('/system/admin/website/link/edit', data)
+  },
+
+  // 友情链接修改
+  linkSort: (data) => {
+    return putRequest('/system/admin/website/link/sort', data)
   },
 
   // 友情链接保存
@@ -169,6 +184,11 @@ export const systemApi = {
     return putRequest('/system/admin/sys/role/edit', data)
   },
 
+  // 系统角色--排序
+  sysRoleSort: (data) => {
+    return putRequest('/system/admin/sys/role/sort', data)
+  },
+
   // 系统角色--状态编辑
   sysRoleStatusId: (data) => {
     return postRequest('/system/admin/sys/role/edit', data)
@@ -232,6 +252,11 @@ export const systemApi = {
   // 系统用户--编辑
   sysUserEdit: (data) => {
     return putRequest('/system/admin/sys/user/edit', data)
+  },
+
+  // 系统用户--排序
+  sysUserSort: (data) => {
+    return putRequest('/system/admin/sys/user/sort', data)
   },
 
   // 系统用户状态--编辑
