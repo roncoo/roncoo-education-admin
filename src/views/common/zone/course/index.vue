@@ -62,7 +62,8 @@
   import Pagination from '@/components/Pagination/index.vue'
   import ZoneCourseForm from './ZoneCourseForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
-
+  import { useRoute } from 'vue-router'
+  const route = useRoute()
   // 添加/修改
   const formRef = ref()
   const openFormModal = (item = null) => {
@@ -71,11 +72,16 @@
 
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: courseApi.zoneCoursePage,
-      delete: courseApi.zoneCourseDelete,
-      status: courseApi.zoneCourseEdit,
-      sort: courseApi.zoneCourseSort
-    })
+    ...useTable(
+      {
+        page: courseApi.zoneCoursePage,
+        delete: courseApi.zoneCourseDelete,
+        status: courseApi.zoneCourseEdit,
+        sort: courseApi.zoneCourseSort
+      },
+      {
+        zoneId: route.query.zoneId
+      }
+    )
   })
 </script>
