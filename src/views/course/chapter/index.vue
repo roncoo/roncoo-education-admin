@@ -182,8 +182,8 @@
             sort: i + 1
           }
         })
-        courseApi.courseChapterPeriodSort(periods).then((res) => {
-          ElMessage.success(res)
+        courseApi.courseChapterPeriodSort(periods).then(() => {
+          ElMessage.success('排序完成')
           periodList.value = []
           handlePeriodList(currentChapterInfo.value.id)
         })
