@@ -55,26 +55,6 @@ export const systemApi = {
     return deleteRequest('/system/admin/website/carousel/delete?id=' + data.id)
   },
 
-  // 文章分页
-  articlePage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/system/admin/website/article/page', { pageCurrent, pageSize, ...params })
-  },
-
-  // 文章修改
-  articleEdit: (data) => {
-    return putRequest('/system/admin/website/article/edit', data)
-  },
-
-  // 文章保存
-  articleSave: (data) => {
-    return postRequest('/system/admin/website/article/save', data)
-  },
-
-  // 文章删除
-  articleDelete: (data) => {
-    return deleteRequest('/system/admin/website/article/delete?id=' + data.id)
-  },
-
   // 友情链接分页
   linkPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/system/admin/website/link/page', { pageCurrent, pageSize, ...params })
@@ -128,12 +108,6 @@ export const systemApi = {
   sysMenuSave: (data) => {
     return postRequest('/system/admin/sys/menu/save', data)
   },
-
-  // 系统菜单--查看
-  sysMenuView: (data) => {
-    return postRequest('/system/admin/sys/menu/view', data)
-  },
-
   // 系统菜单--删除
   sysMenuDelete: (data) => {
     return putRequest('/system/admin/sys/menu/delete', data)
@@ -142,11 +116,6 @@ export const systemApi = {
   // 系统菜单--编辑
   sysMenuEdit: (data) => {
     return putRequest('/system/admin/sys/menu/edit', data)
-  },
-
-  // 系统权限--新增
-  sysPermissionSave: (data) => {
-    return postRequest('/system/admin/sys/menu/save', data)
   },
 
   // 获取指定角色的权限
@@ -169,14 +138,9 @@ export const systemApi = {
     return postRequest('/system/admin/sys/role/save', data)
   },
 
-  // 系统角色--查看
-  sysRoleView: (data) => {
-    return postRequest('/system/admin/sys/role/view', data)
-  },
-
   // 系统角色--删除
   sysRoleDelete: (data) => {
-    return postRequest('/system/admin/sys/role/delete', data)
+    return putRequest('/system/admin/sys/role/delete', data)
   },
 
   // 系统角色--编辑
@@ -187,36 +151,6 @@ export const systemApi = {
   // 系统角色--排序
   sysRoleSort: (data) => {
     return putRequest('/system/admin/sys/role/sort', data)
-  },
-
-  // 系统角色--状态编辑
-  sysRoleStatusId: (data) => {
-    return postRequest('/system/admin/sys/role/edit', data)
-  },
-
-  // 系统角色菜单--新增
-  sysRoleMenuSave: (data) => {
-    return postRequest('/system/admin/sys/role/menu/save', data)
-  },
-
-  // 系统角色菜单--分页
-  sysRoleMenuPage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/system/admin/sys/role/menu/list', { pageCurrent, pageSize, ...params })
-  },
-
-  // 系统角色菜单--查看
-  sysRoleMenuView: (data) => {
-    return postRequest('/system/admin/sys/role/menu/view', data)
-  },
-
-  // 系统角色菜单--删除
-  sysRoleMenuDelete: (data) => {
-    return deleteRequest('/system/admin/sys/role/menu/delete/' + data.id)
-  },
-
-  // 系统角色菜单--编辑
-  sysRoleMenuEdit: (data) => {
-    return putRequest('/system/admin/sys/role/menu/edit', data)
   },
 
   // 系统用户--分配角色
@@ -239,14 +173,9 @@ export const systemApi = {
     return postRequest('/system/admin/sys/user/save', data)
   },
 
-  // 系统用户--查看
-  sysUserView: (data) => {
-    return postRequest('/system/admin/sys/user/view', data)
-  },
-
   // 系统用户--删除
   sysUserDelete: (data) => {
-    return postRequest('/system/admin/sys/user/delete', data)
+    return putRequest('/system/admin/sys/user/delete', data)
   },
 
   // 系统用户--编辑
@@ -259,39 +188,9 @@ export const systemApi = {
     return putRequest('/system/admin/sys/user/sort', data)
   },
 
-  // 系统用户状态--编辑
-  sysUserStatusId: (data) => {
-    return postRequest('/system/admin/sys/user/edit', data)
-  },
-
   // 系统用户密码--编辑
   sysUserPassword: (data) => {
     return putRequest('/system/admin/sys/user/password', data)
-  },
-
-  // 系统用户角色--分页
-  sysUserRolePage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/system/admin/sys/user/role/list', { pageCurrent, pageSize, ...params })
-  },
-
-  // 系统用户角色--新增
-  sysUserRoleSave: (data) => {
-    return postRequest('/system/admin/sys/user/role/save', data)
-  },
-
-  // 系统用户角色--查看
-  sysUserRoleView: (data) => {
-    return postRequest('/system/admin/sys/user/role/view', data)
-  },
-
-  // 系统用户角色--删除
-  sysUserRoleDelete: (data) => {
-    return postRequest('/system/admin/sys/user/role/delete', data)
-  },
-
-  // 系统用户角色--编辑
-  sysUserRoleEdit: (data) => {
-    return putRequest('/system/admin/sys/user/role/edit', data)
   },
 
   // 系统日志

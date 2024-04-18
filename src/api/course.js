@@ -109,15 +109,6 @@ export const courseApi = {
     return putRequest('/course/admin/resource/batch/delete', data)
   },
 
-  // 课程章节分页
-  courseChapterPeriodPage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/course/admin/course/chapter/period/page', {
-      pageCurrent,
-      pageSize,
-      ...params
-    })
-  },
-
   // 课程章分页
   courseChapterPeriodList: (data) => {
     return postRequest('/course/admin/course/chapter/period/list', data)
@@ -141,11 +132,6 @@ export const courseApi = {
   // 课程章节修改
   courseChapterPeriodDelete: (data) => {
     return deleteRequest('/course/admin/course/chapter/period/delete?id=' + data.id)
-  },
-
-  // 课程章分页
-  courseChapterPage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/course/admin/course/chapter/page', { pageCurrent, pageSize, ...params })
   },
 
   // 课程章分页

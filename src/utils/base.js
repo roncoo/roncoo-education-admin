@@ -2,6 +2,7 @@ import { systemApi } from '@/api/system.js'
 import { getSessionStorage, setSessionStorage } from '@/utils/storage.js'
 import _ from 'lodash'
 import { JSEncrypt } from 'jsencrypt'
+import { useWebsiteStore } from '@/store/modules/website.js'
 
 /**
  * 格式化时长
@@ -93,6 +94,11 @@ function toObj(attr) {
 }
 
 export function encrypt(password, publicKey) {
+  if (!publicKey) {
+    publicKey = useWebsiteStore().getInfo.rsaLoginPublicKey
+    console.log(publicKey)
+  }
+
   const crypt = new JSEncrypt()
   crypt.setPublicKey(publicKey)
   return crypt.encrypt(password)

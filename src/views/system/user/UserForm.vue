@@ -4,6 +4,9 @@
       <el-form-item v-if="!formModel.id" label="登录账号" prop="mobile">
         <el-input v-model="formModel.mobile" class="form-group" />
       </el-form-item>
+      <el-form-item v-if="!formModel.id" label="登录密码" prop="mobilePwd">
+        <el-input v-model="formModel.mobilePwd" class="form-group" show-password />
+      </el-form-item>
       <el-form-item label="用户昵称" prop="realName">
         <el-input v-model="formModel.realName" class="form-group" maxlength="50" show-word-limit />
       </el-form-item>
@@ -21,13 +24,15 @@
 </template>
 <script setup>
   import { systemApi } from '@/api/system'
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { ElMessage } from 'element-plus'
+  import { encrypt } from '@/utils/base.js'
 
   // 校验规则
   const formRef = ref()
   const rules = {
     mobile: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    mobilePwd: [{ required: true, message: '不能为空', trigger: 'blur' }],
     realName: [{ required: true, message: '不能为空', trigger: 'blur' }]
   }
 
@@ -56,7 +61,9 @@
         await systemApi.sysUserEdit(formModel)
         ElMessage.success('修改成功')
       } else {
-        await systemApi.carouselSave(formModel)
+        formModel.mobilePwdEncrypt = encrypt(formModel.mobilePwd)
+        delete formModel.mobilePwd
+        await systemApi.sysUserSave(formModel)
         ElMessage.success('添加成功')
       }
       emit('refresh')
