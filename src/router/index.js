@@ -23,12 +23,6 @@ const constantRoutes = [
     path: PATH.URL_403,
     component: () => import('@/views/403.vue'),
     meta: { title: '403' }
-  },
-  {
-    // 装修页面
-    path: '/decoration/pc/dec',
-    component: () => import('@/views/decoration/pc/dec/index.vue'),
-    meta: { title: 'PC装修' }
   }
 ]
 
