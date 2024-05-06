@@ -183,13 +183,11 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: courseApi.resourcePage,
-      delete: courseApi.resourceDelete,
-      status: courseApi.resourceEdit,
-      sort: courseApi.resourceSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: courseApi.resourcePage,
+    delete: courseApi.resourceDelete,
+    status: courseApi.resourceEdit,
+    sort: courseApi.resourceSort
   })
 </script>
 <style lang="scss" scoped>

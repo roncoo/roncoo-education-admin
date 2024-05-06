@@ -61,7 +61,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { usersApi } from '@/api/users'
   import LecturerForm from './LecturerForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
@@ -74,12 +74,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: usersApi.lecturerPage,
-      delete: usersApi.lecturerDelete,
-      status: usersApi.lecturerEdit,
-      sort: usersApi.lecturerSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: usersApi.lecturerPage,
+    delete: usersApi.lecturerDelete,
+    status: usersApi.lecturerEdit,
+    sort: usersApi.lecturerSort
   })
 </script>

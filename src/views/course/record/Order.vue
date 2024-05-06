@@ -74,8 +74,7 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable(
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable(
       {
         page: usersApi.orderInfoPage
       },

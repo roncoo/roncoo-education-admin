@@ -142,16 +142,14 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable(
-      {
-        page: courseApi.resourcePage
-      },
-      {
-        resourceType: props.resourceType
-      }
-    )
-  })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable(
+    {
+      page: courseApi.resourcePage
+    },
+    {
+      resourceType: props.resourceType
+    }
+  )
 </script>
 
 <style lang="scss" scoped>

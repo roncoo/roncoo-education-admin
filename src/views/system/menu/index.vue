@@ -81,7 +81,7 @@
 
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import MenuForm from './MenuForm.vue'
   import { systemApi } from '@/api/system'
   import EnumView from '@/components/Enum/View/index.vue'
@@ -93,11 +93,9 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.sysMenuList,
-      delete: systemApi.sysMenuDelete,
-      status: systemApi.sysMenuEdit
-    })
+  const { page, handlePage, query, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.sysMenuList,
+    delete: systemApi.sysMenuDelete,
+    status: systemApi.sysMenuEdit
   })
 </script>

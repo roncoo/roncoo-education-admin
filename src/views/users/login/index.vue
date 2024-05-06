@@ -29,16 +29,13 @@
   </div>
 </template>
 <script setup>
-  import { reactive } from 'vue'
   import { usersApi } from '@/api/users'
   import EnumView from '@/components/Enum/View/index.vue'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: usersApi.logLoginPage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: usersApi.logLoginPage
   })
 </script>

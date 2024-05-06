@@ -38,7 +38,7 @@
   </div>
 </template>
 <script setup>
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { systemApi } from '@/api/system'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
@@ -51,9 +51,7 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: systemApi.sysLogPage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: systemApi.sysLogPage
   })
 </script>

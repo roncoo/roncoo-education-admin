@@ -56,7 +56,7 @@
   </div>
 </template>
 <script setup>
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { courseApi } from '@/api/course'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
@@ -71,17 +71,15 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable(
-      {
-        page: courseApi.zoneCoursePage,
-        delete: courseApi.zoneCourseDelete,
-        status: courseApi.zoneCourseEdit,
-        sort: courseApi.zoneCourseSort
-      },
-      {
-        zoneId: route.query.zoneId
-      }
-    )
-  })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable(
+    {
+      page: courseApi.zoneCoursePage,
+      delete: courseApi.zoneCourseDelete,
+      status: courseApi.zoneCourseEdit,
+      sort: courseApi.zoneCourseSort
+    },
+    {
+      zoneId: route.query.zoneId
+    }
+  )
 </script>

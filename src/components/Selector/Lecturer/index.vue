@@ -32,7 +32,6 @@
   import { usersApi } from '@/api/users'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
-  import { reactive } from 'vue'
 
   const props = defineProps({
     title: {
@@ -52,10 +51,8 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: usersApi.lecturerPage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: usersApi.lecturerPage
   })
 </script>
 

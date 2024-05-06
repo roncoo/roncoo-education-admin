@@ -23,19 +23,16 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive } from 'vue'
   import { courseApi } from '@/api/course'
   import { useRoute } from 'vue-router/dist/vue-router'
   import Pagination from '@/components/Pagination/index.vue'
 
   const route = useRoute()
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable(
-      {
-        page: courseApi.userCourseCollect
-      },
-      { courseId: route.query.courseId }
-    )
-  })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable(
+    {
+      page: courseApi.userCourseCollect
+    },
+    { courseId: route.query.courseId }
+  )
 </script>

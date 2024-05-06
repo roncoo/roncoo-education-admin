@@ -85,12 +85,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.sysRolePage,
-      delete: systemApi.sysRoleDelete,
-      status: systemApi.sysRoleEdit,
-      sort: systemApi.sysRoleSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.sysRolePage,
+    delete: systemApi.sysRoleDelete,
+    status: systemApi.sysRoleEdit,
+    sort: systemApi.sysRoleSort
   })
 </script>

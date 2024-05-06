@@ -27,8 +27,6 @@
   </div>
 </template>
 <script setup>
-  import { reactive } from 'vue'
-
   import { courseApi } from '@/api/course'
   import { useRoute } from 'vue-router/dist/vue-router'
   import Pagination from '@/components/Pagination/index.vue'
@@ -36,13 +34,11 @@
 
   const route = useRoute()
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete } = reactive({
-    ...useTable(
-      {
-        page: courseApi.userCourseComment,
-        delete: courseApi.courseCommentDelete
-      },
-      { courseId: route.query.courseId }
-    )
-  })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete } = useTable(
+    {
+      page: courseApi.userCourseComment,
+      delete: courseApi.courseCommentDelete
+    },
+    { courseId: route.query.courseId }
+  )
 </script>

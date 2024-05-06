@@ -75,7 +75,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
   import OrderForm from './OrderForm.vue'
@@ -89,10 +89,8 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: usersApi.orderInfoPage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: usersApi.orderInfoPage
   })
 
   onMounted(() => {

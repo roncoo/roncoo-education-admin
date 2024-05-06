@@ -61,7 +61,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { systemApi } from '@/api/system'
   import Pagination from '@/components/Pagination/index.vue'
   import NavigationForm from './NavigationForm.vue'
@@ -74,12 +74,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.navPage,
-      delete: systemApi.navDelete,
-      status: systemApi.navEdit,
-      sort: systemApi.navSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.navPage,
+    delete: systemApi.navDelete,
+    status: systemApi.navEdit,
+    sort: systemApi.navSort
   })
 </script>

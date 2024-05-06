@@ -8,7 +8,7 @@
   </div>
 </template>
 <script setup>
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import List from './List.vue'
   import { systemApi } from '@/api/system'
   import useTable from '@/utils/table'
@@ -21,14 +21,12 @@
 
   const activeName = ref('1')
   // 基础功能
-  const { page, handlePage, query } = reactive({
-    ...useTable(
-      {
-        page: systemApi.sysConfigList
-      },
-      { configType: activeName.value }
-    )
-  })
+  const { page, handlePage, query } = useTable(
+    {
+      page: systemApi.sysConfigList
+    },
+    { configType: activeName.value }
+  )
 
   const tabPanes = [
     {

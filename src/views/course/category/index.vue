@@ -61,7 +61,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { courseApi } from '@/api/course'
   import CategoryForm from './CategoryForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
@@ -73,11 +73,9 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: courseApi.categoryList,
-      delete: courseApi.categoryDelete,
-      status: courseApi.categoryEdit
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: courseApi.categoryList,
+    delete: courseApi.categoryDelete,
+    status: courseApi.categoryEdit
   })
 </script>

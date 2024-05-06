@@ -60,7 +60,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import { systemApi } from '@/api/system'
   import LinkForm from './LinkForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
@@ -73,12 +73,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.linkPage,
-      delete: systemApi.linkDelete,
-      status: systemApi.linkEdit,
-      sort: systemApi.linkSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.linkPage,
+    delete: systemApi.linkDelete,
+    status: systemApi.linkEdit,
+    sort: systemApi.linkSort
   })
 </script>

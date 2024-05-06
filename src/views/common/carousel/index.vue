@@ -69,7 +69,6 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
   import { systemApi } from '@/api/system'
   import CarouselForm from './CarouselForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
@@ -82,12 +81,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = reactive({
-    ...useTable({
-      page: systemApi.carouselPage,
-      delete: systemApi.carouselDelete,
-      status: systemApi.carouselEdit,
-      sort: systemApi.carouselSort
-    })
+  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+    page: systemApi.carouselPage,
+    delete: systemApi.carouselDelete,
+    status: systemApi.carouselEdit,
+    sort: systemApi.carouselSort
   })
 </script>

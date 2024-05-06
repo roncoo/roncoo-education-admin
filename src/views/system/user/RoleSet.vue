@@ -80,10 +80,8 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: systemApi.sysRolePage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: systemApi.sysRolePage
   })
 </script>
 

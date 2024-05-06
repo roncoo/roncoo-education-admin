@@ -39,7 +39,6 @@
 </template>
 
 <script setup>
-  import { reactive } from 'vue'
   import useTable from '@/utils/table'
   import { courseApi } from '@/api/course'
   import Pagination from '@/components/Pagination/index.vue'
@@ -67,10 +66,8 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable({
-      page: courseApi.coursePage
-    })
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable({
+    page: courseApi.coursePage
   })
 </script>
 

@@ -68,7 +68,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive, ref } from 'vue'
+  import { , ref } from 'vue'
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
@@ -83,12 +83,10 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery } = reactive({
-    ...useTable(
+  const { page, handlePage, query, handleQuery, resetQuery } = useTable(
       {
         page: usersApi.orderInfoPage
       },
       { userId: route.query.userId }
     )
-  })
 </script>
