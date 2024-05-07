@@ -23,11 +23,7 @@
     const data = await statApi.login()
     const option = {
       tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          // 坐标轴指示器，坐标轴触发有效
-          type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-        }
+        trigger: 'axis'
       },
       legend: {
         data: ['活跃人数', '新增人数']
@@ -43,11 +39,7 @@
         {
           name: '活跃人数',
           type: 'line',
-          data: data.loginList,
-          label: {
-            show: false,
-            position: 'center'
-          }
+          data: data.loginList
         },
         {
           name: '新增人数',
