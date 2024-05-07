@@ -1,21 +1,20 @@
 <template>
   <el-card class="title-info">
     <template #header>最近14天人数统计</template>
-    <div id="axis" ref="axisRef" class="axis" />
+    <div id="axis" class="axis" />
   </el-card>
 </template>
 
 <script setup>
   import * as echarts from 'echarts'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted } from 'vue'
   import { statApi } from '@/api/dashboard'
 
-  const charts = reactive({})
-  const axisRef = ref()
+  let axisRef
 
   onMounted(() => {
-    if (!charts.axisRef) {
-      charts.axisRef = echarts.init(axisRef.value)
+    if (!axisRef) {
+      axisRef = echarts.init(document.getElementById('axis'))
     }
     init()
   })
@@ -57,7 +56,7 @@
         }
       ]
     }
-    charts.axisRef?.setOption(option)
+    axisRef?.setOption(option)
   }
 </script>
 <style lang="scss" scoped>
