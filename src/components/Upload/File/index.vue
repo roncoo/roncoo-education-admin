@@ -73,7 +73,8 @@
   /* 类型设置 */
   const vodType = 'video/mp4,video/avi'
   const audioType = 'audio/mpeg,audio/mp3,audio/mp4'
-  const docType = 'application/pdf,application/msword,application/vnd,application/x-xls,text/plain'
+  const docType =
+    'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-xls,text/plain'
   const imageType = 'image/jpeg,image/png,image/gif,image/x-icon'
   const zipType = 'application/zip,application/gzip,application/x-zip-compressed'
 
