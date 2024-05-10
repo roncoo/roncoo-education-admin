@@ -10,7 +10,7 @@
             <el-input v-model="query.mobile" placeholder="根据手机号码搜索" prefix-icon="Search" />
           </el-form-item>
           <el-form-item>
-            <enum-select v-model="query.orderStatus" :enum-name="'OrderStatusEnum'" />
+            <enum-select v-model="query.orderStatus" :enum-name="'OrderStatusEnum'" :title="'请选择支付方式'" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()">查询</el-button>
@@ -75,7 +75,7 @@
 </template>
 <script setup>
   import useTable from '@/utils/table'
-  import { onMounted, ref } from 'vue'
+  import { ref } from 'vue'
   import { usersApi } from '@/api/users'
   import Pagination from '@/components/Pagination/index.vue'
   import OrderForm from './OrderForm.vue'
@@ -91,9 +91,5 @@
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery } = useTable({
     page: usersApi.orderInfoPage
-  })
-
-  onMounted(() => {
-    query.orderStatus = 2
   })
 </script>

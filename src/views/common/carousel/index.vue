@@ -4,7 +4,10 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-input v-model="query.carouselUrl" placeholder="请输入地址" prefix-icon="Search" clearable />
+            <enum-select v-model="query.carouselTarget" :enum-name="'TargetEnum'" :title="'请选择跳转方式'" />
+          </el-form-item>
+          <el-form-item>
+            <enum-select v-model="query.statusId" :enum-name="'StatusIdEnum'" :title="'请选择状态'" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询 </el-button>
@@ -74,6 +77,7 @@
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
   import { ref } from 'vue'
+  import EnumSelect from '@/components/Enum/Select/index.vue'
 
   // 添加/修改
   const formRef = ref()
