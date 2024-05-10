@@ -30,7 +30,7 @@
           <el-table-column type="selection" :width="40" />
           <el-table-column :min-width="100" label="资源名称" prop="resourceName">
             <template #default="scope">
-              <el-image v-if="scope.row.resourceType === 4" :src="scope.row.resourceUrl" style="height: 50px; width: auto" />
+              <el-image v-if="scope.row.resourceType === 4" :src="scope.row.resourceUrl" :preview-src-list="[scope.row.resourceUrl]" preview-teleported style="height: 50px; width: auto" />
               <span v-else>{{ scope.row.resourceName }}</span>
               <el-button link v-if="scope.row.videoStatus === 2" @click="onPreview(scope.row)">
                 <el-icon size="20">

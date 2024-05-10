@@ -13,6 +13,7 @@
       :data="treeData"
       :props="{ value: 'id', label: 'categoryName', children: 'childrenList' }"
       :expand-on-click-node="false"
+      :current-node-key="currentNodeKey"
       highlight-current
       node-key="id"
       draggable
@@ -54,6 +55,8 @@
   import CategoryForm from './CategoryForm.vue'
   import { ElMessage } from 'element-plus'
 
+  const emit = defineEmits(['update:category-id', 'refresh'])
+
   const props = defineProps({
     categoryType: {
       type: Number,
@@ -68,15 +71,16 @@
   const categoryId = computed(() => {
     return props.categoryId
   })
+  const currentNodeKey = ref('')
 
   const treeRef = ref()
   onMounted(() => {
     treeRef['value'].setCurrentKey(categoryId.value)
   })
 
-  const emit = defineEmits(['update:category-id', 'refresh'])
   // 选择目录
   const handleChangeCategory = (item) => {
+    currentNodeKey.value = item.id
     emit('update:category-id', item.id)
     emit('refresh')
   }
