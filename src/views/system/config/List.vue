@@ -1,6 +1,6 @@
 <template>
   <el-table :data="props.list">
-    <el-table-column label="配置名称" prop="configName" width="300">
+    <el-table-column label="配置名称" prop="configName" min-width="30">
       <template #default="scope">
         <span>{{ scope.row.configName }}&nbsp;</span>
         <el-tooltip :content="scope.row.configKey" placement="right-start" effect="light">
@@ -29,7 +29,6 @@
       </template>
     </el-table-column>
   </el-table>
-
   <div v-if="props.configType === '3'">
     <div class="clearfix">
       <el-row class="vod-info">
@@ -42,7 +41,6 @@
       </el-row>
     </div>
   </div>
-
   <config-form ref="formRef" @refresh="handleList"></config-form>
   <form-view ref="viewRef"></form-view>
 </template>
