@@ -2,13 +2,13 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="用户昵称" prop="nickname">
-        <el-input v-model="formModel.nickname" maxlength="100" show-word-limit></el-input>
+        <el-input v-model="formModel.nickname" maxlength="20" show-word-limit></el-input>
       </el-form-item>
       <el-form-item label="用户性别" prop="userSex">
         <enum-radio v-model="formModel.userSex" :enum-name="'UserSexEnum'"></enum-radio>
       </el-form-item>
       <el-form-item class="form-group" label="用户年龄" prop="userAge">
-        <el-input-number v-model="formModel.userAge" maxlength="500"></el-input-number>
+        <el-input-number v-model="formModel.userAge" maxlength="200"></el-input-number>
       </el-form-item>
       <el-form-item class="form-group" label="备注" prop="remark">
         <el-input v-model="formModel.remark" maxlength="255" type="textarea" show-word-limit></el-input>

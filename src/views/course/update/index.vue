@@ -8,7 +8,7 @@
             <cascader-course v-model="formModel.categoryId"></cascader-course>
           </el-form-item>
           <el-form-item label="名称" prop="courseName">
-            <el-input v-model="formModel.courseName" maxlength="100" show-word-limit></el-input>
+            <el-input v-model="formModel.courseName" maxlength="125" show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="讲师" prop="lecturerId">
             <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>

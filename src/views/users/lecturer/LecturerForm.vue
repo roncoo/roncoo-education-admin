@@ -4,10 +4,10 @@
       <el-row>
         <el-col :span="12">
           <el-form-item class="form-group" label="名称" prop="lecturerName">
-            <el-input v-model="formModel.lecturerName" maxlength="100" show-word-limit></el-input>
+            <el-input v-model="formModel.lecturerName" maxlength="20" show-word-limit></el-input>
           </el-form-item>
           <el-form-item class="form-group" label="职位" prop="lecturerPosition">
-            <el-input v-model="formModel.lecturerPosition" maxlength="100" show-word-limit></el-input>
+            <el-input v-model="formModel.lecturerPosition" maxlength="20" show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="排序" prop="sort">
             <el-input-number v-model="formModel.sort"></el-input-number>

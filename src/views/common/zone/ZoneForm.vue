@@ -2,10 +2,10 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
       <el-form-item class="form-group" label="名称" prop="zoneName">
-        <el-input v-model="formModel.zoneName" maxlength="100" show-word-limit></el-input>
+        <el-input v-model="formModel.zoneName" maxlength="50" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="描述" prop="zoneDesc">
-        <el-input v-model="formModel.zoneDesc" maxlength="100" show-word-limit></el-input>
+        <el-input v-model="formModel.zoneDesc" maxlength="255" type="textarea" show-word-limit></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="statusId">
         <enum-radio v-model="formModel.statusId" :enum-name="'StatusIdEnum'"></enum-radio>

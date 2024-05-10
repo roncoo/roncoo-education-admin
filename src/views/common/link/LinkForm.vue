@@ -2,7 +2,7 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item label="友情名称" prop="linkName">
-        <el-input v-model="formModel.linkName" maxlength="255" show-word-limit></el-input>
+        <el-input v-model="formModel.linkName" maxlength="10" show-word-limit></el-input>
       </el-form-item>
       <el-form-item label="友情地址" prop="linkUrl">
         <el-input v-model="formModel.linkUrl" maxlength="255" show-word-limit></el-input>

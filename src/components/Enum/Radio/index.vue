@@ -1,6 +1,6 @@
 <template>
   <el-radio-group v-model="modelValue" @change="handleChange">
-    <el-radio v-for="item in enums" :key="item.code" :label="item.code">{{ item.desc }}</el-radio>
+    <el-radio v-for="item in enums" :key="item.code" :value="item.code">{{ item.desc }}</el-radio>
   </el-radio-group>
 </template>
 
