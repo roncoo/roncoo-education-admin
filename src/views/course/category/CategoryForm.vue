@@ -2,7 +2,7 @@
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '分类修改' : '分类添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
       <el-form-item class="form-group" label="名称" prop="categoryName">
-        <el-input v-model="formModel.categoryName" maxlength="100" show-word-limit></el-input>
+        <el-input v-model="formModel.categoryName" maxlength="50" show-word-limit></el-input>
       </el-form-item>
       <el-form-item class="form-group" label="排序" prop="sort">
         <el-input-number v-model="formModel.sort" />

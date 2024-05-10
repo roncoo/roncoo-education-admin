@@ -4,16 +4,10 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-input v-model="query.categoryName" placeholder="请输入分类名称" prefix-icon="Search" clearable />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="handleQuery()"> 查询</el-button>
-            <el-button @click="resetQuery()">重置</el-button>
+            <el-button v-permission="'category:save'" type="primary" @click="openFormModal()">添加分类</el-button>
+            <el-button @click="resetQuery()">刷新</el-button>
           </el-form-item>
         </el-form>
-      </div>
-      <div class="button_bar">
-        <el-button v-permission="'category:save'" type="primary" @click="openFormModal()">添加分类</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" :tree-props="{ children: 'childrenList' }" row-key="id">
