@@ -89,6 +89,7 @@ export const courseApi = {
   resourceSort: (data) => {
     return putRequest('/course/admin/resource/sort', data)
   },
+
   // 资源批量移动
   resourceBatchEdit: (data) => {
     return putRequest('/course/admin/resource/batch/edit', data)
