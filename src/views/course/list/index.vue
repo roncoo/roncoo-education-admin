@@ -21,7 +21,7 @@
         <template #default="scope">
           <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px">
-            {{ scope.row.courseName }}
+            <el-link :href="'/course/detail?id=' + scope.row.id" target="_blank">{{ scope.row.courseName }}</el-link>
             <br />
             <span v-if="scope.row.isFree == 1">免费</span>
             <span v-if="scope.row.isFree == 0">
