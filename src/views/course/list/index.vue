@@ -9,6 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
+            <el-button type="primary" v-permission="'course:es'" @click="handleEs()">同步ES</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -91,11 +92,11 @@
 
 <script setup>
   import useTable from '@/utils/table'
-  import { reactive } from 'vue'
   import Pagination from '@/components/Pagination/index.vue'
   import { courseApi } from '@/api/course'
   import { useRouter } from 'vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
 
   const router = useRouter()
 
@@ -116,6 +117,19 @@
   // 修改
   const toCourseUpdate = (item) => {
     router.push({ path: '/course/update', query: { courseId: item.id } })
+  }
+
+  // 同步ES
+  const handleEs = () => {
+    ElMessageBox.confirm('将课程信息同步到ES，用于门户搜索', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'info'
+    }).then(() => {
+      courseApi.courseEs().then((res) => {
+        ElMessage.success(res)
+      })
+    })
   }
 
   // 基础功能
