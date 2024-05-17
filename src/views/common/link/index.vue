@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-input v-model="query.linkName" placeholder="请输入友情名称" prefix-icon="Search" clearable />
+            <el-input v-model="query.linkName" placeholder="请输入名称" prefix-icon="Search" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -17,7 +17,8 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
-      <el-table-column :min-width="120" label="友情地址" prop="linkUrl" />
+      <el-table-column :min-width="80" label="名称" prop="linkName" />
+      <el-table-column :min-width="120" label="地址" prop="linkUrl" />
       <el-table-column :min-width="80" label="跳转方式">
         <template #default="scope">
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.linkTarget" />
