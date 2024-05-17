@@ -18,7 +18,11 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="80" label="名称" prop="linkName" />
-      <el-table-column :min-width="120" label="地址" prop="linkUrl" />
+      <el-table-column :min-width="120" label="链接地址" prop="linkUrl">
+        <template #default="scope">
+          <el-link type="primary" :href="scope.row.linkUrl" target="_blank">{{ scope.row.linkUrl }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column :min-width="80" label="跳转方式">
         <template #default="scope">
           <enum-view :enum-name="'TargetEnum'" :enum-value="scope.row.linkTarget" />

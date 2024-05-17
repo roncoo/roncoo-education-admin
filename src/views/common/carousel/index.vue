@@ -25,9 +25,9 @@
           <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px; width: auto" />
         </template>
       </el-table-column>
-      <el-table-column :min-width="120" label="地址" prop="carouselUrl">
+      <el-table-column :min-width="120" label="访问地址" prop="carouselUrl">
         <template #default="scope">
-          <a :href="scope.row.carouselUrl" target="_blank">{{ scope.row.carouselUrl }}</a>
+          <el-link type="primary" :href="scope.row.carouselUrl" target="_blank">{{ scope.row.carouselUrl }}</el-link>
         </template>
       </el-table-column>
       <el-table-column :min-width="50" label="跳转方式">
