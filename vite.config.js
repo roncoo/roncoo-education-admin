@@ -30,5 +30,16 @@ export default defineConfig({
       iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
       symbolId: 'icon-[name]'
     })
-  ]
+  ],
+  build: {
+    minify: 'terser',
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 1500,
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  }
 })
