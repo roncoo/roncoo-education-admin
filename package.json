@@ -26,7 +26,7 @@
     "pinia": "2.1.7",
     "simple-uploader.js": "0.6.0",
     "sortablejs": "1.15.2",
-    "vue": "3.4.21",
+    "vue": "3.4.23",
     "vue-json-pretty": "2.4.0",
     "vue-router": "4.3.0",
     "vuedraggable": "4.1.0"
@@ -38,7 +38,7 @@
     "fast-glob": "3.3.2",
     "prettier": "3.2.5",
     "sass": "1.75.0",
-    "vite": "5.2.8",
+    "vite": "5.2.9",
     "vite-plugin-svg-icons": "2.0.1"
   }
 }
