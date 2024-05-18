@@ -27,8 +27,6 @@
   import StatLogin from './StatLogin.vue'
   import StatData from './StatData.vue'
   import { hasPermission } from '@/utils/permission.js'
-
-  console.log(123)
 </script>
 <style lang="scss" scoped>
   .info {
