@@ -59,10 +59,8 @@
         left: 'left',
         formatter(name) {
           let data = option1.series[0].data
-          let total = 0
           let tarValue
           for (let i = 0; i < data.length; i++) {
-            total += data[i].value
             if (data[i].name === name) {
               tarValue = data[i].value
             }

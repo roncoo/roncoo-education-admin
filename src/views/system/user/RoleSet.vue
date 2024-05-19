@@ -30,7 +30,7 @@
 
 <script setup>
   import { systemApi } from '@/api/system'
-  import { reactive, ref } from 'vue'
+  import { ref } from 'vue'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
   import { ElMessage } from 'element-plus'

@@ -67,7 +67,7 @@
   }
 
   // 基础功能
-  const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
+  const { page, handlePage, query, resetQuery, handleDelete, handleStatus } = useTable({
     page: courseApi.categoryList,
     delete: courseApi.categoryDelete,
     status: courseApi.categoryEdit

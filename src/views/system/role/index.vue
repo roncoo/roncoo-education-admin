@@ -59,7 +59,7 @@
 </template>
 <script setup>
   import { systemApi } from '@/api/system'
-  import { nextTick, reactive, ref } from 'vue'
+  import { nextTick, ref } from 'vue'
   import useTable from '@/utils/table'
   import RoleForm from './RoleForm.vue'
   import MenuSet from './MenuSet.vue'

@@ -24,7 +24,7 @@
 </template>
 <script setup>
   import { systemApi } from '@/api/system'
-  import { onMounted, reactive, ref } from 'vue'
+  import { reactive, ref } from 'vue'
   import { ElMessage } from 'element-plus'
   import { encrypt } from '@/utils/base.js'
 

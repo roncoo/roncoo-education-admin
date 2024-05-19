@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import useTable from '@/utils/table'
   import { courseApi } from '@/api/course'
   import Pagination from '@/components/Pagination/index.vue'
