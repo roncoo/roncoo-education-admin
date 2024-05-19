@@ -10,7 +10,6 @@ export default defineConfig({
     port: 9528, // 服务启动端口号
     open: true, // 服务启动时是否自动打开浏览器
     proxy: {
-      // 代理
       '/gateway': {
         target: 'https://dev-os.roncoos.com/gateway',
         //target: 'http://10.65.1.18/gateway',
