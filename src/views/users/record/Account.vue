@@ -31,7 +31,7 @@
       <el-table-column label="备注" prop="remark" />
       <el-table-column label="订单号" prop="orderNo" />
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <consume-form ref="consumeRef" @refresh="handlePage" />
   </div>
 </template>

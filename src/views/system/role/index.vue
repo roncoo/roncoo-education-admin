@@ -40,8 +40,8 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 1" text type="primary">禁用</el-button>
-                  <el-button v-permission="'sys:role:edit'" v-if="scope.row.statusId === 0" text type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1" v-permission="'sys:role:edit'" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0" v-permission="'sys:role:edit'" text type="primary">启用</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
               <el-dropdown-item>
@@ -52,9 +52,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <role-form ref="formRef" @refresh="handlePage" />
-    <menu-set ref="menuRef" v-if="menuVisible" @refresh="handleMenu"></menu-set>
+    <menu-set v-if="menuVisible" ref="menuRef" @refresh="handleMenu"></menu-set>
   </div>
 </template>
 <script setup>

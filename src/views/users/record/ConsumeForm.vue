@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'余额变动'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'余额变动'" width="600px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="消费类型" prop="consumeType">
         <enum-radio v-model="formModel.consumeType" :enum-name="'ConsumeTypeEnum'"></enum-radio>

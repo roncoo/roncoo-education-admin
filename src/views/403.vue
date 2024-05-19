@@ -6,12 +6,12 @@
   </el-result>
 </template>
 <script setup>
-import {useRouter} from 'vue-router';
-import {PATH} from '@/utils/constants/system';
+  import { useRouter } from 'vue-router'
+  import { PATH } from '@/utils/constants/system'
 
-const router = useRouter()
+  const router = useRouter()
 
-function goHome() {
-  router.push({path: PATH.URL_DASHBOARD});
-}
+  function goHome() {
+    router.push({ path: PATH.URL_DASHBOARD })
+  }
 </script>

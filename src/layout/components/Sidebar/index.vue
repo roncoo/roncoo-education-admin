@@ -1,21 +1,21 @@
 <template>
-  <el-aside @mouseleave="restoreSubMenu" :class="{ 'show-sub': subMenuList }">
+  <el-aside :class="{ 'show-sub': subMenuList }" @mouseleave="restoreSubMenu">
     <div class="menu-side">
       <div class="menu-main">
-        <el-menu :default-active="showMenuId" mode="vertical" v-for="item in menuList" :key="item.id">
-          <div class="menu-main-item" @mouseenter="showSubMenu(item.children, item)" :class="[hoverMenuId === item.id ? 'hover' : '']">
+        <el-menu v-for="item in menuList" :key="item.id" :default-active="showMenuId" mode="vertical">
+          <div class="menu-main-item" :class="[hoverMenuId === item.id ? 'hover' : '']" @mouseenter="showSubMenu(item.children, item)">
             <router-link :to="item.path" @click="handleMenu(item)">
-              <el-menu-item :class="[item.id === showMenuId ? 'is-active' : '']" :key="item.id" :index="item.path"> <icon :name="item.menuIcon" class="menu-icon" />{{ item.menuName }} </el-menu-item>
+              <el-menu-item :key="item.id" :class="[item.id === showMenuId ? 'is-active' : '']" :index="item.path"> <icon :name="item.menuIcon" class="menu-icon" />{{ item.menuName }} </el-menu-item>
             </router-link>
           </div>
         </el-menu>
       </div>
       <!-- 子菜单 -->
-      <div class="menu-sub" v-if="subMenuList">
-        <el-menu :default-active="showSubMenuId" mode="vertical" v-for="sub in subMenuList" :key="sub.id">
+      <div v-if="subMenuList" class="menu-sub">
+        <el-menu v-for="sub in subMenuList" :key="sub.id" :default-active="showSubMenuId" mode="vertical">
           <div class="menu-sub-item">
             <router-link :to="sub.path" @click="showChildrenMenu(subMenuList)">
-              <el-menu-item :class="[sub.id === showSubMenuId ? 'is-active' : '']" :key="sub.id" :index="sub.path"> {{ sub.menuName }} </el-menu-item>
+              <el-menu-item :key="sub.id" :class="[sub.id === showSubMenuId ? 'is-active' : '']" :index="sub.path"> {{ sub.menuName }} </el-menu-item>
             </router-link>
           </div>
         </el-menu>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'查看'" width="600px" align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'查看'" width="600px" align-center :destroy-on-close="true" @close="onClose">
     <vue-json-pretty :data="formModel.content"></vue-json-pretty>
     <template #footer>
       <div class="dialog-footer">

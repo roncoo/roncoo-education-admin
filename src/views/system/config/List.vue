@@ -37,7 +37,7 @@
           <div v-if="vodConfig">{{ vodConfig }}</div>
           <div style="color: #999; font-size: 12px">视频配置完成，需要重新初始化</div>
         </el-col>
-        <el-col :span="4"><el-button v-loading="loading" text type="primary" v-permission="'sys:config:video:init'" @click="vodInit()">视频初始化</el-button></el-col>
+        <el-col :span="4"><el-button v-loading="loading" v-permission="'sys:config:video:init'" text type="primary" @click="vodInit()">视频初始化</el-button></el-col>
       </el-row>
     </div>
   </div>

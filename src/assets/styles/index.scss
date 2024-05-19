@@ -38,10 +38,10 @@ a {
 }
 
 // 弹窗
-.el-dialog__body{
+.el-dialog__body {
   max-height: 80vh;
   overflow: auto;
-  padding: 0 20px
+  padding: 0 20px;
 }
 
 // 分页组件
@@ -56,11 +56,11 @@ a {
   height: 50px;
 }
 
-.el-tree-node__content{
+.el-tree-node__content {
   height: 40px;
 }
 
-.el-divider--vertical{
+.el-divider--vertical {
   margin: 0;
 }
 
@@ -73,7 +73,7 @@ a {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 ::-webkit-scrollbar-track {

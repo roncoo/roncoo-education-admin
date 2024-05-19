@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="图标选择" width="400px" center align-center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" title="图标选择" width="400px" center align-center :destroy-on-close="true" @close="handleClose">
     <div class="icon-content">
-      <span v-for="item in iconArray" :key="item" @click="handleClick(item)" class="icon-name"> <icon :name="item" class="icon-item" /><br />{{ item }} </span>
+      <span v-for="item in iconArray" :key="item" class="icon-name" @click="handleClick(item)"> <icon :name="item" class="icon-item" /><br />{{ item }} </span>
     </div>
   </el-dialog>
 </template>

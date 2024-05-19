@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="角色设置" width="800px" center align-center @close="onClose()" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" title="角色设置" width="800px" center align-center :destroy-on-close="true" @close="onClose()">
     <div class="page_head" style="text-align: left">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
@@ -18,7 +18,7 @@
       <el-table-column label="角色名称" prop="roleName" />
       <el-table-column label="备注" prop="remark" />
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <template #footer>
       <span class="handle_bar">
         <el-button @click="onClose()">取消</el-button>

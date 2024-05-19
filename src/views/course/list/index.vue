@@ -9,7 +9,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button type="primary" v-permission="'course:es'" @click="handleEs()">同步ES</el-button>
+            <el-button v-permission="'course:es'" type="primary" @click="handleEs()">同步ES</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -74,8 +74,8 @@
                   <el-button v-permission="'course:edit'" text type="primary" @click="toCourseUpdate(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'course:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
-                  <el-button v-permission="'course:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId == 0" v-permission="'course:edit'" text type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId == 1" v-permission="'course:edit'" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'course:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
@@ -86,7 +86,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
   </div>
 </template>
 

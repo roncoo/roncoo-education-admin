@@ -43,8 +43,8 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'lecturer:edit'" v-if="scope.row.statusId === 0" text type="primary">启用</el-button>
-                  <el-button v-permission="'lecturer:edit'" v-if="scope.row.statusId === 1" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0" v-permission="'lecturer:edit'" text type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1" v-permission="'lecturer:edit'" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'lecturer:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
@@ -55,7 +55,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <lecturer-form ref="formRef" @refresh="handlePage" />
   </div>
 </template>

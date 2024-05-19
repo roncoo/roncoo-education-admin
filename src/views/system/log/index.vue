@@ -33,7 +33,7 @@
       </el-table-column>
       <el-table-column :min-width="100" label="时间" prop="gmtCreate" />
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <log-view ref="formRef" />
   </div>
 </template>

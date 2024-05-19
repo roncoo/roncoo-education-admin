@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="60px" @submit.prevent>
       <el-form-item v-if="!formModel.id" class="form-group" label="课程" prop="courseName">
         <el-input v-model="formModel.courseName" disabled style="width: 300px; margin-right: 20px"></el-input>

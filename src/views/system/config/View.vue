@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="config.configName" width="800px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="config.configName" width="800px" center align-center :destroy-on-close="true" @close="onClose">
     <div class="dialog-content">
       <div v-html="config.configValue" />
     </div>

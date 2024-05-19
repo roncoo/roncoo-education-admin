@@ -4,13 +4,8 @@
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.vue",
-    "src/**/*"
-  ]
+  "include": ["src/**/*.vue", "src/**/*"]
 }

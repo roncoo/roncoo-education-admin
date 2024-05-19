@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in tabPanes" :label="item.label" :name="item.configType" :key="item.configType">
-        <list :list="page.list" :configType="item.configType" @refresh="handlePage"></list>
+      <el-tab-pane v-for="item in tabPanes" :key="item.configType" :label="item.label" :name="item.configType">
+        <list :list="page.list" :config-type="item.configType" @refresh="handlePage"></list>
       </el-tab-pane>
     </el-tabs>
   </div>

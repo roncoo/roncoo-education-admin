@@ -54,8 +54,8 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)"> 启用 </el-button>
-                  <el-button v-permission="'website:carousel:edit'" v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)"> 禁用 </el-button>
+                  <el-button v-if="scope.row.statusId == 0" v-permission="'website:carousel:edit'" text type="primary" @click="handleStatus(scope.row)"> 启用 </el-button>
+                  <el-button v-if="scope.row.statusId == 1" v-permission="'website:carousel:edit'" text type="primary" @click="handleStatus(scope.row)"> 禁用 </el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'website:carousel:delete'" text type="primary" @click="handleDelete(scope.row)"> 删除 </el-button>

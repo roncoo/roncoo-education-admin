@@ -1,7 +1,7 @@
 <template>
   <div style="border: 1px solid #ccc; margin-top: 10px; width: 100%">
     <toolbar :editor="editorRef" :default-config="toolbarConfig" mode="simple" style="border-bottom: 1px solid #ccc" />
-    <editor :default-config="editorConfig" :model-value="props.modelValue" @onChange="handleChange" @onCreated="handleCreated" style="height: 300px" />
+    <editor :default-config="editorConfig" :model-value="props.modelValue" style="height: 300px" @on-change="handleChange" @on-created="handleCreated" />
   </div>
   <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :multiple="true" :visible="picVisible" @close="handleCallback" />
 </template>

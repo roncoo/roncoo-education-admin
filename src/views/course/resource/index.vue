@@ -2,8 +2,8 @@
   <div class="app-container">
     <div class="page_head">
       <el-tabs v-model="activeName" @tab-click="handleTablClick">
-        <el-tab-pane :label="'全部'" :name="0" :key="0" />
-        <el-tab-pane v-for="item in tabPanes" :label="item.desc" :name="item.code" :key="item.code" />
+        <el-tab-pane :key="0" :label="'全部'" :name="0" />
+        <el-tab-pane v-for="item in tabPanes" :key="item.code" :label="item.desc" :name="item.code" />
       </el-tabs>
 
       <div class="search_bar clearfix">
@@ -15,15 +15,15 @@
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
             <upload-file v-permission="'resource:save'" :category-id="query.categoryId" :on-bus="onBus" @refresh="handlePage" />
-            <el-button v-permission="'resource:edit'" style="margin-left: 10px" @click="handleBatchMove()" :disabled="!ids.length > 0">批量移动</el-button>
-            <el-button v-permission="'resource:delete'" style="margin-left: 10px" @click="handleBatchDelete()" :disabled="!ids.length > 0">批量删除</el-button>
+            <el-button v-permission="'resource:edit'" style="margin-left: 10px" :disabled="!ids.length > 0" @click="handleBatchMove()">批量移动</el-button>
+            <el-button v-permission="'resource:delete'" style="margin-left: 10px" :disabled="!ids.length > 0" @click="handleBatchDelete()">批量删除</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div class="table-container">
       <!-- 目录 -->
-      <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
+      <cascader-category v-model:category-id="query.categoryId" :category-type="2" @refresh="handlePage" />
 
       <div class="table-main">
         <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table" @selection-change="handleSelectionChange">
@@ -32,7 +32,7 @@
             <template #default="scope">
               <el-image v-if="scope.row.resourceType === 4" :src="scope.row.resourceUrl" :preview-src-list="[scope.row.resourceUrl]" preview-teleported style="height: 50px; width: auto" />
               <span v-else>{{ scope.row.resourceName }}</span>
-              <el-button link v-if="scope.row.videoStatus === 2" @click="onPreview(scope.row)">
+              <el-button v-if="scope.row.videoStatus === 2" link @click="onPreview(scope.row)">
                 <el-icon size="20">
                   <VideoPlay />
                 </el-icon>
@@ -79,8 +79,8 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="handleStatus(scope.row)">
-                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 0" text type="primary">启用</el-button>
-                      <el-button v-permission="'resource:edit'" v-if="scope.row.statusId == 1" text type="primary">禁用</el-button>
+                      <el-button v-if="scope.row.statusId == 0" v-permission="'resource:edit'" text type="primary">启用</el-button>
+                      <el-button v-if="scope.row.statusId == 1" v-permission="'resource:edit'" text type="primary">禁用</el-button>
                     </el-dropdown-item>
                     <el-dropdown-item>
                       <el-button v-permission="'resource:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
@@ -91,7 +91,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+        <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
       </div>
     </div>
     <resource-form ref="formRef" @refresh="handlePage" />

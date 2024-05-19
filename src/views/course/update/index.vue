@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent style="max-width: 980px">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" style="max-width: 980px" @submit.prevent>
       <div class="form-main">
         <div class="form-main-title">基础信息</div>
         <div class="form-main-content">

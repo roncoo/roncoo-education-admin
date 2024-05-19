@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center @close="onClose" :destroy-on-close="true">
-    <el-form :model="formModel" :rules="rules" label-width="80px" ref="formRef" @submit.prevent>
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center :destroy-on-close="true" @close="onClose">
+    <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item label="轮播广告" prop="carouselImg">
         <selector-image v-model="formModel.carouselImg" :width="'263px'" :height="'80px'" :sug-img="'尺寸：1200x366px，格式：JPG、PNG，大小：<2M'" />
       </el-form-item>

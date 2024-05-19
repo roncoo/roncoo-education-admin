@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" center align-center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="true" :title="props.title" width="800px" center align-center :destroy-on-close="true" @close="handleClose">
     <div class="search_bar clearfix">
       <el-form :model="query" inline label-width="80px">
         <el-form-item label="讲师名称">
@@ -24,7 +24,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
   </el-dialog>
 </template>
 

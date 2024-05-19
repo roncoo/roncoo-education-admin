@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="1000px" align-center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="1000px" align-center :destroy-on-close="true" @close="handleClose">
     <el-tabs v-if="props.resourceType === 0" v-model="activeName" @tab-click="handleTablClick">
-      <el-tab-pane :label="'全部'" :name="0" :key="0" />
-      <el-tab-pane v-for="item in tabPanes" :label="item.desc" :name="item.code" :key="item.code" />
+      <el-tab-pane :key="0" :label="'全部'" :name="0" />
+      <el-tab-pane v-for="item in tabPanes" :key="item.code" :label="item.desc" :name="item.code" />
     </el-tabs>
     <el-form :model="query" class="filter-container" inline label-width="100px">
       <el-form-item label="资源名称">
@@ -17,10 +17,10 @@
 
     <div class="table-container">
       <!-- 目录 -->
-      <cascader-category :category-type="2" v-model:category-id="query.categoryId" @refresh="handlePage" />
+      <cascader-category v-model:category-id="query.categoryId" :category-type="2" @refresh="handlePage" />
       <div class="table-main">
-        <div v-if="props.resourceType === 4" class="table-main-card" v-loading="page.loading">
-          <div class="table-main-card-item" v-for="(item, index) in page.list" :key="index" @click="handleCard(item)">
+        <div v-if="props.resourceType === 4" v-loading="page.loading" class="table-main-card">
+          <div v-for="(item, index) in page.list" :key="index" class="table-main-card-item" @click="handleCard(item)">
             <div v-if="item['check']" class="card-check" />
             <img class="table-main-card-item-img" :src="item.resourceUrl" />
             <div class="table-main-card-item-name">{{ item.resourceName }}</div>
@@ -50,7 +50,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+        <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
       </div>
     </div>
     <template #footer>

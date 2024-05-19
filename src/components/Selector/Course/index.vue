@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" align-center @close="handleClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" align-center :destroy-on-close="true" @close="handleClose">
     <el-form :model="query" class="filter-container" inline label-width="100px">
       <el-form-item label="课程名称">
         <el-input v-model="query.courseName" />
@@ -34,7 +34,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
   </el-dialog>
 </template>
 

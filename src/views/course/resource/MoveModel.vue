@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="'移动指定目录'" width="600px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="'移动指定目录'" width="600px" center align-center :destroy-on-close="true" @close="onClose">
     <div class="move-model">
       <el-tree
         ref="treeRef"

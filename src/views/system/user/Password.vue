@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" title="密码重置" width="600px" center align-center @close="onClose" :destroy-on-close="true">
+  <el-dialog :append-to-body="true" :model-value="visible" title="密码重置" width="600px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px">
       <el-form-item label="登录密码" prop="mobilePwd">
         <el-input v-model="formModel.mobilePwd" class="form-group" type="password" />

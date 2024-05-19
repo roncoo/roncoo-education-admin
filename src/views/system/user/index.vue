@@ -49,8 +49,8 @@
                   <el-button v-permission="'sys:user:password'" text type="primary" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 0" text type="primary">启用</el-button>
-                  <el-button v-permission="'sys:user:edit'" v-if="scope.row.statusId === 1" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0" v-permission="'sys:user:edit'" text type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1" v-permission="'sys:user:edit'" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'sys:user:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
@@ -61,10 +61,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :total="page.totalCount" v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" @pagination="handlePage" />
+    <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
     <user-form ref="formRef" @refresh="handlePage" />
     <password ref="passwordRef" @refresh="handlePage" />
-    <role-set ref="roleRef" v-if="roleVisible" @refresh="handleRole" />
+    <role-set v-if="roleVisible" ref="roleRef" @refresh="handleRole" />
   </div>
 </template>
 
