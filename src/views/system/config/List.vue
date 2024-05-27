@@ -25,7 +25,19 @@
     </el-table-column>
     <el-table-column v-permission="'sys:config:edit'" label="操作" width="220">
       <template #default="scope">
-        <el-button text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+        <el-switch
+          v-if="scope.row.contentType === 4"
+          v-model="scope.row.configValue"
+          active-color="#13ce66"
+          active-text="开启"
+          active-value="1"
+          inactive-color="#ff4949"
+          inactive-text="关闭"
+          inactive-value="0"
+          @change="handleSwitch(scope.row)"
+        />
+
+        <el-button v-else text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -91,6 +103,15 @@
   const viewRef = ref()
   const handleView = (item) => {
     viewRef.value.onOpen(item)
+  }
+
+  const handleSwitch = (row) => {
+    const formModel = {
+      id: row.id,
+      configKey: row.configKey,
+      configValue: row.configValue
+    }
+    systemApi.sysConfigEdit(formModel)
   }
 
   // 添加/修改
