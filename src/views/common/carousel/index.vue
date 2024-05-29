@@ -22,7 +22,7 @@
     <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="120" label="图片">
         <template #default="scope">
-          <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px; width: auto" />
+          <img :alt="scope.row.carouselTitle" :src="scope.row.carouselImg" style="height: 50px; width: 90px" />
         </template>
       </el-table-column>
       <el-table-column :min-width="120" label="访问地址" prop="carouselUrl">

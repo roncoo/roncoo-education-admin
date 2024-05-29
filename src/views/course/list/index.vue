@@ -20,7 +20,7 @@
     <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
       <el-table-column :min-width="180" label="课程信息">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: 90px; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px; max-width: 70%">
             <el-link :href="'/course/detail?id=' + scope.row.id" target="_blank">{{ scope.row.courseName }}</el-link>
             <br />

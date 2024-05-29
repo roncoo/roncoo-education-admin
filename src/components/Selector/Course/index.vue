@@ -12,7 +12,7 @@
     <el-table v-loading="page.loading" :data="page.list">
       <el-table-column :min-width="130" label="课程信息">
         <template #default="scope">
-          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: auto; vertical-align: middle; border-radius: 5px" />
+          <img :alt="scope.row.courseName" :src="scope.row.courseLogo" style="float: left; height: 50px; width: 90px; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px">
             {{ scope.row.courseName }}
             <br />
