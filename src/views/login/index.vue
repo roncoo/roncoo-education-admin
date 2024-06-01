@@ -9,7 +9,7 @@
         </p>
         <div style="text-align: center; font-size: 10px">
           <img src="@/assets/images/weixin.jpg" alt="作者微信公众号" style="width: 120px; height: auto" />
-          <div style="text-align: center">关注微信公众号，可获取更多资料</div>
+          <div style="text-align: center; margin-top: 5px">关注微信公众号，可获取更多资料</div>
         </div>
       </div>
       <div class="login-panel">
