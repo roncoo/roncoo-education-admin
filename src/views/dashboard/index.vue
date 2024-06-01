@@ -46,7 +46,7 @@
     }
     .info-content {
       div {
-        line-height: 32px;
+        line-height: 30px;
       }
     }
   }
