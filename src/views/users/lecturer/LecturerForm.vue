@@ -88,7 +88,10 @@
   const visible = ref(false)
   const onOpen = (item) => {
     if (item) {
-      Object.assign(formModel, item)
+      console.log(item)
+      usersApi.lecturerView({ id: item.id }).then((res) => {
+        Object.assign(formModel, res)
+      })
     }
     visible.value = true
   }

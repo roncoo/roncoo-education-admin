@@ -14,7 +14,10 @@ export const usersApi = {
   lecturerPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/user/admin/lecturer/page', { pageCurrent, pageSize, ...params })
   },
-
+  // 讲师查看
+  lecturerView: (data) => {
+    return getRequest('/user/admin/lecturer/view?id=' + data.id)
+  },
   // 讲师修改
   lecturerEdit: (data) => {
     return putRequest('/user/admin/lecturer/edit', data)
