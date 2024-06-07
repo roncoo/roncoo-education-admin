@@ -7,6 +7,9 @@ export const uploadApi = {
   doc: (file, cb, cancelFun) => {
     return upload('/system/admin/upload/doc?name=' + file.name, file, 'docFile', cb, cancelFun)
   },
+  app: (file, cb, cancelFun) => {
+    return upload('/system/admin/upload/app?name=' + file.name, file, 'appFile', cb, cancelFun)
+  },
   getVodConfig: () => {
     return getRequest('/course/admin/resource/vod/config?t' + Date.now())
   },

@@ -16,6 +16,11 @@
       <el-table-column label="登录地址" prop="province">
         <template #default="scope"> {{ scope.row.province }} {{ scope.row.city }} </template>
       </el-table-column>
+      <el-table-column label="登录客户端">
+        <template #default="scope">
+          <enum-view :enum-name="'LoginClientEnum'" :enum-value="scope.row.loginClient" />
+        </template>
+      </el-table-column>
       <el-table-column label="操作系统" prop="os" />
       <el-table-column label="浏览器" prop="browser" />
       <el-table-column label="登录时间" prop="gmtCreate" />

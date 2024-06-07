@@ -1,8 +1,19 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="600px" center align-center :destroy-on-close="true" @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item class="form-group" label="课时名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit />
+      </el-form-item>
+      <el-form-item class="form-group" label="直播时间">
+        <div style="display: flex; flex-direction: row; align-items: center; line-height: 10px">
+          <div>开播时间&nbsp;&nbsp;</div>
+          <el-date-picker v-model="formModel.beginTime" value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss" type="datetime" placeholder="请选择"></el-date-picker>
+          <div>&nbsp;&nbsp;预计时长(单位：分钟)&nbsp;&nbsp;</div>
+          <el-input-number v-model="formModel.liveDuration" />
+        </div>
+      </el-form-item>
+      <el-form-item class="form-group" label="直播延迟" prop="liveDelay">
+        <enum-radio v-model="formModel.liveDelay" :enum-name="'LiveDelayEnum'" />
       </el-form-item>
       <el-form-item class="form-group" label="收费设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
@@ -35,7 +46,11 @@
   const formDefault = {
     id: undefined,
     periodName: undefined,
-    periodType: 1,
+    beginTime: undefined,
+    periodType: 2,
+    liveDuration: 60,
+    liveDelay: 1,
+    liveModel: 1,
     isFree: 1
   }
   const formModel = reactive({ ...formDefault })
@@ -67,8 +82,12 @@
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
   const onOpen = (item) => {
-    if (item) {
+    formModel.courseId = item.courseId
+    formModel.chapterId = item.chapterId
+    if (item.id) {
+      Object.assign(formModel, item.liveViewResp)
       formModel.id = item.id
+      formModel.liveId = item.liveId
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
     }

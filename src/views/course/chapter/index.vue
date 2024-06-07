@@ -29,21 +29,31 @@
             <template #default="scope">
               <div class="table-default">
                 <span>{{ scope.$index + 1 }}.</span>
-                <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
-                <span>{{ scope.row.periodName }}</span>
-                <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
-                <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
+                <span v-if="scope.row.resourceViewResp">
+                  <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
+                  <span>{{ scope.row.periodName }}</span>
+                  <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
+                  <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
+                </span>
+                <span v-if="scope.row.liveViewResp">
+                  <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'PeriodTypeEnum'" :enum-value="scope.row.periodType" /> </el-tag>
+                  <span>{{ scope.row.periodName }}</span>
+                </span>
               </div>
             </template>
           </el-table-column>
           <el-table-column align="right">
             <template #header>
               <div>
+                <el-button @click="openFormLiveModal">添加直播</el-button>
                 <el-button @click="resourceSelect">添加资源</el-button>
               </div>
             </template>
             <template #default="scope">
-              <el-button text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 2" text type="primary" @click="broadcasting(scope.row)">开播</el-button>
+              <el-divider v-if="scope.row.periodType === 2" direction="vertical" />
+              <el-button v-if="scope.row.periodType === 1" text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 2" text type="primary" @click="openFormLiveModal(scope.row)">编辑</el-button>
               <el-divider direction="vertical" />
               <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
             </template>
@@ -53,12 +63,14 @@
     </div>
   </div>
   <select-resource v-if="period.visible" :visible="period.visible" @close="handleResource" />
-  <period-form ref="periodFormRef" />
+  <period-form ref="periodFormRef" @refresh="handleChapterList" />
+  <live-form ref="liveFormRef" @refresh="handleChapterList" />
 </template>
 <script setup>
   import { onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import PeriodForm from './PeriodForm.vue'
+  import liveForm from './LiveForm.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
   import Chapter from './Chapter.vue'
@@ -79,6 +91,14 @@
     // 章节信息
     handleChapterList()
   })
+
+  // 直播
+  const liveFormRef = ref()
+  const openFormLiveModal = (item) => {
+    item.courseId = currentCourseInfo.value.id
+    item.chapterId = currentChapterInfo.value.id
+    liveFormRef.value.onOpen(item)
+  }
 
   // 课时信息
   const period = ref({
