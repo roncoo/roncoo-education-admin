@@ -47,7 +47,7 @@
     id: undefined,
     periodName: undefined,
     beginTime: undefined,
-    periodType: 2,
+    periodType: 20,
     liveDuration: 60,
     liveDelay: 1,
     liveModel: 1,

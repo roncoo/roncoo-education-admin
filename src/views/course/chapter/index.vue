@@ -50,10 +50,10 @@
               </div>
             </template>
             <template #default="scope">
-              <el-button v-if="scope.row.periodType === 2" text type="primary" @click="broadcasting(scope.row)">开播</el-button>
-              <el-divider v-if="scope.row.periodType === 2" direction="vertical" />
-              <el-button v-if="scope.row.periodType === 1" text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
-              <el-button v-if="scope.row.periodType === 2" text type="primary" @click="openFormLiveModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 20" text type="primary" @click="broadcasting(scope.row)">开播</el-button>
+              <el-divider v-if="scope.row.periodType === 20" direction="vertical" />
+              <el-button v-if="scope.row.periodType === 10" text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 20" text type="primary" @click="openFormLiveModal(scope.row)">编辑</el-button>
               <el-divider direction="vertical" />
               <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
             </template>

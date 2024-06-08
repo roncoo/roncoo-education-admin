@@ -35,7 +35,7 @@
   const formDefault = {
     id: undefined,
     periodName: undefined,
-    periodType: 1,
+    periodType: 10,
     isFree: 1
   }
   const formModel = reactive({ ...formDefault })
