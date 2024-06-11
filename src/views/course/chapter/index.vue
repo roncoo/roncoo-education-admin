@@ -31,13 +31,23 @@
                 <span>{{ scope.$index + 1 }}. </span>
                 <span v-if="scope.row.resourceViewResp">
                   <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
-                  <span>{{ scope.row.periodName }}</span>
+                  <span>
+                    <span>{{ scope.row.periodName }}</span>
+                    <el-image
+                      v-if="scope.row.resourceViewResp.resourceType === 4"
+                      :src="scope.row.resourceViewResp.resourceUrl"
+                      :preview-src-list="[scope.row.resourceViewResp.resourceUrl]"
+                      preview-teleported
+                      style="height: 50px; width: auto; vertical-align: middle; margin-left: 10px"
+                    />
+                  </span>
                   <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
                   <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
                 </span>
                 <span v-if="scope.row.liveViewResp">
                   <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'PeriodTypeEnum'" :enum-value="scope.row.periodType" /> </el-tag>
                   <span>{{ scope.row.periodName }}</span>
+                  <span>【主讲人：{{ scope.row.liveViewResp.lecturerName }}，&nbsp;&nbsp;开播时间：{{ scope.row.liveViewResp.beginTime }}】</span>
                 </span>
                 <span v-if="currentCourseInfo.isFree === 0 && scope.row.isFree === 1" class="is-free">试看</span>
               </div>
@@ -131,6 +141,7 @@
       period.value.periodName = item.resourceName
       period.value.resourceId = item.id
       period.value.chapterId = currentChapterInfo.value.id
+      period.value.periodType = 10
       await courseApi.courseChapterPeriodSave(period.value)
       ElMessage.success('添加成功')
     }

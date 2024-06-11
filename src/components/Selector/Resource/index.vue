@@ -31,7 +31,11 @@
           </div>
         </div>
         <el-table v-else v-loading="page.loading" :data="page.list">
-          <el-table-column label="资源名称" prop="resourceName" />
+          <el-table-column label="资源名称" prop="resourceName">
+            <template #default="scope">
+              <span>{{ scope.row.resourceName }}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="资源类型" prop="resourceType" :width="200">
             <template #default="scope">
               <span>
@@ -42,11 +46,19 @@
               <br />
               <span v-if="scope.row.resourceType < 3">{{ formatTime(scope.row.videoLength) }}</span>
               <span v-if="scope.row.resourceType === 3">{{ scope.row.docPage }} 页</span>
+
+              <el-image
+                v-if="scope.row.resourceType === 4"
+                :src="scope.row.resourceUrl"
+                :preview-src-list="[scope.row.resourceUrl]"
+                preview-teleported
+                style="height: 20px; width: auto; vertical-align: middle; margin-right: 10px"
+              />
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
             <template #default="scope">
-              <el-button type="primary" @click="selectResource(scope.row)">选择</el-button>
+              <el-button text type="primary" @click="selectResource(scope.row)">选择</el-button>
             </template>
           </el-table-column>
         </el-table>
