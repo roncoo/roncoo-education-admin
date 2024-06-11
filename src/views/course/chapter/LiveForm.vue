@@ -90,6 +90,7 @@
       formModel.liveId = item.liveId
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
+      formModel.sort = item.sort
     }
     visible.value = true
   }

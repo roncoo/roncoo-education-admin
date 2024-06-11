@@ -17,6 +17,7 @@
         <img v-if="scope.row.contentType === 3" :alt="scope.row.configName" :src="scope.row.configValue" />
         <span v-if="scope.row.contentType === 4">{{ scope.row.configValue == 1 ? '开启' : '关闭' }}</span>
         <enum-view v-if="scope.row.configKey === 'vodPlatform'" :enum-name="'VodPlatformEnum'" :enum-value="scope.row.configValue" />
+        <enum-view v-if="scope.row.configKey === 'livePlatform'" :enum-name="'LivePlatformEnum'" :enum-value="scope.row.configValue" />
         <enum-view v-if="scope.row.configKey === 'storagePlatform'" :enum-name="'StoragePlatformEnum'" :enum-value="scope.row.configValue" />
         <enum-view v-if="scope.row.configKey === 'smsPlatform'" :enum-name="'SmsPlatformEnum'" :enum-value="scope.row.configValue" />
         <br />
@@ -36,7 +37,6 @@
           inactive-value="0"
           @change="handleSwitch(scope.row)"
         />
-
         <el-button v-else text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
@@ -44,7 +44,7 @@
   <div v-if="props.configType === '3'">
     <div class="clearfix">
       <el-row class="vod-info">
-        <el-col :span="6"> &nbsp;&nbsp;&nbsp;&nbsp;视频回调地址</el-col>
+        <el-col :span="6"> &nbsp;&nbsp;&nbsp;&nbsp;视频点播回调地址</el-col>
         <el-col :span="14">
           <div v-if="vodConfig">{{ vodConfig }}</div>
           <div style="color: #999; font-size: 12px">视频配置完成，需要重新初始化</div>

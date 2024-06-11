@@ -13,6 +13,7 @@
         <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'vodPlatform'" v-model="formModel.configValue" :enum-name="'VodPlatformEnum'"></enum-radio>
+        <enum-radio v-if="formModel.configKey === 'livePlatform'" v-model="formModel.configValue" :enum-name="'LivePlatformEnum'"></enum-radio>
       </el-form-item>
     </el-form>
     <template #footer>
