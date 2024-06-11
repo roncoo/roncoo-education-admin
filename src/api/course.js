@@ -135,6 +135,11 @@ export const courseApi = {
     return deleteRequest('/course/admin/course/chapter/period/delete?id=' + data.id)
   },
 
+  // 获取开播地址
+  getBroadcastUrl: (data) => {
+    return postRequest('/course/admin/live/broadcast', data)
+  },
+
   // 课程章分页
   courseChapterList: (data) => {
     return postRequest('/course/admin/course/chapter/list', data)

@@ -4,7 +4,7 @@
       <el-form-item class="form-group" label="课时名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit />
       </el-form-item>
-      <el-form-item class="form-group" label="收费设置" prop="isFree">
+      <el-form-item v-if="coursePrice > 0" class="form-group" label="收费设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
       </el-form-item>
     </el-form>
@@ -30,6 +30,7 @@
   }
 
   // 表单
+  const coursePrice = ref(0)
   const loading = ref(false) // 加载进度状态
   const emit = defineEmits(['refresh'])
   const formDefault = {
@@ -71,6 +72,7 @@
       formModel.id = item.id
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
+      coursePrice.value = item.coursePrice
     }
     visible.value = true
   }

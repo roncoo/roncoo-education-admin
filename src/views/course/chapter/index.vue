@@ -28,7 +28,7 @@
             </template>
             <template #default="scope">
               <div class="table-default">
-                <span>{{ scope.$index + 1 }}.</span>
+                <span>{{ scope.$index + 1 }}. </span>
                 <span v-if="scope.row.resourceViewResp">
                   <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
                   <span>{{ scope.row.periodName }}</span>
@@ -39,6 +39,7 @@
                   <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'PeriodTypeEnum'" :enum-value="scope.row.periodType" /> </el-tag>
                   <span>{{ scope.row.periodName }}</span>
                 </span>
+                <span v-if="currentCourseInfo.isFree === 0 && scope.row.isFree === 1" class="is-free">试看</span>
               </div>
             </template>
           </el-table-column>
@@ -95,9 +96,22 @@
   // 直播
   const liveFormRef = ref()
   const openFormLiveModal = (item) => {
+    item.coursePrice = currentCourseInfo.value.coursePrice
     item.courseId = currentCourseInfo.value.id
     item.chapterId = currentChapterInfo.value.id
     liveFormRef.value.onOpen(item)
+  }
+  // 开播功能
+  const broadcasting = (item) => {
+    ElMessageBox.confirm('确认要开播？', 'Web端开播', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      courseApi.getBroadcastUrl({ id: item.liveId, courseId: currentCourseInfo.value.id }).then((res) => {
+        window.open(res)
+      })
+    })
   }
 
   // 课时信息
@@ -161,6 +175,7 @@
   // 课时修改
   const periodFormRef = ref()
   const openFormPeriodModal = (item) => {
+    item.coursePrice = currentCourseInfo.value.coursePrice
     periodFormRef.value.onOpen(item)
   }
 
@@ -251,5 +266,11 @@
     border-radius: 4px;
     margin: 20px 0;
     font-size: 14px;
+  }
+  .is-free {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 5px;
   }
 </style>

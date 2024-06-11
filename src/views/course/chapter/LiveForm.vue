@@ -1,6 +1,10 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
+      <el-form-item label="主讲人" prop="lecturerId">
+        <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>
+        <el-button type="primary" @click="lecturerSelect">选择讲师</el-button>
+      </el-form-item>
       <el-form-item class="form-group" label="课时名称" prop="periodName">
         <el-input v-model="formModel.periodName" maxlength="100" show-word-limit />
       </el-form-item>
@@ -15,7 +19,7 @@
       <el-form-item class="form-group" label="直播延迟" prop="liveDelay">
         <enum-radio v-model="formModel.liveDelay" :enum-name="'LiveDelayEnum'" />
       </el-form-item>
-      <el-form-item class="form-group" label="收费设置" prop="isFree">
+      <el-form-item v-if="coursePrice" class="form-group" label="收费设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
       </el-form-item>
     </el-form>
@@ -26,6 +30,7 @@
       </span>
     </template>
   </el-dialog>
+  <select-lecturer v-if="lecturer.visible" @close="handleLecturer" />
 </template>
 
 <script setup>
@@ -33,11 +38,29 @@
   import { reactive, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
+  import SelectLecturer from '@/components/Selector/Lecturer/index.vue'
 
   // 校验规则
   const formRef = ref()
   const rules = {
-    periodName: [{ required: true, message: '不能为空', trigger: 'blur' }]
+    periodName: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    lecturerId: [{ required: true, message: '不能为空', trigger: 'blur' }]
+  }
+
+  const coursePrice = ref(0)
+  // 讲师选择功能
+  const lecturer = reactive({
+    visible: false
+  })
+  const lecturerSelect = () => {
+    lecturer.visible = true
+  }
+  const handleLecturer = (item) => {
+    lecturer.visible = false
+    if (item) {
+      formModel.lecturerName = item.lecturerName
+      formModel.lecturerId = item.lecturerId
+    }
   }
 
   // 表单
@@ -91,6 +114,7 @@
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
       formModel.sort = item.sort
+      coursePrice.value = item.coursePrice
     }
     visible.value = true
   }
