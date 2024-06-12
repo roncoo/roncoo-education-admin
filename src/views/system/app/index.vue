@@ -4,7 +4,7 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
-            <el-input v-model="query.appName" placeholder="请输入角色名称" prefix-icon="Search" clearable />
+            <enum-select v-model="query.appType" :enum-name="'AppTypeEnum'" :title="'请选择应用类型'" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
@@ -66,6 +66,7 @@
   import appForm from './AppForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
+  import EnumSelect from '@/components/Enum/Select/index.vue'
 
   // 添加/修改
   const formRef = ref()
@@ -77,7 +78,6 @@
   const { page, handlePage, query, handleQuery, resetQuery, handleDelete, handleStatus } = useTable({
     page: systemApi.appPage,
     delete: systemApi.appDelete,
-    status: systemApi.appEdit,
-    sort: systemApi.appSort
+    status: systemApi.appEdit
   })
 </script>

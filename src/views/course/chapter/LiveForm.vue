@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center :destroy-on-close="true" @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="900px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" @submit.prevent>
       <el-form-item label="主讲人" prop="lecturerId">
         <el-input v-model="formModel.lecturerName" disabled style="width: 260px; margin-right: 20px"></el-input>
@@ -22,6 +22,9 @@
       <el-form-item v-if="coursePrice" class="form-group" label="收费设置" prop="isFree">
         <enum-radio v-model="formModel.isFree" :enum-name="'FreeEnum'" />
       </el-form-item>
+      <el-form-item label="直播简介" prop="introduce">
+        <editor v-model="formModel.liveIntroduce" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -39,6 +42,7 @@
   import { courseApi } from '@/api/course'
   import EnumRadio from '@/components/Enum/Radio/index.vue'
   import SelectLecturer from '@/components/Selector/Lecturer/index.vue'
+  import Editor from '@/components/Editor/index.vue'
 
   // 校验规则
   const formRef = ref()
@@ -74,7 +78,7 @@
     liveDuration: 60,
     liveDelay: 1,
     liveModel: 1,
-    isFree: 1
+    isFree: 0
   }
   const formModel = reactive({ ...formDefault })
   const onSubmit = async () => {
@@ -107,6 +111,7 @@
   const onOpen = (item) => {
     formModel.courseId = item.courseId
     formModel.chapterId = item.chapterId
+    coursePrice.value = item.coursePrice
     if (item.id) {
       Object.assign(formModel, item.liveViewResp)
       formModel.id = item.id
@@ -114,7 +119,6 @@
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
       formModel.sort = item.sort
-      coursePrice.value = item.coursePrice
     }
     visible.value = true
   }

@@ -37,7 +37,7 @@
     id: undefined,
     periodName: undefined,
     periodType: 10,
-    isFree: 1
+    isFree: 0
   }
   const formModel = reactive({ ...formDefault })
   const onSubmit = async () => {
@@ -68,11 +68,11 @@
   // 打开和关闭
   const visible = ref(false) // 弹窗显示状态
   const onOpen = (item) => {
+    coursePrice.value = item.coursePrice
     if (item) {
       formModel.id = item.id
       formModel.periodName = item.periodName
       formModel.isFree = item.isFree
-      coursePrice.value = item.coursePrice
     }
     visible.value = true
   }

@@ -106,9 +106,9 @@
   // 直播
   const liveFormRef = ref()
   const openFormLiveModal = (item) => {
-    item.coursePrice = currentCourseInfo.value.coursePrice
     item.courseId = currentCourseInfo.value.id
     item.chapterId = currentChapterInfo.value.id
+    item.coursePrice = currentCourseInfo.value.coursePrice
     liveFormRef.value.onOpen(item)
   }
   // 开播功能
