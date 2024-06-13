@@ -10,7 +10,7 @@
       </el-descriptions-item>
       <el-descriptions-item label="用户手机:"> {{ usersInfo.mobile }} </el-descriptions-item>
       <el-descriptions-item label="账号余额:"> ￥{{ usersInfo.usersAccountViewResp?.availableAmount }}</el-descriptions-item>
-      <el-descriptions-item label="用户年龄:"> {{ usersInfo.userAge }}</el-descriptions-item>
+      <el-descriptions-item label="出生日期:"> {{ usersInfo.userAge }}</el-descriptions-item>
     </el-descriptions>
     <div style="height: 20px"></div>
     <el-descriptions title="其他信息" :column="3">
