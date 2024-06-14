@@ -20,7 +20,7 @@
       <chapter v-if="currentChapterInfo.id" :tree-data="treeData" :chapter-id="currentChapterInfo.id" @node-click="handleChapterClick" @refresh="handleChapterList" />
       <div class="main-table">
         <el-table v-loading="loading" :data="periodList">
-          <el-table-column align="left">
+          <el-table-column align="left" :min-width="300">
             <template #header>
               <div class="table-header">
                 {{ currentChapterInfo.chapterName }}
@@ -47,7 +47,11 @@
                 <span v-if="scope.row.liveViewResp">
                   <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'PeriodTypeEnum'" :enum-value="scope.row.periodType" /> </el-tag>
                   <span>{{ scope.row.periodName }}</span>
-                  <span>【主讲人：{{ scope.row.liveViewResp.lecturerName }}，&nbsp;&nbsp;开播时间：{{ scope.row.liveViewResp.beginTime }}】</span>
+                  <div style="margin-top: 10px; margin-left: 80px">
+                    主讲人：{{ scope.row.liveViewResp.lecturerName }}&nbsp;&nbsp;|&nbsp;
+                    <span>直播状态：<enum-view :enum-name="'LiveStatusEnum'" :enum-value="scope.row.liveViewResp.liveStatus" /></span>
+                    <span v-if="scope.row.liveViewResp.liveStatus === 1">&nbsp;&nbsp;|&nbsp;开播时间：{{ scope.row.liveViewResp.beginTime }}</span>
+                  </div>
                 </span>
                 <span v-if="currentCourseInfo.isFree === 0 && scope.row.isFree === 1" class="is-free">试看</span>
               </div>
