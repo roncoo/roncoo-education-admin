@@ -21,14 +21,19 @@
           <enum-view :enum-name="'LoginClientEnum'" :enum-value="scope.row.loginClient" />
         </template>
       </el-table-column>
+      <el-table-column label="登录方式">
+        <template #default="scope">
+          <enum-view :enum-name="'LoginTypeEnum'" :enum-value="scope.row.loginType" />
+        </template>
+      </el-table-column>
       <el-table-column label="操作系统" prop="os" />
       <el-table-column label="浏览器" prop="browser" />
-      <el-table-column label="登录时间" prop="gmtCreate" :min-width="100" />
-      <el-table-column label="登录状态">
+      <el-table-column label="动作">
         <template #default="scope">
           <enum-view :enum-name="'LoginStatusEnum'" :enum-value="scope.row.loginStatus" />
         </template>
       </el-table-column>
+      <el-table-column label="时间" prop="gmtCreate" :min-width="100" />
     </el-table>
     <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
   </div>
