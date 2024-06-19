@@ -4,6 +4,12 @@
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
           <el-form-item>
+            <enum-select v-model="query.loginClient" :enum-name="'LoginClientEnum'" :title="'请选择登录客户端'" />
+          </el-form-item>
+          <el-form-item>
+            <enum-select v-model="query.loginType" :enum-name="'LoginTypeEnum'" :title="'请选择登录方式'" />
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
           </el-form-item>
@@ -43,6 +49,7 @@
   import EnumView from '@/components/Enum/View/index.vue'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
+  import EnumSelect from '@/components/Enum/Select/index.vue'
 
   // 基础功能
   const { page, handlePage, query, handleQuery, resetQuery } = useTable({
