@@ -60,7 +60,7 @@
           <el-table-column align="right">
             <template #header>
               <div>
-                <el-button @click="openFormLiveModal">添加直播</el-button>
+                <!-- <el-button @click="openFormLiveModal">添加直播</el-button> -->
                 <el-button @click="resourceSelect">添加资源</el-button>
               </div>
             </template>
