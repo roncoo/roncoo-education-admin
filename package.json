@@ -18,7 +18,7 @@
     "@polyv/vod-upload-js-sdk": "1.6.0",
     "@wangeditor/editor": "5.1.23",
     "@wangeditor/editor-for-vue": "5.1.12",
-    "axios": "1.6.8",
+    "axios": "1.7.4",
     "echarts": "5.5.0",
     "element-plus": "2.6.3",
     "js-cookie": "3.0.5",
