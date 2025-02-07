@@ -48,8 +48,8 @@ Cloud为核心框架。系统目前主要功能有课程点播功能，支持多
 
 ### 演示地址
 
-* 前端门户演示地址：[https://eduos.roncoo.net/](https://eduos.roncoo.net/)
-* 后台管理演示地址：[https://eduos.roncoo.net/admin](https://eduos.roncoo.net/admin/)
+* 前端门户演示地址：[https://eduos.roncoos.com/](https://eduos.roncoos.com/)
+* 后台管理演示地址：[https://eduos.roncoos.com/admin](https://eduos.roncoos.com/admin/)
 * 前端技术体系：Vue3 + Vite5 + Vue-Router + Element-Plus + Pinia + Axios
 * 后端技术体系：Spring Cloud Alibaba2021 + MySQL8 + Nacos + Seata + Mybatis + Druid
 
