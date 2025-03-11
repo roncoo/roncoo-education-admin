@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-container">
     <el-row :gutter="20">
-      <el-col v-if="hasPermission('stat:data')" :span="14">
+      <el-col v-if="hasPermission('stat:data')" :span="13">
         <stat-data />
       </el-col>
-      <el-col :span="10">
+      <el-col :span="11">
         <el-card class="info">
           <template #header>特别说明</template>
           <div class="info-body">
