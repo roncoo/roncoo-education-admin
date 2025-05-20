@@ -12,7 +12,7 @@ export default defineConfig({
     proxy: {
       '/gateway': {
         //target: 'http://localhost:7700',
-        target: 'https://dev-os.roncoos.com/gateway',
+        target: 'https://eduos.roncoos.com/gateway',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/gateway/, '')
       }
