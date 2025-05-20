@@ -26,10 +26,6 @@ export const usersApi = {
   lecturerSort: (data) => {
     return putRequest('/user/admin/lecturer/sort', data)
   },
-  // 课程同步
-  lecturerEs: () => {
-    return getRequest('/user/admin/lecturer/es')
-  },
 
   // 讲师保存
   lecturerSave: (data) => {

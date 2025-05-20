@@ -182,10 +182,6 @@ export const courseApi = {
   courseSort: (data) => {
     return putRequest('/course/admin/course/sort', data)
   },
-  // 课程同步
-  courseEs: () => {
-    return getRequest('/course/admin/course/es')
-  },
   // 课程保存
   courseSave: (data) => {
     return postRequest('/course/admin/course/save', data)

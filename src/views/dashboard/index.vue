@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-container">
     <el-row :gutter="20">
-      <el-col v-if="hasPermission('stat:data')" :span="14">
+      <el-col v-if="hasPermission('stat:data')">
         <stat-data />
       </el-col>
-      <el-col :span="10">
+      <!--      <el-col :span="10">
         <el-card class="info">
           <template #header>特别说明</template>
           <div class="info-body">
@@ -17,7 +17,7 @@
             <img class="info-image" src="@/assets/images/weixin.jpg" alt="作者微信公众号" style="width: auto; height: 120px" />
           </div>
         </el-card>
-      </el-col>
+      </el-col>-->
     </el-row>
 
     <div v-if="hasPermission('stat:login')">

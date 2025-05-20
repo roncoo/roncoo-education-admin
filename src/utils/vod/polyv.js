@@ -56,7 +56,7 @@ export const uploadPolyv = (polyvClient, startFile, callback) => {
       // 文件上传相关信息设置
       //title: file.name,  // 标题
       //desc: <desc>,  // 描述
-      cataid: startFile.categoryId, // 上传分类目录ID
+      //cataid: startFile.categoryId, // 上传分类目录ID
       //tag: <tag>,  // 标签
       luping: 1, // 是否开启视频课件优化处理，对于上传录屏类视频清晰度有所优化：0为不开启，1为开启
       keepsource: 0 // 是否源文件播放（不对视频进行编码）：0为编码，1为不编码
