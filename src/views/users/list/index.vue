@@ -15,13 +15,13 @@
     </div>
     <el-table v-loading="page.loading" :data="page.list">
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
-      <el-table-column label="用户信息" :min-width="50">
+      <el-table-column label="用户信息" :min-width="60">
         <template #default="scope">
           <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
           &nbsp;{{ scope.row.nickname }}
         </template>
       </el-table-column>
-      <el-table-column :min-width="50" label="账户">
+      <el-table-column :min-width="60" label="账户">
         <template #default="scope">
           <span>余额：￥{{ scope.row.usersAccountViewResp?.availableAmount }}元</span>
           <br />
@@ -29,9 +29,9 @@
           <el-button v-permission="'user:record'" link @click="toUserRecord(scope.row, 'account')">查看明细</el-button>
         </template>
       </el-table-column>
-      <el-table-column :min-width="50" label="备注" prop="remark">
+      <el-table-column :min-width="40" label="注册来源" prop="remark">
         <template #default="scope">
-          <span v-html="scope.row.remark" />
+          <enum-view :enum-name="'RegisterSourceEnum'" :enum-value="scope.row.registerSource" />
         </template>
       </el-table-column>
       <el-table-column :min-width="50" label="注册时间" prop="gmtCreate" />

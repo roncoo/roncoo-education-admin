@@ -135,6 +135,11 @@ export const courseApi = {
     return deleteRequest('/course/admin/course/chapter/period/delete?id=' + data.id)
   },
 
+  // 获取开播地址
+  getBroadcastUrl: (data) => {
+    return postRequest('/course/admin/live/broadcast', data)
+  },
+
   // 课程章分页
   courseChapterList: (data) => {
     return postRequest('/course/admin/course/chapter/list', data)
@@ -176,10 +181,6 @@ export const courseApi = {
   // 课程排序
   courseSort: (data) => {
     return putRequest('/course/admin/course/sort', data)
-  },
-  // 课程同步
-  courseEs: () => {
-    return getRequest('/course/admin/course/es')
   },
   // 课程保存
   courseSave: (data) => {

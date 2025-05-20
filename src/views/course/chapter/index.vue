@@ -20,7 +20,7 @@
       <chapter v-if="currentChapterInfo.id" :tree-data="treeData" :chapter-id="currentChapterInfo.id" @node-click="handleChapterClick" @refresh="handleChapterList" />
       <div class="main-table">
         <el-table v-loading="loading" :data="periodList">
-          <el-table-column align="left">
+          <el-table-column align="left" :min-width="300">
             <template #header>
               <div class="table-header">
                 {{ currentChapterInfo.chapterName }}
@@ -28,22 +28,47 @@
             </template>
             <template #default="scope">
               <div class="table-default">
-                <span>{{ scope.$index + 1 }}.</span>
-                <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
-                <span>{{ scope.row.periodName }}</span>
-                <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
-                <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
+                <span>{{ scope.$index + 1 }}. </span>
+                <span v-if="scope.row.resourceViewResp">
+                  <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'ResourceTypeEnum'" :enum-value="scope.row.resourceViewResp.resourceType" /> </el-tag>
+                  <span>
+                    <span>{{ scope.row.periodName }}</span>
+                    <el-image
+                      v-if="scope.row.resourceViewResp.resourceType === 4"
+                      :src="scope.row.resourceViewResp.resourceUrl"
+                      :preview-src-list="[scope.row.resourceViewResp.resourceUrl]"
+                      preview-teleported
+                      style="height: 50px; width: auto; vertical-align: middle; margin-left: 10px"
+                    />
+                  </span>
+                  <span v-if="scope.row.resourceViewResp.resourceType < 3"> 【{{ formatTime(scope.row.resourceViewResp.videoLength) }}】</span>
+                  <span v-if="scope.row.resourceViewResp.resourceType === 3"> 【{{ scope.row.resourceViewResp.docPage }} 页】</span>
+                </span>
+                <span v-if="scope.row.liveViewResp">
+                  <el-tag class="table-default-tag" effect="plain"><enum-view :enum-name="'PeriodTypeEnum'" :enum-value="scope.row.periodType" /> </el-tag>
+                  <span>{{ scope.row.periodName }}</span>
+                  <div style="margin-top: 10px; margin-left: 80px">
+                    主讲人：{{ scope.row.liveViewResp.lecturerName }}&nbsp;&nbsp;|&nbsp;
+                    <span>直播状态：<enum-view :enum-name="'LiveStatusEnum'" :enum-value="scope.row.liveViewResp.liveStatus" /></span>
+                    <span v-if="scope.row.liveViewResp.liveStatus === 1">&nbsp;&nbsp;|&nbsp;开播时间：{{ scope.row.liveViewResp.beginTime }}</span>
+                  </div>
+                </span>
+                <span v-if="currentCourseInfo.isFree === 0 && scope.row.isFree === 1" class="is-free">试看</span>
               </div>
             </template>
           </el-table-column>
           <el-table-column align="right">
             <template #header>
               <div>
+                <!-- <el-button @click="openFormLiveModal">添加直播</el-button> -->
                 <el-button @click="resourceSelect">添加资源</el-button>
               </div>
             </template>
             <template #default="scope">
-              <el-button text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 20" text type="primary" @click="broadcasting(scope.row)">开播</el-button>
+              <el-divider v-if="scope.row.periodType === 20" direction="vertical" />
+              <el-button v-if="scope.row.periodType === 10" text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 20" text type="primary" @click="openFormLiveModal(scope.row)">编辑</el-button>
               <el-divider direction="vertical" />
               <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
             </template>
@@ -53,12 +78,14 @@
     </div>
   </div>
   <select-resource v-if="period.visible" :visible="period.visible" @close="handleResource" />
-  <period-form ref="periodFormRef" />
+  <period-form ref="periodFormRef" @refresh="handleChapterList" />
+  <live-form ref="liveFormRef" @refresh="handleChapterList" />
 </template>
 <script setup>
   import { onMounted, ref } from 'vue'
   import { courseApi } from '@/api/course'
   import PeriodForm from './PeriodForm.vue'
+  import liveForm from './LiveForm.vue'
   import { useRoute } from 'vue-router/dist/vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
   import Chapter from './Chapter.vue'
@@ -80,6 +107,27 @@
     handleChapterList()
   })
 
+  // 直播
+  const liveFormRef = ref()
+  const openFormLiveModal = (item) => {
+    item.courseId = currentCourseInfo.value.id
+    item.chapterId = currentChapterInfo.value.id
+    item.coursePrice = currentCourseInfo.value.coursePrice
+    liveFormRef.value.onOpen(item)
+  }
+  // 开播功能
+  const broadcasting = (item) => {
+    ElMessageBox.confirm('确认要开播？', 'Web端开播', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      courseApi.getBroadcastUrl({ id: item.liveId, courseId: currentCourseInfo.value.id }).then((res) => {
+        window.open(res)
+      })
+    })
+  }
+
   // 课时信息
   const period = ref({
     visible: false,
@@ -97,6 +145,7 @@
       period.value.periodName = item.resourceName
       period.value.resourceId = item.id
       period.value.chapterId = currentChapterInfo.value.id
+      period.value.periodType = 10
       await courseApi.courseChapterPeriodSave(period.value)
       ElMessage.success('添加成功')
     }
@@ -141,6 +190,7 @@
   // 课时修改
   const periodFormRef = ref()
   const openFormPeriodModal = (item) => {
+    item.coursePrice = currentCourseInfo.value.coursePrice
     periodFormRef.value.onOpen(item)
   }
 
@@ -231,5 +281,11 @@
     border-radius: 4px;
     margin: 20px 0;
     font-size: 14px;
+  }
+  .is-free {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 5px;
   }
 </style>

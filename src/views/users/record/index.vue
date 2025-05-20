@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-descriptions title="用户信息" :column="4">
       <el-descriptions-item label="">
-        <img :alt="usersInfo.nickname" :src="usersInfo.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
+        <img :alt="usersInfo.nickname" :src="usersInfo.userHead" style="height: 60px; width: auto; border-radius: 50%; vertical-align: middle" />
         <span style="margin-left: 10px">
           {{ usersInfo.nickname }}
           <br />
@@ -10,10 +10,13 @@
       </el-descriptions-item>
       <el-descriptions-item label="用户手机:"> {{ usersInfo.mobile }} </el-descriptions-item>
       <el-descriptions-item label="账号余额:"> ￥{{ usersInfo.usersAccountViewResp?.availableAmount }}</el-descriptions-item>
-      <el-descriptions-item label="用户年龄:"> {{ usersInfo.userAge }} 岁</el-descriptions-item>
-      <el-descriptions-item label="">
-        <span style="color: #999">{{ usersInfo.remark }}</span>
-      </el-descriptions-item>
+      <el-descriptions-item label="出生日期:"> {{ usersInfo.userAge }}</el-descriptions-item>
+    </el-descriptions>
+    <div style="height: 20px"></div>
+    <el-descriptions title="其他信息" :column="3">
+      <el-descriptions-item label="注册来源:"><enum-view :enum-name="'RegisterSourceEnum'" :enum-value="usersInfo.registerSource" /></el-descriptions-item>
+      <el-descriptions-item label="地址:">{{ usersInfo.country }}-{{ usersInfo.province }}-{{ usersInfo.city }}</el-descriptions-item>
+      <el-descriptions-item label="备注："> {{ usersInfo.remark }} </el-descriptions-item>
     </el-descriptions>
     <div style="height: 20px"></div>
     <el-descriptions title="数据统计" :column="4">
@@ -45,6 +48,7 @@
   import { usersApi } from '@/api/users'
   import { courseApi } from '@/api/course.js'
   import { formatTimeTotal } from '@/utils/base.js'
+  import EnumView from '@/components/Enum/View/index.vue'
   const route = useRoute()
   const activeName = ref(route.query.activeName)
   // 切换

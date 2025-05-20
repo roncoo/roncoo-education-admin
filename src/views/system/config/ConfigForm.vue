@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="800px" center align-center :destroy-on-close="true" @close="onClose">
+  <el-dialog :append-to-body="true" :model-value="visible" :title="formModel.id ? '修改' : '添加'" width="820px" center align-center :destroy-on-close="true" @close="onClose">
     <el-form ref="formRef" :model="formModel" :rules="rules" @submit.prevent>
       <el-form-item prop="configValue">
         <!-- 文本类型 -->
@@ -13,6 +13,7 @@
         <enum-radio v-if="formModel.configKey === 'smsPlatform'" v-model="formModel.configValue" :enum-name="'SmsPlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'storagePlatform'" v-model="formModel.configValue" :enum-name="'StoragePlatformEnum'"></enum-radio>
         <enum-radio v-if="formModel.configKey === 'vodPlatform'" v-model="formModel.configValue" :enum-name="'VodPlatformEnum'"></enum-radio>
+        <enum-radio v-if="formModel.configKey === 'livePlatform'" v-model="formModel.configValue" :enum-name="'LivePlatformEnum'"></enum-radio>
       </el-form-item>
     </el-form>
     <template #footer>

@@ -23,7 +23,7 @@
           </el-form-item>
           <el-form-item class="form-group" prop="verCode">
             <el-input v-model="loginForm.verCode" class="var-input" placeholder="验证码" />
-            <img class="var-img" :src="verImg" @click="getCaptcha" />
+            <img class="var-img" :src="verImg" alt="" @click="getCaptcha" />
           </el-form-item>
           <el-button class="login-button" type="primary" @click="handleLogin">登 录</el-button>
           <div class="tip">账号：18800000000/123456（需要本地部署）</div>

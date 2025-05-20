@@ -57,7 +57,7 @@ export const usersApi = {
 
   // 登录日志
   logLoginPage: (params, pageCurrent = 1, pageSize = 20) => {
-    return postRequest('/user/admin/log/login/page', { pageCurrent, pageSize, ...params })
+    return postRequest('/user/admin/users/log/page', { pageCurrent, pageSize, ...params })
   },
 
   // 用户课程分页

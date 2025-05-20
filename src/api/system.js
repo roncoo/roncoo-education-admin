@@ -5,6 +5,27 @@ export const systemApi = {
     return postRequest('/system/api/common/enum', data)
   },
 
+  // app版本分页
+  appPage: (params, pageCurrent = 1, pageSize = 20) => {
+    return postRequest('/system/admin/website/app/page', { pageCurrent, pageSize, ...params })
+  },
+  // app版本修改
+  appEdit: (data) => {
+    return putRequest('/system/admin/website/app/edit', data)
+  },
+  // app版本排序
+  appSort: (data) => {
+    return putRequest('/system/admin/website/app/sort', data)
+  },
+  // app版本保存
+  appSave: (data) => {
+    return postRequest('/system/admin/website/app/save', data)
+  },
+  // app版本删除
+  appDelete: (data) => {
+    return deleteRequest('/system/admin/website/app/delete?id=' + data.id)
+  },
+
   // 头部导航分页
   navPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/system/admin/website/nav/page', { pageCurrent, pageSize, ...params })

@@ -13,7 +13,7 @@
         </el-form>
       </div>
       <div class="button_bar">
-        <el-button type="primary" @click="openFormModal()">添加课程</el-button>
+        <el-button type="primary" @click="courseSelect">添加课程</el-button>
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list" row-key="id" class="drag-table">
@@ -52,7 +52,8 @@
       </el-table-column>
     </el-table>
     <pagination v-model:current-page="page.pageCurrent" v-model:page-size="page.pageSize" :total="page.totalCount" @pagination="handlePage" />
-    <zone-course-form ref="formRef" @refresh="handlePage" />
+
+    <select-course v-if="course.visible" :visible="course.visible" @close="handleCourse" />
   </div>
 </template>
 <script setup>
@@ -60,14 +61,24 @@
   import { courseApi } from '@/api/course'
   import useTable from '@/utils/table'
   import Pagination from '@/components/Pagination/index.vue'
-  import ZoneCourseForm from './ZoneCourseForm.vue'
   import EnumView from '@/components/Enum/View/index.vue'
   import { useRoute } from 'vue-router'
+  import SelectCourse from '@/components/Selector/Course/index.vue'
   const route = useRoute()
-  // 添加/修改
-  const formRef = ref()
-  const openFormModal = (item = null) => {
-    formRef.value.onOpen(item)
+
+  // 添加课程
+  const course = ref({
+    visible: false
+  })
+  const courseSelect = () => {
+    course.value.visible = true
+  }
+  const handleCourse = async (item) => {
+    course.value.visible = false
+    console.log(item)
+    const formModel = { zoneId: route.query.zoneId, courseId: item.courseId, sort: 1 }
+    await courseApi.zoneCourseSave(formModel)
+    handleQuery()
   }
 
   // 基础功能
