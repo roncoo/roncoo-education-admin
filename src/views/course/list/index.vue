@@ -9,7 +9,6 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'course:es'" type="primary" @click="handleEs()">同步ES</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -24,8 +23,8 @@
           <div style="float: left; margin-left: 10px; max-width: 70%">
             <el-link :href="'/course/detail?id=' + scope.row.id" target="_blank">{{ scope.row.courseName }}</el-link>
             <br />
-            <span v-if="scope.row.isFree == 1">免费</span>
-            <span v-if="scope.row.isFree == 0">
+            <span v-if="scope.row.isFree === 1">免费</span>
+            <span v-if="scope.row.isFree === 0">
               ￥{{ scope.row.coursePrice }}<span style="text-decoration: line-through; margin-left: 10px">￥{{ scope.row.rulingPrice }}</span>
             </span>
           </div>
@@ -74,8 +73,8 @@
                   <el-button v-permission="'course:edit'" text type="primary" @click="toCourseUpdate(scope.row)">编辑</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-if="scope.row.statusId == 0" v-permission="'course:edit'" text type="primary">启用</el-button>
-                  <el-button v-if="scope.row.statusId == 1" v-permission="'course:edit'" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0" v-permission="'course:edit'" text type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1" v-permission="'course:edit'" text type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button v-permission="'course:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
@@ -96,7 +95,6 @@
   import { courseApi } from '@/api/course'
   import { useRouter } from 'vue-router'
   import EnumView from '@/components/Enum/View/index.vue'
-  import { ElMessage, ElMessageBox } from 'element-plus'
 
   const router = useRouter()
 
@@ -117,19 +115,6 @@
   // 修改
   const toCourseUpdate = (item) => {
     router.push({ path: '/course/update', query: { courseId: item.id } })
-  }
-
-  // 同步ES
-  const handleEs = () => {
-    ElMessageBox.confirm('将课程信息同步到ES，用于门户搜索', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'info'
-    }).then(() => {
-      courseApi.courseEs().then((res) => {
-        ElMessage.success(res)
-      })
-    })
   }
 
   // 基础功能

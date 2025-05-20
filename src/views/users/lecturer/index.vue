@@ -9,7 +9,6 @@
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>
             <el-button @click="resetQuery()">重置</el-button>
-            <el-button v-permission="'lecturer:es'" type="primary" @click="handleEs()">同步ES</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -67,25 +66,12 @@
   import LecturerForm from './LecturerForm.vue'
   import Pagination from '@/components/Pagination/index.vue'
   import EnumView from '@/components/Enum/View/index.vue'
-  import { ElMessage, ElMessageBox } from 'element-plus'
+  import { ArrowDown } from '@element-plus/icons-vue'
 
   // 添加/修改
   const formRef = ref()
   const openFormModal = (item) => {
     formRef.value.onOpen(item)
-  }
-
-  // 同步ES
-  const handleEs = () => {
-    ElMessageBox.confirm('将讲师信息同步到ES，用于门户搜索', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'info'
-    }).then(() => {
-      usersApi.lecturerEs().then((res) => {
-        ElMessage.success(res)
-      })
-    })
   }
 
   // 基础功能
