@@ -8,16 +8,18 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
-    "prettier": "prettier --write src"
+    "prettier": "prettier --write src",
+    "zip": "node zip.mjs"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.3.1",
     "@polyv/vod-upload-js-sdk": "1.6.0",
     "@wangeditor/editor": "5.1.23",
     "@wangeditor/editor-for-vue": "5.1.12",
+    "archiver": "7.0.1",
     "axios": "1.11.0",
     "echarts": "5.5.0",
     "element-plus": "2.6.3",
