@@ -96,9 +96,7 @@ function toObj(attr) {
 export function encrypt(password, publicKey) {
   if (!publicKey) {
     publicKey = useWebsiteStore().getInfo.rsaLoginPublicKey
-    console.log(publicKey)
   }
-
   const crypt = new JSEncrypt()
   crypt.setPublicKey(publicKey)
   return crypt.encrypt(password)
