@@ -13,10 +13,6 @@ export const systemApi = {
   appEdit: (data) => {
     return putRequest('/system/admin/website/app/edit', data)
   },
-  // app版本排序
-  appSort: (data) => {
-    return putRequest('/system/admin/website/app/sort', data)
-  },
   // app版本保存
   appSave: (data) => {
     return postRequest('/system/admin/website/app/save', data)
