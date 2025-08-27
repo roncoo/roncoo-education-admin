@@ -30,9 +30,9 @@
     "pinia": "2.1.7",
     "simple-uploader.js": "0.6.0",
     "sortablejs": "1.15.2",
-    "vue": "3.4.21",
-    "vue-json-pretty": "2.4.0",
-    "vue-router": "4.3.0",
+    "vue": "3.5.20",
+    "vue-json-pretty": "2.5.0",
+    "vue-router": "4.5.1",
     "vuedraggable": "4.1.0"
   },
   "devDependencies": {
