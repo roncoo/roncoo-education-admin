@@ -11,7 +11,8 @@ export default defineConfig({
     open: true, // 服务启动时是否自动打开浏览器
     proxy: {
       '/gateway': {
-        target: 'http://localhost:7700',
+        //target: 'http://localhost:7700',
+        target: 'https://eduos.roncoos.com/gateway',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/gateway/, '')
       }
