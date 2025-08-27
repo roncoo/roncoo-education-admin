@@ -25,6 +25,7 @@
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/../dist</directory>
+      <outputDirectory></outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>
