@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { EventSource } from 'eventsource'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getToken, removeToken } from '@/utils/cookie.js'
 import router from '@/router/index.js'
@@ -157,4 +158,12 @@ export const upload = (url, file, fileName, cb, cancelFun) => {
   }
 
   return request.post(url, formData, config)
+}
+
+
+// EventStream 底层方法
+export const getEventStream = (url, data) => {
+  return new EventSource(PATH.URL_GATEWAY + url + '?' + new URLSearchParams(data), {
+    fetch: (input, init) => fetch(input, { ...init, headers: { token: getToken() } })
+  })
 }

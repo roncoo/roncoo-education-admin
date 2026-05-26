@@ -1,10 +1,17 @@
-import { deleteRequest, getRequest, postRequest, putRequest } from '@/utils/request'
+import { deleteRequest, getEventStream, getRequest, postRequest, putRequest } from '@/utils/request'
 
 export const systemApi = {
   getEnum: (data) => {
     return postRequest('/system/api/common/enum', data)
   },
-
+  // AI写作-创建任务，返回aiToken
+  aiWriteCreate: (data) => {
+    return postRequest('/system/admin/ai/write/create', data)
+  },
+  // AI写作-SSE流式获取内容
+  aiWriteCompletions: (data) => {
+    return getEventStream('/system/admin/ai/write/completions', data)
+  },
   // app版本分页
   appPage: (params, pageCurrent = 1, pageSize = 20) => {
     return postRequest('/system/admin/website/app/page', { pageCurrent, pageSize, ...params })

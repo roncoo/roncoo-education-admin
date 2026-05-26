@@ -4,6 +4,7 @@
     <editor :default-config="editorConfig" :model-value="props.modelValue" style="height: 300px" @on-change="handleChange" @on-created="handleCreated" />
   </div>
   <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :multiple="true" :visible="picVisible" @close="handleCallback" />
+  <ai-form v-if="aiVisible" :visible="aiVisible" @close="handleAiCallback" />
 </template>
 
 <script setup>
@@ -12,6 +13,7 @@
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
   import registerMenu from './index.js'
   import SelectorResource from '@/components/Selector/Resource/index.vue'
+  import AiForm from './module/plugin/ai/AiForm.vue'
 
   const props = defineProps({
     modelValue: {
@@ -21,7 +23,7 @@
   })
 
   const emit = defineEmits(['update:modelValue'])
-  // 编辑器回调函数
+
   const handleChange = (editor) => {
     emit('update:modelValue', editor.getHtml())
   }
@@ -32,26 +34,28 @@
     editor.destroy()
   })
 
-  // 编辑器实例
   const editorRef = shallowRef()
   const handleCreated = (editor) => {
     editorRef.value = editor
-    // 注册自定义菜单
     registerMenu(editorRef.value, toolbarConfig.value)
-    // 注册自定义菜单点击事件
     initMenuEvent()
   }
+
   const toolbarConfig = ref({
-    // https://blog.csdn.net/weixin_62277266/article/details/130645112
     excludeKeys: ['insertLink', 'todo', 'clearStyle', 'emotion', 'group-image', 'insertVideo', 'insertTable', 'redo', 'undo', 'fullScreen']
   })
   const editorConfig = ref({})
 
   const picVisible = ref(false)
+  const aiVisible = ref(false)
+
   const initMenuEvent = () => {
     const editor = editorRef.value
     editor.on('PicMenuClick', () => {
       picVisible.value = true
+    })
+    editor.on('AiMenuClick', () => {
+      aiVisible.value = true
     })
   }
 
@@ -64,7 +68,16 @@
       })
     }
   }
+
+  const handleAiCallback = (val) => {
+    aiVisible.value = false
+    if (val) {
+      editorRef.value.restoreSelection()
+      editorRef.value.dangerouslyInsertHtml(val)
+    }
+  }
 </script>
+
 <style lang="scss">
   .w-e-text-container {
     height: 300px;
