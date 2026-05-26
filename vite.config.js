@@ -5,7 +5,6 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 export default defineConfig({
   base: './',
-  telemetry: false,
   server: {
     port: 9528, // 服务启动端口号
     open: true, // 服务启动时是否自动打开浏览器
@@ -19,13 +18,13 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, '.', 'src')
+      '@': resolve('src')
     }
   },
   plugins: [
     vue(),
     createSvgIconsPlugin({
-      iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
+      iconDirs: [resolve('src/assets/svg')],
       symbolId: 'icon-[name]'
     })
   ],
@@ -39,5 +38,6 @@ export default defineConfig({
         drop_debugger: true
       }
     }
-  }
+  },
+  telemetry: false
 })
