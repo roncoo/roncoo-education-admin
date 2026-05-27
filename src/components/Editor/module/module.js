@@ -3,9 +3,7 @@ import AiParseElemHtml from '@/components/Editor/module/plugin/ai/parse-elem-htm
 import AiElemToHtml from '@/components/Editor/module/plugin/ai/elem-to-html.js'
 import AiRenderElem from '@/components/Editor/module/plugin/ai/render-elem.js'
 
-/**
- * 注册自定义菜单到编辑器工具栏
- */
+// 注册自定义菜单到编辑器工具栏
 export const registerMenu = function (editor, toolbarConfig, menusList) {
   const allRegisterMenu = editor.getAllMenuKeys()
   let keys = []
@@ -27,15 +25,10 @@ export const registerMenu = function (editor, toolbarConfig, menusList) {
   }
 }
 
-// 注册 AI 自定义节点插件（只注册一次）
-let aiModuleRegistered = false
-export const registerAiModule = () => {
-  if (aiModuleRegistered) return
-  aiModuleRegistered = true
-  const module = {
-    parseElemsHtml: [AiParseElemHtml],
-    elemsToHtml: [AiElemToHtml],
-    renderElems: [AiRenderElem]
-  }
-  Boot.registerModule(module)
+// 注册 AI 自定义节点插件
+const module = {
+  parseElemsHtml: [AiParseElemHtml],
+  elemsToHtml: [AiElemToHtml],
+  renderElems: [AiRenderElem]
 }
+Boot.registerModule(module)

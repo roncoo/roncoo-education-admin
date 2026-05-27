@@ -1,9 +1,9 @@
 <template>
-  <div style="border: 1px solid #ccc; margin-top: 10px; width: 100%">
+  <div class="editor-container">
     <toolbar :editor="editorRef" :default-config="toolbarConfig" mode="simple" style="border-bottom: 1px solid #ccc" />
     <editor :default-config="editorConfig" :model-value="props.modelValue" style="height: 300px" @on-change="handleChange" @on-created="handleCreated" />
   </div>
-  <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :multiple="true" :visible="picVisible" @close="handleCallback" />
+  <selector-resource v-if="picVisible" :title="'选择图片'" :resource-type="4" :multiple="true" :visible="picVisible" @close="handleImageCallback" />
   <ai-form v-if="aiVisible" :visible="aiVisible" @close="handleAiCallback" />
 </template>
 
@@ -11,7 +11,8 @@
   import '@wangeditor/editor/dist/css/style.css'
   import { onBeforeUnmount, ref, shallowRef } from 'vue'
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-  import registerMenu from './index.js'
+  import { Menus } from './index.js'
+  import { registerMenu } from './module/module.js'
   import SelectorResource from '@/components/Selector/Resource/index.vue'
   import AiForm from './module/plugin/ai/AiForm.vue'
 
@@ -37,21 +38,39 @@
   const editorRef = shallowRef()
   const handleCreated = (editor) => {
     editorRef.value = editor
-    registerMenu(editorRef.value, toolbarConfig.value)
-    initMenuEvent()
+    registerMenu(editorRef.value, toolbarConfig.value, Menus)
+    initMenuEvent(editor)
   }
 
   const toolbarConfig = ref({
-    excludeKeys: ['insertLink', 'todo', 'clearStyle', 'emotion', 'group-image', 'insertVideo', 'insertTable', 'redo', 'undo', 'fullScreen']
+    toolbarKeys: [
+      'fontSize',
+      '|',
+      'bold',
+      'italic',
+      'underline',
+      'through',
+      'color',
+      'bgColor',
+      '|',
+      'justifyLeft',
+      'justifyRight',
+      'justifyCenter',
+      'justifyJustify',
+      '|',
+      'redo',
+      'undo',
+      'clearStyle',
+      '|'
+    ]
   })
   const editorConfig = ref({})
 
   const picVisible = ref(false)
   const aiVisible = ref(false)
 
-  const initMenuEvent = () => {
-    const editor = editorRef.value
-    editor.on('PicMenuClick', () => {
+  const initMenuEvent = (editor) => {
+    editor.on('ImageMenuClick', () => {
       picVisible.value = true
     })
     editor.on('AiMenuClick', () => {
@@ -59,7 +78,7 @@
     })
   }
 
-  const handleCallback = (val) => {
+  const handleImageCallback = (val) => {
     picVisible.value = false
     if (val) {
       const editor = editorRef.value
@@ -79,6 +98,12 @@
 </script>
 
 <style lang="scss">
+  .editor-container {
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    width: 100%;
+  }
+
   .w-e-text-container {
     height: 300px;
   }

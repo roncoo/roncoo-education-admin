@@ -1,18 +1,32 @@
 import { h } from 'snabbdom'
 
-const renderElem = (elem) => {
+function renderAi(elem, children, editor) {
   const { value = '' } = elem
   return h(
     'div',
     {
-      props: { contentEditable: true },
-      attrs: { 'data-w-e-type': 'ai' }
+      props: {
+        class: 'ai-element',
+        contenteditable: true
+      }
     },
-    value
+    [
+      h(
+        'div',
+        {
+          props: {
+            innerHTML: value
+          }
+        },
+        null
+      )
+    ]
   )
 }
 
-export default {
-  type: 'ai',
-  renderElem
+const conf = {
+  type: 'ai', // 节点 type ，重要！！！
+  renderElem: renderAi
 }
+
+export default conf

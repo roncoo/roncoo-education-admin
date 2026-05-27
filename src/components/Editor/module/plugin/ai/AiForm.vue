@@ -68,7 +68,9 @@
   } = useEventStream({
     onChunk: (text) => {
       if (text && text.trim()) {
-        messageList.value = safeMarkdownRender(preprocessMarkdown(text))
+        // 后端将换行符编码为 \n 字面量推送，此处还原为真正的换行符再渲染
+        const decoded = text.replace(/\\n/g, '\n').replace(/\\r/g, '')
+        messageList.value = safeMarkdownRender(preprocessMarkdown(decoded))
       }
       nextTick().then(() => {
         if (contentRef.value) {
