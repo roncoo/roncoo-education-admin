@@ -42,12 +42,12 @@
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
-      <el-table-column :width="250" fixed="right" label="操作" prop="address">
+          <el-table-column :width="140" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-if="scope.row.statusId == 0" text type="primary" @click="handleStatus(scope.row)">启用</el-button>
-          <el-button v-if="scope.row.statusId == 1" text type="primary" @click="handleStatus(scope.row)">禁用</el-button>
+          <el-button v-if="scope.row.statusId == 0" link type="primary" @click="handleStatus(scope.row)">启用</el-button>
+          <el-button v-if="scope.row.statusId == 1" link type="primary" @click="handleStatus(scope.row)">禁用</el-button>
           <el-divider direction="vertical" />
-          <el-button text type="primary" @click="handleDelete(scope.row, '确认要移除当前课程吗？')">移除</el-button>
+          <el-button link type="primary" @click="handleDelete(scope.row, '确认要移除当前课程吗？')">移除</el-button>
         </template>
       </el-table-column>
     </el-table>

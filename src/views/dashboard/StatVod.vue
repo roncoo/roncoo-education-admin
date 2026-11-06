@@ -10,7 +10,7 @@
 
 <script setup>
   import * as echarts from 'echarts'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
   import { statApi } from '@/api/dashboard'
 
   const charts = reactive({
@@ -31,6 +31,18 @@
       init1(res)
       init2(res)
     })
+    window.addEventListener('resize', handleResize)
+  })
+
+  const handleResize = () => {
+    charts.pieOne?.resize()
+    charts.pieTwo?.resize()
+  }
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', handleResize)
+    charts.pieOne?.dispose()
+    charts.pieTwo?.dispose()
   })
 
   const init1 = (data) => {
@@ -191,5 +203,20 @@
 
   .title-info {
     margin-top: 20px;
+    border: 1px solid var(--admin-line);
+    border-radius: 10px;
+    box-shadow: var(--admin-shadow);
+
+    :deep(.el-card__header) {
+      padding: 20px 24px 16px;
+      color: var(--admin-ink);
+      font-size: 18px;
+      font-weight: 650;
+      border-bottom-color: var(--admin-line);
+    }
+
+    :deep(.el-card__body) {
+      padding: 16px 24px 24px;
+    }
   }
 </style>

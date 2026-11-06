@@ -7,14 +7,18 @@
 
 <style lang="scss" scoped>
   .logo {
-    padding: 5px 10px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
     background-color: #15213e;
-    width: 80px;
-    height: 50px;
+    // 保持与左侧主菜单 100px 的视觉对齐；全局 border-box 下需要包含原有内边距。
+    width: 100px;
+    height: 60px;
     vertical-align: top;
     z-index: 99;
     text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
 
     img {
       height: 40px;

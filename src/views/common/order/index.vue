@@ -20,7 +20,7 @@
       </div>
     </div>
     <el-table v-loading="page.loading" :data="page.list">
-      <el-table-column :min-width="180" label="商品信息">
+      <el-table-column :min-width="150" label="商品信息" show-overflow-tooltip>
         <template #default="scope">
           <img :alt="scope.row.courseViewVO.courseName" :src="scope.row.courseViewVO.courseLogo" style="float: left; height: 50px; width: 90px; vertical-align: middle; border-radius: 5px" />
           <div style="float: left; margin-left: 10px">
@@ -65,7 +65,7 @@
       </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'order:remark'" text type="primary" @click="openFormModal(scope.row)">写备注</el-button>
+          <el-button v-permission="'order:remark'" link type="primary" @click="openFormModal(scope.row)">写备注</el-button>
         </template>
       </el-table-column>
     </el-table>

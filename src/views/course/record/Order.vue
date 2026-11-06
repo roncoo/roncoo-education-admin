@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column :width="100" fixed="right" label="操作" prop="address">
         <template #default="scope">
-          <el-button v-permission="'order:remark'" text type="primary" @click="openFormModal(scope.row)">写备注</el-button>
+          <el-button v-permission="'order:remark'" link type="primary" @click="openFormModal(scope.row)">写备注</el-button>
         </template>
       </el-table-column>
     </el-table>

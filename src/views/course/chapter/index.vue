@@ -60,13 +60,13 @@
           <el-table-column align="right">
             <template #header>
               <div>
-                <el-button @click="resourceSelect">添加资源</el-button>
+                <el-button link type="primary" @click="resourceSelect">添加资源</el-button>
               </div>
             </template>
             <template #default="scope">
-              <el-button v-if="scope.row.periodType === 10" text type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.periodType === 10" link type="primary" @click="openFormPeriodModal(scope.row)">编辑</el-button>
               <el-divider direction="vertical" />
-              <el-button text type="primary" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button link type="primary" @click="handleDelete(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>

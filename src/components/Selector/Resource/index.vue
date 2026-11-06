@@ -5,8 +5,8 @@
       <el-tab-pane v-for="item in tabPanes" :key="item.code" :label="item.desc" :name="item.code" />
     </el-tabs>
     <el-form :model="query" class="filter-container" inline label-width="100px">
-      <el-form-item label="资源名称">
-        <el-input v-model="query.resourceName" />
+      <el-form-item>
+        <el-input v-model="query.resourceName" placeholder="请输入资源名称" />
       </el-form-item>
       <el-form-item>
         <el-button class="filter-item" type="primary" @click="handleQuery">查询</el-button>
@@ -56,9 +56,9 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="100">
+          <el-table-column label="操作" width="100" fixed="right">
             <template #default="scope">
-              <el-button text type="primary" @click="selectResource(scope.row)">选择</el-button>
+              <el-button link type="primary" @click="selectResource(scope.row)">选择</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -171,7 +171,7 @@
 
   .table-container {
     display: flex;
-    max-height: calc(50vh);
+    max-height: calc(60vh);
     overflow: auto;
   }
 

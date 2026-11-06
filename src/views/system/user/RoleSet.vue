@@ -3,8 +3,8 @@
     <div class="page_head" style="text-align: left">
       <div class="search_bar clearfix">
         <el-form :model="query" inline label-width="80px">
-          <el-form-item label="角色名称">
-            <el-input v-model="query.roleName" clearable />
+          <el-form-item>
+            <el-input v-model="query.roleName" placeholder="请输入角色名称" clearable />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery()"> 查询</el-button>

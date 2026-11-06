@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 
 export default defineConfig({
   base: './',
@@ -26,6 +27,10 @@ export default defineConfig({
     createSvgIconsPlugin({
       iconDirs: [resolve('src/assets/svg')],
       symbolId: 'icon-[name]'
+    }),
+    codeInspectorPlugin({
+      bundler: 'vite',
+      editor: 'webstorm'
     })
   ],
   build: {

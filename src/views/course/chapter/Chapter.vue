@@ -2,7 +2,7 @@
   <div class="table-catalog">
     <div class="table-catalog-title">
       <span style="cursor: pointer">章节目录</span>
-      <el-button text link style="margin-left: 120px" @click="openFormCatalog(null, props.treeData[0].courseId)">
+      <el-button link style="margin-left: 120px" @click="openFormCatalog(null, props.treeData[0].courseId)">
         <el-icon>
           <CirclePlus />
         </el-icon>

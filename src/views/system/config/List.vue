@@ -24,11 +24,12 @@
         <span style="color: #999; font-size: 13px">{{ scope.row.remark }}</span>
       </template>
     </el-table-column>
-    <el-table-column v-permission="'sys:config:edit'" label="操作" width="220">
+    <el-table-column v-permission="'sys:config:edit'" label="操作" width="110" fixed="right">
       <template #default="scope">
         <el-switch
           v-if="scope.row.contentType === 4"
           v-model="scope.row.configValue"
+          inline-prompt
           active-color="#13ce66"
           active-text="开启"
           active-value="1"
@@ -37,7 +38,7 @@
           inactive-value="0"
           @change="handleSwitch(scope.row)"
         />
-        <el-button v-else text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+        <el-button v-else link type="primary" @click="openFormModal(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -49,7 +50,7 @@
           <div v-if="vodConfig">{{ vodConfig }}</div>
           <div style="color: #999; font-size: 12px">视频配置完成，需要重新初始化</div>
         </el-col>
-        <el-col :span="4"><el-button v-loading="loading" v-permission="'sys:config:video:init'" text type="primary" @click="vodInit()">视频初始化</el-button></el-col>
+        <el-col :span="4"><el-button v-loading="loading" v-permission="'sys:config:video:init'" link type="primary" @click="vodInit()">视频初始化</el-button></el-col>
       </el-row>
     </div>
   </div>

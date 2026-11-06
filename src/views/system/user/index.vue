@@ -30,14 +30,14 @@
           <enum-view :enum-name="'StatusIdEnum'" :enum-value="scope.row.statusId" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" :width="320">
+      <el-table-column label="操作" :width="250" fixed="right">
         <template #default="scope">
-          <el-button v-permission="'sys:user:edit'" text type="primary" @click="openFormModal(scope.row)">编辑</el-button>
+          <el-button v-permission="'sys:user:edit'" link type="primary" @click="openFormModal(scope.row)">编辑</el-button>
           <el-divider direction="vertical" />
-          <el-button v-permission="'sys:user:role:set'" text type="primary" @click="openRoleModal(scope.row)">角色分配</el-button>
+          <el-button v-permission="'sys:user:role:set'" link type="primary" @click="openRoleModal(scope.row)">角色分配</el-button>
           <el-divider direction="vertical" />
           <el-dropdown>
-            <el-button text type="primary">
+            <el-button link type="primary">
               更多操作
               <el-icon class="el-icon--right">
                 <arrow-down />
@@ -46,14 +46,14 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <el-button v-permission="'sys:user:password'" text type="primary" @click="openPasswordModal(scope.row)">密码</el-button>
+                  <el-button v-permission="'sys:user:password'" link type="primary" @click="openPasswordModal(scope.row)">密码</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleStatus(scope.row)">
-                  <el-button v-if="scope.row.statusId === 0" v-permission="'sys:user:edit'" text type="primary">启用</el-button>
-                  <el-button v-if="scope.row.statusId === 1" v-permission="'sys:user:edit'" text type="primary">禁用</el-button>
+                  <el-button v-if="scope.row.statusId === 0" v-permission="'sys:user:edit'" link type="primary">启用</el-button>
+                  <el-button v-if="scope.row.statusId === 1" v-permission="'sys:user:edit'" link type="primary">禁用</el-button>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <el-button v-permission="'sys:user:delete'" text type="primary" @click="handleDelete(scope.row)">删除</el-button>
+                  <el-button v-permission="'sys:user:delete'" link type="primary" @click="handleDelete(scope.row)">删除</el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>

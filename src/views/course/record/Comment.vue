@@ -17,9 +17,9 @@
       <el-table-column label="用户手机" min-width="20" prop="mobile" />
       <el-table-column label="用户昵称" min-width="20" prop="nickname" />
       <el-table-column label="内容" prop="commentText" />
-      <el-table-column label="操作" width="100">
+      <el-table-column label="操作" width="100" fixed="right">
         <template #default="scope">
-          <el-button type="primary" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button link type="primary" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

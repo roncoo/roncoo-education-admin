@@ -1,11 +1,77 @@
+:root {
+  --admin-brand: #2563eb;
+  --admin-brand-hover: #1d4ed8;
+  --admin-brand-soft: #eff6ff;
+  --admin-ink: #172b4d;
+  --admin-muted: #64748b;
+  --admin-line: #e5eaf2;
+  --admin-canvas: #f5f7fb;
+  --admin-surface: #ffffff;
+  --admin-success: #16a34a;
+  --admin-warning: #d97706;
+  --admin-danger: #dc2626;
+  --admin-radius: 10px;
+  --admin-shadow: 0 4px 18px rgba(23, 43, 77, 0.06);
+  --el-color-primary: var(--admin-brand);
+  --el-color-primary-light-3: #6692f1;
+  --el-color-primary-light-5: #93b4f5;
+  --el-color-primary-light-7: #c2d5fa;
+  --el-color-primary-light-8: #d6e3fc;
+  --el-color-primary-light-9: var(--admin-brand-soft);
+  --el-color-primary-dark-2: var(--admin-brand-hover);
+  --el-border-radius-base: 8px;
+  --el-text-color-primary: var(--admin-ink);
+  --el-text-color-regular: #475569;
+  --el-text-color-secondary: var(--admin-muted);
+  --el-border-color: var(--admin-line);
+  --el-border-color-light: #edf1f6;
+  --el-fill-color-light: #f8fafc;
+  --el-bg-color-page: var(--admin-canvas);
+  --el-font-size-base: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
-  word-break: break-all;
+  color: var(--admin-ink);
+  background: var(--admin-canvas);
+  font: 14px/1.6 Inter, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui, sans-serif;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+a:hover {
+  color: var(--admin-brand);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid #93b4f5;
+  outline-offset: 2px;
 }
 
 .c-danger {
@@ -23,7 +89,28 @@ a {
 
 .button_bar {
   text-align: left;
-  margin-bottom: 10px;
+  margin: 18px 0 0;
+}
+
+.app-container {
+  min-width: 0;
+}
+
+.page_head {
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.search_bar .el-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.search_bar .el-form-item {
+  margin: 0;
 }
 
 // 编辑器全屏
@@ -41,13 +128,160 @@ a {
 .el-dialog__body {
   max-height: 80vh;
   overflow: auto;
-  padding: 0 20px;
+  padding: 24px 24px 4px;
+}
+
+.el-dialog {
+  max-width: calc(100vw - 32px);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 14px 42px rgba(23, 43, 77, 0.18);
+}
+
+.el-dialog__header {
+  margin: 0;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.el-dialog__title {
+  color: var(--admin-ink);
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.el-dialog__footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--admin-line);
+}
+
+.el-button {
+  min-height: 36px;
+  border-radius: 7px;
+  font-weight: 500;
+}
+
+.el-button--primary {
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.16);
+}
+
+// 链接型按钮不使用实体按钮的阴影和背景。
+.el-button.is-link,
+.el-button.is-link.el-button--primary {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+// 列表行内操作使用链接型按钮，避免呈现为白色块状按钮。
+.el-table .el-button.is-link,
+.el-table .el-button.is-link.el-button--primary {
+  min-height: 30px;
+  padding: 4px 8px;
+  color: var(--admin-brand);
+  border-radius: 6px;
+  font-weight: 400;
+}
+
+// 下拉菜单渲染在表格外，行内操作菜单同样使用正常字重。
+.el-dropdown-menu .el-button.is-link {
+  font-weight: 400;
+}
+
+.el-table .el-button.is-link:hover,
+.el-table .el-button.is-link:focus-visible {
+  color: var(--admin-brand-hover);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.el-table .el-button.is-link + .el-divider--vertical {
+  margin: 0 2px;
+}
+
+.el-input__wrapper,
+.el-select__wrapper {
+  min-height: 36px;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px var(--admin-line) inset;
+}
+
+.el-input__wrapper:hover,
+.el-select__wrapper:hover {
+  box-shadow: 0 0 0 1px #b7c4d8 inset;
+}
+
+.el-form-item__label {
+  color: #475569;
+  font-weight: 500;
+}
+
+.el-table {
+  --el-table-border-color: var(--admin-line);
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-row-hover-bg-color: #f8fbff;
+  color: var(--admin-ink);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.el-table .el-table__header th.el-table__cell {
+  height: 44px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 650;
+  background: var(--el-table-header-bg-color);
+}
+
+.el-table .el-table__body td.el-table__cell {
+  height: 56px;
+  padding: 10px 0;
+}
+
+.el-table__empty-text {
+  color: var(--admin-muted);
+}
+
+.el-table .el-table__fixed-right .el-table__cell,
+.el-table .el-table__fixed .el-table__cell {
+  white-space: nowrap;
+}
+
+.el-table .el-table__fixed-right .cell,
+.el-table .el-table__fixed .cell,
+.el-table .el-button.is-link,
+.el-table .el-dropdown {
+  white-space: nowrap;
+}
+
+.el-table .el-table__fixed-right td.el-table__cell .cell,
+.el-table .el-table__fixed td.el-table__cell .cell {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.el-tag {
+  border-radius: 5px;
+  font-weight: 500;
 }
 
 // 分页组件
 .el-pagination {
-  margin-top: 20px;
+  margin-top: 24px;
   justify-content: center;
+  --el-pagination-button-bg-color: var(--admin-surface);
+  --el-pagination-hover-color: var(--admin-brand);
+}
+
+.el-pagination.is-background .el-pager li {
+  border: 1px solid var(--admin-line);
+  border-radius: 6px;
+}
+
+.el-pagination.is-background .el-pager li.is-active {
+  border-color: var(--admin-brand);
 }
 
 // 表头样式
@@ -57,7 +291,7 @@ a {
 }
 
 .el-tree-node__content {
-  height: 40px;
+  height: 38px;
 }
 
 .el-divider--vertical {
@@ -78,5 +312,28 @@ a {
 
 ::-webkit-scrollbar-track {
   border-radius: 0;
-  background: #fff;
+  background: transparent;
+}
+
+@media (max-width: 1024px) {
+  .el-main {
+    --el-main-padding: 16px 14px 24px;
+  }
+
+  .main-container {
+    padding: 18px !important;
+  }
+
+  .search_bar .el-form {
+    gap: 10px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

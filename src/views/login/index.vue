@@ -116,23 +116,27 @@
 
 <style lang="scss" scoped>
   .login-container {
-    height: 100vh;
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    height: auto;
+    padding: 72px 24px 112px;
     background: #2873f0;
   }
 
   .login-content {
-    position: absolute;
-    top: calc((100vh - 520px) / 2);
-    left: 0;
-    right: 0;
-    width: 800px;
-    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    width: min(800px, 100%);
+    margin: auto;
 
     .login-info {
-      float: left;
-      width: 350px;
-      padding: 25px;
-      height: 450px;
+      display: flex;
+      flex: 1 1 50%;
+      flex-direction: column;
+      width: 50%;
+      min-height: 450px;
+      padding: 32px 30px 24px;
       color: #fff;
       background: #033c94;
       border-radius: 12px 0 0 12px;
@@ -147,14 +151,18 @@
         font-weight: 300;
         line-height: 25px;
       }
+
+      > div {
+        margin-top: auto !important;
+      }
     }
 
     .login-panel {
-      float: right;
+      flex: 1 1 50%;
+      width: 50%;
+      min-height: 450px;
       background: #fff;
-      height: 450px;
-      width: 350px;
-      padding: 25px;
+      padding: 32px 30px;
       border-radius: 0 12px 12px 0;
 
       .login-head {
@@ -164,7 +172,7 @@
       }
 
       .login-button {
-        width: 350px;
+        width: 100%;
         height: 45px;
         background: #2873f0;
         border-radius: 4px;
@@ -215,5 +223,37 @@
 
   .el-input {
     height: 40px;
+  }
+
+  @media (max-width: 860px) {
+    .login-container {
+      min-height: 100vh;
+      height: auto;
+      padding: 24px 16px 88px;
+    }
+
+    .login-content {
+      position: static;
+      display: block;
+      width: min(100%, 350px);
+      margin: 0 auto;
+
+      .login-info {
+        display: none;
+      }
+
+      .login-panel {
+        float: none;
+        width: 100%;
+        height: auto;
+        min-height: 450px;
+        border-radius: 12px;
+      }
+    }
+
+    .footer {
+      position: static;
+      padding: 20px 16px 0;
+    }
   }
 </style>

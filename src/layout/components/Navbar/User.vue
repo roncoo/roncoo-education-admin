@@ -61,7 +61,13 @@
     .info-home {
       display: flex;
       align-items: center;
-      margin: 0 10px;
+      margin: 0 12px;
+      color: var(--admin-muted);
+      font-size: 13px;
+
+      &:hover {
+        color: var(--admin-brand);
+      }
     }
   }
 
@@ -71,6 +77,8 @@
     margin-right: 20px;
     height: 100%;
     line-height: 50px;
+    color: var(--admin-ink);
+    font-weight: 600;
 
     :focus-visible {
       outline: 0px;

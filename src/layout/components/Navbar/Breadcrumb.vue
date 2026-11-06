@@ -28,5 +28,15 @@
     margin-left: 20px;
     line-height: 50px;
     font-size: 14px;
+
+    :deep(.el-breadcrumb__inner) {
+      color: var(--admin-muted);
+      font-weight: 500;
+    }
+
+    :deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner) {
+      color: var(--admin-ink);
+      font-weight: 650;
+    }
   }
 </style>

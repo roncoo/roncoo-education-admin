@@ -19,7 +19,7 @@
       <el-table-column :min-width="120" label="操作">
         <template #default="scope">
           {{ scope.row.operation }}
-          <el-button v-if="scope.row.content" text type="primary" @click="handleView(scope.row)">
+          <el-button v-if="scope.row.content" link type="primary" @click="handleView(scope.row)">
             <el-icon :size="20">
               <Document />
             </el-icon>

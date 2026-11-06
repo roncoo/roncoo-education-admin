@@ -1,8 +1,8 @@
 <template>
   <el-dialog :append-to-body="true" :model-value="props.visible" :title="props.title" width="800px" align-center :destroy-on-close="true" @close="handleClose">
     <el-form :model="query" class="filter-container" inline label-width="100px">
-      <el-form-item label="课程名称">
-        <el-input v-model="query.courseName" />
+      <el-form-item>
+        <el-input v-model="query.courseName" placeholder="请输入课程名称" />
       </el-form-item>
       <el-form-item>
         <el-button class="filter-item" type="primary" @click="handleQuery">查询</el-button>
@@ -28,9 +28,9 @@
           <enum-view :enum-name="'PutawayEnum'" :enum-value="scope.row.isPutaway" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column label="操作" width="100" fixed="right">
         <template #default="scope">
-          <el-button text type="primary" @click="selectCourse(scope.row)">选择</el-button>
+          <el-button link type="primary" @click="selectCourse(scope.row)">选择</el-button>
         </template>
       </el-table-column>
     </el-table>

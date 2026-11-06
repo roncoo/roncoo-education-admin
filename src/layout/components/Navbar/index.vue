@@ -17,7 +17,8 @@
     padding: 0;
     width: 100%;
     z-index: 99;
-    background-color: #fff;
-    border-bottom: 1px solid #ebeef5;
+    background-color: var(--admin-surface);
+    border-bottom: 1px solid var(--admin-line);
+    box-shadow: 0 1px 8px rgba(23, 43, 77, 0.04);
   }
 </style>

@@ -98,6 +98,7 @@
 
 <style lang="scss" scoped>
   .el-aside {
+    flex: 0 0 auto;
     overflow: hidden;
     width: 100px;
 
@@ -111,6 +112,9 @@
   .menu-side {
     position: fixed;
     top: 60px;
+    bottom: 0;
+    display: flex;
+    z-index: 10;
   }
 
   .menu-main {
@@ -124,17 +128,29 @@
       border: 0;
     }
 
-    width: 90px;
+    // 原菜单由 90px 内容区 + 10px 左内边距组成。
+    width: 100px;
     float: left;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 60px);
     background-color: #15213e;
     padding-left: 10px;
+
+    a,
+    a:hover,
+    a:focus,
+    a:active {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .menu-main-item {
       .el-menu-item {
         width: 90px;
         height: 50px;
         margin: 10px 0;
+        padding: 0 12px;
+        overflow: hidden;
+        white-space: nowrap;
         color: white;
         border-radius: 10px 0 0 10px;
 
@@ -168,8 +184,16 @@
     float: left;
     padding-top: 10px;
     background-color: #fff;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 60px);
     transition: all 0.5s;
+
+    a,
+    a:hover,
+    a:focus,
+    a:active {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .el-menu {
       border: none;
@@ -182,9 +206,14 @@
         margin: 5px auto;
         justify-content: center;
         width: 80px;
+        padding: 0 8px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #172b4d;
 
         &:hover {
           background-color: #f0f1ff;
+          color: #172b4d;
           border-radius: 5px;
           width: 80px;
         }
@@ -192,6 +221,7 @@
 
       .is-active {
         background-color: #f0f1ff;
+        color: #172b4d;
         border-radius: 5px;
         width: 80px;
       }
@@ -208,5 +238,16 @@
 
   .is-active {
     color: black;
+  }
+
+  @media (max-width: 1024px) {
+    .menu-main {
+      width: 100px;
+      padding-left: 10px;
+    }
+
+    .menu-sub {
+      width: 100px;
+    }
   }
 </style>

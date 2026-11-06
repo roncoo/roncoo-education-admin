@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container">
+  <div class="form-container course-edit">
     <el-form ref="formRef" :model="formModel" :rules="rules" label-width="80px" style="max-width: 980px" @submit.prevent>
       <div class="form-main">
         <div class="form-main-title">基础信息</div>
@@ -47,7 +47,7 @@
     </el-form>
     <div class="form-footer">
       <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="onSubmit()">确定</el-button>
+      <el-button type="primary" :loading="loading" @click="onSubmit()">确定</el-button>
     </div>
   </div>
   <select-lecturer v-if="lecturer.visible" @close="handleLecturer" />
@@ -147,6 +147,10 @@
   }
 </script>
 <style lang="scss" scoped>
+  .course-edit {
+    padding-bottom: 88px;
+  }
+
   .form-main-title {
     width: 120px;
   }
@@ -157,21 +161,48 @@
   }
 
   .form-footer {
-    text-align: center;
-    width: calc(100% - 260px);
     position: fixed;
-    height: 30px;
+    right: 15px;
+    bottom: 16px;
+    left: 215px;
+    z-index: 9;
     display: flex;
-    bottom: 0px;
-    border-radius: 4px;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
-    padding: 20px;
-    border-top: 1px solid #ebeef5;
-    border-bottom: 10px solid #f2f3f5;
-    margin-left: -20px;
-    z-index: 9;
+    gap: 12px;
+    min-height: 72px;
+    padding: 16px 24px;
+    border: 1px solid var(--admin-line);
+    border-radius: 12px;
+    background: var(--admin-surface);
+    box-shadow: 0 -4px 20px rgb(23 43 77 / 6%);
+    transition: left 0.5s;
+
+    .el-button {
+      min-width: 88px;
+      min-height: 38px;
+      margin: 0;
+    }
+  }
+
+  :global(.el-aside:not(.show-sub) + .el-main .course-edit .form-footer) {
+    left: 120px;
+  }
+
+  :global(body:has(.course-edit) .global-backtop) {
+    bottom: 104px;
+  }
+
+  @media (max-width: 1024px) {
+    .form-footer {
+      right: 14px;
+      left: 214px;
+      padding: 14px 16px;
+    }
+
+    :global(.el-aside:not(.show-sub) + .el-main .course-edit .form-footer) {
+      left: 114px;
+    }
   }
 
   .tooltip {
