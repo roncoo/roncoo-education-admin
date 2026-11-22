@@ -174,20 +174,22 @@
   }
 
   .upload_file_list {
-    width: 540px;
+    width: 100%;
     max-height: 30vh;
     overflow: auto;
 
     .upload_file_item {
       position: relative;
       padding: 0 10px;
-      display: flex;
-      line-height: 45px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 76px 54px 54px 24px;
+      align-items: center;
+      min-height: 56px;
       border-bottom: 1px solid #dedede;
       font-size: 12px;
 
       div {
-        padding: 0 12px;
+        padding: 0;
         position: relative;
         z-index: 99;
       }
@@ -198,26 +200,32 @@
       }
 
       .file_name {
-        width: 200px;
+        min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .file_size {
-        width: 60px;
         color: #666;
         text-align: center;
+        white-space: nowrap;
+      }
+
+      .file_progress_number {
+        text-align: center;
+        white-space: nowrap;
       }
 
       .file_status {
         text-align: center;
-        width: 60px;
+        white-space: nowrap;
       }
 
       .file_ctrl_btn {
         font-size: 20px;
         color: #237cc3;
+        text-align: center;
       }
 
       .file_progress {
