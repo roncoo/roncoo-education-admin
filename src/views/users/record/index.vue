@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-descriptions title="用户信息" :column="4">
       <el-descriptions-item label="">
-        <img :alt="usersInfo.nickname" :src="usersInfo.userHead" style="height: 60px; width: auto; border-radius: 50%; vertical-align: middle" />
+        <img :alt="usersInfo.nickname" :src="usersInfo.userHead || defaultAvatar" style="height: 60px; width: auto; border-radius: 50%; vertical-align: middle" />
         <span style="margin-left: 10px">
           {{ usersInfo.nickname }}
           <br />
@@ -40,6 +40,7 @@
   </div>
 </template>
 <script setup>
+  import defaultAvatar from '@/assets/images/default-avatar.svg'
   import UsersOrder from './Order.vue'
   import UsersCourse from './Course.vue'
   import UsersAccount from './Account.vue'

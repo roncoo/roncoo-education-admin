@@ -17,7 +17,7 @@
       <el-table-column label="手机号码" :min-width="40" prop="mobile" />
       <el-table-column label="用户信息" :min-width="60">
         <template #default="scope">
-          <img :alt="scope.row.nickname" :src="scope.row.userHead" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
+          <img :alt="scope.row.nickname" :src="scope.row.userHead || defaultAvatar" style="height: 40px; width: auto; border-radius: 50%; vertical-align: middle" />
           &nbsp;{{ scope.row.nickname }}
         </template>
       </el-table-column>
@@ -71,6 +71,7 @@
   </div>
 </template>
 <script setup>
+  import defaultAvatar from '@/assets/images/default-avatar.svg'
   import useTable from '@/utils/table'
   import { ref } from 'vue'
   import { usersApi } from '@/api/users'
