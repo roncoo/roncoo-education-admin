@@ -205,6 +205,7 @@
         box-sizing: border-box;
         margin: 5px auto;
         justify-content: center;
+        text-align: center;
         width: 80px;
         padding: 0 8px;
         overflow: hidden;
