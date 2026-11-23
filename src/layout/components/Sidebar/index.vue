@@ -149,7 +149,7 @@
         height: 50px;
         margin: 10px 0;
         justify-content: center;
-        padding: 0 12px;
+        padding: 0 12px !important;
         overflow: hidden;
         white-space: nowrap;
         color: white;
@@ -208,7 +208,7 @@
         justify-content: center;
         text-align: center;
         width: 80px;
-        padding: 0 8px;
+        padding: 0 8px !important;
         overflow: hidden;
         white-space: nowrap;
         color: #172b4d;
