@@ -148,6 +148,7 @@
         width: 90px;
         height: 50px;
         margin: 10px 0;
+        justify-content: center;
         padding: 0 12px;
         overflow: hidden;
         white-space: nowrap;
